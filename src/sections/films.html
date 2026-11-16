@@ -1,7 +1,7 @@
 <section class="chapter" id="films" data-tab="Films" aria-labelledby="films-title">
   <header class="chapter-head page">
     <p class="chapter-kicker hand">project films · narrated + captioned</p>
-    <h2 id="films-title" class="chapter-title">Eleven systems, drawn out</h2>
+    <h2 id="films-title" class="chapter-title">Twelve systems, drawn out</h2>
     <p class="chapter-lede">Each film sketches the architecture, then walks one event through it step by step. Most now carry a voiceover; a few stay silent and captioned. Nothing downloads until you press play.</p>
   </header>
 
@@ -13,7 +13,7 @@
           <video controls preload="none" playsinline poster="assets/video/narrated/carbonshift-poster.webp" width="1920" height="1080" aria-labelledby="fl-cs-t" aria-describedby="fl-cs-d">
             <source src="assets/video/narrated/carbonshift.mp4" type="video/mp4">
           </video>
-          <figcaption class="fl-meta"><span class="hand pencil">reel 1 · 3:07 · narrated</span><span class="fl-tag">control loop</span></figcaption>
+          <figcaption class="fl-meta"><span class="hand pencil">reel 1 · 3:12 · narrated</span><span class="fl-tag">control loop</span></figcaption>
         </figure>
         <h3 class="fl-title" id="fl-cs-t">CarbonShift</h3>
         <p class="fl-cap" id="fl-cs-d">A 60-second control loop polls CAISO grid price and carbon, maps them to GREEN, NORMAL, AMBER or RED, and sets the A100 power cap through NVML, from 250 W down to a checkpointed pause. In a realistic scenario profile it cut carbon intensity ~43% and energy cost ~37%.</p>
@@ -52,7 +52,7 @@
           <video controls preload="none" playsinline poster="assets/video/narrated/lerobot-poster.webp" width="1920" height="1080" aria-labelledby="fl-so-t" aria-describedby="fl-so-d">
             <source src="assets/video/narrated/lerobot.mp4" type="video/mp4">
           </video>
-          <figcaption class="fl-meta"><span class="hand pencil">reel 4 · 2:45 · narrated</span><span class="fl-tag">robot learning</span></figcaption>
+          <figcaption class="fl-meta"><span class="hand pencil">reel 4 · 2:43 · narrated</span><span class="fl-tag">robot learning</span></figcaption>
         </figure>
         <h3 class="fl-title" id="fl-so-t">SO-101 robot learning</h3>
         <p class="fl-cap" id="fl-so-d">Leader-to-follower teleop over Feetech STS3215 buses records 50 demos (~49.6k and ~60k frames). ACT trained from scratch on a ResNet-18 backbone and a fine-tuned SmolVLA run on the arm: ACT places the cube in 46 of 50 trials at one fixed position, ~18 ms vs ~251 ms per inference. Includes the EEPROM <code>Lock=1</code> motor-ID fix.</p>
@@ -104,7 +104,7 @@
           <video controls preload="none" playsinline poster="assets/video/narrated/wikirisk-poster.webp" width="1920" height="1080" aria-labelledby="fl-wr-t" aria-describedby="fl-wr-d">
             <source src="assets/video/narrated/wikirisk.mp4" type="video/mp4">
           </video>
-          <figcaption class="fl-meta"><span class="hand pencil">reel 8 · 2:38 · narrated</span><span class="fl-tag">streaming ML</span></figcaption>
+          <figcaption class="fl-meta"><span class="hand pencil">reel 8 · 2:39 · narrated</span><span class="fl-tag">streaming ML</span></figcaption>
         </figure>
         <h3 class="fl-title" id="fl-wr-t">WikiRisk</h3>
         <p class="fl-cap" id="fl-wr-d">Spark ingests 29+ GB of Wikipedia revision history and cross-validates a SparkML model on 11.16M rows in MLflow, then a live Structured Streaming job scores every Wikimedia edit as it lands. Scored events go to a Parquet archive and a SQLite + FastAPI serving layer. Held-out recall is 89.6% at 0.762 ROC AUC.</p>
@@ -147,6 +147,18 @@
         </figure>
         <h3 class="fl-title" id="fl-ve-t">Visual attention, measured</h3>
         <p class="fl-cap" id="fl-ve-d">Pupil Labs gaze, fixation, blink and pupil streams are aligned per trial, cleaned, and turned into features across global, selective and sustained attention tasks. Statistics show fixation count is the strongest discriminator, and everything lands in a model-ready dataset plus gaze heatmaps and cross-discipline reports. Published in SAGE/HFES 2026.</p>
+        <a class="btn" href="https://ayushgawai.github.io/" target="_blank" rel="noopener">See the research</a>
+      </article>
+      <article class="fl-card" aria-labelledby="fl-mm-t">
+        <figure class="fl-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <video controls preload="none" playsinline poster="assets/video/narrated/mmm-poster.webp" width="1920" height="1080" aria-labelledby="fl-mm-t" aria-describedby="fl-mm-d">
+            <source src="assets/video/narrated/mmm.mp4" type="video/mp4">
+          </video>
+          <figcaption class="fl-meta"><span class="hand pencil">reel 12 · 4:13 · narrated</span><span class="fl-tag">marketing ML</span></figcaption>
+        </figure>
+        <h3 class="fl-title" id="fl-mm-t">Unified MMM + MTA measurement &amp; budget optimizer</h3>
+        <p class="fl-cap" id="fl-mm-d">A Bayesian mix model (geometric adstock + Hill saturation) and a discrete-time survival multi-touch model over 16M Criteo journey events, joined by Shapley attribution, feed a constrained SLSQP budget optimizer. Channel ROI error lands within 7% — last-touch was around 31% — and the optimized plan delivered +14% incremental conversions at flat spend.</p>
         <a class="btn" href="https://ayushgawai.github.io/" target="_blank" rel="noopener">See the research</a>
       </article>
     </div>
