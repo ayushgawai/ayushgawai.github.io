@@ -79,7 +79,84 @@
 
 
 <main id="main">
-<!-- missing sections/projlib.html -->
+<!-- Full project library: every project as a card, grouped, each linking to its own detail page.
+     Detail pages live under project/<slug>.html (built in the detail-page pass). Until then,
+     links fall back to the owning category anchor so nothing 404s. -->
+<section class="chapter" id="projlib" data-tab="Projects" aria-labelledby="projlib-title">
+  <header class="chapter-head page">
+    <p class="chapter-kicker hand">the full library</p>
+    <h2 id="projlib-title" class="chapter-title">Every build, in one list</h2>
+    <p class="chapter-lede">The complete index. Each entry opens its own page — video, architecture, the technical depth, and the links. No company or project is repeated across the site.</p>
+  </header>
+
+  <div class="page">
+    <div class="lib-grid">
+
+      <article class="lib-card" id="lib-sentinel">
+        <p class="lib-where hand">AI · edge</p>
+        <h3 class="lib-t">Sentinel AI</h3>
+        <p class="lib-sum">Local multi-camera safety: cheap on every frame, VLM only on escalation. <a class="hand" href="project/sentinel.html">open the full work →</a></p>
+      </article>
+
+      <article class="lib-card" id="lib-predicates">
+        <p class="lib-where hand">Zoox · data</p>
+        <h3 class="lib-t">Grounded SQL predicates</h3>
+        <p class="lib-sum">LLM drafts a verification predicate that is executed and checked before it is trusted. <a class="hand" href="project/predicates.html">open the full work →</a></p>
+      </article>
+
+      <article class="lib-card" id="lib-so101">
+        <p class="lib-where hand">robotics</p>
+        <h3 class="lib-t">SO-101 imitation learning</h3>
+        <p class="lib-sum">ACT vs SmolVLA on 50 teleoperated demos; the EEPROM fix that unblocked it. <a class="hand" href="project/so101.html">open the full work →</a></p>
+      </article>
+
+      <article class="lib-card" id="lib-wheelchair">
+        <p class="lib-where hand">research</p>
+        <h3 class="lib-t">AssistAI wheelchair</h3>
+        <p class="lib-sum">Depth-triggered, multimodal obstacle warnings; a published study of cue design. <a class="hand" href="project/wheelchair.html">open the full work →</a></p>
+      </article>
+
+      <article class="lib-card" id="lib-transit">
+        <p class="lib-where hand">data platform</p>
+        <h3 class="lib-t">Transit Analytics</h3>
+        <p class="lib-sum">GTFS and live departures into a forecasting operator dashboard. <a class="hand" href="project/transit.html">open the full work →</a></p>
+      </article>
+
+      <article class="lib-card" id="lib-lsmstore">
+        <p class="lib-where hand">systems</p>
+        <h3 class="lib-t">LSM-tree key-value store</h3>
+        <p class="lib-sum">WAL recovery, Bloom-filtered SSTables, tombstones, crash-aware compaction. <a class="hand" href="project/lsmstore.html">open the full work →</a></p>
+      </article>
+
+      <article class="lib-card" id="lib-blast">
+        <p class="lib-where hand">agents · hackathon</p>
+        <h3 class="lib-t">Blast Radius</h3>
+        <p class="lib-sum">One schema rename caught across three repos before merge by an agent fleet. <a class="hand" href="project/blast.html">open the full work →</a></p>
+      </article>
+
+      <article class="lib-card" id="lib-carbonshift">
+        <p class="lib-where hand">AI · hackathon</p>
+        <h3 class="lib-t">CarbonShift</h3>
+        <p class="lib-sum">GPU training that follows the grid on a 60-second control loop. <a class="hand" href="project/carbonshift.html">open the full work →</a></p>
+      </article>
+
+      <article class="lib-card" id="lib-leo">
+        <p class="lib-where hand">AI · geospatial</p>
+        <h3 class="lib-t">LEO coverage-risk agent</h3>
+        <p class="lib-sum">A tool-use agent scoring 4.7M satellite sites against canopy and terrain. <a class="hand" href="project/leo.html">open the full work →</a></p>
+      </article>
+
+      <article class="lib-card" id="lib-mmm">
+        <p class="lib-where hand">marketing ML</p>
+        <h3 class="lib-t">MarketMIX (MMM + MTA)</h3>
+        <p class="lib-sum">Bayesian mix model plus survival MTA feeding a constrained SLSQP budget optimizer. <a class="hand" href="project/mmm.html">open the full work →</a></p>
+      </article>
+
+    </div>
+    <p class="lib-note hand pencil">Full detail pages are being built out — a card's "open the full work" link falls back to its section until then.</p>
+  </div>
+</section>
+
 <section class="chapter" id="contact" data-tab="Contact" aria-labelledby="contact-title">
   <header class="chapter-head page">
     <p class="chapter-kicker hand">back cover</p>
@@ -97,7 +174,7 @@
       </ul>
       <div class="btn-row">
         <a class="btn blue" href="mailto:ayushsunilgawai@gmail.com">Write an email</a>
-        <a class="btn" href="#resume">Get the résumé</a>
+        <a class="btn" href="recognition.html#resume">Get the résumé</a>
       </div>
       <span class="ct-plane" aria-hidden="true" data-anim>
         <svg viewBox="0 0 220 120" class="rough">

@@ -416,7 +416,61 @@
   </div>
 </section>
 
-<!-- missing sections/software.html -->
+<section class="chapter" id="software" data-tab="Software" aria-labelledby="sw-title">
+  <header class="chapter-head page">
+    <p class="chapter-kicker hand">systems software &amp; performance</p>
+    <h2 id="sw-title" class="chapter-title">Software engineering, down near the metal</h2>
+    <p class="chapter-lede">The area that was missing from the map: storage internals, matching engines, replication and compiler-style tools in C++ and Java — the "how does it work under the hood" work.</p>
+  </header>
+
+  <div class="page">
+    <div class="sw-grid">
+      <a class="sw-card" href="project/query-engine.html">
+        <span class="sw-tab">C++20</span>
+        <h3 class="sw-t">Columnar query engine</h3>
+        <p class="sw-sum">Vectorized execution with an optimizer: constant folding, filter pushdown, min/max row-group skipping. 1,500 randomized queries checked against a reference.</p>
+      </a>
+      <a class="sw-card" href="project/lsmstore.html">
+        <span class="sw-tab">Java 17</span>
+        <h3 class="sw-t">LSMStore</h3>
+        <p class="sw-sum">An LSM-tree key-value store: fsynced WAL, sorted memtables, Bloom-filtered SSTables, tombstones and crash-aware compaction.</p>
+      </a>
+      <a class="sw-card" href="project/orderbook.html">
+        <span class="sw-tab">C++20</span>
+        <h3 class="sw-t">Order-book engine</h3>
+        <p class="sw-sum">Price-time priority matching: O(1) cancels, IOC and reprice semantics. ~4.68M messages/s, p99 ≈ 900 ns on a 2M-message replay.</p>
+      </a>
+      <a class="sw-card" href="project/dedup-store.html">
+        <span class="sw-tab">C++20</span>
+        <h3 class="sw-t">Dedup store</h3>
+        <p class="sw-sum">Content-defined chunking with crash-resumable mark-and-sweep GC, and replication that sends only the missing chunks.</p>
+      </a>
+      <a class="sw-card" href="project/capflow.html">
+        <span class="sw-tab">Python</span>
+        <h3 class="sw-t">CapFlow CDC replication</h3>
+        <p class="sw-sum">SQL Server-style change-data-capture: LSN cursors, row-level reconciliation, backfill and replay from a saved LSN.</p>
+      </a>
+      <a class="sw-card" href="project/apm-explorer.html">
+        <span class="sw-tab">Java · Spring</span>
+        <h3 class="sw-t">APM trace explorer</h3>
+        <p class="sw-sum">Ingests OTLP traces into span trees with RED metrics, a D3 service map and rolling-baseline anomaly flags.</p>
+      </a>
+      <a class="sw-card" href="project/gpu-orchestrator.html">
+        <span class="sw-tab">Go</span>
+        <h3 class="sw-t">GPU job orchestrator</h3>
+        <p class="sw-sum">A multicloud control plane: gang scheduling, spot-preemption rollback, and pool placement by cost and type.</p>
+      </a>
+      <a class="sw-card" href="project/agent-fleet.html">
+        <span class="sw-tab">Python</span>
+        <h3 class="sw-t">Agent fleet</h3>
+        <p class="sw-sum">Parallel coding agents in isolated worktrees with sharded test suites and a diff-review gate before a human approves.</p>
+      </a>
+    </div>
+
+    <p class="home-more"><a class="btn" href="project/query-engine.html">Start with the query engine</a> · <a class="hand" href="projects.html">or see the whole library</a></p>
+  </div>
+</section>
+
 </main>
 
 <script src="assets/site.js" defer></script>

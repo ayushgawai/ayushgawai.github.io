@@ -368,6 +368,81 @@ main { position: relative; overflow-x: clip; }  /* rotated tape/doodles must nev
   .xp-card, .feat-card { transform: none; }
 }
 
+/* 07-newsections.css */
+/* CSS for the new multi-page sections: recognition, hackathons, full project
+   library (projlib), and the software-engineering gallery. Reuses the notebook
+   visual language: paper cards, tape, hand-drawn ink, and the shared tokens. */
+
+/* ---------------- shared gallery-card base (used by hack/lib/sw grids) ---------------- */
+.hack-grid, .lib-grid, .sw-grid { display: grid; gap: calc(var(--u) * 2.2) calc(var(--u) * 1.6); }
+.hack-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.lib-grid  { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.sw-grid   { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.hack-card, .sw-card, .lib-card {
+  position: relative; display: flex; flex-direction: column; gap: 8px;
+  background: var(--paper-card); border: 1.5px solid var(--ink);
+  border-radius: 4px; padding: 22px 18px 18px; box-shadow: var(--shadow-card);
+}
+a.hack-card, a.sw-card { text-decoration: none; color: inherit; transition: transform .18s var(--ease-out), box-shadow .18s var(--ease-out); }
+a.hack-card:hover, a.sw-card:hover { transform: translateY(-4px) rotate(-.3deg); box-shadow: 0 2px 0 rgba(31,35,41,.06), 0 18px 30px -12px rgba(31,35,41,.3); }
+a.hack-card:focus-visible, a.sw-card:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+/* taped corner */
+.hack-card::before, .sw-card::before, .lib-card::before {
+  content: ""; position: absolute; top: -11px; left: 24px; width: 84px; height: 24px;
+  background: var(--tape); mix-blend-mode: multiply; box-shadow: 0 1px 2px rgba(0,0,0,.08);
+  clip-path: polygon(3% 0, 97% 4%, 100% 50%, 96% 100%, 2% 96%, 0 50%); transform: rotate(-2deg);
+}
+/* area tab */
+.hack-tab, .sw-tab {
+  align-self: flex-start; font: 600 11px/1 var(--f-print); letter-spacing: .05em; text-transform: uppercase;
+  color: var(--ink-2); background: var(--tab, #efe9da); border: 1.25px solid rgba(31,35,41,.3);
+  border-radius: 4px 9px 5px 8px; padding: 5px 8px;
+}
+.hack-t, .sw-t { font: 800 1.15rem/1.1 var(--f-print); letter-spacing: -.015em; margin: 2px 0 0; color: var(--ink); }
+.hack-sum, .sw-sum { font-size: var(--t-sm); line-height: 1.45; color: var(--ink-2); margin: 0; }
+.hack-cta { margin-top: auto; padding-top: 8px; font-size: var(--t-sm); color: var(--blue); }
+a.hack-card:hover .hack-cta, a.sw-card:hover .sw-cta { text-decoration: underline; }
+.lib-where { font-size: var(--t-xs); color: var(--ink-3); margin: 0; }
+.lib-t { font: 800 1.1rem/1.1 var(--f-print); letter-spacing: -.015em; margin: 4px 0 0; color: var(--ink); }
+.lib-sum { font-size: var(--t-sm); line-height: 1.45; color: var(--ink-2); margin: 0; }
+.lib-note { margin-top: calc(var(--u) * 2); }
+
+/* ---------------- recognition ---------------- */
+.rec-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(var(--u) * 1.6); }
+.rec-card {
+  position: relative; background: var(--paper-card); border: 1.5px solid var(--ink);
+  border-radius: 4px; padding: 20px 18px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 8px;
+}
+.rec-ribbon { position: absolute; top: -12px; left: 18px; width: 96px; height: 26px; background: var(--tape);
+  mix-blend-mode: multiply; box-shadow: 0 1px 2px rgba(0,0,0,.08);
+  clip-path: polygon(3% 0, 97% 4%, 100% 50%, 96% 100%, 2% 96%, 0 50%); transform: rotate(-2deg); }
+.rec-card.rec-win { border-color: var(--green); }
+.rec-card.rec-win::before { content: "✓"; position: absolute; top: -14px; right: 16px; font: 800 20px var(--f-print);
+  color: var(--green); }
+.rec-h { font: 800 1.05rem/1.2 var(--f-print); letter-spacing: -.01em; margin: 0; color: var(--ink); }
+.rec-p { font-size: var(--t-sm); line-height: 1.45; color: var(--ink-2); margin: 0; }
+.rec-link { margin-top: auto; padding-top: 6px; font-size: var(--t-sm); color: var(--blue); }
+.rec-pub-title { font: 600 1.25rem/1 var(--f-print); color: var(--ink); margin: calc(var(--u) * 2.5) 0 var(--u); }
+.rec-papers { list-style: none; margin: 0; padding: 0; display: grid; gap: calc(var(--u) * 1.4); }
+.rec-paper { position: relative; background: var(--paper-card); border: 1.5px solid var(--ink); border-radius: 4px;
+  padding: 18px 18px 16px; box-shadow: var(--shadow-card); display: grid; gap: 4px; }
+.rec-paper-t { font: 700 1.05rem/1.25 var(--f-print); margin: 0; color: var(--ink); }
+.rec-paper-m { font-size: var(--t-xs); color: var(--ink-3); margin: 0; }
+.rec-paper-links { display: flex; gap: 14px; margin-top: 6px; flex-wrap: wrap; }
+.rec-paper-links a { font: 600 13px var(--f-print); color: var(--blue); }
+.rec-service { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.rec-service li { font-size: var(--t-sm); color: var(--ink-2); padding-left: 20px; position: relative; }
+.rec-service li::before { content: "→"; position: absolute; left: 0; color: var(--blue); }
+
+/* ---------------- responsive ---------------- */
+@media (max-width: 900px) {
+  .hack-grid, .lib-grid, .sw-grid, .rec-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .hack-grid, .lib-grid, .sw-grid, .rec-grid { grid-template-columns: 1fr; }
+}
+
 /* 10-hero.css */
 /* ---------- hero / cover: the tool mobile ---------- */
 #top.hero {
