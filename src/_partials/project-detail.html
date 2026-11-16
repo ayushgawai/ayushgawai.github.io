@@ -1,0 +1,41 @@
+<!-- Project detail page. One source of truth: everything about this project
+     lives on this page — film, architecture, depth, results, links. -->
+<section class="chapter proj" id="proj" data-tab="{page}" aria-labelledby="proj-title">
+  <header class="chapter-head page">
+    <p class="chapter-kicker hand">{where}</p>
+    <h2 id="proj-title" class="chapter-title">{title}</h2>
+    <p class="chapter-lede">{summary}</p>
+  </header>
+
+  <div class="page">
+    {film}
+
+    <div class="proj-two">
+      <div class="proj-facts">
+        <h3 class="proj-sub hand">the numbers</h3>
+        {facts}
+      </div>
+      <div class="proj-deep">
+        <h3 class="proj-sub hand">how it works</h3>
+        {deep}
+      </div>
+    </div>
+
+    {decisions}
+
+    <div class="proj-rows">
+      <div class="proj-stack">
+        <h3 class="proj-sub hand">the stack</h3>
+        <ul class="tags">{stack}</ul>
+      </div>
+      <div class="proj-links">
+        <h3 class="proj-sub hand">the links</h3>
+        <div class="btn-row">{repo}{papers}</div>
+      </div>
+    </div>
+
+    {related}
+
+    <p class="proj-back"><a class="hand" href="projects.html">← back to the library</a> <a class="hand" href="media.html">or watch all the films</a></p>
+  </div>
+</section>

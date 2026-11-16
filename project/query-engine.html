@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Columnar query engine — project · Ayush Gawai</title>
+<meta name="description" content="Columnar query engine — A mini analytical engine with an explicit plan, optimizer passes and a vectorized executor over column files with min/max skip">
+<meta name="author" content="Ayush Gawai">
+<meta name="theme-color" content="#F6F5F0">
+<link rel="canonical" href="https://ayushgawai.github.io/project/query-engine.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Columnar query engine — project · Ayush Gawai">
+<meta property="og:description" content="Columnar query engine — A mini analytical engine with an explicit plan, optimizer passes and a vectorized executor over column files with min/max skip">
+<meta property="og:url" content="https://ayushgawai.github.io/project/query-engine.html">
+<meta property="og:image" content="https://ayushgawai.github.io/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../assets/favicon.svg" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400..800;1,400&family=Shantell+Sans:wght,BNCE,INFM@300..800,-100..100,0..100&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Ayush Gawai","url":"https://ayushgawai.github.io/","jobTitle":"Data, AI and robotics systems engineer","alumniOf":"San José State University","sameAs":["https://github.com/ayushgawai","https://www.linkedin.com/in/ayushgawai"]}
+</script>
+
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- shared SVG defs: hand-drawn filters + hatch pattern. Use class="boil" (animated) or "rough" (static) on line art. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="boil" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="1" result="n">
+        <animate attributeName="seed" values="1;7;13" dur="0.42s" calcMode="discrete" repeatCount="indefinite"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="4" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(40)">
+      <line x1="0" y1="0" x2="6" y2="0" stroke="#1F2329" stroke-width="1" stroke-opacity=".45"/>
+    </pattern>
+    <pattern id="hatch-blue" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+      <line x1="0" y1="0" x2="6" y2="0" stroke="#2346B0" stroke-width="1" stroke-opacity=".5"/>
+    </pattern>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1.5 L8 5 L1.5 8.8" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round"/>
+    </marker>
+  </defs>
+</svg>
+
+
+<header class="topbar">
+  <a class="topbar-wordmark hand" href="../index.html">Ayush Gawai<span>· field notebook</span></a>
+  <nav class="topnav" data-page="projects" aria-label="Notebook">
+    <a class="topnav-tab" href="../index.html" style="--tab:#EFE6C8"><b>Home</b></a>
+    <a class="topnav-tab" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
+    <a class="topnav-tab" href="../projects.html" style="--tab:#F3D9CF"><b>Projects</b></a>
+    <span class="topnav-rule" aria-hidden="true"></span>
+    <a class="topnav-tab" href="../ai.html" style="--tab:#D8ECDF"><b>AI · LLM</b></a>
+    <a class="topnav-tab" href="../data.html" style="--tab:#F2E3C4"><b>Data</b></a>
+    <a class="topnav-tab" href="../software.html" style="--tab:#DDE6F6"><b>Software</b></a>
+    <a class="topnav-tab" href="../robotics.html" style="--tab:#F0D6D6"><b>Robotics</b></a>
+    <a class="topnav-tab" href="../autonomy.html" style="--tab:#DDE9E6"><b>Zoox</b></a>
+    <a class="topnav-tab" href="../research.html" style="--tab:#E3DDF0"><b>Research</b></a>
+    <a class="topnav-tab" href="../hackathons.html" style="--tab:#F4EDB8"><b>Hackathons</b></a>
+    <a class="topnav-tab" href="../media.html" style="--tab:#F6E2C9"><b>Media</b></a>
+    <a class="topnav-tab" href="../recognition.html" style="--tab:#E9DDEA"><b>Recognition</b></a>
+    <a class="topnav-tab topnav-tab--cta" href="../contact.html" style="--tab:#D9E9F0"><b>Contact</b></a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="btn" href="assets/resume.html" target="_blank" rel="noopener">Résumé</a>
+    <span class="topbar-social"><a href="https://github.com/ayushgawai" target="_blank" rel="noopener">GitHub</a><i aria-hidden="true">·</i><a href="https://www.linkedin.com/in/ayushgawai" target="_blank" rel="noopener">LinkedIn</a></span>
+  </div>
+</header>
+
+
+<main id="main">
+<!-- Project detail page. One source of truth: everything about this project
+     lives on this page — film, architecture, depth, results, links. -->
+<section class="chapter proj" id="proj" data-tab="projects" aria-labelledby="proj-title">
+  <header class="chapter-head page">
+    <p class="chapter-kicker hand">C++20 · analytical engine from scratch</p>
+    <h2 id="proj-title" class="chapter-title">Columnar query engine</h2>
+    <p class="chapter-lede">A mini analytical engine with an explicit plan, optimizer passes and a vectorized executor over column files with min/max skipping — checked against a row-at-a-time reference on 4M rows.</p>
+  </header>
+
+  <div class="page">
+    <figure class="proj-film"><video controls preload="metadata" playsinline poster="../assets/video/query-engine-poster.webp" width="1920" height="1080"><source src="../assets/video/query-engine.mp4" type="video/mp4"></video></figure>
+
+    <div class="proj-two">
+      <div class="proj-facts">
+        <h3 class="proj-sub hand">the numbers</h3>
+        <p class="fact"><b>1,500</b>randomized queries checked against a reference interpreter</p><p class="fact"><b>2,048</b>row vectorized batches with selection vectors</p><p class="fact"><b>63 / 80</b>row groups skipped by min/max on a one-year filter</p>
+      </div>
+      <div class="proj-deep">
+        <h3 class="proj-sub hand">how it works</h3>
+        <ul class='deep-list'><li>Plan: explicit logical operators — Scan, Filter, Project, Aggregate, HashJoin, Limit.</li><li>Optimizer: constant folding, filter pushdown through projections and joins into scans, and unused-column pruning.</li><li>Execution: batch-at-a-time vectorized execution over column vectors with selection vectors.</li><li>Storage: row-group columnar files with dictionary encoding, footer metadata and per-column min/max stats so predicates skip row groups before deserialization.</li></ul>
+      </div>
+    </div>
+
+    <div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid"><div class="dec"><h4>Verify against a reference</h4><p>Randomized queries compared row-at-a-time keep the optimizer honest.</p></div></div></div>
+
+    <div class="proj-rows">
+      <div class="proj-stack">
+        <h3 class="proj-sub hand">the stack</h3>
+        <ul class="tags"><li>C++20</li><li>vectorization</li><li>columnar</li><li>TPC-H-like data</li></ul>
+      </div>
+      <div class="proj-links">
+        <h3 class="proj-sub hand">the links</h3>
+        <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/query-engine" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </div>
+    </div>
+
+    <p class="proj-rel hand">same territory: <a class="rel-link" href="lsmstore.html">lsmstore</a><a class="rel-link" href="orderbook.html">orderbook</a></p>
+
+    <p class="proj-back"><a class="hand" href="../projects.html">← back to the library</a> <a class="hand" href="../media.html">or watch all the films</a></p>
+  </div>
+</section>
+
+</main>
+
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

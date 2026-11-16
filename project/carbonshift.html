@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CarbonShift — project · Ayush Gawai</title>
+<meta name="description" content="CarbonShift — GPU training that follows the grid: a 60-second control loop polls CAISO price and carbon, maps them to four Eco-Pulse states, and drive">
+<meta name="author" content="Ayush Gawai">
+<meta name="theme-color" content="#F6F5F0">
+<link rel="canonical" href="https://ayushgawai.github.io/project/carbonshift.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CarbonShift — project · Ayush Gawai">
+<meta property="og:description" content="CarbonShift — GPU training that follows the grid: a 60-second control loop polls CAISO price and carbon, maps them to four Eco-Pulse states, and drive">
+<meta property="og:url" content="https://ayushgawai.github.io/project/carbonshift.html">
+<meta property="og:image" content="https://ayushgawai.github.io/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../assets/favicon.svg" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400..800;1,400&family=Shantell+Sans:wght,BNCE,INFM@300..800,-100..100,0..100&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Ayush Gawai","url":"https://ayushgawai.github.io/","jobTitle":"Data, AI and robotics systems engineer","alumniOf":"San José State University","sameAs":["https://github.com/ayushgawai","https://www.linkedin.com/in/ayushgawai"]}
+</script>
+
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- shared SVG defs: hand-drawn filters + hatch pattern. Use class="boil" (animated) or "rough" (static) on line art. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="boil" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="1" result="n">
+        <animate attributeName="seed" values="1;7;13" dur="0.42s" calcMode="discrete" repeatCount="indefinite"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="4" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(40)">
+      <line x1="0" y1="0" x2="6" y2="0" stroke="#1F2329" stroke-width="1" stroke-opacity=".45"/>
+    </pattern>
+    <pattern id="hatch-blue" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+      <line x1="0" y1="0" x2="6" y2="0" stroke="#2346B0" stroke-width="1" stroke-opacity=".5"/>
+    </pattern>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1.5 L8 5 L1.5 8.8" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round"/>
+    </marker>
+  </defs>
+</svg>
+
+
+<header class="topbar">
+  <a class="topbar-wordmark hand" href="../index.html">Ayush Gawai<span>· field notebook</span></a>
+  <nav class="topnav" data-page="projects" aria-label="Notebook">
+    <a class="topnav-tab" href="../index.html" style="--tab:#EFE6C8"><b>Home</b></a>
+    <a class="topnav-tab" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
+    <a class="topnav-tab" href="../projects.html" style="--tab:#F3D9CF"><b>Projects</b></a>
+    <span class="topnav-rule" aria-hidden="true"></span>
+    <a class="topnav-tab" href="../ai.html" style="--tab:#D8ECDF"><b>AI · LLM</b></a>
+    <a class="topnav-tab" href="../data.html" style="--tab:#F2E3C4"><b>Data</b></a>
+    <a class="topnav-tab" href="../software.html" style="--tab:#DDE6F6"><b>Software</b></a>
+    <a class="topnav-tab" href="../robotics.html" style="--tab:#F0D6D6"><b>Robotics</b></a>
+    <a class="topnav-tab" href="../autonomy.html" style="--tab:#DDE9E6"><b>Zoox</b></a>
+    <a class="topnav-tab" href="../research.html" style="--tab:#E3DDF0"><b>Research</b></a>
+    <a class="topnav-tab" href="../hackathons.html" style="--tab:#F4EDB8"><b>Hackathons</b></a>
+    <a class="topnav-tab" href="../media.html" style="--tab:#F6E2C9"><b>Media</b></a>
+    <a class="topnav-tab" href="../recognition.html" style="--tab:#E9DDEA"><b>Recognition</b></a>
+    <a class="topnav-tab topnav-tab--cta" href="../contact.html" style="--tab:#D9E9F0"><b>Contact</b></a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="btn" href="assets/resume.html" target="_blank" rel="noopener">Résumé</a>
+    <span class="topbar-social"><a href="https://github.com/ayushgawai" target="_blank" rel="noopener">GitHub</a><i aria-hidden="true">·</i><a href="https://www.linkedin.com/in/ayushgawai" target="_blank" rel="noopener">LinkedIn</a></span>
+  </div>
+</header>
+
+
+<main id="main">
+<!-- Project detail page. One source of truth: everything about this project
+     lives on this page — film, architecture, depth, results, links. -->
+<section class="chapter proj" id="proj" data-tab="projects" aria-labelledby="proj-title">
+  <header class="chapter-head page">
+    <p class="chapter-kicker hand">Devpost / TreeHacks · carbon-aware training</p>
+    <h2 id="proj-title" class="chapter-title">CarbonShift</h2>
+    <p class="chapter-lede">GPU training that follows the grid: a 60-second control loop polls CAISO price and carbon, maps them to four Eco-Pulse states, and drives the A100&#x27;s power cap through NVML — from full 250 W down to a checkpointed pause.</p>
+  </header>
+
+  <div class="page">
+    <figure class="proj-film"><video controls preload="metadata" playsinline poster="../assets/video/narrated/carbonshift-poster.webp" width="1920" height="1080"><source src="../assets/video/narrated/carbonshift.mp4" type="video/mp4"></video></figure>
+
+    <div class="proj-two">
+      <div class="proj-facts">
+        <h3 class="proj-sub hand">the numbers</h3>
+        <p class="fact"><b>43%</b>lower carbon intensity in a realistic profile</p><p class="fact"><b>37%</b>lower energy cost, same throughput</p><p class="fact"><b>4 states</b>GREEN / NORMAL / AMBER / RED → 250→100 W</p><p class="fact"><b>2 s</b>WebSocket state updates to the dashboard</p>
+      </div>
+      <div class="proj-deep">
+        <h3 class="proj-sub hand">how it works</h3>
+        <ul class='deep-list'><li>Sensing: an async 60-second monitor polls CAISO OASIS (WattTime fallback) for $/MWh and gCO₂/kWh.</li><li>Decision: the Eco-Pulse engine maps thresholds over price and carbon to four states; GREEN raises the cap to 250 W, AMBER throttles to 150 W, RED saves a checkpoint, drops to 100 W and pauses.</li><li>Control: the GPU controller issues NVML power caps to the A100; the PyTorch training engine pause/resumes with a checkpoint manager, so a pause never loses progress.</li><li>Surface: FastAPI REST plus a WebSocket loop pushing state and running savings every 2 s to a React dashboard; a two-loop, two-clock design keeps the control loop (60 s) separate from the UI loop (2 s).</li></ul>
+      </div>
+    </div>
+
+    <div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid"><div class="dec"><h4>Throttle before pausing</h4><p>Power caps keep training moving; only RED stops it.</p></div><div class="dec"><h4>Checkpoint on every pause</h4><p>A red pause is free to resume — no progress lost.</p></div></div></div>
+
+    <div class="proj-rows">
+      <div class="proj-stack">
+        <h3 class="proj-sub hand">the stack</h3>
+        <ul class="tags"><li>FastAPI</li><li>PyTorch</li><li>pynvml</li><li>WebSocket</li><li>React</li><li>CAISO OASIS</li><li>LangGraph</li></ul>
+      </div>
+      <div class="proj-links">
+        <h3 class="proj-sub hand">the links</h3>
+        <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/carbonshift" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </div>
+    </div>
+
+    <p class="proj-rel hand">same territory: <a class="rel-link" href="leo.html">leo</a><a class="rel-link" href="mmm.html">mmm</a></p>
+
+    <p class="proj-back"><a class="hand" href="../projects.html">← back to the library</a> <a class="hand" href="../media.html">or watch all the films</a></p>
+  </div>
+</section>
+
+</main>
+
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

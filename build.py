@@ -21,10 +21,9 @@ def inc_all(t): return re.sub(r"<!--\s*@include\s+(.+?)\s*-->", inc, t)
 def partial(name: str, **kw) -> str:
     p = src / "_partials" / f"{name}.html"
     t = p.read_text() if p.exists() else f"<!-- missing partial {name} -->"
-    return t.replace("{title}", kw.get("title", "")) \
-            .replace("{desc}", kw.get("desc", "")) \
-            .replace("{url}", kw.get("url", "")) \
-            .replace("{page}", kw.get("page", ""))
+    for k, v in kw.items():
+        t = t.replace("{%s}" % k, v)
+    return t
 
 # page: (file, [fragments], title, description, nav-active-key)
 PAGES = [
@@ -87,7 +86,7 @@ def build_page(file, frs, title, desc, page_key):
     html = f"""<!doctype html>
 <html lang="en">
 <head>
-{partial('head', title=title, desc=desc, url=f"{ROOT}/{'' if file=='index.html' else file}")}
+{partial('head', title=title, desc=desc, url=f"{ROOT}/{'' if file=='index.html' else file}", assetbase='')}
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -106,6 +105,97 @@ def build_page(file, frs, title, desc, page_key):
 """
     (R / file).write_text(inc_all(html))
 
+# ---- project detail pages: rendered from the single source of truth ----
+import json, html as htmlmod
+
+def _esc(s): return htmlmod.escape(str(s), quote=True)
+
+def _film_block(m, ab):
+    if not m: return ""
+    if isinstance(m, str):  # "silent:query-engine.mp4"
+        if m.startswith("silent:"):
+            f = "assets/video/" + m.split(":", 1)[1]
+        else:
+            f = f"assets/video/narrated/{m}.mp4"
+        return (f'<figure class="proj-film"><video controls preload="metadata" playsinline '
+                f'poster="{ab}{f.replace(".mp4","")}-poster.webp" width="1920" height="1080">'
+                f'<source src="{ab}{f}" type="video/mp4"></video></figure>')
+    t = m.get("type")
+    if t == "yt":
+        return (f'<figure class="proj-film proj-film-embed"><div class="embed-frame">'
+                f'<iframe src="https://www.youtube-nocookie.com/embed/{m["id"]}" title="{m.get("label","Video")}" '
+                f'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>'
+                f'</div></figure>')
+    if t == "loom":
+        return (f'<figure class="proj-film proj-film-embed"><div class="embed-frame">'
+                f'<iframe src="https://www.loom.com/embed/{m["id"]}?autoplay=0&hide_owner=true" title="{m.get("label","Video")}" allow="fullscreen" loading="lazy"></iframe>'
+                f'</div></figure>')
+    return ""
+
+def build_projects():
+    data = json.loads((src / "data" / "projects.json").read_text())
+    import pathlib
+    (R / "project").mkdir(exist_ok=True)
+    for it in data["items"]:
+        slug, ab = it["slug"], "../"
+        title = it["title"]
+        desc = f'{title} — {it["summary"]}'[:150]
+        facts = "".join(f'<p class="fact"><b>{_esc(f["k"])}</b>{_esc(f.get("v",""))}</p>' for f in it.get("facts", []))
+        deep = "".join(f'<li>{_esc(p)}</li>' for p in it.get("deep", []))
+        deep = f"<ul class='deep-list'>{deep}</ul>" if deep else ""
+        dec = it.get("decisions", [])
+        decisions = ""
+        if dec:
+            cards = "".join(f'<div class="dec"><h4>{_esc(d["h"])}</h4><p>{_esc(d["b"])}</p></div>' for d in dec)
+            decisions = f'<div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid">{cards}</div></div>'
+        stack = "".join(f"<li>{_esc(s)}</li>" for s in it.get("stack", []))
+        repo = (f'<a class="btn" href="{it["repo"]}" target="_blank" rel="noopener">Code on GitHub</a>'
+                if it.get("repo") else '<p class="hand pencil">no public repo</p>')
+        papers = it.get("papers", [])
+        pstr = ""
+        for p in papers:
+            u = p["url"]
+            pstr += (f'<a class="btn" href="{_esc(u)}" target="_blank" rel="noopener">{_esc(p["label"])}</a> ')
+            if "placeholder" in u:
+                pstr += '<span class="hand pencil red">link pending — see TODO.md</span> '
+        rel = it.get("related", [])
+        if rel:
+            links = "".join(f'<a class="rel-link" href="{r}.html">{_esc(r)}</a>' for r in rel)
+            related = f'<p class="proj-rel hand">same territory: {links}</p>'
+        else:
+            related = ""
+        body = partial("project-detail", page="projects",
+                       title=_esc(title), where=_esc(it.get("where","")), summary=_esc(it.get("summary","")),
+                       film=_film_block(it.get("film"), ab), facts=facts, deep=deep,
+                       decisions=decisions, stack=stack, repo=repo, papers=pstr, related=related)
+        html = f"""<!doctype html>
+<html lang="en">
+<head>
+{partial('head', title=f'{title} — project · Ayush Gawai', desc=desc, url=f"{ROOT}/project/{slug}.html", assetbase='../')}
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+{partial('defs')}
+
+{partial('topnav', page="projects")}
+
+<main id="main">
+{body}
+</main>
+
+<script src="{ab}assets/site.js" defer></script>
+</body>
+</html>
+"""
+        # relative page links need a ../ prefix on project/ pages
+        for lnk in ["index.html","experience.html","projects.html","ai.html","data.html","software.html",
+                    "robotics.html","autonomy.html","research.html","hackathons.html","media.html",
+                    "recognition.html","contact.html"]:
+            html = html.replace(f'href="{lnk}"', f'href="../{lnk}"')
+        (R / "project" / f"{slug}.html").write_text(inc_all(html))
+    print(f"built project/ detail pages ({len(data['items'])})")
+
 def main():
     only = sys.argv[1:] or [p[0] for p in PAGES]
     for file, frs, title, desc, key in PAGES:
@@ -113,6 +203,8 @@ def main():
             continue
         build_page(file, frs, title, desc, key)
         print(f"built {file}")
+    if "project/" not in " ".join(only):
+        build_projects()
 
     js = sorted((src / "js").glob("*.js"))
     bad = [p.name for p in js if subprocess.run(["node", "--check", str(p)], capture_output=True).returncode]

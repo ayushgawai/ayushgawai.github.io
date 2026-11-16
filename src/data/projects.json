@@ -1,0 +1,1370 @@
+{
+  "slug": "project/<name>.html",
+  "_readme": "Single source of truth for project detail pages. One entry per project; the detail page is the ONLY place its full story lives. film = narrated film slug under assets/video/narrated/ (or 'silent:<file>' under assets/video/). media: {type:'film', slug} | {type:'yt', id} | {type:'loom', id} | null. paperLinks: [] if none. 'placeholder' marks links the owner must confirm (see TODO.md).",
+  "areas": [
+    "ai",
+    "data",
+    "software",
+    "robotics",
+    "autonomy",
+    "research",
+    "marketing"
+  ],
+  "items": [
+    {
+      "slug": "sentinel",
+      "title": "Sentinel AI",
+      "area": "ai",
+      "where": "HP × SJSU Edge AI Hackathon · winner · 2026",
+      "summary": "A fully local, privacy-first multi-camera safety system on the HP ZGX Nano: cheap on every frame, and expensive reasoning only when an escalation is credible. Video never leaves the machine.",
+      "facts": [
+        {
+          "k": "3 → 13+",
+          "v": "fps on a six-feed camera wall"
+        },
+        {
+          "k": "640 / 649",
+          "v": "frames agreed with the demo clip's labels"
+        },
+        {
+          "k": "~157 ms",
+          "v": "first synthesized audio on a warm voice connection"
+        },
+        {
+          "k": "16-frame",
+          "v": "evidence bundle to Qwen3-VL-30B (FP8, local)"
+        }
+      ],
+      "deep": [
+        "Perception: YOLO26s-pose person and pose detection with temporal tracking; per-track motion rules (weapon, fall, run, loitering, sudden change) and optional CLIP screening keep the cheap path cheap.",
+        "Reasoning: a 16-frame evidence bundle goes to locally served Qwen3-VL-30B-A3B FP8 for event classification — WEAPON, FIGHT, THEFT, RUN, MEDICAL or BENIGN — plus a person description. Score-based escalation instead of every-frame VLM calls.",
+        "Operations: an incident state machine (NEW → ALERTED → DISPATCH_PENDING → DISPATCHED → TRACKING → RESOLVED / DISMISSED), SQLite event history, and a guarded emergency-call workflow with local speech recognition, ElevenLabs TTS, SignalWire telephony, human confirmation, a kill switch and one dispatch per incident.",
+        "Surface: a live multi-camera wall, site map, incident history, timeline, call transcript and operator actions over REST, WebSocket and MJPEG."
+      ],
+      "decisions": [
+        {
+          "h": "Cost-fidelity funnel",
+          "b": "Cheap per-frame perception handles volume; the VLM handles the few ambiguous, high-impact events."
+        },
+        {
+          "h": "No cloud, on purpose",
+          "b": "Video stays on the ZGX Nano — a privacy and latency choice, not a limitation."
+        }
+      ],
+      "stack": [
+        "Python",
+        "CUDA",
+        "OpenCV",
+        "FastAPI",
+        "WebSockets",
+        "SQLite",
+        "Yolo v26",
+        "Qwen3-VL",
+        "Docker"
+      ],
+      "repo": "https://github.com/ayushgawai/campus_sentinel",
+      "film": {
+        "type": "yt",
+        "id": "MFF1DICU6Ow",
+        "label": "Live demo video"
+      },
+      "papers": [],
+      "related": [
+        "blast",
+        "carbonshift"
+      ]
+    },
+    {
+      "slug": "predicates",
+      "title": "Grounded SQL predicates",
+      "area": "data",
+      "where": "Zoox Perception · Software Engineer Intern · 2026",
+      "summary": "Quality validation for ~409 active perception data miners: the LLM drafts a SQL true-positive predicate, the system executes and verifies it, and scoring is plain SQL over the full labeled population.",
+      "facts": [
+        {
+          "k": "321 / 321",
+          "v": "ground-truth-capable miners validated"
+        },
+        {
+          "k": "~1.3 s",
+          "v": "median scoring time per miner"
+        },
+        {
+          "k": "~93%",
+          "v": "fewer redundant writes (write-on-change)"
+        },
+        {
+          "k": "days → minutes",
+          "v": "failure discovery on miner state transitions"
+        }
+      ],
+      "deep": [
+        "Deterministic routing: miner → annotation task → task type → labeling view is a fixed mapping across classification, 2D detection, instance, track-attribute, sound-interval and 3D-cuboid tasks. A hallucinated view would produce a valid but wrong number, so routing never touches the LLM.",
+        "Grounding: the draft sees the miner description and selection config, the annotation ontology, valid label keys and the label vocabulary actually observed in the warehouse. Output: one scoped SQL boolean predicate.",
+        "Generate → execute → verify → retry: invalid SQL, unsupported fields, zero matches or vocabulary conflicts loop back into the next grounded attempt. The LLM only writes the rule; scoring never calls it.",
+        "Scoring stores precision, TP, denominator, labeled count, the lifecycle funnel, the labeling view and the canonical SQL. A new row is written only when TP or the denominator changes (~93% fewer writes).",
+        "Distribution: weekly Postgres aggregation into immutable versioned JSON snapshots plus an S3 manifest, read by a zero-backend Vite/TypeScript/Chart.js dashboard, a Slack digest and per-owner DMs. Failure alerts fire on the FAILED run-state transition."
+      ],
+      "decisions": [
+        {
+          "h": "LLM proposes, deterministic verifies",
+          "b": "Every number ships with the SQL that reproduces it; stored precision is a lower bound, and coverage gaps are audited."
+        }
+      ],
+      "stack": [
+        "Python",
+        "FastAPI",
+        "SQLAlchemy",
+        "PostgreSQL",
+        "Databricks SQL",
+        "S3",
+        "Airflow",
+        "Vue 3",
+        "TypeScript",
+        "Bazel",
+        "Vault",
+        "Kubernetes"
+      ],
+      "repo": "https://github.com/ayushgawai",
+      "film": null,
+      "papers": [],
+      "related": [
+        "fleet-reporting",
+        "zoox"
+      ]
+    },
+    {
+      "slug": "so101",
+      "title": "SO-101 imitation learning",
+      "area": "robotics",
+      "where": "SJSU research · SO-101 + Hugging Face LeRobot",
+      "summary": "Six-joint leader/follower arms with Feetech STS3215 servos: 50 teleoperated demonstrations, ACT trained from scratch on a ResNet-18 backbone and SmolVLA fine-tuning, then physical pick-and-place rollouts with video-measured error.",
+      "facts": [
+        {
+          "k": "50",
+          "v": "teleoperated demonstrations (~50k + ~60k frames)"
+        },
+        {
+          "k": "46 / 50",
+          "v": "physical pick-and-place trials at a fixed cube position"
+        },
+        {
+          "k": "2.49 cm",
+          "v": "mean placement error among successes"
+        },
+        {
+          "k": "18 vs 251 ms",
+          "v": "ACT vs SmolVLA local inference"
+        }
+      ],
+      "deep": [
+        "Data: calibrated joint commands and synchronized RGB frames from paired cameras, with integrity validation, camera-dropout handling and resumable 50-trial rollout scripts.",
+        "Policies: ACT from scratch (30k and 60k step runs) and a fine-tuned SmolVLA (20k steps), both rolling out on the physical arm.",
+        "The debugging story: follower motor IDs reverted after power cycles and wrist-roll/gripper collided on one Feetech ID. Traced to an EEPROM write that was never re-locked — patched LeRobot's motor-bus setup to write Lock=1 after ID or baud changes, which persisted across restarts and unblocked calibration.",
+        "Evaluation: video-measured placement error, a failure taxonomy, and checkpoint-selection analysis across the two policy families."
+      ],
+      "decisions": [
+        {
+          "h": "Measure from video, not assumption",
+          "b": "Placement error is read off the camera, so the number is real."
+        },
+        {
+          "h": "Two policy families, one dataset",
+          "b": "ACT and the VLA are directly comparable because they share the demos."
+        }
+      ],
+      "stack": [
+        "LeRobot",
+        "ACT",
+        "SmolVLA",
+        "Feetech STS3215",
+        "SO-101",
+        "PyTorch",
+        "ResNet-18",
+        "Isaac Sim"
+      ],
+      "repo": "https://github.com/ayushgawai/so101-lerobot",
+      "film": "lerobot",
+      "papers": [],
+      "related": [
+        "wheelchair",
+        "obstacle"
+      ]
+    },
+    {
+      "slug": "wheelchair",
+      "title": "AssistAI — wheelchair obstacle alert",
+      "area": "research",
+      "where": "SJSU, with Industrial & Systems Engineering and Audiology",
+      "summary": "An AI obstacle-alert system for power wheelchairs where the real contribution is the human-machine interface: depth-triggered, multimodal warnings — twelve tactors plus speech or tone cues — measured by how fast a real person responds.",
+      "facts": [
+        {
+          "k": "24",
+          "v": "participants × 24 controlled trials"
+        },
+        {
+          "k": "12",
+          "v": "vibrotactile tactors (seatback + wrist)"
+        },
+        {
+          "k": "0.90",
+          "v": "confidence gate on YOLOv10n pedestrian detection"
+        },
+        {
+          "k": "3 × 2",
+          "v": "seatback tactor array in the published setup"
+        }
+      ],
+      "deep": [
+        "Perception: an onboard GPU laptop runs synchronized ZED 2i RGB and depth streams at 30 fps through pretrained YOLOv10n; box-center image-midline sets left/right, and a lightweight temporal association keeps one obstacle stable across frames to avoid duplicate warnings.",
+        "Trigger: box-center depth drives an inward crossing of roughly 1 m as the warning trigger; a pilot-measured ~1.65 s haptic actuation lag is compensated by movement speed × delay.",
+        "Warning design: instructional versus hazard-location content, speech versus non-speech cues, and seatback / wrist / no-vibration conditions — 12 warning designs in the expanded study.",
+        "Findings: seatback vibration was associated with stronger usefulness/satisfaction and, in the expanded study, shorter reaction times than audio-only; action-oriented warnings produced faster reactions and higher usefulness than informative/location-only; non-speech cues improved reaction time when tactile feedback was absent."
+      ],
+      "decisions": [
+        {
+          "h": "Measure the human, not just the model",
+          "b": "Reaction time and preference are the real metrics of a useful warning."
+        },
+        {
+          "h": "Trust is engineered",
+          "b": "A correct detection is not enough — the cue has to carry the decision to the driver fast."
+        }
+      ],
+      "stack": [
+        "ZED 2i",
+        "YOLOv10n",
+        "GPU laptop",
+        "12 tactors",
+        "ROS 2",
+        "C++",
+        "statistics"
+      ],
+      "repo": "https://github.com/ayushgawai/realtime-obstacle-alert",
+      "film": "wheelchair",
+      "papers": [
+        {
+          "label": "SAGE / HFES 2026 — Communication strategy and vibrotactile feedback location",
+          "url": "https://journals.sagepub.com/doi/full/10.1177/10711813261493634"
+        },
+        {
+          "label": "Elsevier / Transportation Research Part F, Vol. 123, 103801 — Multimodal warning design",
+          "url": "https://www.sciencedirect.com/science/article/pii/S1369847826002962"
+        }
+      ],
+      "related": [
+        "eyetracking",
+        "so101"
+      ]
+    },
+    {
+      "slug": "transit",
+      "title": "Transit Analytics",
+      "area": "data",
+      "where": "SJSU MSDA capstone · BART + VTA",
+      "summary": "A complete transit data platform: GTFS schedules and live departures meet in one Snowflake warehouse, and a forecasting layer sits on top — served through FastAPI and a React/TypeScript operator dashboard with text-to-SQL chat.",
+      "facts": [
+        {
+          "k": "3",
+          "v": "Airflow DAGs: batch, streaming, ML"
+        },
+        {
+          "k": "2",
+          "v": "transit operators, BART and VTA"
+        },
+        {
+          "k": "7-day",
+          "v": "demand forecast horizon"
+        },
+        {
+          "k": "2 deployments",
+          "v": "AWS S3 + MWAA, and Azure Databricks/Delta"
+        }
+      ],
+      "deep": [
+        "Batch: gtfs_incremental lands BART and VTA GTFS every 6 h into a Snowflake LANDING schema.",
+        "Streaming: a Kafka producer polls the live departures API every 5 minutes; a consumer group writes events into the same LANDING zone, so static and live data share one place.",
+        "Modeling: dbt stages raw rows and joins trips, stops and routes per agency into analytics marts with route-level performance KPIs; an ml_forecast_dag trains on 90 days and forecasts 7 days ahead.",
+        "Serving: FastAPI serves KPIs, forecasts and a text-to-SQL chat; heavy ETL and training stay off the request path, and Snowflake and LLM keys live in AWS Secrets Manager.",
+        "Azure extension: on-time performance and service-reliability KPIs modeled in Azure Databricks with PySpark and Delta, ADF orchestration, SQL and Power BI with data-quality checks."
+      ],
+      "decisions": [
+        {
+          "h": "Stream and batch, one landing zone",
+          "b": "Both paths land raw; dbt owns the cleanup."
+        },
+        {
+          "h": "Secrets out of the code",
+          "b": "Warehouse and LLM credentials in AWS Secrets Manager."
+        }
+      ],
+      "stack": [
+        "Airflow",
+        "Kafka",
+        "dbt",
+        "Snowflake",
+        "FastAPI",
+        "React + TS",
+        "Docker",
+        "Databricks",
+        "Azure Databricks"
+      ],
+      "repo": "https://github.com/ayushgawai/transit-system",
+      "film": "transit",
+      "papers": [],
+      "related": [
+        "transitrisk",
+        "wikirisk"
+      ]
+    },
+    {
+      "slug": "lsmstore",
+      "title": "LSMStore — LSM-tree key-value store",
+      "area": "software",
+      "where": "Systems project · Java 17",
+      "summary": "A Log-Structured Merge tree engine built from first principles: fsynced WAL, sorted memtables, immutable SSTables with Bloom filters, tombstones and crash-aware recovery.",
+      "facts": [
+        {
+          "k": "WAL",
+          "v": "appended and fsynced before the memtable, replayed at startup"
+        },
+        {
+          "k": "10 bits/key",
+          "v": "Bloom filters with seven hash functions on SSTables"
+        },
+        {
+          "k": "4-table",
+          "v": "trigger merges into one compacted table"
+        },
+        {
+          "k": "crash-aware",
+          "v": "startup replays the WAL and ignores a truncated final record"
+        }
+      ],
+      "deep": [
+        "Writes append to a write-ahead log and are fsynced before entering a sorted TreeMap memtable.",
+        "When the memtable fills, it flushes to an immutable sorted SSTable published through a temp file and an atomic rename.",
+        "Reads check the memtable, then newest-to-oldest SSTables using in-memory key-offset indexes and Bloom filters; deletes use tombstones.",
+        "A four-SSTable trigger merges tables in memory into one compacted table."
+      ],
+      "decisions": [
+        {
+          "h": "Publish-what-you-mean",
+          "b": "Atomic temp-file + rename publication makes every SSTable consistent, crash or no crash."
+        }
+      ],
+      "stack": [
+        "Java 17",
+        "WAL",
+        "Bloom filters",
+        "SSTables"
+      ],
+      "repo": "https://github.com/ayushgawai/LSMStore",
+      "film": null,
+      "papers": [],
+      "related": [
+        "query-engine",
+        "dedup-store"
+      ]
+    },
+    {
+      "slug": "blast",
+      "title": "Blast Radius",
+      "area": "ai",
+      "where": "WeMakeDevs submission · with Manav Patel · Nov 2026",
+      "summary": "Answers the data-engineer's scariest question — 'if I rename this upstream field, what breaks before I merge?' — with a fleet of coding agents and a human-controlled merge gate.",
+      "facts": [
+        {
+          "k": "6",
+          "v": "downstream checks broken by one user_id → account_id rename"
+        },
+        {
+          "k": "3 providers",
+          "v": "Claude Code, Codex and OpenCode working in own checkouts"
+        },
+        {
+          "k": "3",
+          "v": "coordinated fix PRs + tickets, all owner-approved"
+        },
+        {
+          "k": "1",
+          "v": "harmless optional-column case correctly reported as no-impact"
+        }
+      ],
+      "deep": [
+        "Trigger: an upstream PR posts to a Switch schema-changes room; an impact coordinator on Claude Code broadcasts an impact-checker role to linked analytics, ML-feature and dashboard rooms.",
+        "Bounded ownership: three agents work in their own Git checkouts, run the upstream branch against local tests, and report the exact failing file and check.",
+        "Repair: agents open Jira tickets and fix PRs, then wait for owner authorization — a non-owner's approval is rejected in the demo.",
+        "Gate: the coordinator writes a durable impact report and holds the upstream required check pending until every repo owner approves in Slack; the demo ends green only after legitimate owners sign off."
+      ],
+      "decisions": [
+        {
+          "h": "Parallel agents, bounded ownership",
+          "b": "Each provider works in its own checkout; ownership and test scope are explicit."
+        },
+        {
+          "h": "Human-controlled merge gate",
+          "b": "The impact report stays pending until the humans approve — least privilege by construction."
+        }
+      ],
+      "stack": [
+        "Claude Code",
+        "Codex",
+        "OpenCode",
+        "Switch",
+        "Git",
+        "Jira",
+        "Slack"
+      ],
+      "repo": "https://github.com/ayushgawai/blast-radius",
+      "film": {
+        "type": "yt",
+        "id": "9MtxDeI03c0",
+        "label": "Multi-agent demo"
+      },
+      "papers": [],
+      "related": [
+        "sentinel",
+        "agent-fleet"
+      ]
+    },
+    {
+      "slug": "carbonshift",
+      "title": "CarbonShift",
+      "area": "ai",
+      "where": "Devpost / TreeHacks · carbon-aware training",
+      "summary": "GPU training that follows the grid: a 60-second control loop polls CAISO price and carbon, maps them to four Eco-Pulse states, and drives the A100's power cap through NVML — from full 250 W down to a checkpointed pause.",
+      "facts": [
+        {
+          "k": "43%",
+          "v": "lower carbon intensity in a realistic profile"
+        },
+        {
+          "k": "37%",
+          "v": "lower energy cost, same throughput"
+        },
+        {
+          "k": "4 states",
+          "v": "GREEN / NORMAL / AMBER / RED → 250→100 W"
+        },
+        {
+          "k": "2 s",
+          "v": "WebSocket state updates to the dashboard"
+        }
+      ],
+      "deep": [
+        "Sensing: an async 60-second monitor polls CAISO OASIS (WattTime fallback) for $/MWh and gCO₂/kWh.",
+        "Decision: the Eco-Pulse engine maps thresholds over price and carbon to four states; GREEN raises the cap to 250 W, AMBER throttles to 150 W, RED saves a checkpoint, drops to 100 W and pauses.",
+        "Control: the GPU controller issues NVML power caps to the A100; the PyTorch training engine pause/resumes with a checkpoint manager, so a pause never loses progress.",
+        "Surface: FastAPI REST plus a WebSocket loop pushing state and running savings every 2 s to a React dashboard; a two-loop, two-clock design keeps the control loop (60 s) separate from the UI loop (2 s)."
+      ],
+      "decisions": [
+        {
+          "h": "Throttle before pausing",
+          "b": "Power caps keep training moving; only RED stops it."
+        },
+        {
+          "h": "Checkpoint on every pause",
+          "b": "A red pause is free to resume — no progress lost."
+        }
+      ],
+      "stack": [
+        "FastAPI",
+        "PyTorch",
+        "pynvml",
+        "WebSocket",
+        "React",
+        "CAISO OASIS",
+        "LangGraph"
+      ],
+      "repo": "https://github.com/ayushgawai/carbonshift",
+      "film": "carbonshift",
+      "papers": [],
+      "related": [
+        "leo",
+        "mmm"
+      ]
+    },
+    {
+      "slug": "leo",
+      "title": "LEO satellite coverage-risk agent",
+      "area": "ai",
+      "where": "Ready Builders Challenge · 2026",
+      "summary": "Scores 4.67M candidate broadband-install sites for LEO-satellite obstruction risk — tree canopy and terrain, the gap between 'covered on the map' and 'works in practice' — with a Claude tool-use orchestrator over five deterministic tools.",
+      "facts": [
+        {
+          "k": "4.67M",
+          "v": "locations scored, all 100 counties"
+        },
+        {
+          "k": "0.0%",
+          "v": "environmental NaNs after validation"
+        },
+        {
+          "k": "49.3%",
+          "v": "of sites scored LOW obstruction risk"
+        },
+        {
+          "k": "250",
+          "v": "tests in the suite"
+        }
+      ],
+      "deep": [
+        "Data chain: location coordinates and IDs join NLCD and USGS canopy rasters, USGS 3DEP elevation with derived slope, and NLCD land-cover classes; spatial sampling at each site feeds component scores into HIGH, MODERATE or LOW tiers using Starlink installation guidance.",
+        "Agent architecture: a Claude tool-use orchestrator decides the next step across five deterministic tools — ingest_locations, sample_environment, score_risk, validate_results, generate_report. Python does the geospatial and numeric work; file-based state passes artifact paths instead of millions of rows into the prompt.",
+        "Pipeline-only mode runs the same functions without an LLM; interactive tools analyze coordinates, addresses, areas, polygons and nearby alternatives over the precomputed scores.",
+        "Output: reports, charts and a scored CSV served through an interactive web app with a map and search."
+      ],
+      "decisions": [
+        {
+          "h": "Agent decides, Python computes",
+          "b": "The LLM orchestrates; the raster math is deterministic and testable."
+        },
+        {
+          "h": "File-based state",
+          "b": "Millions of rows never enter the prompt — only artifact paths do."
+        }
+      ],
+      "stack": [
+        "Claude agent",
+        "NLCD",
+        "USGS 3DEP",
+        "Python",
+        "raster",
+        "FastAPI",
+        "React"
+      ],
+      "repo": "https://github.com/ayushgawai/Ready_Builders_Challenge",
+      "film": "leo",
+      "papers": [],
+      "related": [
+        "carbonshift",
+        "wikirisk"
+      ]
+    },
+    {
+      "slug": "mmm",
+      "title": "MarketMIX — MMM + MTA budget optimizer",
+      "area": "marketing",
+      "where": "Marketing measurement & budget optimization · 2026",
+      "summary": "A unified marketing-measurement system: a Bayesian mix model and a survival multi-touch model over 16M journey events, joined by Shapley attribution and a constrained SLSQP optimizer that hands back a spendable budget plan.",
+      "facts": [
+        {
+          "k": "7%",
+          "v": "channel ROI error, vs 31% for last-touch"
+        },
+        {
+          "k": "+14%",
+          "v": "incremental conversions at flat spend"
+        },
+        {
+          "k": "16M",
+          "v": "Criteo journey events in the survival model"
+        },
+        {
+          "k": "Shapley",
+          "v": "attribution across channels, not one model's view"
+        }
+      ],
+      "deep": [
+        "Mix model: Bayesian MMM in PyMC Marketing with geometric adstock and Hill saturation; geo-lift experiment priors and transfer learning seed the coefficients.",
+        "Attribution: a discrete-time survival MTA over 16M Criteo journey events in PySpark, plus Shapley-value channel attribution.",
+        "Fusion: Shapley merges the mix model's incrementality with the survival model's path evidence into one set of channel contributions.",
+        "Optimization: constrained SciPy SLSQP budget optimization respects channel minimums and total spend, so the output is a plan, not coefficients. Prophet handles seasonality and promotions."
+      ],
+      "decisions": [
+        {
+          "h": "Two engines, one answer",
+          "b": "Attribution never hinges on a single model's view of the world."
+        },
+        {
+          "h": "Constraints are first-class",
+          "b": "The optimizer returns a spendable plan that respects minimums and total budget."
+        }
+      ],
+      "stack": [
+        "PyMC Marketing",
+        "PySpark",
+        "Spark MLlib",
+        "SciPy SLSQP",
+        "Prophet",
+        "MLflow",
+        "Airflow",
+        "Delta Lake",
+        "Streamlit"
+      ],
+      "repo": null,
+      "film": "mmm",
+      "papers": [],
+      "related": [
+        "transit",
+        "wikirisk"
+      ]
+    },
+    {
+      "slug": "wikirisk",
+      "title": "WikiRisk",
+      "area": "data",
+      "where": "Spark streaming · Wikimedia EventStreams",
+      "summary": "Predicts a harmful Wikipedia edit before it lands: historical Spark ingestion over 29+ GB of revisions trains a cross-validated model, then a live Structured Streaming job scores every event as it arrives.",
+      "facts": [
+        {
+          "k": "89.61%",
+          "v": "recall on held-out edits"
+        },
+        {
+          "k": "0.762",
+          "v": "ROC AUC, 5-fold cross-validation"
+        },
+        {
+          "k": "11.16M",
+          "v": "training rows"
+        },
+        {
+          "k": "29+ GB",
+          "v": "decompressed revision history ingested"
+        }
+      ],
+      "deep": [
+        "Training: Spark ingests 29+ GB of Wikipedia revisions and engineers author, diff and page features; SparkML models are cross-validated and tracked in MLflow over 11.16M rows.",
+        "Live: a Structured Streaming job consumes Wikimedia EventStreams and scores each edit as it lands; every scored event goes to a Parquet archive.",
+        "Serving: a SQLite serving store plus FastAPI health and search endpoints with tests keep the model queryable in production, not just a notebook.",
+        "Replay: the Parquet archive means any decision can be rebuilt and audited later."
+      ],
+      "decisions": [
+        {
+          "h": "Train on history, score live",
+          "b": "The batch data teaches; the stream applies."
+        },
+        {
+          "h": "Archive every decision",
+          "b": "Scored events are durable — audit and replay for free."
+        }
+      ],
+      "stack": [
+        "PySpark",
+        "Spark Structured Streaming",
+        "MLflow",
+        "Parquet",
+        "FastAPI",
+        "SQLite"
+      ],
+      "repo": "https://github.com/ayushgawai/WikiRisk",
+      "film": "wikirisk",
+      "papers": [],
+      "related": [
+        "transit",
+        "leo"
+      ]
+    },
+    {
+      "slug": "accessimed",
+      "title": "AccessiMed",
+      "area": "software",
+      "where": "Accessibility engineering tooling",
+      "summary": "A CLI-first accessibility scanner with reviewable fixes: Playwright + axe-core audits against WCAG 2.1 A/AA, deterministic or LLM remediation, and every change ships as a reviewed git diff into a CI gate.",
+      "facts": [
+        {
+          "k": "WCAG 2.1",
+          "v": "A/AA levels via axe-core in a real browser"
+        },
+        {
+          "k": "2",
+          "v": "fix strategies: deterministic no-key fallback + LLM"
+        },
+        {
+          "k": "SQLite",
+          "v": "scan and remediation history, plus PDF reports"
+        },
+        {
+          "k": "CI",
+          "v": "GitHub Actions gates keep it green"
+        }
+      ],
+      "deep": [
+        "Scan: install the CLI, initialize .accessimed.toml, then audit local HTML or run a real browser with Playwright and axe-core against WCAG 2.1 A/AA; findings normalize to severity and rule IDs (alt text, labels, button/link names, page language).",
+        "Fix: pick a finding and get a deterministic exact-match patch where one exists, or an LLM suggestion where it doesn't — detection is separated from remediation.",
+        "Review: apply the fix to source, review the git diff, re-run the checks; SQLite stores scans and remediation history and powers PDF reports and an optional FastAPI + React/Vite dashboard.",
+        "CI: GitHub Actions and automated test gates make accessibility a merge gate, not a one-time audit."
+      ],
+      "decisions": [
+        {
+          "h": "Deterministic first, LLM second",
+          "b": "No-key fallbacks are fully predictable; the LLM only covers what rules can't."
+        },
+        {
+          "h": "Nothing applies silently",
+          "b": "Every change is a reviewed diff — a human is always in the loop."
+        }
+      ],
+      "stack": [
+        "Playwright",
+        "axe-core",
+        "WCAG 2.1",
+        "FastAPI",
+        "React + Vite",
+        "SQLite",
+        "GitHub Actions"
+      ],
+      "repo": "https://github.com/ayushgawai/accessiMed",
+      "film": "accessiMed",
+      "papers": [],
+      "related": [
+        "lsmstore",
+        "mmm"
+      ]
+    },
+    {
+      "slug": "eyetracking",
+      "title": "Visual attention, measured",
+      "area": "research",
+      "where": "SJSU · Body Brain Connect · RSCA winner",
+      "summary": "Whether eye and brain signals can objectively distinguish global, selective and sustained visual attention — built as a reproducible pipeline over Pupil Labs streams, and published in SAGE / HFES 2026.",
+      "facts": [
+        {
+          "k": "3",
+          "v": "attention task types: global, selective, sustained"
+        },
+        {
+          "k": "fixation count",
+          "v": "the strongest task discriminator measured"
+        },
+        {
+          "k": "7 participants",
+          "v": "ages 19–36, time-aligned multimodal streams"
+        },
+        {
+          "k": "RSCA",
+          "v": "university competition winner, then CSU delegate"
+        }
+      ],
+      "deep": [
+        "Pipeline: Pupil Labs Core streams (gaze, fixation, blink, pupil, timing) per trial, with invalid-sample handling, temporal alignment, signal smoothing and feature extraction into fixation, blink, pupil and timing measures.",
+        "Validation: statistical comparison across the three task types identified which oculometric features best separate them — fixation count was the most sensitive in the pilot.",
+        "Output: gaze heatmaps, attention trajectories, model-ready features, and presentation-ready reports for HCI, human-factors and audiology audiences.",
+        "Why it matters: objective attention measures are the substrate for attention-aware interfaces, adaptive UIs and assistive systems."
+      ],
+      "decisions": [
+        {
+          "h": "Measure, don't ask",
+          "b": "Signals beat self-report when studying attention."
+        },
+        {
+          "h": "Reproducible by construction",
+          "b": "Clean → align → extract, as a repeatable pipeline, not a notebook."
+        }
+      ],
+      "stack": [
+        "Pupil Labs",
+        "eye tracking",
+        "fNIRS (broader track)",
+        "Python",
+        "statistics",
+        "heatmaps"
+      ],
+      "repo": null,
+      "film": "eyetracking",
+      "papers": [
+        {
+          "label": "SAGE / HFES 2026 — Measuring visual attention across concurrent and sequential tasks",
+          "url": "https://journals.sagepub.com/eprint/T2T3XWNAEZ9PE2YBN9VY/full"
+        }
+      ],
+      "related": [
+        "wheelchair",
+        "so101"
+      ]
+    },
+    {
+      "slug": "query-engine",
+      "title": "Columnar query engine",
+      "area": "software",
+      "where": "C++20 · analytical engine from scratch",
+      "summary": "A mini analytical engine with an explicit plan, optimizer passes and a vectorized executor over column files with min/max skipping — checked against a row-at-a-time reference on 4M rows.",
+      "facts": [
+        {
+          "k": "1,500",
+          "v": "randomized queries checked against a reference interpreter"
+        },
+        {
+          "k": "2,048",
+          "v": "row vectorized batches with selection vectors"
+        },
+        {
+          "k": "63 / 80",
+          "v": "row groups skipped by min/max on a one-year filter"
+        }
+      ],
+      "deep": [
+        "Plan: explicit logical operators — Scan, Filter, Project, Aggregate, HashJoin, Limit.",
+        "Optimizer: constant folding, filter pushdown through projections and joins into scans, and unused-column pruning.",
+        "Execution: batch-at-a-time vectorized execution over column vectors with selection vectors.",
+        "Storage: row-group columnar files with dictionary encoding, footer metadata and per-column min/max stats so predicates skip row groups before deserialization."
+      ],
+      "decisions": [
+        {
+          "h": "Verify against a reference",
+          "b": "Randomized queries compared row-at-a-time keep the optimizer honest."
+        }
+      ],
+      "stack": [
+        "C++20",
+        "vectorization",
+        "columnar",
+        "TPC-H-like data"
+      ],
+      "repo": "https://github.com/ayushgawai/query-engine",
+      "film": "silent:query-engine.mp4",
+      "papers": [],
+      "related": [
+        "lsmstore",
+        "orderbook"
+      ]
+    },
+    {
+      "slug": "orderbook",
+      "title": "Order-book matching engine",
+      "area": "software",
+      "where": "C++20 · price-time priority matching",
+      "summary": "A single-instrument limit order book with O(1) cancels, correct reprice semantics and sub-microsecond tail latency on a multi-million-message replay.",
+      "facts": [
+        {
+          "k": "4.68M",
+          "v": "messages/second sustained"
+        },
+        {
+          "k": "~900 ns",
+          "v": "p99 on a 2M-message replay"
+        },
+        {
+          "k": "O(1)",
+          "v": "cancel via an order-ID hash index"
+        },
+        {
+          "k": "20,000",
+          "v": "randomized ops checked against a reference"
+        }
+      ],
+      "deep": [
+        "Structure: int64 tick prices, sorted price maps per side, FIFO queues per level, and an order-ID hash index of iterators for O(1) cancels.",
+        "Matching: marketable and IOC orders match by best price then time; size increases and reprices lose queue position, size reductions keep it."
+      ],
+      "decisions": [
+        {
+          "h": "Correctness first, speed measured",
+          "b": "20k randomized operations checked against a reference before the latency numbers."
+        }
+      ],
+      "stack": [
+        "C++20",
+        "FIFO queues",
+        "hash indexes"
+      ],
+      "repo": "https://github.com/ayushgawai/orderbook-engine",
+      "film": null,
+      "papers": [],
+      "related": [
+        "dedup-store",
+        "query-engine"
+      ]
+    },
+    {
+      "slug": "dedup-store",
+      "title": "Dedup store",
+      "area": "software",
+      "where": "C++20 · content-defined storage",
+      "summary": "FastCDC-style chunking with SHA-256 fingerprints and crash-resumable mark-and-sweep GC, plus replication that only sends what the far end is missing.",
+      "facts": [
+        {
+          "k": "FastCDC",
+          "v": "gear-hash content-defined chunking"
+        },
+        {
+          "k": "SHA-256",
+          "v": "fingerprints, append-only containers"
+        },
+        {
+          "k": "resumable",
+          "v": "journaled GC survives a crash mid-compaction"
+        },
+        {
+          "k": "WAN-sim",
+          "v": "replication transfers only missing chunks"
+        }
+      ],
+      "deep": [
+        "Ingestion: parallel segmentation and hashing feed a bounded commit path of append-only containers with reference tracking.",
+        "GC: journaled mark-and-sweep compacts containers and resumes after a crash.",
+        "Replication: a simulated WAN sends only the chunks the peer lacks."
+      ],
+      "decisions": [
+        {
+          "h": "Journey the GC",
+          "b": "Compaction is durable — a crash mid-sweep resumes instead of corrupting."
+        }
+      ],
+      "stack": [
+        "C++20",
+        "FastCDC",
+        "SHA-256",
+        "journaled GC"
+      ],
+      "repo": "https://github.com/ayushgawai/dedup-store",
+      "film": null,
+      "papers": [],
+      "related": [
+        "lsmstore",
+        "orderbook"
+      ]
+    },
+    {
+      "slug": "capflow",
+      "title": "CapFlow — CDC replication",
+      "area": "software",
+      "where": "SQL Server-style change data capture · Python",
+      "summary": "A CDC pipeline that mirrors inserts, updates and deletes from a change log into warehouse tables, reconciles row by row, and can backfill or replay from a saved LSN.",
+      "facts": [
+        {
+          "k": "LSN cursors",
+          "v": "commit-ordered, per-table progress"
+        },
+        {
+          "k": "row-level",
+          "v": "source/target reconciliation"
+        },
+        {
+          "k": "lag",
+          "v": "reported per table, continuously"
+        },
+        {
+          "k": "replay",
+          "v": "backfill from any saved LSN"
+        }
+      ],
+      "deep": [
+        "Capture: reads inserts, updates and deletes from the change log and advances commit-LSN cursors.",
+        "Apply: mirrors changes into warehouse tables with per-table lag reporting.",
+        "Verify: reconciles source and target row by row; supports backfill and replay from a saved LSN."
+      ],
+      "decisions": [
+        {
+          "h": "Reconcile, don't trust",
+          "b": "Every mirror is verified against the source row by row."
+        }
+      ],
+      "stack": [
+        "Python",
+        "SQL Server CDC",
+        "LSN cursors"
+      ],
+      "repo": "https://github.com/ayushgawai/capflow",
+      "film": null,
+      "papers": [],
+      "related": [
+        "lsmstore",
+        "transit"
+      ]
+    },
+    {
+      "slug": "apm-explorer",
+      "title": "APM trace explorer",
+      "area": "software",
+      "where": "Spring Boot · observability tooling",
+      "summary": "Ingests OTLP/HTTP traces, assembles span trees and computes per-service and per-endpoint RED metrics with histogram percentiles — with a D3 service map, latency heatmap and rolling-baseline anomaly flags.",
+      "facts": [
+        {
+          "k": "OTLP",
+          "v": "HTTP trace ingestion into span trees"
+        },
+        {
+          "k": "RED",
+          "v": "per-service and per-endpoint rates, errors, duration"
+        },
+        {
+          "k": "D3",
+          "v": "service map + latency heatmap + waterfall"
+        },
+        {
+          "k": "MCP-style",
+          "v": "incident tools: find_slow_endpoints, get_trace"
+        }
+      ],
+      "deep": [
+        "Ingest: OTLP/HTTP traces assembled into span trees with optional Redis and Postgres backends.",
+        "Analysis: RED metrics and histogram percentiles per service and endpoint; deploy-window comparison and rolling-baseline anomaly flags.",
+        "Tools: MCP-style incident tools (find_slow_endpoints, get_trace) built on the same store."
+      ],
+      "decisions": [
+        {
+          "h": "The demo injects faults",
+          "b": "A ten-service e-commerce trace set with payment and inventory faults exercises the anomaly path."
+        }
+      ],
+      "stack": [
+        "Spring Boot",
+        "OTLP",
+        "D3",
+        "Redis",
+        "Postgres"
+      ],
+      "repo": "https://github.com/ayushgawai/apm-trace-explorer",
+      "film": null,
+      "papers": [],
+      "related": [
+        "agent-fleet",
+        "capflow"
+      ]
+    },
+    {
+      "slug": "gpu-orchestrator",
+      "title": "GPU job orchestrator",
+      "area": "software",
+      "where": "Multicloud control plane · Go",
+      "summary": "A scheduler API and Python SDK over 512 GPUs across AWS, GCP and on-prem pools: gang scheduling, tenant quotas, spot-preemption rollback and pool placement by cost and type.",
+      "facts": [
+        {
+          "k": "512",
+          "v": "GPUs across AWS, GCP and on-prem pools"
+        },
+        {
+          "k": "12k req/s",
+          "v": "sustained in load tests"
+        },
+        {
+          "k": "single-digit ms",
+          "v": "tail latency on the hot path"
+        },
+        {
+          "k": "gang",
+          "v": "all-or-nothing placement with best-fit"
+        }
+      ],
+      "deep": [
+        "Queue: jobs with idempotency keys enter a priority + FIFO queue, pass tenant quota checks, and filter pools by GPU type, cost and spot availability.",
+        "Placement: all-or-nothing gang scheduling with best-fit; jobs advance checkpoints and roll back to the last checkpoint on spot preemption, rescheduling on another pool.",
+        "Observability: health, job and pool APIs with Prometheus metrics."
+      ],
+      "decisions": [
+        {
+          "h": "Checkpoints as the safety net",
+          "b": "Preemption rolls back to the last checkpoint instead of losing the job."
+        }
+      ],
+      "stack": [
+        "Go",
+        "Python SDK",
+        "AWS",
+        "GCP",
+        "Prometheus"
+      ],
+      "repo": "https://github.com/ayushgawai/gpu-job-orchestrator",
+      "film": null,
+      "papers": [],
+      "related": [
+        "agent-fleet",
+        "apm-explorer"
+      ]
+    },
+    {
+      "slug": "agent-fleet",
+      "title": "Agent fleet",
+      "area": "software",
+      "where": "Parallel coding agents · Python + FastAPI",
+      "summary": "A CLI and dashboard that gives each coding-agent task its own Git branch and worktree, shards tests across workers, and gates every diff through a review gate before a human approves.",
+      "facts": [
+        {
+          "k": "worktrees",
+          "v": "each task runs isolated in Docker or a subprocess sandbox"
+        },
+        {
+          "k": "LPT",
+          "v": "historical-duration test-shard scheduling"
+        },
+        {
+          "k": "JUnit",
+          "v": "results merged across workers"
+        },
+        {
+          "k": "diff gate",
+          "v": "deleted tests, weak assertions, secrets, network calls, large changes"
+        }
+      ],
+      "deep": [
+        "Isolation: each task gets its own branch and worktree, running in a Docker or subprocess sandbox.",
+        "Verification: test suites are sharded across workers using historical-duration LPT scheduling, and JUnit results are merged.",
+        "Review gate: a diff-review gate checks for deleted tests, weak assertions, secrets, network calls and large changes, with optional LLM review — then a human approves, retries or discards."
+      ],
+      "decisions": [
+        {
+          "h": "The gate is the product",
+          "b": "Agents can propose anything; only gated, reviewed diffs move."
+        }
+      ],
+      "stack": [
+        "Python",
+        "FastAPI",
+        "htmx",
+        "Docker",
+        "Git worktrees",
+        "JUnit"
+      ],
+      "repo": "https://github.com/ayushgawai/agent-fleet",
+      "film": null,
+      "papers": [],
+      "related": [
+        "blast",
+        "apm-explorer"
+      ]
+    },
+    {
+      "slug": "zoox",
+      "title": "Zoox — perception data platform",
+      "area": "autonomy",
+      "where": "Zoox · Software Engineer Intern, Perception · May–Aug 2026",
+      "summary": "The umbrella for the Zoox perception work: automated quality validation across ~409 data miners, weekly fleet snapshots, and a read-only ops Q&A — the single source for the company's story.",
+      "facts": [
+        {
+          "k": "~409",
+          "v": "active miners, 90M+ events a week"
+        },
+        {
+          "k": "321 / 321",
+          "v": "GT-capable miners validated"
+        },
+        {
+          "k": "~14",
+          "v": "PRs merged in small deployable slices"
+        },
+        {
+          "k": "0-backend",
+          "v": "Vite/TypeScript dashboard over S3 snapshots"
+        }
+      ],
+      "deep": [
+        "See the pieces: Grounded SQL predicates (validation), Fleet reporting (snapshots and the tripwire), and the read-only ops bot — each has its own page with the full technical depth.",
+        "The through-line: LLM proposes, deterministic systems verify, production executes, and humans can reproduce every number."
+      ],
+      "decisions": [
+        {
+          "h": "Read-only by construction",
+          "b": "The ops bot answers from published snapshots and holds zero execution tools."
+        }
+      ],
+      "stack": [
+        "Python",
+        "FastAPI",
+        "Databricks SQL",
+        "PostgreSQL",
+        "S3",
+        "Airflow",
+        "Vue 3",
+        "TypeScript",
+        "Kubernetes"
+      ],
+      "repo": "https://github.com/ayushgawai",
+      "film": null,
+      "papers": [],
+      "related": [
+        "predicates",
+        "slackbot"
+      ]
+    },
+    {
+      "slug": "fleet-reporting",
+      "title": "Fleet reporting + failure tripwire",
+      "area": "data",
+      "where": "Zoox · Perception data-mining fleet · 2026",
+      "summary": "Weekly Postgres snapshots of the whole miner fleet into immutable, versioned S3 artifacts, with event-driven failure alerts that cut discovery from days to minutes.",
+      "facts": [
+        {
+          "k": "weekly",
+          "v": "immutable versioned snapshots + S3 manifest"
+        },
+        {
+          "k": "0-backend",
+          "v": "Vite/TypeScript/Chart.js dashboard"
+        },
+        {
+          "k": "minutes",
+          "v": "failure discovery via the FAILED run-state transition"
+        },
+        {
+          "k": "Slack",
+          "v": "digest + per-owner DMs, read-only Q&A"
+        }
+      ],
+      "deep": [
+        "Snapshots: Postgres aggregation into immutable versioned JSON plus an S3 manifest, read by a zero-backend dashboard.",
+        "Alerts: fire on the miner run-state transition to FAILED — event-driven, opt-in per miner; the owner gets miner identity, run ID, state, timestamp and a deep link.",
+        "Q&A: a read-only Slack bot answers from published snapshots — no tools, fenced untrusted context, bounded lengths, Vault-managed credentials."
+      ],
+      "decisions": [
+        {
+          "h": "Alert on the transition",
+          "b": "The state machine is the source of truth; no polling for failures."
+        }
+      ],
+      "stack": [
+        "PostgreSQL",
+        "S3",
+        "Airflow",
+        "Vite",
+        "TypeScript",
+        "Chart.js",
+        "Slack",
+        "Vault"
+      ],
+      "repo": "https://github.com/ayushgawai",
+      "film": null,
+      "papers": [],
+      "related": [
+        "predicates",
+        "zoox"
+      ]
+    },
+    {
+      "slug": "slackbot",
+      "title": "Read-only ops bot",
+      "area": "ai",
+      "where": "Zoox · miner ops · 2026",
+      "summary": "A Slack Q&A that can explain the fleet and never act on it: answers only from the published weekly snapshot, with both report and question fenced as untrusted data.",
+      "facts": [
+        {
+          "k": "0 tools",
+          "v": "the model holds no execution handle"
+        },
+        {
+          "k": "fenced",
+          "v": "report and question treated as untrusted context"
+        },
+        {
+          "k": "bounded",
+          "v": "lengths and Vault-managed credentials"
+        }
+      ],
+      "deep": [
+        "Prompt-injection defense by construction: an injected 'rerun all jobs' has nothing to call.",
+        "Ephemeral responses keep operational queries out of shared channels; failures reach owners as DMs."
+      ],
+      "decisions": [
+        {
+          "h": "Capability is the control",
+          "b": "The safest guardrail is a model that structurally can't do the thing."
+        }
+      ],
+      "stack": [
+        "FastAPI",
+        "Slack",
+        "Vault",
+        "Claude"
+      ],
+      "repo": "https://github.com/ayushgawai",
+      "film": null,
+      "papers": [],
+      "related": [
+        "zoox",
+        "blast"
+      ]
+    },
+    {
+      "slug": "transitrisk",
+      "title": "TransitRisk — delay forecasting",
+      "area": "data",
+      "where": "DATA 245 · cost-sensitive forecasting",
+      "summary": "Predicts whether a station-route pair will see elevated delay in the next hour: seven classifiers, probability calibration, conformal prediction and a cost-optimal alert threshold when a miss costs 5× a false alarm.",
+      "facts": [
+        {
+          "k": "1.2M",
+          "v": "generated transit events, leakage-audited"
+        },
+        {
+          "k": "38",
+          "v": "engineered features"
+        },
+        {
+          "k": "0.163",
+          "v": "cost-optimal alert threshold"
+        },
+        {
+          "k": "SHAP",
+          "v": "per-route explanations + what-if analysis"
+        }
+      ],
+      "deep": [
+        "Models: naive Bayes, logistic regression, kNN, decision tree, random forest, SVM and XGBoost, with probability calibration and conformal prediction.",
+        "Decision theory: the alert threshold is chosen for cost, not accuracy — a missed delay costs five times a false alarm.",
+        "Surface: a Streamlit dashboard with per-route gauges, what-if controls, SHAP explanations and live-feed replay. 15 tests cover features, leakage, conformal coverage and targets."
+      ],
+      "decisions": [
+        {
+          "h": "Calibrate, then threshold on cost",
+          "b": "Accuracy is the floor; the operating point is a business decision."
+        }
+      ],
+      "stack": [
+        "scikit-learn",
+        "XGBoost",
+        "conformal",
+        "SHAP",
+        "Streamlit"
+      ],
+      "repo": "https://github.com/ayushgawai/transitrisk",
+      "film": null,
+      "papers": [],
+      "related": [
+        "transit",
+        "wikirisk"
+      ]
+    },
+    {
+      "slug": "warehouse",
+      "title": "Warehouse case perception",
+      "area": "robotics",
+      "where": "RGB-D warehouse perception",
+      "summary": "Detects cases in RGB-D warehouse frames and tracks them in 3D: YOLO/OpenCV detection, Kalman prediction, two-stage Hungarian assignment through occlusion, and depth back-projection to XYZ.",
+      "facts": [
+        {
+          "k": "3D",
+          "v": "tracks from RGB + depth, via pinhole back-projection"
+        },
+        {
+          "k": "Kalman",
+          "v": "prediction between detections"
+        },
+        {
+          "k": "2-stage Hungarian",
+          "v": "assignment survives occlusion"
+        },
+        {
+          "k": "C++ NMS",
+          "v": "non-maximum suppression component"
+        }
+      ],
+      "deep": [
+        "Detection: Ultralytics YOLO or OpenCV on RGB; depth lookup and pinhole back-projection give XYZ.",
+        "Tracking: Kalman prediction plus two-stage Hungarian assignment keeps tracks alive through occlusion; collision-zone checks flag risky states.",
+        "Robustness: illumination, blur and occlusion variants, plus checkerboard and extrinsic calibration; C++ NMS keeps detection fast."
+      ],
+      "decisions": [
+        {
+          "h": "Two-stage assignment",
+          "b": "Cheap matching first, Hungarian only where it matters — robust to occlusion."
+        }
+      ],
+      "stack": [
+        "YOLO",
+        "OpenCV",
+        "Kalman",
+        "Hungarian",
+        "C++"
+      ],
+      "repo": "https://github.com/ayushgawai/warehouse-case-perception",
+      "film": null,
+      "papers": [],
+      "related": [
+        "obstacle",
+        "so101"
+      ]
+    }
+  ]
+}

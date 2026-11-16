@@ -443,6 +443,64 @@ a.hack-card:hover .hack-cta, a.sw-card:hover .sw-cta { text-decoration: underlin
   .hack-grid, .lib-grid, .sw-grid, .rec-grid { grid-template-columns: 1fr; }
 }
 
+/* 08-project.css */
+/* Project detail pages (project/<slug>.html): the single home for one project's
+   full story — film, numbers, architecture depth, decisions, stack, links. */
+
+.proj { scroll-margin-top: 80px; }
+
+/* the film / video, taped like the reels */
+.proj-film { margin: 0 0 calc(var(--u) * 2); position: relative; }
+.proj-film video { display: block; width: 100%; aspect-ratio: 16/9; background: var(--paper-card);
+  border: 1.5px solid var(--ink); border-radius: 4px; box-shadow: var(--shadow-card); }
+.proj-film::before { content: ""; position: absolute; top: -12px; left: 40%; width: 110px; height: 26px;
+  background: var(--tape); mix-blend-mode: multiply; transform: rotate(-1.5deg);
+  clip-path: polygon(3% 0, 97% 4%, 100% 50%, 96% 100%, 2% 96%, 0 50%); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+/* YT / loom embeds keep the 16:9 box so layout doesn't jump when the iframe loads */
+.proj-film-embed .embed-frame { position: relative; width: 100%; aspect-ratio: 16/9; }
+.proj-film-embed .embed-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%;
+  border: 1.5px solid var(--ink); border-radius: 4px; background: var(--paper-card); }
+
+/* facts + deep-dive two-column */
+.proj-two { display: grid; grid-template-columns: minmax(0, 340px) 1fr; gap: calc(var(--u) * 3);
+  padding: calc(var(--u) * 1.5) 0; border-top: 1.5px dashed var(--grid-major); }
+.proj-sub { font: 600 var(--t-lg)/1 var(--f-hand); color: var(--blue); margin: 0 0 calc(var(--u) * 1); }
+.facts { margin: 0; padding: 0; list-style: none; display: grid; gap: calc(var(--u) * 0.9); }
+.fact { display: flex; gap: 14px; align-items: baseline; padding: 12px 14px;
+  background: var(--paper-card); border: 1.5px solid var(--ink); border-radius: 4px;
+  box-shadow: var(--shadow-card); font-size: var(--t-sm); color: var(--ink-2); line-height: 1.35; }
+.fact b { flex: 0 0 auto; font: 800 1.4rem/1 var(--f-print); color: var(--ink);
+  letter-spacing: -.02em; white-space: nowrap; }
+.deep-list { margin: 0; padding: 0; list-style: none; display: grid; gap: calc(var(--u) * 0.8); }
+.deep-list li { position: relative; padding-left: 26px; font-size: var(--t-md); line-height: 1.5; color: var(--ink); }
+.deep-list li::before { content: "–"; position: absolute; left: 6px; color: var(--blue); font-weight: 700; }
+
+/* the design calls */
+.proj-decs { padding: calc(var(--u) * 1.5) 0; border-top: 1.5px dashed var(--grid-major); margin-top: calc(var(--u) * 1.5); }
+.decs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: calc(var(--u) * 1.4); }
+.dec { position: relative; background: var(--paper-card); border: 1.5px solid var(--ink); border-radius: 4px;
+  padding: 18px 16px 16px; box-shadow: var(--shadow-card); transform: rotate(-.4deg); }
+.dec:nth-child(2n) { transform: rotate(.4deg); }
+.dec::before { content: "✓"; position: absolute; top: -14px; right: 14px; font: 800 20px var(--f-print); color: var(--green); }
+.dec h4 { margin: 0 0 6px; font: 800 var(--t-md)/1.2 var(--f-print); color: var(--ink); letter-spacing: -.01em; }
+.dec p { margin: 0; font-size: var(--t-sm); line-height: 1.45; color: var(--ink-2); }
+
+/* stack + links row */
+.proj-rows { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * 3);
+  padding: calc(var(--u) * 1.5) 0; border-top: 1.5px dashed var(--grid-major); margin-top: calc(var(--u) * 1.5); }
+.proj-rows .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.proj-rows .btn-row { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.proj-rel { margin: calc(var(--u) * 2) 0 0; font-size: var(--t-sm); color: var(--ink-2); }
+.rel-link { font: 600 var(--t-sm) var(--f-print); color: var(--blue); margin-right: 14px; }
+.rel-link::after { content: "·"; margin-left: 14px; color: var(--ink-3); }
+.rel-link:last-child::after { content: ""; }
+.proj-back { margin-top: calc(var(--u) * 2); padding-top: var(--u); border-top: 1.5px dashed var(--grid-major); }
+.proj-back a { color: var(--blue); margin-right: 22px; }
+
+@media (max-width: 820px) {
+  .proj-two, .proj-rows { grid-template-columns: 1fr; gap: calc(var(--u) * 2); }
+}
+
 /* 10-hero.css */
 /* ---------- hero / cover: the tool mobile ---------- */
 #top.hero {
