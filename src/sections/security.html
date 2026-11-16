@@ -136,7 +136,7 @@
           <li class="sec-fact" data-part="readonly" tabindex="0"><b>read-only</b>pinned to the report week</li>
           <li class="sec-fact" data-part="vault" tabindex="0"><b>Vault</b>least-privilege policies</li>
         </ul>
-        <div class="btn-row"><a class="btn blue" href="#p-slackbot">See the bot in the Agents chapter</a></div>
+        <div class="btn-row"><a class="btn blue" href="agents.html#p-slackbot">See the bot in the Agents chapter</a></div>
         <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
           <h4>Threat model</h4>
           <p>Anyone in Slack can type a question, and report fields carry free text written by many owners. Either can contain instructions. The design assumes both are hostile and removes the capability an attacker would want, instead of trying to filter every phrasing.</p>
@@ -173,7 +173,7 @@
         <p>Local Qwen3-VL on an HP ZGX Nano: video never leaves the site. The dispatch path needs human confirmation, has a kill switch, and fires once per incident.</p>
         <div class="btn-row">
           <a class="btn" href="https://github.com/ayushgawai/campus_sentinel" target="_blank" rel="noopener">Code on GitHub</a>
-          <a class="btn blue" href="#p-sentinel">Watch demo</a>
+          <a class="btn blue" href="ai.html#p-sentinel">Watch demo</a>
         </div>
         <details class="deep"><summary>How dispatch is fenced</summary><div class="deep-body">
           <p>Team of five; owned the frame-streaming backend, asynchronous event routing, alert triggers and incident logging.</p>
@@ -198,7 +198,7 @@
         <p>Three agents test an upstream schema change against downstream repos, each with least-privilege scope. The merge gate rejects approvals from non-owners.</p>
         <div class="btn-row">
           <a class="btn" href="https://github.com/ayushgawai/blast-radius" target="_blank" rel="noopener">Code on GitHub</a>
-          <a class="btn blue" href="#p-blast">Watch demo</a>
+          <a class="btn blue" href="agents.html#p-blast">Watch demo</a>
         </div>
         <details class="deep"><summary>The owner gate</summary><div class="deep-body">
           <p>Team project; owned the impact coordinator and the owner-gated merge check. The coordinator holds the upstream required check pending until every downstream repo owner approves. In the demo, renaming <code>user_id</code> to <code>account_id</code> broke six checks, a non-owner's approval was rejected, and the check went green only after the real owners signed off.</p>

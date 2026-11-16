@@ -1,0 +1,64 @@
+/* Top binder-tab navigation (replaces the old right-rail .tabs).
+   A row of index-tab "booktabs" hanging off the top edge, sticky on scroll. */
+
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--paper);
+  border-bottom: 1.5px solid var(--grid-major);
+  box-shadow: 0 1px 0 rgba(31,35,41,.04), 0 8px 20px -14px rgba(31,35,41,.4);
+}
+.topbar-wordmark { display: none; }
+
+.topnav {
+  display: flex; align-items: stretch; flex-wrap: wrap; gap: 2px;
+  max-width: var(--page-max); margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.topnav-tab {
+  position: relative; display: inline-flex; align-items: center;
+  font: 600 13px/1 var(--f-print); letter-spacing: .01em; color: var(--ink-2);
+  text-decoration: none; padding: 11px 11px 13px; white-space: nowrap;
+  /* booktab: rounded-bottom tab that "hangs" from the top bar */
+  border-radius: 0 0 9px 9px;
+  background: var(--tab, #efe9da);
+  border: 1.25px solid rgba(31,35,41,.22); border-top: 0;
+  transform: translateY(1px);
+  transition: transform .15s var(--ease-out), background .15s var(--ease-out);
+}
+.topnav-tab b { font-weight: 700; }
+.topnav-tab:hover { transform: translateY(3px); }
+.topnav-tab--cta { background: var(--blue); color: #fff; border-color: rgba(31,35,41,.4); }
+.topnav-tab--cta:hover { background: #1b3a90; }
+
+/* active page marker: the tab lifts + gets a red-pencil underline + bold */
+.topnav[data-page="home"] .topnav-tab[href="index.html"],
+.topnav[data-page="experience"] .topnav-tab[href="experience.html"],
+.topnav[data-page="projects"] .topnav-tab[href="projects.html"],
+.topnav[data-page="ai"] .topnav-tab[href="ai.html"],
+.topnav[data-page="data"] .topnav-tab[href="data.html"],
+.topnav[data-page="software"] .topnav-tab[href="software.html"],
+.topnav[data-page="robotics"] .topnav-tab[href="robotics.html"],
+.topnav[data-page="autonomy"] .topnav-tab[href="autonomy.html"],
+.topnav[data-page="research"] .topnav-tab[href="research.html"],
+.topnav[data-page="hackathons"] .topnav-tab[href="hackathons.html"],
+.topnav[data-page="media"] .topnav-tab[href="media.html"],
+.topnav[data-page="recognition"] .topnav-tab[href="recognition.html"],
+.topnav[data-page="contact"] .topnav-tab[href="contact.html"] {
+  transform: translateY(7px);
+  box-shadow: inset 0 0 0 1.5px var(--ink);
+  background: var(--paper-card);
+  z-index: 1;
+}
+.topnav-rule { flex: 0 0 14px; }
+
+.topbar-actions { display: none; }
+
+/* the old right-rail tabs are superseded by the top nav — hide them */
+.tabs { display: none; }
+
+@media (max-width: 760px) {
+  .topnav { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .topnav::-webkit-scrollbar { display: none; }
+  .topnav-tab { padding: 10px 10px 12px; flex: 0 0 auto; }
+  body { padding-top: 0; }
+}

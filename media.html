@@ -1,0 +1,785 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Media — Ayush Gawai</title>
+<meta name="description" content="Demo films, live demos and the scrapbook — everything visual about the work.">
+<meta name="author" content="Ayush Gawai">
+<meta name="theme-color" content="#F6F5F0">
+<link rel="canonical" href="https://ayushgawai.github.io/media.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Media — Ayush Gawai">
+<meta property="og:description" content="Demo films, live demos and the scrapbook — everything visual about the work.">
+<meta property="og:url" content="https://ayushgawai.github.io/media.html">
+<meta property="og:image" content="https://ayushgawai.github.io/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.svg" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400..800;1,400&family=Shantell+Sans:wght,BNCE,INFM@300..800,-100..100,0..100&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Ayush Gawai","url":"https://ayushgawai.github.io/","jobTitle":"Data, AI and robotics systems engineer","alumniOf":"San José State University","sameAs":["https://github.com/ayushgawai","https://www.linkedin.com/in/ayushgawai"]}
+</script>
+
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- shared SVG defs: hand-drawn filters + hatch pattern. Use class="boil" (animated) or "rough" (static) on line art. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="boil" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="1" result="n">
+        <animate attributeName="seed" values="1;7;13" dur="0.42s" calcMode="discrete" repeatCount="indefinite"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="4" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(40)">
+      <line x1="0" y1="0" x2="6" y2="0" stroke="#1F2329" stroke-width="1" stroke-opacity=".45"/>
+    </pattern>
+    <pattern id="hatch-blue" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+      <line x1="0" y1="0" x2="6" y2="0" stroke="#2346B0" stroke-width="1" stroke-opacity=".5"/>
+    </pattern>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1.5 L8 5 L1.5 8.8" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round"/>
+    </marker>
+  </defs>
+</svg>
+
+
+<header class="topbar">
+  <a class="topbar-wordmark hand" href="index.html">Ayush Gawai<span>· field notebook</span></a>
+  <nav class="topnav" data-page="media" aria-label="Notebook">
+    <a class="topnav-tab" href="index.html" style="--tab:#EFE6C8"><b>Home</b></a>
+    <a class="topnav-tab" href="experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
+    <a class="topnav-tab" href="projects.html" style="--tab:#F3D9CF"><b>Projects</b></a>
+    <span class="topnav-rule" aria-hidden="true"></span>
+    <a class="topnav-tab" href="ai.html" style="--tab:#D8ECDF"><b>AI · LLM</b></a>
+    <a class="topnav-tab" href="data.html" style="--tab:#F2E3C4"><b>Data</b></a>
+    <a class="topnav-tab" href="software.html" style="--tab:#DDE6F6"><b>Software</b></a>
+    <a class="topnav-tab" href="robotics.html" style="--tab:#F0D6D6"><b>Robotics</b></a>
+    <a class="topnav-tab" href="autonomy.html" style="--tab:#DDE9E6"><b>Zoox</b></a>
+    <a class="topnav-tab" href="research.html" style="--tab:#E3DDF0"><b>Research</b></a>
+    <a class="topnav-tab" href="hackathons.html" style="--tab:#F4EDB8"><b>Hackathons</b></a>
+    <a class="topnav-tab" href="media.html" style="--tab:#F6E2C9"><b>Media</b></a>
+    <a class="topnav-tab" href="recognition.html" style="--tab:#E9DDEA"><b>Recognition</b></a>
+    <a class="topnav-tab topnav-tab--cta" href="contact.html" style="--tab:#D9E9F0"><b>Contact</b></a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="btn" href="assets/resume.html" target="_blank" rel="noopener">Résumé</a>
+    <span class="topbar-social"><a href="https://github.com/ayushgawai" target="_blank" rel="noopener">GitHub</a><i aria-hidden="true">·</i><a href="https://www.linkedin.com/in/ayushgawai" target="_blank" rel="noopener">LinkedIn</a></span>
+  </div>
+</header>
+
+
+<main id="main">
+<section class="chapter" id="films" data-tab="Films" aria-labelledby="films-title">
+  <header class="chapter-head page">
+    <p class="chapter-kicker hand">project films · narrated + captioned</p>
+    <h2 id="films-title" class="chapter-title">Twelve systems, drawn out</h2>
+    <p class="chapter-lede">Each film sketches the architecture, then walks one event through it step by step. Most now carry a voiceover; a few stay silent and captioned. Nothing downloads until you press play.</p>
+  </header>
+
+  <div class="page">
+    <div class="fl-grid">
+      <article class="fl-card" aria-labelledby="fl-cs-t">
+        <figure class="fl-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <video controls preload="none" playsinline poster="assets/video/narrated/carbonshift-poster.webp" width="1920" height="1080" aria-labelledby="fl-cs-t" aria-describedby="fl-cs-d">
+            <source src="assets/video/narrated/carbonshift.mp4" type="video/mp4">
+          </video>
+          <figcaption class="fl-meta"><span class="hand pencil">reel 1 · 3:12 · narrated</span><span class="fl-tag">control loop</span></figcaption>
+        </figure>
+        <h3 class="fl-title" id="fl-cs-t">CarbonShift</h3>
+        <p class="fl-cap" id="fl-cs-d">A 60-second control loop polls CAISO grid price and carbon, maps them to GREEN, NORMAL, AMBER or RED, and sets the A100 power cap through NVML, from 250 W down to a checkpointed pause. In a realistic scenario profile it cut carbon intensity ~43% and energy cost ~37%.</p>
+        <a class="btn" href="https://github.com/ayushgawai/carbonshift" target="_blank" rel="noopener">Code on GitHub</a>
+      </article>
+
+      <article class="fl-card" aria-labelledby="fl-tr-t">
+        <figure class="fl-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <video controls preload="none" playsinline poster="assets/video/narrated/transit-poster.webp" width="1920" height="1080" aria-labelledby="fl-tr-t" aria-describedby="fl-tr-d">
+            <source src="assets/video/narrated/transit.mp4" type="video/mp4">
+          </video>
+          <figcaption class="fl-meta"><span class="hand pencil">reel 2 · 3:00 · narrated</span><span class="fl-tag">data platform</span></figcaption>
+        </figure>
+        <h3 class="fl-title" id="fl-tr-t">Transit Analytics</h3>
+        <p class="fl-cap" id="fl-tr-d">Airflow lands BART and VTA GTFS every 6 h while a Kafka producer streams live departures into Snowflake <code>LANDING</code>. dbt builds route marts, and Snowflake ML forecasts demand 7 days ahead behind FastAPI and a React dashboard.</p>
+        <a class="btn" href="https://github.com/ayushgawai/transit-system" target="_blank" rel="noopener">Code on GitHub</a>
+      </article>
+
+      <article class="fl-card" aria-labelledby="fl-ma-t">
+        <figure class="fl-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <video controls preload="none" playsinline poster="assets/video/multiplayer-agents-poster.webp" width="1920" height="1080" aria-labelledby="fl-ma-t" aria-describedby="fl-ma-d">
+            <source src="assets/video/multiplayer-agents.mp4" type="video/mp4">
+          </video>
+          <figcaption class="fl-meta"><span class="hand pencil">reel 3 · 1:37</span><span class="fl-tag">human + agent sessions</span></figcaption>
+        </figure>
+        <h3 class="fl-title" id="fl-ma-t">Multiplayer Agent Sessions</h3>
+        <p class="fl-cap" id="fl-ma-d">Every human and agent action is one versioned <code>SessionEvent</code> with a gapless <code>seq</code>, stored append-only in Postgres and fanned out over Redis and WebSocket. Catch-up, intent, merge arbitration and routing models (M1 to M4) share one <code>/v1/models/{id}/predict</code> endpoint.</p>
+        <a class="btn" href="https://github.com/ayushgawai/multiplayer-agent-sessions" target="_blank" rel="noopener">Code on GitHub</a>
+      </article>
+
+      <article class="fl-card" aria-labelledby="fl-so-t">
+        <figure class="fl-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <video controls preload="none" playsinline poster="assets/video/narrated/lerobot-poster.webp" width="1920" height="1080" aria-labelledby="fl-so-t" aria-describedby="fl-so-d">
+            <source src="assets/video/narrated/lerobot.mp4" type="video/mp4">
+          </video>
+          <figcaption class="fl-meta"><span class="hand pencil">reel 4 · 2:43 · narrated</span><span class="fl-tag">robot learning</span></figcaption>
+        </figure>
+        <h3 class="fl-title" id="fl-so-t">SO-101 robot learning</h3>
+        <p class="fl-cap" id="fl-so-d">Leader-to-follower teleop over Feetech STS3215 buses records 50 demos (~49.6k and ~60k frames). ACT trained from scratch on a ResNet-18 backbone and a fine-tuned SmolVLA run on the arm: ACT places the cube in 46 of 50 trials at one fixed position, ~18 ms vs ~251 ms per inference. Includes the EEPROM <code>Lock=1</code> motor-ID fix.</p>
+        <a class="btn" href="https://github.com/ayushgawai/so101-lerobot" target="_blank" rel="noopener">Code on GitHub</a>
+      </article>
+
+      <article class="fl-card" aria-labelledby="fl-qe-t">
+        <figure class="fl-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <video controls preload="none" playsinline poster="assets/video/query-engine-poster.webp" width="1920" height="1080" aria-labelledby="fl-qe-t" aria-describedby="fl-qe-d">
+            <source src="assets/video/query-engine.mp4" type="video/mp4">
+          </video>
+          <figcaption class="fl-meta"><span class="hand pencil">reel 5 · 1:38</span><span class="fl-tag">C++20 engine</span></figcaption>
+        </figure>
+        <h3 class="fl-title" id="fl-qe-t">Columnar query engine</h3>
+        <p class="fl-cap" id="fl-qe-d">A rule optimizer folds constants, pushes filters through projections and joins into scans, and prunes columns. Footer min/max stats then skip 63 of 80 row groups on a one-year filter, and 2,048-row batches with selection vectors run the rest. 1,500 random queries match a row-at-a-time oracle.</p>
+        <a class="btn" href="https://github.com/ayushgawai/query-engine" target="_blank" rel="noopener">Code on GitHub</a>
+      </article>
+
+      <article class="fl-card" aria-labelledby="fl-io-t">
+        <figure class="fl-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <video controls preload="none" playsinline poster="assets/video/iot-garden-poster.webp" width="1920" height="1080" aria-labelledby="fl-io-t" aria-describedby="fl-io-d">
+            <source src="assets/video/iot-garden.mp4" type="video/mp4">
+          </video>
+          <figcaption class="fl-meta"><span class="hand pencil">reel 6 · 1:23</span><span class="fl-tag">edge to cloud</span></figcaption>
+        </figure>
+        <h3 class="fl-title" id="fl-io-t">IoT Smart Garden</h3>
+        <p class="fl-cap" id="fl-io-d">ESP32 soil-moisture, temperature and humidity readings travel over MQTT to Azure IoT Hub and Azure SQL. Python checks flag sensor faults before Power Automate sends alerts and Power BI reports device health.</p>
+        <p class="fl-note hand pencil">no public repo for this one</p>
+      </article>
+
+      <article class="fl-card" aria-labelledby="fl-am-t">
+        <figure class="fl-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <video controls preload="none" playsinline poster="assets/video/narrated/accessiMed-poster.webp" width="1920" height="1080" aria-labelledby="fl-am-t" aria-describedby="fl-am-d">
+            <source src="assets/video/narrated/accessiMed.mp4" type="video/mp4">
+          </video>
+          <figcaption class="fl-meta"><span class="hand pencil">reel 7 · 2:55 · narrated</span><span class="fl-tag">accessibility</span></figcaption>
+        </figure>
+        <h3 class="fl-title" id="fl-am-t">AccessiMed</h3>
+        <p class="fl-cap" id="fl-am-d">A CLI-driven accessibility tool that audits a live page with Playwright and axe-core against WCAG 2.1 A/AA, normalizes findings to severity and rule IDs, then writes a fix — a deterministic no-key patch or an LLM suggestion — and hands you the <code>git diff</code> to review. Every scan and fix is stored in SQLite, powering PDF reports, a dashboard, and a CI merge gate.</p>
+        <a class="btn" href="https://github.com/ayushgawai/accessiMed" target="_blank" rel="noopener">Code on GitHub</a>
+      </article>
+
+      <article class="fl-card" aria-labelledby="fl-wr-t">
+        <figure class="fl-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <video controls preload="none" playsinline poster="assets/video/narrated/wikirisk-poster.webp" width="1920" height="1080" aria-labelledby="fl-wr-t" aria-describedby="fl-wr-d">
+            <source src="assets/video/narrated/wikirisk.mp4" type="video/mp4">
+          </video>
+          <figcaption class="fl-meta"><span class="hand pencil">reel 8 · 2:39 · narrated</span><span class="fl-tag">streaming ML</span></figcaption>
+        </figure>
+        <h3 class="fl-title" id="fl-wr-t">WikiRisk</h3>
+        <p class="fl-cap" id="fl-wr-d">Spark ingests 29+ GB of Wikipedia revision history and cross-validates a SparkML model on 11.16M rows in MLflow, then a live Structured Streaming job scores every Wikimedia edit as it lands. Scored events go to a Parquet archive and a SQLite + FastAPI serving layer. Held-out recall is 89.6% at 0.762 ROC AUC.</p>
+        <a class="btn" href="https://github.com/ayushgawai/WikiRisk" target="_blank" rel="noopener">Code on GitHub</a>
+      </article>
+
+      <article class="fl-card" aria-labelledby="fl-wc-t">
+        <figure class="fl-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <video controls preload="none" playsinline poster="assets/video/narrated/wheelchair-poster.webp" width="1920" height="1080" aria-labelledby="fl-wc-t" aria-describedby="fl-wc-d">
+            <source src="assets/video/narrated/wheelchair.mp4" type="video/mp4">
+          </video>
+          <figcaption class="fl-meta"><span class="hand pencil">reel 9 · 2:55 · narrated</span><span class="fl-tag">assistive HMI</span></figcaption>
+        </figure>
+        <h3 class="fl-title" id="fl-wc-t">AssistAI — wheelchair obstacle alert</h3>
+        <p class="fl-cap" id="fl-wc-d">An onboard ZED 2i + YOLOv10n pipeline detects pedestrians, holds them with temporal tracking, and triggers on a 1 m depth crossing. The warning is multimodal — twelve vibrotactile tactors plus a speech or tone cue — and the study measures how fast a person actually reacts. Published in SAGE/HFES and Transportation Research Part F.</p>
+        <a class="btn" href="https://github.com/ayushgawai/realtime-obstacle-alert" target="_blank" rel="noopener">Code on GitHub</a>
+      </article>
+
+      <article class="fl-card" aria-labelledby="fl-leo-t">
+        <figure class="fl-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <video controls preload="none" playsinline poster="assets/video/narrated/leo-poster.webp" width="1920" height="1080" aria-labelledby="fl-leo-t" aria-describedby="fl-leo-d">
+            <source src="assets/video/narrated/leo.mp4" type="video/mp4">
+          </video>
+          <figcaption class="fl-meta"><span class="hand pencil">reel 10 · 2:46 · narrated</span><span class="fl-tag">geospatial agent</span></figcaption>
+        </figure>
+        <h3 class="fl-title" id="fl-leo-t">LEO satellite coverage risk</h3>
+        <p class="fl-cap" id="fl-leo-d">A geospatial agent scores 4.67M candidate LEO-satellite install sites for tree and terrain obstruction, sampling NLCD canopy and USGS 3DEP elevation at each. A Claude tool-use orchestrator drives five deterministic tools — Python does the raster math, file-based state keeps millions of rows out of the prompt — and lands 100 of 100 counties at 0.0% environmental NaNs.</p>
+        <a class="btn" href="https://github.com/ayushgawai/Ready_Builders_Challenge" target="_blank" rel="noopener">Code on GitHub</a>
+      </article>
+
+      <article class="fl-card" aria-labelledby="fl-ve-t">
+        <figure class="fl-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <video controls preload="none" playsinline poster="assets/video/narrated/eyetracking-poster.webp" width="1920" height="1080" aria-labelledby="fl-ve-t" aria-describedby="fl-ve-d">
+            <source src="assets/video/narrated/eyetracking.mp4" type="video/mp4">
+          </video>
+          <figcaption class="fl-meta"><span class="hand pencil">reel 11 · 2:26 · narrated</span><span class="fl-tag">eye-tracking research</span></figcaption>
+        </figure>
+        <h3 class="fl-title" id="fl-ve-t">Visual attention, measured</h3>
+        <p class="fl-cap" id="fl-ve-d">Pupil Labs gaze, fixation, blink and pupil streams are aligned per trial, cleaned, and turned into features across global, selective and sustained attention tasks. Statistics show fixation count is the strongest discriminator, and everything lands in a model-ready dataset plus gaze heatmaps and cross-discipline reports. Published in SAGE/HFES 2026.</p>
+        <a class="btn" href="https://ayushgawai.github.io/" target="_blank" rel="noopener">See the research</a>
+      </article>
+      <article class="fl-card" aria-labelledby="fl-mm-t">
+        <figure class="fl-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <video controls preload="none" playsinline poster="assets/video/narrated/mmm-poster.webp" width="1920" height="1080" aria-labelledby="fl-mm-t" aria-describedby="fl-mm-d">
+            <source src="assets/video/narrated/mmm.mp4" type="video/mp4">
+          </video>
+          <figcaption class="fl-meta"><span class="hand pencil">reel 12 · 4:13 · narrated</span><span class="fl-tag">marketing ML</span></figcaption>
+        </figure>
+        <h3 class="fl-title" id="fl-mm-t">Unified MMM + MTA measurement &amp; budget optimizer</h3>
+        <p class="fl-cap" id="fl-mm-d">A Bayesian mix model (geometric adstock + Hill saturation) and a discrete-time survival multi-touch model over 16M Criteo journey events, joined by Shapley attribution, feed a constrained SLSQP budget optimizer. Channel ROI error lands within 7% — last-touch was around 31% — and the optimized plan delivered +14% incremental conversions at flat spend.</p>
+        <a class="btn" href="https://ayushgawai.github.io/" target="_blank" rel="noopener">See the research</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" id="demos" data-tab="Demos" aria-labelledby="demos-title">
+  <header class="chapter-head page">
+    <p class="chapter-kicker hand">the screening room · press play</p>
+    <h2 id="demos-title" class="chapter-title">Watch the builds run</h2>
+    <p class="chapter-lede">Recorded demos, playable in place. Nothing loads until you press play; builds without a recording run as moving diagrams.</p>
+  </header>
+
+  <div class="page">
+    <!-- ===== featured: LEO ===== -->
+    <article class="project dm-feature" aria-labelledby="dm-leo-t">
+      <div class="project-media">
+        <figure class="dm-frame dm-frame--big">
+          <span class="tape" aria-hidden="true"></span>
+          <button class="video" type="button" data-loom="70303e4b0399499c865463a79cd17a84" data-title="LEO satellite coverage risk: data, architecture and UI walkthrough (Loom)">
+            <img src="assets/img/demos/leo.webp" alt="" width="1280" height="720" loading="lazy" decoding="async">
+            <span class="video-label">Walkthrough · Loom</span>
+          </button>
+          <figcaption class="dm-frame-meta"><span class="hand pencil">feature reel · geospatial agent</span><span class="dm-reel" aria-hidden="true">reel 1</span></figcaption>
+        </figure>
+      </div>
+      <div class="project-body">
+        <p class="project-where hand">Ready Builders Challenge · March 2026</p>
+        <h3 class="project-title" id="dm-leo-t">LEO satellite coverage risk</h3>
+        <p class="project-sum">Scores tree and terrain obstruction risk for LEO broadband at every candidate site in North Carolina by sampling NLCD canopy and land-cover rasters and USGS 3DEP elevation and slope. A Claude tool-use orchestrator sequences five deterministic Python tools over file-based state, so row data never enters the prompt.</p>
+        <ul class="facts">
+          <li><b>4.67M</b> sites scored</li>
+          <li><b>100/100</b> counties covered</li>
+          <li><b>5</b> deterministic tools</li>
+          <li><b>250</b> tests</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn" href="https://github.com/ayushgawai/Ready_Builders_Challenge" target="_blank" rel="noopener">Code on GitHub</a>
+          <a class="btn blue" href="https://www.loom.com/share/70303e4b0399499c865463a79cd17a84" target="_blank" rel="noopener">Open on Loom</a>
+        </div>
+        <details class="deep"><summary>Technical deep dive</summary>
+          <div class="deep-body">
+            <h4>Data chain</h4>
+            <p>Location IDs and coordinates join NLCD and USGS canopy rasters, USGS 3DEP elevation with derived slope, and NLCD land-cover classes. Each site is spatially sampled, component-scored into HIGH, MODERATE or LOW tiers against Starlink installation guidance, and validated for coordinates and coverage before a scored CSV, charts and reports are written.</p>
+            <h4>Agent architecture</h4>
+            <ul>
+              <li>Claude tool use picks the next step across <code>ingest_locations</code>, <code>sample_environment</code>, <code>score_risk</code>, <code>validate_results</code> and <code>generate_report</code>.</li>
+              <li>Python does all geospatial and numeric work; state passes as artifact paths, never as rows.</li>
+              <li>A pipeline-only mode runs the same functions with no LLM, so results are reproducible.</li>
+              <li>Interactive tools answer coordinate, address, area, polygon and nearby-alternative queries over precomputed scores, behind a map and search UI.</li>
+            </ul>
+            <h4>March 2026 run</h4>
+            <p>4,674,905 of 4,674,905 sites scored; 100 of 100 counties; 0.0% missing environmental values; tiers HIGH 19.4%, MODERATE 31.3%, LOW 49.3%.</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <p class="dm-grid-label hand"><span>more reels</span></p>
+
+    <div class="dm-grid">
+      <!-- Sentinel AI -->
+      <article class="dm-card" aria-labelledby="dm-sen-t">
+        <figure class="dm-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <button class="video" type="button" data-yt="MFF1DICU6Ow" data-title="Sentinel AI: live demo (YouTube)">
+            <img src="assets/img/demos/sentinel.webp" alt="" width="960" height="540" loading="lazy" decoding="async">
+            <span class="video-label">Live demo · YouTube</span>
+          </button>
+          <span class="dm-stamp-win" aria-hidden="true">Winner</span>
+          <figcaption class="dm-frame-meta"><span class="hand pencil">edge video safety</span></figcaption>
+        </figure>
+        <p class="project-where hand">HP × SJSU Edge AI Hackathon · winner</p>
+        <h3 class="project-title" id="dm-sen-t">Sentinel AI</h3>
+        <p class="project-sum">YOLO26s-pose tracking and per-track temporal rules on an HP ZGX Nano gate a 16-frame evidence bundle into a local Qwen3-VL-30B-A3B FP8 classifier. Owned the frame-streaming backend, async event routing, alert triggers and incident log.</p>
+        <ul class="facts">
+          <li><b>13–14</b> fps, six-feed wall</li>
+          <li><b>16</b> frames per VLM call</li>
+          <li><b>6</b> incident classes</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn" href="https://github.com/ayushgawai/campus_sentinel" target="_blank" rel="noopener">Code on GitHub</a>
+        </div>
+        <details class="deep"><summary>Technical deep dive</summary>
+          <div class="deep-body">
+            <h4>Escalation funnel</h4>
+            <p>Frame decode feeds a person detector and tracker; per-track rules (weapon, fall, run, loitering, sudden change) score events, and only credible ones open a 16-frame window for Qwen3-VL served through HP Z Runtime, which returns WEAPON, FIGHT, THEFT, RUN, MEDICAL or BENIGN plus a person description. Cheap per-frame perception carries the volume; VLM reasoning is spent only on ambiguous, high-impact events.</p>
+            <h4>Backend</h4>
+            <p>Severity thresholds drive an incident state machine (NEW, ALERTED, DISPATCH_PENDING, DISPATCHED, TRACKING, RESOLVED or DISMISSED) with SQLite history and REST, WebSocket and MJPEG console updates. A voice-dispatch path needs human confirmation, has a kill switch, one call per incident and a fixed camera-to-address map.</p>
+            <h4>Ownership and caveats</h4>
+            <p>Team project; owned the video and frame-streaming backend, async event routing, alert triggers and incident logging. Wall throughput rose from about 3&nbsp;fps to 13–14&nbsp;fps with three full-analysis feeds; 640 of 649 frames matched the demo clip's labels (not a formal benchmark). Demo calls never reached real 911.</p>
+          </div>
+        </details>
+      </article>
+
+      <!-- Blast Radius -->
+      <article class="dm-card" aria-labelledby="dm-br-t">
+        <figure class="dm-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <button class="video" type="button" data-yt="9MtxDeI03c0" data-title="Blast Radius: AI agents that catch a schema change's damage before merge (YouTube)">
+            <img src="assets/img/demos/blast-radius.webp" alt="" width="960" height="540" loading="lazy" decoding="async">
+            <span class="video-label">Multi-agent demo · YouTube</span>
+          </button>
+          <figcaption class="dm-frame-meta"><span class="hand pencil">WeMakeDevs · Nov 2026</span></figcaption>
+        </figure>
+        <p class="project-where hand">Schema-change impact · Nov 2026</p>
+        <h3 class="project-title" id="dm-br-t">Blast Radius</h3>
+        <p class="project-sum">A coordinator agent fans an upstream field rename out to analytics, ML-feature and dashboard agents, each testing the branch in its own git checkout and reporting the exact failing file and check. The upstream required check stays pending until every downstream owner approves in Slack.</p>
+        <ul class="facts">
+          <li><b>6</b> broken checks caught</li>
+          <li><b>3</b> fix PRs opened</li>
+          <li><b>3</b> agent runtimes</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn" href="https://github.com/ayushgawai/blast-radius" target="_blank" rel="noopener">Code on GitHub</a>
+        </div>
+        <details class="deep"><summary>Technical deep dive</summary>
+          <div class="deep-body">
+            <h4>Flow</h4>
+            <p>An upstream PR posts to a schema-changes room; the impact coordinator (Claude Code) broadcasts an impact-checker role to linked analytics, ML-feature and dashboard rooms. Claude Code, Codex and OpenCode agents run the upstream branch against local tests in independent checkouts, open Jira tickets and fix PRs, then wait for owner authorization while the coordinator writes a durable impact report.</p>
+            <h4>Demo run</h4>
+            <p>Renaming <code>user_id</code> to <code>account_id</code> broke six checks across dbt models, ML features and dashboard SQL, produced three coordinated fix PRs, and rejected a non-owner's approval; the gate turned green only after the real owners approved. A harmless optional-column rename reports no impact.</p>
+            <h4>Design</h4>
+            <p>Two-person team project. Bounded agent ownership, independent tests, least privilege, an audit trail and a human-controlled merge gate.</p>
+          </div>
+        </details>
+      </article>
+
+      <!-- CarbonShift -->
+      <article class="dm-card" aria-labelledby="dm-cs-t">
+        <figure class="dm-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <button class="video" type="button" data-yt="OkEENwR6-Gk" data-title="CarbonShift demo (YouTube)">
+            <img src="assets/img/demos/carbonshift-demo.webp" alt="" width="960" height="540" loading="lazy" decoding="async">
+            <span class="video-label">Demo · YouTube</span>
+          </button>
+          <figcaption class="dm-frame-meta"><span class="hand pencil">carbon-aware GPU training</span></figcaption>
+        </figure>
+        <p class="project-where hand">Grid-aware training control</p>
+        <h3 class="project-title" id="dm-cs-t">CarbonShift</h3>
+        <p class="project-sum">WattTime and CAISO signals polled every ~60&nbsp;s drive a GREEN, AMBER, RED, NORMAL state machine that sets A100 power limits, with checkpointed pause and resume. FastAPI exposes control endpoints and streams telemetry over WebSocket every ~2&nbsp;s.</p>
+        <ul class="facts">
+          <li><b>~43%</b> less carbon, simulated</li>
+          <li><b>~37%</b> lower cost, simulated</li>
+          <li><b>~60&nbsp;s</b> control period</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn" href="https://github.com/ayushgawai/carbonshift" target="_blank" rel="noopener">Code on GitHub</a>
+          <a class="btn blue" href="https://devpost.com/software/carbonshift" target="_blank" rel="noopener">Devpost</a>
+        </div>
+        <details class="deep"><summary>Technical deep dive</summary>
+          <div class="deep-body">
+            <h4>Control loop</h4>
+            <p>A grid monitor (WattTime and CAISO, with a mock fallback) feeds the Eco-Pulse arbitration engine; its state sets a GPU power-limit target, and a checkpoint manager pauses and resumes training when the grid is dirtiest. A background metrics loop backs the FastAPI status endpoints, WebSocket updates and cumulative cost and carbon accounting.</p>
+            <h4>Trade-offs</h4>
+            <p>Power capping instead of pure scheduling keeps jobs progressing; the poll period and state hysteresis avoid thrashing between limits.</p>
+            <h4>Caveat</h4>
+            <p>The ~43% carbon and ~37% cost reductions are <em>simulated</em> scenario results, not measured datacenter savings. A LangGraph supervisor, planner and executor layer is a later extension; the public repo documents the mock-enabled control loop.</p>
+          </div>
+        </details>
+      </article>
+    </div>
+
+    <!-- ===== Transit: the drawing is the demo ===== -->
+    <article class="project flip dm-wide" aria-labelledby="dm-tr-t">
+      <div class="project-media">
+        <figure class="dm-sketch" data-anim>
+          <svg class="dm-tr" viewBox="0 0 480 616" role="img" aria-labelledby="dm-tr-svgt">
+            <title id="dm-tr-svgt">Moving diagram of the transit platform: BART and VTA schedule and live feeds enter Airflow and Kafka, land in Snowflake, move through dbt models into analytics tables, and are served by FastAPI to a React operator dashboard.</title>
+            <!-- packets run underneath the paper-filled boxes, so they only show on the wires between stages -->
+            <g class="dm-pk" aria-hidden="true">
+              <circle r="7"><animateMotion dur="6s" repeatCount="indefinite" path="M116 60 L116 390 L246 390 L390 390 L386 515 L130 540"/></circle>
+              <circle r="7"><animateMotion dur="6s" begin="-4s" repeatCount="indefinite" path="M362 60 L362 390 L390 390 L386 515 L130 540"/></circle>
+              <circle r="7" class="dm-pk-x"><animateMotion dur="6s" begin="-2s" repeatCount="indefinite" path="M200 100 C250 122 290 128 330 160 L362 210 L362 390 L390 390 L386 515 L130 540"/></circle>
+            </g>
+            <g class="rough">
+              <!-- cross feeds: each operator feeds both paths -->
+              <path class="ink-blue dm-wire" d="M200 106 C250 122 290 128 330 148" marker-end="url(#arrowhead)"/>
+              <path class="ink-blue dm-wire" d="M280 106 C230 122 190 128 150 148" marker-end="url(#arrowhead)"/>
+              <path class="ink-blue" d="M116 110 L116 144" marker-end="url(#arrowhead)"/>
+              <path class="ink-blue" d="M362 110 L362 144" marker-end="url(#arrowhead)"/>
+              <path class="ink-blue" d="M116 276 L116 360" marker-end="url(#arrowhead)"/>
+              <path class="ink-blue" d="M362 276 L366 360" marker-end="url(#arrowhead)"/>
+              <path class="ink-blue" d="M164 391 L176 391" marker-end="url(#arrowhead)"/>
+              <path class="ink-blue" d="M322 391 L334 391" marker-end="url(#arrowhead)"/>
+              <path class="ink-blue" d="M390 418 L387 464" marker-end="url(#arrowhead)"/>
+              <path class="ink-blue" d="M288 515 L254 515" marker-end="url(#arrowhead)"/>
+
+              <!-- sources -->
+              <path class="ink dm-box" d="M16 18 L214 14 L218 104 L18 108 Z"/>
+              <path class="ink dm-box" d="M262 16 L462 18 L460 106 L264 104 Z"/>
+              <!-- Airflow + Kafka -->
+              <path class="ink dm-box" d="M16 152 L216 148 L214 270 L20 272 Z"/>
+              <path class="ink-thin" d="M66 222 L98 216 M134 216 L158 222"/>
+              <circle class="ink-thin dm-node" cx="56" cy="223" r="9"/><circle class="ink-thin dm-node" cx="116" cy="214" r="9"/><circle class="ink-thin dm-node" cx="176" cy="223" r="9"/>
+              <path class="ink dm-box" d="M264 150 L462 152 L464 272 L262 270 Z"/>
+              <path class="ink-thin" d="M284 204 L444 202 L444 232 L284 234 Z M304 203 v30 M324 203 v30 M344 203 v30 M364 203 v30 M384 203 v30 M404 203 v30 M424 203 v30"/>
+              <path class="dm-log" d="M286 218 L442 217"/>
+              <!-- Snowflake: landing → dbt → analytics -->
+              <path class="ink" d="M16 318 L464 314 L462 430 L18 434 Z"/>
+              <path class="ink-blue" d="M418 334 v26 M405 341 l26 12 M431 341 l-26 12"/>
+              <path class="ink dm-box" d="M38 370 L160 368 L162 414 L40 416 Z"/>
+              <path class="ink dm-box" d="M180 368 L318 370 L316 414 L182 412 Z"/><path class="dm-box-blue" d="M180 368 L318 370 L316 414 L182 412 Z"/>
+              <path class="ink dm-box" d="M338 370 L444 368 L446 414 L340 416 Z"/>
+              <!-- FastAPI + dashboard -->
+              <path class="ink dm-box" d="M292 474 L464 470 L462 560 L294 562 Z"/>
+              <path class="ink dm-box" d="M16 472 L246 476 L244 600 L18 598 Z"/>
+              <path class="ink-thin" d="M44 562 v-16 M70 562 v-30 M96 562 v-22 M122 562 v-40 M148 562 v-26"/>
+              <path class="ink-blue dm-trend" pathLength="1" d="M40 540 L70 524 L96 532 L122 510 L150 520 L176 506 L212 512"/>
+              <path class="ink-thin" d="M188 548 c0 -14 18 -14 18 0 c0 8 -9 16 -9 16 c0 0 -9 -8 -9 -16 Z"/>
+            </g>
+            <!-- labels stay off the wobble filter so they read cleanly -->
+            <g class="dm-lab">
+              <text class="svg-print dm-t" x="116" y="54" text-anchor="middle">BART</text>
+              <text class="svg-hand dm-h" x="116" y="88" text-anchor="middle">GTFS + live feed</text>
+              <text class="svg-print dm-t" x="362" y="54" text-anchor="middle">VTA</text>
+              <text class="svg-hand dm-h" x="362" y="88" text-anchor="middle">GTFS + live feed</text>
+              <text class="svg-print dm-t" x="116" y="188" text-anchor="middle">Airflow</text>
+              <text class="svg-hand dm-h" x="116" y="258" text-anchor="middle">3 DAGs</text>
+              <text class="svg-print dm-t" x="362" y="188" text-anchor="middle">Kafka</text>
+              <text class="svg-hand dm-h" x="362" y="258" text-anchor="middle">live vehicle events</text>
+              <text class="svg-print dm-t" x="240" y="352" text-anchor="middle">Snowflake</text>
+              <text class="svg-hand dm-h" x="100" y="398" text-anchor="middle">landing</text>
+              <text class="svg-hand dm-h" x="249" y="398" text-anchor="middle">dbt models</text>
+              <text class="svg-hand dm-h" x="392" y="398" text-anchor="middle">analytics</text>
+              <text class="svg-print dm-t" x="378" y="508" text-anchor="middle">FastAPI</text>
+              <text class="svg-hand dm-h" x="378" y="540" text-anchor="middle">REST + NL query</text>
+              <text class="svg-print dm-t" x="131" y="504" text-anchor="middle">React UI</text>
+              <text class="svg-hand dm-h" x="131" y="588" text-anchor="middle">operator dashboard</text>
+            </g>
+          </svg>
+          <figcaption class="hand pencil">moving diagram · drawn from the repo's architecture</figcaption>
+        </figure>
+      </div>
+      <div class="project-body">
+        <p class="project-where hand">MSDA capstone · BART + VTA</p>
+        <h3 class="project-title" id="dm-tr-t">Transit analytics platform</h3>
+        <p class="project-sum">GTFS schedules and live vehicle feeds from two operators flow through three Airflow DAGs and a Kafka producer and consumer into dbt models on Snowflake, served by FastAPI to React operator dashboards. The hard parts: joining static stop IDs to live events, late or malformed positions, and dedup on replay.</p>
+        <ul class="facts">
+          <li><b>2</b> transit operators</li>
+          <li><b>3</b> Airflow DAGs</li>
+          <li><b>AWS + Azure</b> deployments</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn" href="https://github.com/ayushgawai/transit-system" target="_blank" rel="noopener">Code on GitHub</a>
+        </div>
+        <details class="deep"><summary>Technical deep dive</summary>
+          <div class="deep-body">
+            <h4>Pipeline</h4>
+            <ul>
+              <li>Airflow DAGs: incremental GTFS ingestion, streaming ingestion and ML forecasting, across BART and VTA.</li>
+              <li>Kafka producer and consumer carry near-real-time vehicle events into Snowflake landing schemas.</li>
+              <li>dbt builds analytics schemas: route-level performance aggregates and forecast outputs.</li>
+              <li>FastAPI serves React/TypeScript dashboards (maps, metrics, natural-language queries); heavy ETL and training stay off the request path.</li>
+              <li>Docker Compose for local runs; AWS Secrets Manager for credentials.</li>
+            </ul>
+            <h4>Extensions</h4>
+            <p>Ran the platform on AWS S3 and MWAA, and built an Azure extension that models on-time performance and service-reliability KPIs in Azure Databricks (PySpark, Delta), Azure Data Factory, SQL and Power BI, with data-quality checks.</p>
+            <h4>Ownership</h4>
+            <p>Team capstone; built the AWS (S3, MWAA) deployment and the Azure Databricks extension.</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <div class="dm-duo">
+      <!-- SO-101 -->
+      <article class="dm-card" aria-labelledby="dm-so-t">
+        <figure class="dm-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <div class="dm-screen dm-screen--soon">
+            <img src="assets/img/demos/so101-topcam.webp" alt="Top camera view of the SO-101 follower arm at its start pose, with the cube on a paper grid marker and a bowl labelled B." width="640" height="480" loading="lazy" decoding="async">
+            <p class="dm-soon hand red" aria-hidden="true">rollout video<br>coming soon</p>
+          </div>
+          <figcaption class="dm-frame-meta"><span class="hand pencil">top-camera frame from the dataset</span></figcaption>
+        </figure>
+        <p class="project-where hand">SJSU robotics lab · LeRobot</p>
+        <h3 class="project-title" id="dm-so-t">SO-101 arm, imitation learning</h3>
+        <p class="project-sum">ACT policy with a ResNet-18 backbone, trained from scratch on 50 teleoperated SO-101 demonstrations and compared against a SmolVLA fine-tune. Traced reverting servo IDs to a Feetech EEPROM lock that was never re-set, which unblocked calibration.</p>
+        <ul class="facts">
+          <li><b>46/50</b> picks, fixed cube position</li>
+          <li><b>~18&nbsp;ms</b> ACT vs ~251&nbsp;ms SmolVLA</li>
+          <li><b>50</b> demos, ~110k frames</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn" href="https://github.com/ayushgawai/so101-lerobot" target="_blank" rel="noopener">Code on GitHub</a>
+        </div>
+        <details class="deep"><summary>Technical deep dive</summary>
+          <div class="deep-body">
+            <h4>Setup and data flow</h4>
+            <p>Six-joint SO-101 leader and follower arms on Feetech STS3215 servos over USB motor buses, with a gripper and paired RGB cameras, calibrated and teleoperated through Hugging Face LeRobot. 50 demonstrations (about 49,633 and 59,998 frames in two datasets) passed integrity validation, then trained ACT from scratch (30k- and 60k-step runs) and fine-tuned SmolVLA (20k steps) before physical rollouts.</p>
+            <h4>Results and caveat</h4>
+            <p>ACT completed 46 of 50 pick-and-place trials at a <em>fixed</em> cube position (demo positions varied under 1&nbsp;cm), 2.49&nbsp;cm mean placement error on successes. That does not establish generalized success; randomized-position evaluation is unfinished.</p>
+            <h4>Ownership</h4>
+            <p>Two-person research build. Owned calibration, teleoperated data collection, resumable 50-trial rollout scripts, video-measured placement error, a failure taxonomy, camera-dropout handling and checkpoint-selection analysis.</p>
+            <h4>The EEPROM bug</h4>
+            <p>Follower IDs reverted after power cycles and the wrist-roll and gripper collided on one ID. The EEPROM was unlocked for an ID write and never re-locked; patching LeRobot's motor-bus setup to write <code>Lock=1</code> after ID or baud changes made IDs persist.</p>
+          </div>
+        </details>
+      </article>
+
+      <!-- Research -->
+      <article class="dm-card" aria-labelledby="dm-rs-t">
+        <figure class="dm-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <div class="dm-screen">
+            <img src="assets/img/demos/research-csu.webp" alt="Presenting Body Brain Connect at the CSU research competition, 2026." width="960" height="541" loading="lazy" decoding="async">
+          </div>
+          <figcaption class="dm-frame-meta"><span class="hand pencil">40th CSU Student Research Competition · photo: SJSU NewsCenter</span></figcaption>
+        </figure>
+        <p class="project-where hand">SJSU · human factors research</p>
+        <h3 class="project-title" id="dm-rs-t">Research, on paper</h3>
+        <p class="project-sum">Eye-tracking pipeline (Pupil Labs gaze, fixation, blink and pupil streams) for a 7-participant visual-attention study, and an obstacle-alert wheelchair HMI running YOLOv10n at 30&nbsp;fps on ZED 2i RGB-D. Two HFES 2026 posters and a Transportation Research Part F article.</p>
+        <ul class="facts">
+          <li><b>24</b> participants, HMI study</li>
+          <li><b>30&nbsp;fps</b> on-board detection</li>
+          <li><b>RSCA</b> winner, CSU delegate</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn" href="#research">Research chapter</a>
+        </div>
+        <details class="deep"><summary>Papers and press</summary>
+          <div class="deep-body">
+            <ul>
+              <li><a href="https://hfesam2026.conference-program.com/presentation/?id=POST409&amp;sess=sess246" target="_blank" rel="noopener">HFES 2026 poster: visual attention (eye tracking)</a></li>
+              <li><a href="https://hfesam2026.conference-program.com/presentation/?id=POST130&amp;sess=sess257" target="_blank" rel="noopener">HFES 2026 poster: wheelchair HMI</a></li>
+              <li><a href="https://www.sciencedirect.com/science/article/pii/S1369847826002962" target="_blank" rel="noopener">Transportation Research Part F article (Elsevier)</a></li>
+              <li><a href="https://blogs.sjsu.edu/newsroom/2026/research-spotlight-the-body-brain-connection-at-the-csu-research-competition/" target="_blank" rel="noopener">SJSU NewsCenter research spotlight</a></li>
+            </ul>
+            <h4>Findings and scope</h4>
+            <p>Fixation count was the strongest discriminator among the measured oculometrics. In the wheelchair study, seatback vibration plus instructional cues produced faster obstacle responses; it measures response timing, usefulness and preference, not real-world crash reduction. The published apparatus is the onboard GPU laptop with the ZED 2i; a Jetson and LiDAR C++ prototype is a separate project.</p>
+          </div>
+        </details>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" id="gallery" data-tab="Scrapbook" aria-labelledby="gallery-title">
+  <header class="chapter-head page">
+    <p class="chapter-kicker hand">taped into the back pages</p>
+    <h2 id="gallery-title" class="chapter-title">Snapshots from labs, talks and hackathons</h2>
+    <p class="chapter-lede">Research demos at SJSU, a summer at Zoox and a few long hackathon weekends. Tap a photo to see it full size.</p>
+  </header>
+
+  <!-- shared doodles for this section -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="g-cam" viewBox="0 0 120 90">
+      <path d="M14 30 Q13 24 20 23 L38 22 L45 12 Q47 9 51 9 L70 9.5 Q74 10 76 13 L82 22 L101 23 Q108 24 107 31 L106 72 Q106 79 99 79 L21 80 Q14 80 14 73 Z"/>
+      <circle cx="60" cy="50" r="19"/>
+      <circle cx="60" cy="50" r="10.5"/>
+      <path d="M53 45 Q56 41 61 41.5"/>
+      <path d="M89 32 L97 32.5"/>
+      <path d="M22 23 L22 18 L33 18 L33 22.5"/>
+    </symbol>
+  </svg>
+
+  <div class="page">
+    <div class="board">
+
+      <!-- ============================================================
+           REAL PHOTOS. Each one is a <figure class="snap"> with a <button class="snap-open">.
+           The lightbox reads data-full / data-caption / data-w / data-h from the button.
+           Sources for every photo: .qa/assets-gallery.md
+           ============================================================ -->
+
+      <figure class="snap c6 room" style="--r:-1.4deg">
+        <span class="tape" aria-hidden="true"></span>
+        <button class="snap-open" type="button" data-full="assets/img/gallery/rsca-brain-body-connect.webp" data-w="1200" data-h="650"
+          data-caption="Presenting “Brain Body Connect” at the SJSU RSCA competition, spring 2026. L–R: Jonathan Chiu, Allison Tran and Ayush. The project won SJSU’s RSCA competition and went on to the 40th CSU Student Research Competition. Photo: SJSU NewsCenter.">
+          <img src="assets/img/gallery/rsca-brain-body-connect-600.webp" srcset="assets/img/gallery/rsca-brain-body-connect-600.webp 600w, assets/img/gallery/rsca-brain-body-connect.webp 1200w" sizes="(max-width: 600px) 92vw, 50vw" width="600" height="325" loading="lazy" decoding="async"
+            alt="Presenting Brain Body Connect at SJSU RSCA, 2026. Ayush is on the right.">
+        </button>
+        <figcaption class="hand">Brain Body Connect · SJSU RSCA, 2026 <span class="who">(Ayush on the right)</span></figcaption>
+        <svg class="doodle d-star" viewBox="0 0 150 70" aria-hidden="true">
+          <path class="ink-red" d="M26 8 L31 22 L46 22.5 L34 31 L39 45 L26.5 36.5 L14 45 L18.5 31 L7 22.5 L21.5 22 Z"/>
+          <text class="svg-hand red" x="54" y="26">won! then</text>
+          <text class="svg-hand red" x="54" y="48">on to CSU</text>
+        </svg>
+      </figure>
+
+      <figure class="snap c3" style="--r:2.2deg; --y:18px">
+        <span class="tape tape-l" aria-hidden="true"></span>
+        <button class="snap-open" type="button" data-full="assets/img/gallery/portrait.webp" data-w="955" data-h="1200"
+          data-caption="Portrait from the SJSU College of Information, Data and Society community profile, “Harnessing the power of community”, 2025. Photo: SJSU College of IDS.">
+          <img src="assets/img/gallery/portrait-600.webp" srcset="assets/img/gallery/portrait-600.webp 478w, assets/img/gallery/portrait.webp 955w" sizes="(max-width: 600px) 46vw, 25vw" width="478" height="600" loading="lazy" decoding="async"
+            alt="Portrait from the SJSU College of IDS community profile, 2025.">
+        </button>
+        <figcaption class="hand">SJSU IDS community profile, 2025</figcaption>
+      </figure>
+
+      <!-- PLACEHOLDER "hfes-2026". To fill it: save assets/img/gallery/hfes-2026.webp (≤1200px) and hfes-2026-600.webp (600px),
+           then replace this whole <figure> with a copy of a real photo figure above (button.snap-open + img), keeping the caption. -->
+      <figure class="snap c3 ph" data-placeholder="hfes-2026" style="--r:-2.6deg; --y:42px">
+        <span class="tape" aria-hidden="true"></span>
+        <div class="ph-frame" style="aspect-ratio: 4 / 5">
+          <svg class="ph-cam" aria-hidden="true"><use href="#g-cam"/></svg>
+          <span class="hand pencil">photo coming soon</span>
+        </div>
+        <figcaption class="hand">Presenting at HFES 2026</figcaption>
+      </figure>
+
+      <figure class="snap c3" style="--r:-1.8deg">
+        <span class="tape" aria-hidden="true"></span>
+        <button class="snap-open" type="button" data-full="assets/img/gallery/zoox-badge.webp" data-w="974" data-h="1200"
+          data-caption="Zoox badge — summer 2026 Software Engineer internship, Perception team. Photo: Ayush’s Devpost profile.">
+          <img src="assets/img/gallery/zoox-badge-600.webp" srcset="assets/img/gallery/zoox-badge-600.webp 487w, assets/img/gallery/zoox-badge.webp 974w" sizes="(max-width: 600px) 46vw, 25vw" width="487" height="600" loading="lazy" decoding="async"
+            alt="Ayush’s Zoox employee badge, summer 2026.">
+        </button>
+        <figcaption class="hand">Zoox badge, summer 2026</figcaption>
+      </figure>
+
+      <figure class="snap c6" style="--r:1.1deg; --y:26px">
+        <span class="tape tape-l" aria-hidden="true"></span>
+        <span class="tape tape-r" aria-hidden="true"></span>
+        <button class="snap-open" type="button" data-full="assets/img/gallery/global-spartan-reception.webp" data-w="1200" data-h="738"
+          data-caption="Global Spartan Scholarship award reception, fall 2025. Ayush is in the back row, second from right, in the cap. Photo: SJSU ISSS.">
+          <img src="assets/img/gallery/global-spartan-reception-600.webp" srcset="assets/img/gallery/global-spartan-reception-600.webp 600w, assets/img/gallery/global-spartan-reception.webp 1200w" sizes="(max-width: 600px) 92vw, 50vw" width="600" height="369" loading="lazy" decoding="async"
+            alt="Global Spartan Scholarship reception, fall 2025. Ayush is in the back row, wearing the cap.">
+        </button>
+        <figcaption class="hand">Global Spartan Scholarship reception, fall 2025</figcaption>
+        <svg class="doodle d-me" viewBox="0 0 600 369" aria-hidden="true">
+          <text class="svg-hand red" x="500" y="-8">Ayush</text>
+          <path class="ink-red" d="M496 -16 Q452 30 430 150" marker-end="url(#arrowhead)"/>
+        </svg>
+      </figure>
+
+      <!-- PLACEHOLDER "zoox-summer". To fill it: save assets/img/gallery/zoox-summer.webp + zoox-summer-600.webp,
+           then replace this <figure> with a copy of a real photo figure (button.snap-open + img). -->
+      <figure class="snap c3 ph" data-placeholder="zoox-summer" style="--r:2.4deg; --y:8px">
+        <span class="tape" aria-hidden="true"></span>
+        <div class="ph-frame" style="aspect-ratio: 1 / 1">
+          <svg class="ph-cam" aria-hidden="true"><use href="#g-cam"/></svg>
+          <span class="hand pencil">photo coming soon</span>
+        </div>
+        <figcaption class="hand">Zoox summer</figcaption>
+      </figure>
+
+      <figure class="snap c3 tall" style="--r:-2deg; --y:-6px">
+        <span class="tape" aria-hidden="true"></span>
+        <button class="snap-open" type="button" data-full="assets/img/gallery/cids-retreat.webp" data-w="547" data-h="940"
+          data-caption="Presenting at the College of IDS strategy retreat, 2025. Photo: SJSU College of IDS.">
+          <img src="assets/img/gallery/cids-retreat-600.webp" srcset="assets/img/gallery/cids-retreat-600.webp 349w, assets/img/gallery/cids-retreat.webp 547w" sizes="(max-width: 600px) 46vw, 25vw" width="349" height="600" loading="lazy" decoding="async"
+            alt="Ayush presenting at the College of IDS strategy retreat, 2025.">
+        </button>
+        <figcaption class="hand">Presenting at the CIDS strategy retreat</figcaption>
+      </figure>
+
+      <figure class="snap c6 room note-room" style="--r:-0.9deg; --y:4px">
+        <span class="tape" aria-hidden="true"></span>
+        <button class="snap-open" type="button" data-full="assets/img/gallery/sentinel-demo.webp" data-w="1200" data-h="484"
+          data-caption="Frame from the Sentinel AI demo video, built for the HP × SJSU Edge AI hackathon (won): live camera wall, incident panel and a staged dispatcher call. Demo calls never reached a real 911 line. Running locally on an HP ZGX Nano.">
+          <img src="assets/img/gallery/sentinel-demo-600.webp" srcset="assets/img/gallery/sentinel-demo-600.webp 600w, assets/img/gallery/sentinel-demo.webp 1200w" sizes="(max-width: 600px) 92vw, 50vw" width="600" height="242" loading="lazy" decoding="async"
+            alt="Sentinel AI operations console showing a hallway camera feed, a strip of other camera thumbnails, a site map and a call transcript, next to a teammate playing the dispatcher.">
+        </button>
+        <figcaption class="hand">Sentinel AI demo · HP × SJSU Edge AI hackathon (won)</figcaption>
+        <svg class="doodle d-note" viewBox="0 0 200 40" aria-hidden="true">
+          <path class="ink-blue" d="M6 30 Q40 10 70 22" marker-end="url(#arrowhead)"/>
+          <text class="svg-hand" x="78" y="28">staged call, not real 911</text>
+        </svg>
+      </figure>
+
+      <figure class="snap c3 tall" style="--r:2.8deg; --y:10px">
+        <span class="tape tape-r" aria-hidden="true"></span>
+        <button class="snap-open" type="button" data-full="assets/img/gallery/treehacks-carbonshift.webp" data-w="405" data-h="720"
+          data-caption="CarbonShift running on a laptop at TreeHacks 2026: grid carbon intensity, GPU power draw and renewable mix feeding the scheduler. Its carbon and cost savings are simulated. Frame from Ayush’s Devpost update video.">
+          <img src="assets/img/gallery/treehacks-carbonshift-600.webp" srcset="assets/img/gallery/treehacks-carbonshift-600.webp 338w, assets/img/gallery/treehacks-carbonshift.webp 405w" sizes="(max-width: 600px) 46vw, 25vw" width="338" height="600" loading="lazy" decoding="async"
+            alt="A laptop screen showing the CarbonShift dashboard with bar charts, a 217 gCO2 per kWh carbon-intensity tile, 149 watts of GPU power and a Running status.">
+        </button>
+        <figcaption class="hand">CarbonShift at TreeHacks 2026</figcaption>
+      </figure>
+
+      <!-- PLACEHOLDER "hackathon-team". To fill it: save assets/img/gallery/hackathon-team.webp + hackathon-team-600.webp,
+           then replace this <figure> with a copy of a real photo figure (button.snap-open + img). -->
+      <figure class="snap c3 ph" data-placeholder="hackathon-team" style="--r:-2.2deg; --y:-4px">
+        <span class="tape" aria-hidden="true"></span>
+        <div class="ph-frame" style="aspect-ratio: 4 / 3">
+          <svg class="ph-cam" aria-hidden="true"><use href="#g-cam"/></svg>
+          <span class="hand pencil">photo coming soon</span>
+        </div>
+        <figcaption class="hand">Hackathon team</figcaption>
+      </figure>
+
+      <!-- PLACEHOLDER "lerobot-lab". To fill it: save assets/img/gallery/lerobot-lab.webp + lerobot-lab-600.webp,
+           then replace this <figure> with a copy of a real photo figure (button.snap-open + img). -->
+      <figure class="snap c3 ph" data-placeholder="lerobot-lab" style="--r:1.4deg; --y:22px">
+        <span class="tape" aria-hidden="true"></span>
+        <div class="ph-frame" style="aspect-ratio: 4 / 3">
+          <svg class="ph-cam" aria-hidden="true"><use href="#g-cam"/></svg>
+          <span class="hand pencil">photo coming soon</span>
+        </div>
+        <figcaption class="hand">LeRobot lab</figcaption>
+      </figure>
+
+      <!-- PLACEHOLDER "research-poster". To fill it: save assets/img/gallery/research-poster.webp + research-poster-600.webp,
+           then replace this <figure> with a copy of a real photo figure (button.snap-open + img). -->
+      <figure class="snap c3 ph start3" data-placeholder="research-poster" style="--r:1.6deg; --y:4px">
+        <span class="tape" aria-hidden="true"></span>
+        <div class="ph-frame" style="aspect-ratio: 4 / 5">
+          <svg class="ph-cam" aria-hidden="true"><use href="#g-cam"/></svg>
+          <span class="hand pencil">photo coming soon</span>
+        </div>
+        <figcaption class="hand">Research poster</figcaption>
+      </figure>
+
+      <!-- PLACEHOLDER "so101-arm". To fill it: save assets/img/gallery/so101-arm.webp + so101-arm-600.webp,
+           then replace this <figure> with a copy of a real photo figure (button.snap-open + img). -->
+      <figure class="snap c3 ph start8" data-placeholder="so101-arm" style="--r:-1.2deg; --y:36px">
+        <span class="tape" aria-hidden="true"></span>
+        <div class="ph-frame" style="aspect-ratio: 4 / 3">
+          <svg class="ph-cam" aria-hidden="true"><use href="#g-cam"/></svg>
+          <span class="hand pencil">photo coming soon</span>
+        </div>
+        <figcaption class="hand">Robotics lab / SO-101 arm</figcaption>
+        <svg class="doodle d-end" viewBox="0 0 200 110" aria-hidden="true">
+          <text class="svg-hand" x="14" y="30">more pages</text>
+          <text class="svg-hand" x="22" y="56">to fill in…</text>
+          <path class="ink-blue" d="M40 70 Q90 104 168 80" marker-end="url(#arrowhead)"/>
+        </svg>
+      </figure>
+
+    </div>
+  </div>
+
+  <dialog class="lightbox" aria-label="Photo viewer">
+    <figure>
+      <img alt="" width="1200" height="800">
+      <figcaption class="hand"></figcaption>
+    </figure>
+    <div class="lb-bar">
+      <button type="button" class="btn lb-prev" aria-label="Previous photo">‹ prev</button>
+      <span class="lb-count hand pencil" aria-live="polite"></span>
+      <button type="button" class="btn lb-next" aria-label="Next photo">next ›</button>
+    </div>
+    <form method="dialog"><button class="lb-close" aria-label="Close photo viewer">×</button></form>
+  </dialog>
+</section>
+
+</main>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

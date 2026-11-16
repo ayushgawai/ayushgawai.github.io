@@ -1,0 +1,57 @@
+/* Home fragments: the experience strip + featured gallery that replace the one giant page.
+   All styling reuses the notebook tokens (tape, hand ink, grid paper). */
+
+/* ---- main experience strip: five pinned cards on the trail ---- */
+.xp-strip { list-style: none; margin: 0; padding: 0; display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr)); gap: calc(var(--u) * 1.5); }
+.xp-card { position: relative; min-width: 0; background: var(--paper-card);
+  border: 1.5px solid var(--ink); border-radius: 3px; padding: 16px 16px 18px;
+  box-shadow: var(--shadow-card); transform: rotate(-.5deg); display: flex; flex-direction: column; gap: 6px; }
+.xp-card:nth-child(even) { transform: rotate(.5deg); }
+.xp-card::before { content: ""; position: absolute; top: -12px; left: 50%; width: 88px; height: 26px;
+  transform: translateX(-50%) rotate(-2deg); background: var(--tape); mix-blend-mode: multiply;
+  box-shadow: 0 1px 2px rgba(0,0,0,.08); clip-path: polygon(3% 0, 97% 4%, 100% 50%, 96% 100%, 2% 96%, 0 50%); }
+.xp-date { font-size: var(--t-xs); color: var(--ink-3); margin: 0; }
+.xp-role { font-family: var(--f-print); font-weight: 800; font-size: 1.02rem; letter-spacing: -.01em; margin: 2px 0 0; color: var(--ink); }
+.xp-line { font-size: var(--t-sm); line-height: 1.4; color: var(--ink-2); margin: 0; }
+.xp-go { margin-top: auto; padding-top: 8px; font-size: var(--t-sm); color: var(--blue); }
+.xp-card .xp-go:hover { text-decoration: underline; }
+.xp-dot { display: none; }
+
+/* ---- featured gallery: 6 cards + "show more" ---- */
+.feat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(var(--u) * 2) calc(var(--u) * 1.5); }
+.feat-card { position: relative; display: flex; flex-direction: column; gap: 8px; min-height: 210px;
+  background: var(--paper-card); border: 1.5px solid var(--ink); border-radius: 4px;
+  padding: 18px 18px 16px; box-shadow: var(--shadow-card); text-decoration: none; color: var(--ink);
+  transform: rotate(-.4deg); transition: transform .18s var(--ease-out), box-shadow .18s var(--ease-out); }
+.feat-card:nth-child(2) { transform: rotate(.6deg); }
+.feat-card:nth-child(3) { transform: rotate(-.3deg); }
+.feat-card:nth-child(4) { transform: rotate(.4deg); }
+.feat-card:nth-child(5) { transform: rotate(-.5deg); }
+.feat-card:nth-child(6) { transform: rotate(.3deg); }
+.feat-card:hover { transform: rotate(0deg) translateY(-4px); box-shadow: 0 2px 0 rgba(31,35,41,.06), 0 16px 30px -10px rgba(31,35,41,.28); }
+.feat-card:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.feat-tab { align-self: flex-start; font: 600 11px/1 var(--f-print); letter-spacing: .04em; text-transform: uppercase;
+  color: var(--ink-2); background: var(--tab, #efe9da); border: 1.25px solid rgba(31,35,41,.3);
+  border-radius: 4px 9px 5px 8px; padding: 5px 8px; }
+.feat-title { font-family: var(--f-print); font-weight: 800; font-size: 1.25rem; letter-spacing: -.015em; margin: 4px 0 0; }
+.feat-sum { font-size: var(--t-sm); line-height: 1.42; color: var(--ink-2); margin: 0; }
+.feat-cta { margin-top: auto; padding-top: 8px; font-size: var(--t-sm); color: var(--blue); }
+.feat-card:hover .feat-cta { text-decoration: underline; }
+
+.home-more { margin-top: calc(var(--u) * 2.5); }
+.home-more .btn { display: inline-block; }
+.home-more a.hand { color: var(--blue); margin-left: 14px; }
+
+@media (max-width: 1000px) {
+  .xp-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .xp-card:last-child { grid-column: 1 / -1; }
+  .feat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .xp-strip { grid-template-columns: 1fr; }
+  .feat-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .xp-card, .feat-card { transform: none; }
+}

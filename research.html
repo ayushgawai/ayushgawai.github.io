@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research — Ayush Gawai</title>
+<meta name="description" content="Published human-centered research: visual attention, assistive mobility and robot learning at SJSU.">
+<meta name="author" content="Ayush Gawai">
+<meta name="theme-color" content="#F6F5F0">
+<link rel="canonical" href="https://ayushgawai.github.io/research.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Research — Ayush Gawai">
+<meta property="og:description" content="Published human-centered research: visual attention, assistive mobility and robot learning at SJSU.">
+<meta property="og:url" content="https://ayushgawai.github.io/research.html">
+<meta property="og:image" content="https://ayushgawai.github.io/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.svg" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400..800;1,400&family=Shantell+Sans:wght,BNCE,INFM@300..800,-100..100,0..100&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Ayush Gawai","url":"https://ayushgawai.github.io/","jobTitle":"Data, AI and robotics systems engineer","alumniOf":"San José State University","sameAs":["https://github.com/ayushgawai","https://www.linkedin.com/in/ayushgawai"]}
+</script>
+
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- shared SVG defs: hand-drawn filters + hatch pattern. Use class="boil" (animated) or "rough" (static) on line art. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="boil" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="1" result="n">
+        <animate attributeName="seed" values="1;7;13" dur="0.42s" calcMode="discrete" repeatCount="indefinite"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="4" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(40)">
+      <line x1="0" y1="0" x2="6" y2="0" stroke="#1F2329" stroke-width="1" stroke-opacity=".45"/>
+    </pattern>
+    <pattern id="hatch-blue" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+      <line x1="0" y1="0" x2="6" y2="0" stroke="#2346B0" stroke-width="1" stroke-opacity=".5"/>
+    </pattern>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1.5 L8 5 L1.5 8.8" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round"/>
+    </marker>
+  </defs>
+</svg>
+
+
+<header class="topbar">
+  <a class="topbar-wordmark hand" href="index.html">Ayush Gawai<span>· field notebook</span></a>
+  <nav class="topnav" data-page="research" aria-label="Notebook">
+    <a class="topnav-tab" href="index.html" style="--tab:#EFE6C8"><b>Home</b></a>
+    <a class="topnav-tab" href="experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
+    <a class="topnav-tab" href="projects.html" style="--tab:#F3D9CF"><b>Projects</b></a>
+    <span class="topnav-rule" aria-hidden="true"></span>
+    <a class="topnav-tab" href="ai.html" style="--tab:#D8ECDF"><b>AI · LLM</b></a>
+    <a class="topnav-tab" href="data.html" style="--tab:#F2E3C4"><b>Data</b></a>
+    <a class="topnav-tab" href="software.html" style="--tab:#DDE6F6"><b>Software</b></a>
+    <a class="topnav-tab" href="robotics.html" style="--tab:#F0D6D6"><b>Robotics</b></a>
+    <a class="topnav-tab" href="autonomy.html" style="--tab:#DDE9E6"><b>Zoox</b></a>
+    <a class="topnav-tab" href="research.html" style="--tab:#E3DDF0"><b>Research</b></a>
+    <a class="topnav-tab" href="hackathons.html" style="--tab:#F4EDB8"><b>Hackathons</b></a>
+    <a class="topnav-tab" href="media.html" style="--tab:#F6E2C9"><b>Media</b></a>
+    <a class="topnav-tab" href="recognition.html" style="--tab:#E9DDEA"><b>Recognition</b></a>
+    <a class="topnav-tab topnav-tab--cta" href="contact.html" style="--tab:#D9E9F0"><b>Contact</b></a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="btn" href="assets/resume.html" target="_blank" rel="noopener">Résumé</a>
+    <span class="topbar-social"><a href="https://github.com/ayushgawai" target="_blank" rel="noopener">GitHub</a><i aria-hidden="true">·</i><a href="https://www.linkedin.com/in/ayushgawai" target="_blank" rel="noopener">LinkedIn</a></span>
+  </div>
+</header>
+
+
+<main id="main">
+<section class="chapter" id="research" data-tab="Research" aria-labelledby="research-title">
+  <header class="chapter-head page">
+    <p class="chapter-kicker hand">SJSU · Graduate Research Assistant</p>
+    <h2 id="research-title" class="chapter-title">Human-centered AI research</h2>
+    <p class="chapter-lede">Applied Data Science × Human Factors × Audiology: raw eye-tracking signals and AI detections turned into measurable human behavior. <span class="marker">Three papers in 2026</span>, two at HFES and one in Transportation Research Part F.</p>
+  </header>
+
+  <div class="page">
+    <!-- Study 1: eye tracking -->
+    <article class="project r-wide" id="p-eyetracking">
+      <div class="project-media">
+        <figure class="sketch r-gaze-fig" data-anim>
+          <svg id="r-gaze-svg" viewBox="0 0 1000 420" role="img" aria-labelledby="r-gaze-t">
+            <title id="r-gaze-t">Two sketched pictures side by side, image A and image B, each showing a sun, a cloud, hills, a house and a tree; B differs from A in two details. An eye-tracking scanpath draws itself over them: numbered fixation circles, sized by fixation duration, joined by saccade lines. It cycles through three tasks: describing image A only, spotting differences between A and B side by side, and comparing A then B shown one after the other.</title>
+            <defs>
+              <g id="r-scene">
+                <circle class="ink" cx="70" cy="64" r="24"/>
+                <path class="ink-thin" d="M70 28 v-12 M70 100 v12 M34 64 h-12 M106 64 h12 M45 39 l-8 -8 M95 39 l8 -8 M45 89 l-8 8 M95 89 l8 8"/>
+                <path class="ink" d="M226 70 q-4 -22 18 -22 q8 -16 28 -8 q20 -6 24 12 q16 4 10 18 Z"/>
+                <path class="ink" d="M4 252 Q90 196 180 236 T 426 222"/>
+                <path class="ink-thin" d="M8 276 L422 274"/>
+                <path class="ink" d="M150 238 L150 172 L222 172 L222 238 M140 174 L186 132 L232 174"/>
+                <path class="ink-thin" d="M176 238 L176 206 L196 206 L196 238"/>
+                <path class="ink" d="M326 240 L328 196"/>
+                <path class="ink r-fillp" d="M300 200 Q290 160 326 150 Q366 156 358 198 Q342 214 300 200 Z"/>
+                <path class="ink-thin" d="M312 196 L334 178 M336 196 L318 174"/>
+              </g>
+            </defs>
+
+            <g class="rough">
+              <rect class="ink r-frame" x="36" y="56" width="430" height="292"/>
+              <rect class="ink r-frame" x="534" y="56" width="430" height="292"/>
+            </g>
+            <g class="boil">
+              <use href="#r-scene" x="38" y="60"/>
+              <rect class="hatch" x="198" y="244" width="22" height="18"/><rect class="ink-thin" x="198" y="244" width="22" height="18"/>
+              <use href="#r-scene" x="536" y="60"/>
+              <!-- B differs: no window, one extra bird -->
+              <path class="ink" d="M848 128 q10 -10 18 0 q8 -10 18 0"/>
+            </g>
+            <text class="svg-hand r-lbl" x="36" y="40">image A</text>
+            <text class="svg-hand r-lbl" x="534" y="40">image B</text>
+
+            <!-- the two differences, revealed at the end of spot-the-difference -->
+            <g id="r-diffs" class="r-diffs">
+              <circle class="ink-red" cx="209" cy="253" r="24" stroke-dasharray="5 5"/>
+              <circle class="ink-red" cx="707" cy="253" r="24" stroke-dasharray="5 5"/>
+              <circle class="ink-red" cx="866" cy="126" r="26" stroke-dasharray="5 5"/>
+              <circle class="ink-red" cx="368" cy="126" r="26" stroke-dasharray="5 5"/>
+            </g>
+
+            <!-- paper flaps that hide a picture when the task does not show it -->
+            <g id="r-coverA" class="r-cover"><rect x="30" y="50" width="442" height="304" rx="3"/><text class="svg-hand" x="251" y="210" text-anchor="middle">A hidden</text></g>
+            <g id="r-coverB" class="r-cover"><rect x="528" y="50" width="442" height="304" rx="3"/><text class="svg-hand" x="749" y="210" text-anchor="middle">not shown</text></g>
+
+            <!-- scanpath (JS) -->
+            <g id="r-scan">
+              <path id="r-sacc" class="r-sacc" d=""/>
+              <g id="r-fixes"></g>
+              <circle id="r-gaze" class="r-gaze" r="9" cx="-50" cy="-50"/>
+            </g>
+            <text class="svg-hand r-lbl r-pencil" x="964" y="392" text-anchor="end">circle size = fixation duration · number = order</text>
+          </svg>
+          <div class="r-readout">
+            <div class="r-modes" role="group" aria-label="Attention task">
+              <button class="btn r-mb is-on" type="button" data-mode="global" aria-pressed="true">global description</button>
+              <button class="btn r-mb" type="button" data-mode="sel" aria-pressed="false">spot the difference</button>
+              <button class="btn r-mb" type="button" data-mode="seq" aria-pressed="false">sequential comparison</button>
+            </div>
+            <p class="r-count" aria-live="polite"><span class="hand">fixations</span> <b id="r-count">0</b></p>
+          </div>
+          <figcaption class="hand pencil" id="r-mode-cap">task 1 · describe the whole picture: long, spread-out fixations over one image</figcaption>
+        </figure>
+      </div>
+
+      <div class="project-body">
+        <div class="r-main">
+          <p class="project-where hand">HFES 2026 · Body Brain Connect</p>
+          <h3 class="project-title">Visual attention from eye-tracking signals</h3>
+          <p class="project-sum">Analysis pipeline over Pupil Labs Core streams: per-trial timestamp alignment, smoothing and invalid-sample rejection, then fixation, blink, pupil-diameter and duration features compared across three attention tasks. In a 7-participant study, fixation count separated the tasks better than any other measured oculometric variable.</p>
+          <div class="btn-row">
+            <a class="btn" href="https://journals.sagepub.com/eprint/T2T3XWNAEZ9PE2YBN9VY/full" target="_blank" rel="noopener">Paper (SAGE ePrint)</a>
+            <a class="btn" href="https://hfesam2026.conference-program.com/presentation/?id=POST409&amp;sess=sess246" target="_blank" rel="noopener">HFES 2026 poster</a>
+          </div>
+        </div>
+        <ul class="facts">
+          <li><b>7</b> participants, ages 19–36</li>
+          <li><b>3</b> attention tasks</li>
+          <li><b>fixation count</b> strongest discriminator</li>
+          <li><b>Pupil Labs</b> Core gaze, pupil, blink</li>
+        </ul>
+      </div>
+
+      <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
+        <h4>Tasks</h4>
+        <ul>
+          <li>Global: describe one image. Selective: find differences between two images shown side by side (concurrent). Sustained: compare images shown one after another (sequential).</li>
+        </ul>
+        <h4>Signals and pipeline</h4>
+        <ul>
+          <li>Pupil Labs Core streams: gaze position, fixations, blinks, pupil diameter, with per-trial timestamps.</li>
+          <li>High-frequency signal data, not tabular rows: alignment to trial boundaries, smoothing, invalid-sample handling, then per-trial features (fixation count and percentage, blink count and percentage, pupil diameter, task duration).</li>
+          <li>Gaze heatmaps and attention trajectories for interpretation; modular, documented, re-runnable workflow with model-ready outputs.</li>
+        </ul>
+        <h4>Analysis</h4>
+        <ul>
+          <li>Statistical tests across the global, selective and sustained conditions to find which oculometric features separate tasks.</li>
+          <li>Fixation count was the strongest discriminator among the measured variables, under controlled low-demand conditions.</li>
+        </ul>
+        <h4>Scope</h4>
+        <ul>
+          <li>Small preliminary study, not a powered one. The paper reports eye-tracking measures only; fNIRS belongs to the broader Body Brain Connect track and is not part of these findings.</li>
+        </ul>
+        <p class="meta">Co-authored team study. Built the alignment, feature and statistical-comparison pipeline; helped collect and interpret the data.</p>
+      </div></details>
+    </article>
+
+    <!-- Study 2: wheelchair HMI -->
+    <article class="project r-wide" id="p-wheelchair">
+      <div class="project-media">
+        <figure class="sketch r-chair-fig" data-anim>
+          <svg id="r-chair-svg" viewBox="0 0 1000 400" role="img" aria-labelledby="r-chair-t">
+            <title id="r-chair-t">Side view of a power wheelchair with a ZED 2i stereo camera on a front mast. A pedestrian walks toward it inside a YOLO detection box with a live depth readout. A blue dashed line marks where the haptic command is sent early to cover the 1.65 second actuator lag; a red dashed line marks the roughly 1 metre trigger. When the pedestrian reaches it, the 3 by 2 tactor array on the seatback pulses and a speech bubble plays either an instructional or an informative cue.</title>
+            <g class="boil">
+              <path class="ink" d="M20 330 L980 331"/>
+              <path class="r-ground" d="M20 342 L980 342"/>
+              <!-- camera field of view -->
+              <path class="r-fov" d="M318 186 L980 156 L980 330 L330 330 Z"/>
+            </g>
+
+            <!-- trigger lines (150 px per metre from the chair front at x=300) -->
+            <path class="r-line r-line-red" d="M450 336 L450 126"/>
+            <path class="r-line r-line-blue" d="M615 336 L615 126"/>
+            <g class="r-t">
+              <text class="svg-hand r-lbl r-red" x="450" y="114" text-anchor="middle">~1 m trigger</text>
+              <text class="svg-hand r-lbl" x="626" y="114">haptic cmd sent early:</text>
+              <text class="svg-hand r-lbl" x="626" y="138">+ v × 1.65 s actuator lag</text>
+              <path class="r-dim" d="M304 360 L446 360" marker-end="url(#arrowhead)" marker-start="url(#arrowhead)"/>
+              <text class="svg-hand r-lbl r-pencil" x="375" y="388" text-anchor="middle">1 m</text>
+            </g>
+
+            <!-- wheelchair + seated user -->
+            <g class="boil">
+              <circle class="ink r-fill" cx="160" cy="288" r="42"/>
+              <circle class="ink-thin" cx="160" cy="288" r="32"/>
+              <path class="ink-thin" d="M160 256 L160 320 M128 288 L192 288 M137 265 L183 311 M183 265 L137 311"/>
+              <circle class="ink r-fill" cx="276" cy="318" r="12"/>
+              <path class="ink" d="M120 270 L254 270 L276 306 M200 270 L210 300 L250 300"/>
+              <path class="ink" d="M254 270 L268 218"/>
+              <rect class="ink r-fill" x="110" y="172" width="26" height="102" rx="9"/>
+              <path class="ink-thin" d="M186 236 L232 236 L236 226 M236 226 L246 222"/>
+              <!-- user -->
+              <circle class="ink r-fill" cx="166" cy="146" r="17"/>
+              <path class="ink" d="M160 164 L150 238 L222 240 L234 296 M156 184 L194 214 L234 226"/>
+              <!-- ZED 2i on a front mast -->
+              <path class="ink" d="M262 252 L304 192"/>
+              <rect class="ink r-fill" x="290" y="176" width="52" height="18" rx="7"/>
+              <circle class="ink-thin" cx="304" cy="185" r="4.5"/><circle class="ink-thin" cx="328" cy="185" r="4.5"/>
+            </g>
+            <!-- 3x2 seatback tactors + pulses -->
+            <g id="r-tactors">
+              <circle class="r-pulse" cx="123" cy="222" r="10"/>
+              <circle class="r-pulse r-p2" cx="123" cy="222" r="10"/>
+              <circle class="r-pulse r-p3" cx="123" cy="222" r="10"/>
+              <circle class="r-tac" cx="117" cy="198" r="4"/><circle class="r-tac" cx="129" cy="198" r="4"/>
+              <circle class="r-tac" cx="117" cy="222" r="4"/><circle class="r-tac" cx="129" cy="222" r="4"/>
+              <circle class="r-tac" cx="117" cy="246" r="4"/><circle class="r-tac" cx="129" cy="246" r="4"/>
+            </g>
+            <!-- haptic command packet: camera → seatback (JS) -->
+            <path id="r-wire" class="r-wire" d="M300 196 C260 150 190 150 136 196"/>
+            <circle id="r-cmd" class="r-cmd" r="6" cx="-20" cy="-20"/>
+
+            <!-- speech bubble -->
+            <g id="r-bubble" class="r-bubble">
+              <path class="ink r-fill" d="M40 30 L380 28 L382 86 L214 88 L190 112 L184 88 L42 90 Z"/>
+              <text id="r-cue" class="svg-print r-cue" x="211" y="68" text-anchor="middle">“Stop. Person ahead.”</text>
+            </g>
+
+            <!-- pedestrian (JS translates; legs swing via CSS) -->
+            <g id="r-ped" transform="translate(900 0)">
+              <g class="boil">
+                <circle class="ink r-fill" cx="0" cy="206" r="15"/>
+                <path class="ink" d="M0 221 L-2 276 M-1 236 L-18 262 M-1 236 L14 260"/>
+                <g class="r-legs"><path class="ink r-leg1" d="M-2 276 L-14 328"/><path class="ink r-leg2" d="M-2 276 L12 328"/></g>
+              </g>
+              <rect class="r-box" x="-34" y="182" width="66" height="152" rx="2"/>
+              <rect class="r-tag" x="-34" y="156" width="118" height="26"/>
+              <text id="r-z" class="svg-print r-ztxt" x="-28" y="175">person 2.6 m</text>
+            </g>
+          </svg>
+          <ol class="r-pipe" aria-label="Warning loop">
+            <li data-s="0">ZED 2i RGB + depth · 30 fps</li>
+            <li data-s="1">YOLOv10n · conf ≥ 0.90</li>
+            <li data-s="2">track + box-center depth</li>
+            <li data-s="3">~1 m crossing, lag-compensated</li>
+            <li data-s="4">tactors + speech cue</li>
+            <li data-s="5">reaction time logged</li>
+          </ol>
+          <div class="r-cuetoggle" role="group" aria-label="Message type">
+            <button class="btn r-cuebtn is-on" data-cue="inst" type="button" aria-pressed="true">instructional cue</button>
+            <button class="btn r-cuebtn" data-cue="info" type="button" aria-pressed="false">informative cue</button>
+          </div>
+        </figure>
+      </div>
+
+      <div class="project-body">
+        <div class="r-main">
+          <p class="project-where hand">Transportation Research Part F · HFES 2026</p>
+          <h3 class="project-title">AI obstacle alerts for power wheelchairs</h3>
+          <p class="project-sum">An onboard GPU laptop runs YOLOv10n on synchronized ZED 2i RGB + depth at 30 fps; temporal association keeps one stable track, and an inward box-center depth crossing at ~1 m fires the warning. Owned the perception-to-HMI layer: cue selection, a 3×2 seatback tactor array, lag-compensated timing and timestamped response capture.</p>
+          <div class="btn-row">
+            <a class="btn" href="https://www.sciencedirect.com/science/article/pii/S1369847826002962" target="_blank" rel="noopener">Elsevier article</a>
+            <a class="btn" href="https://journals.sagepub.com/doi/full/10.1177/10711813261493634" target="_blank" rel="noopener">HFES paper (SAGE)</a>
+            <a class="btn" href="https://hfesam2026.conference-program.com/presentation/?id=POST130&amp;sess=sess257" target="_blank" rel="noopener">HFES 2026 poster</a>
+          </div>
+        </div>
+        <ul class="facts">
+          <li><b>24 × 24</b> participants × trials</li>
+          <li><b>12</b> warning designs</li>
+          <li><b>~1.65 s</b> haptic lag, compensated</li>
+          <li><b>seatback</b> vibration + instructional cue: faster reactions</li>
+        </ul>
+      </div>
+
+      <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
+        <h4>Perception</h4>
+        <ul>
+          <li>Onboard GPU laptop; synchronized ZED 2i RGB and aligned depth at 30 fps; pretrained YOLOv10n pedestrian detection at a 0.90 confidence threshold.</li>
+          <li>Box center vs image midline sets left/right; lightweight temporal association holds one obstacle across frames so a person does not trigger duplicate warnings.</li>
+          <li>Box-center depth drives the event: an inward crossing of roughly 1 m.</li>
+        </ul>
+        <h4>Timing</h4>
+        <ul>
+          <li>Pilot timing showed ~1.65 s of haptic actuation lag relative to audio. The haptic trigger distance is pushed out by movement speed × actuation delay, so vibration and speech land together at the boundary.</li>
+          <li>Loop: capture → detect/track → boundary crossing → cue and timing selection → actuation → timestamped participant reaction → statistical comparison.</li>
+        </ul>
+        <h4>Study</h4>
+        <ul>
+          <li>24 able-bodied participants × 24 controlled trials; 12 warning designs crossing vibration configuration (seatback, wrist, none), auditory signal (speech, non-speech) and information type (instructional vs hazard location). The HFES paper is the 6-participant pilot of the same system.</li>
+          <li>Seatback vibration gave shorter reaction times than audio-only and higher usefulness; instructional messages beat informative ones on reaction time and usefulness. Non-speech cues helped when there was no vibration; decision accuracy did not differ across conditions.</li>
+          <li>Measures response timing, usefulness and preference, not real-world crash reduction. Separate from the C++17 camera + LiDAR prototype in the Robots chapter.</li>
+        </ul>
+        <p class="meta">Co-authored team publication; the Elsevier article credits Ayush with Software, Methodology and Investigation. Owned the perception-to-HMI integration, warning timing and cue logic, response capture and the comparative analysis.</p>
+      </div></details>
+    </article>
+
+    <!-- Publications, recognition, press -->
+    <div class="r-pubs">
+      <h3>Published, 2026</h3>
+      <ol class="r-publist">
+        <li>
+          <p class="r-title">Measuring Visual Attention Across Concurrent and Sequential Visual Perception Tasks</p>
+          <p class="r-venue">Proceedings of the HFES Annual Meeting (SAGE), 2026 · with J. Chiu, A. Tran, S.-Y. Huang, G. Liu, Y. Yuan, Y. Luo</p>
+          <p class="r-links"><a href="https://journals.sagepub.com/eprint/T2T3XWNAEZ9PE2YBN9VY/full" target="_blank" rel="noopener">SAGE ePrint</a><a href="https://hfesam2026.conference-program.com/presentation/?id=POST409&amp;sess=sess246" target="_blank" rel="noopener">HFES 2026 poster</a></p>
+        </li>
+        <li>
+          <p class="r-title">AI-Enhanced Human-Machine Interface for Power Wheelchair Navigation: Effects of Communication Strategy and Vibrotactile Feedback Location</p>
+          <p class="r-venue">Proceedings of the HFES Annual Meeting (SAGE), 2026 · with S. Tang, A. Shah, S.-Y. Huang, G. Liu, J. Xie, G. Huang</p>
+          <p class="r-links"><a href="https://journals.sagepub.com/doi/full/10.1177/10711813261493634" target="_blank" rel="noopener">SAGE full text</a><a href="https://hfesam2026.conference-program.com/presentation/?id=POST130&amp;sess=sess257" target="_blank" rel="noopener">HFES 2026 poster</a></p>
+        </li>
+        <li>
+          <p class="r-title">Evaluating an AI-enhanced power wheelchair obstacle alert system: Effects of multimodal warning design on warning-response behavior</p>
+          <p class="r-venue">Transportation Research Part F: Traffic Psychology and Behaviour, Vol. 123, 103801 (Elsevier), 2026 · with S. Tang, A. Shah, S.-Y. Huang, G. Liu, J. Xie, G. Huang</p>
+          <p class="r-links"><a href="https://www.sciencedirect.com/science/article/pii/S1369847826002962" target="_blank" rel="noopener">ScienceDirect</a></p>
+        </li>
+      </ol>
+
+      <div class="r-under">
+        <div>
+          <h3>Recognition &amp; press</h3>
+          <ul class="r-awards">
+            <li><b>Winner</b>, SJSU RSCA research competition</li>
+            <li>SJSU delegate to the <b>40th CSU Student Research Competition</b></li>
+            <li>RSCA Fellowship</li>
+            <li>Presented at the SJSU AI Center for Civic and Social Good grand opening</li>
+            <li><a href="https://blogs.sjsu.edu/newsroom/2026/research-spotlight-the-body-brain-connection-at-the-csu-research-competition/" target="_blank" rel="noopener">SJSU NewsCenter research spotlight</a>: the Body Brain Connection at the CSU competition</li>
+            <li><a href="https://blogs.sjsu.edu/idsprofiles/2025/11/23/harnessing-the-power-of-community-with-ayush-sunil-gawai/" target="_blank" rel="noopener">IDS profile</a>: “Harnessing the Power of Community”</li>
+          </ul>
+          <p class="r-exploring hand pencil">also exploring, in a separate SJSU track: language-model training and tuning for scientific-literature understanding and research-paper writing</p>
+        </div>
+        <figure class="r-photo">
+          <span class="tape" aria-hidden="true"></span>
+          <img src="assets/img/demos/research-csu.webp" alt="Presenting Body Brain Connect at the CSU research competition, 2026." width="960" height="541" loading="lazy" decoding="async">
+          <figcaption class="hand pencil">40th CSU Student Research Competition · photo: SJSU NewsCenter</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>
