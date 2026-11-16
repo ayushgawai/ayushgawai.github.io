@@ -1365,6 +1365,225 @@
         "obstacle",
         "so101"
       ]
+    },
+    {
+      "slug": "obstacle",
+      "title": "Real-time obstacle alert policy",
+      "area": "robotics",
+      "where": "C++17 · camera + LiDAR fusion prototype",
+      "summary": "A hardware-independent wheelchair obstacle-alert prototype: multithreaded camera/LiDAR fusion mapping boxes to bearings, and a distance-triggered STOP/CAUTION policy with hysteresis and confirming frames.",
+      "facts": [
+        {
+          "k": "<2.0 m",
+          "v": "CAUTION ring; STOP under 1.0 m"
+        },
+        {
+          "k": "0.25 m",
+          "v": "hysteresis band on the trigger"
+        },
+        {
+          "k": "2 / 5",
+          "v": "confirming frames to escalate / de-escalate"
+        },
+        {
+          "k": "~66.8 ms",
+          "v": "p95 capture-to-decision latency in the laptop simulator"
+        }
+      ],
+      "deep": [
+        "Latest-value slots: a frame slot and a scan slot drop stale work instead of queueing it — perception can never outrun the policy.",
+        "Fusion: a detector thread and a fusion+alert thread map camera boxes onto LiDAR bearings, so a 'person' is a thing in space, not a pixel.",
+        "Policy: depth drives the trigger — STOP under 1.0 m, CAUTION under 2.0 m, with a 0.25 m hysteresis band, two confirming frames to escalate and five to de-escalate, and immediate STOP for very close obstacles.",
+        "The shipped repo is a hardware-independent simulator with scripted detector and LiDAR streams plus interfaces for Jetson YOLOv8/TensorRT and ROS 2 integration — the published ZED 2i/YOLOv10n study lives on the wheelchair project page."
+      ],
+      "decisions": [
+        {
+          "h": "Drop, don't queue",
+          "b": "Latest-value slots mean a slow detector can't feed the policy stale geometry."
+        },
+        {
+          "h": "Distance, not detection, is the trigger",
+          "b": "A box is a hint; the inward depth crossing is the cue, with hysteresis so it can't flicker."
+        }
+      ],
+      "stack": [
+        "C++17",
+        "camera + LiDAR",
+        "Jetson",
+        "YOLOv8/TensorRT (interface)",
+        "ROS 2 (interface)"
+      ],
+      "repo": "https://github.com/ayushgawai/realtime-obstacle-alert",
+      "film": null,
+      "papers": [],
+      "related": [
+        "wheelchair",
+        "warehouse"
+      ]
+    },
+    {
+      "slug": "cicd",
+      "title": "Release pipelines that refuse bad changes",
+      "area": "software",
+      "where": "Coditas 2021 · Zscaler 2024–2025",
+      "summary": "Git-based delivery with automated schema checks and SQL test gates: Docker-standardized environments, CI that blocks schema drift before deploy, and the release-cycle speed that comes with it.",
+      "facts": [
+        {
+          "k": "~17%",
+          "v": "shorter release cycles (Coditas)"
+        },
+        {
+          "k": "5 stages",
+          "v": "commit → build → schema → SQL tests → deploy"
+        },
+        {
+          "k": "Git-based",
+          "v": "schema checks and SQL tests as CI gates (Zscaler)"
+        },
+        {
+          "k": "0",
+          "v": "'works on my machine' classes of failure"
+        }
+      ],
+      "deep": [
+        "Coditas: backend services Dockerized with GitLab CI pipelines; automated build and deploy steps removed the manual release effort and kept staging and production parity.",
+        "Zscaler: Git-based workflows with automated schema checks and SQL tests in GitHub Actions; Docker standardized the build environment end to end.",
+        "The pipeline shape: on the first run, the schema check catches drift and blocks the change; on the next run every stage gets a green check and it deploys."
+      ],
+      "decisions": [
+        {
+          "h": "Block, don't batch",
+          "b": "Schema and SQL tests gate each change, so drift never reaches production to be discovered."
+        }
+      ],
+      "stack": [
+        "Docker",
+        "GitLab CI",
+        "GitHub Actions",
+        "Git",
+        "Jenkins (exposure)"
+      ],
+      "repo": "https://github.com/ayushgawai",
+      "film": null,
+      "papers": [],
+      "related": [
+        "lsmstore",
+        "capflow"
+      ]
+    },
+    {
+      "slug": "formulas",
+      "title": "Compiling Salesforce formulas into verified dbt SQL",
+      "area": "data",
+      "where": "Zscaler · Data Engineer · 2024–2025",
+      "summary": "A metadata-driven compiler: pull formula definitions from the ObjectDetails API, walk the dependency graph depth-first, feed structured context to an LLM, and land validated SQL in version-controlled dbt models.",
+      "facts": [
+        {
+          "k": "depth-first",
+          "v": "traversal over nested formula dependencies"
+        },
+        {
+          "k": "100%",
+          "v": "validation confidence before deployment"
+        },
+        {
+          "k": "~80%",
+          "v": "lower reporting latency after incremental redesign"
+        },
+        {
+          "k": "sampled",
+          "v": "rows reconciled against the live CRM"
+        }
+      ],
+      "deep": [
+        "Pull: formula definitions and complete logic via the Salesforce ObjectDetails API.",
+        "Compile: depth-first traversal maps every nested dependency into a structured JSON context per formula field.",
+        "Generate: the LLM emits optimized SQL from that structured context; the transforms are inserted into dbt models for warehouse execution.",
+        "Verify: automated sampling compares transformed output against live CRM, flags discrepancies programmatically, and reconciliation dashboards gate deployment.",
+        "Ingestion: incremental upserts with change detection, modular transformation layering, and partitioning/clustering tuned for Snowflake; secrets in AWS Secrets Manager."
+      ],
+      "decisions": [
+        {
+          "h": "Engineer the verification",
+          "b": "Prompt tuning alone is not a control; sampled reconciliation against source truth is."
+        },
+        {
+          "h": "Deterministic SQL out of a dynamic source",
+          "b": "The formula logic is compiled once into versioned, reproducible warehouse code."
+        }
+      ],
+      "stack": [
+        "Python",
+        "SQL",
+        "Snowflake",
+        "dbt",
+        "Matillion",
+        "Salesforce API",
+        "AWS S3/EC2",
+        "Docker",
+        "GitHub Actions"
+      ],
+      "repo": "https://github.com/ayushgawai",
+      "film": null,
+      "papers": [],
+      "related": [
+        "zoox",
+        "transit"
+      ]
+    },
+    {
+      "slug": "latentview",
+      "title": "An 800 TB HDFS → S3 migration behind a test gate",
+      "area": "data",
+      "where": "LatentView Analytics · Data Engineer · 2021–2023",
+      "summary": "Controlled enterprise migration: AWS Data Sync moves the bytes, bash tracks every batch, and a Delta Lake + pytest validation framework proves source and destination match before go-live.",
+      "facts": [
+        {
+          "k": "~800 TB",
+          "v": "migrated with zero production data errors"
+        },
+        {
+          "k": "99.6%",
+          "v": "validation accuracy"
+        },
+        {
+          "k": "~45%",
+          "v": "fewer client escalations (SLA alerting)"
+        },
+        {
+          "k": "18 → 6 min",
+          "v": "one major reporting pipeline, after CTE + partition rewrites"
+        }
+      ],
+      "deep": [
+        "Transfer: AWS Data Sync with bash scripts copying and tracking every batch.",
+        "Validation: Delta Lake–style change tracking plus Python/pytest dataset checks comparing source and destination for row mismatches, null anomalies and type drift, flagged before release.",
+        "SLAs: CloudWatch metrics, SNS alerts and Lambda triggers orchestrated in Airflow detect SLA breaches and log root-cause traces; containerized, modular MWAA-style DAGs replaced the legacy pipelines.",
+        "Performance: layered CTE structure, partition pruning and execution tuning took a major reporting model from ~18 to 6 minutes."
+      ],
+      "decisions": [
+        {
+          "h": "Controlled migration",
+          "b": "Validation gates make the move auditable — a small failure can't cascade into a client reporting error."
+        }
+      ],
+      "stack": [
+        "Python",
+        "Spark / Databricks",
+        "Snowflake",
+        "AWS S3",
+        "Data Sync",
+        "Lambda",
+        "CloudWatch",
+        "Airflow",
+        "pytest"
+      ],
+      "repo": "https://github.com/ayushgawai",
+      "film": null,
+      "papers": [],
+      "related": [
+        "transit"
+      ]
     }
   ]
 }

@@ -1,0 +1,35 @@
+<!-- Experience detail page: the single home for one company's full story.
+     Nothing about this org is repeated anywhere else on the site. -->
+<section class="chapter work" id="work" data-tab="{page}" aria-labelledby="work-title">
+  <header class="chapter-head page">
+    <p class="chapter-kicker hand">{dates} · {org}</p>
+    <h2 id="work-title" class="chapter-title">{org}</h2>
+    <p class="chapter-lede">{role}. {one}</p>
+  </header>
+
+  <div class="page">
+    <div class="work-two">
+      <div class="work-numbers">
+        <h3 class="proj-sub hand">on the record</h3>
+        {numbers}
+      </div>
+      <div class="work-story">
+        <h3 class="proj-sub hand">what I actually did</h3>
+        {story}
+      </div>
+    </div>
+
+    <div class="proj-rows">
+      <div>
+        <h3 class="proj-sub hand">the stack</h3>
+        <ul class="tags">{stack}</ul>
+      </div>
+      <div>
+        <h3 class="proj-sub hand">the builds from here</h3>
+        <div class="btn-row work-projs">{projects}</div>
+      </div>
+    </div>
+
+    <p class="proj-back"><a class="hand" href="experience.html">← back to the route</a> <a class="hand" href="projects.html">all projects</a></p>
+  </div>
+</section>

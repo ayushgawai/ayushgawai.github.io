@@ -193,8 +193,90 @@ def build_projects():
                     "robotics.html","autonomy.html","research.html","hackathons.html","media.html",
                     "recognition.html","contact.html"]:
             html = html.replace(f'href="{lnk}"', f'href="../{lnk}"')
+        html = html.replace('href="assets/', 'href="../assets/')   # topnav resume pdf etc
         (R / "project" / f"{slug}.html").write_text(inc_all(html))
     print(f"built project/ detail pages ({len(data['items'])})")
+
+def build_works():
+    data = json.loads((src / "data" / "experiences.json").read_text())
+    (R / "work").mkdir(exist_ok=True)
+    for it in data["items"]:
+        slug, ab, title = it["slug"], "../", it["org"]
+        desc = f'{it["org"]} — {it["role"]} · {it["dates"]}'
+        numbers = "".join(f'<p class="fact"><b>{_esc(n["k"])}</b>{_esc(n.get("v",""))}</p>' for n in it.get("numbers", []))
+        numbers = f'<div class="facts">{numbers}</div>'
+        story = "".join(f'<li>{_esc(p)}</li>' for p in it.get("deep", []))
+        story = f'<ul class="deep-list">{story}</ul>'
+        stack = "".join(f"<li>{_esc(x)}</li>" for x in it.get("stack", []))
+        projs = "".join(f'<a class="btn" href="project/{r}.html">{_esc(r.replace("-"," ").replace("zoox","Zoox").title()) if r not in ("zoox",) else "Zoox (overview)"}</a>' for r in it.get("projects", []))
+        body = partial("work-detail", page="experience",
+                       org=_esc(title), role=_esc(it.get("role","")), dates=_esc(it.get("dates","")),
+                       one=_esc(it.get("one","")), numbers=numbers, story=story, stack=stack, projects=projs)
+        html = f"""<!doctype html>
+<html lang="en">
+<head>
+{partial('head', title=f'{title} — experience · Ayush Gawai', desc=desc, url=f"{ROOT}/work/{slug}.html", assetbase='../')}
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+{partial('defs')}
+
+{partial('topnav', page="experience")}
+
+<main id="main">
+{body}
+</main>
+
+<script src="{ab}assets/site.js" defer></script>
+</body>
+</html>
+"""
+        for lnk in ["index.html","experience.html","projects.html","ai.html","data.html","software.html",
+                    "robotics.html","autonomy.html","research.html","hackathons.html","media.html",
+                    "recognition.html","contact.html"]:
+            html = html.replace(f'href="{lnk}"', f'href="../{lnk}"')
+        html = html.replace('href="project/', 'href="../project/')
+        html = html.replace('href="assets/', 'href="../assets/')
+        (R / "work" / f"{slug}.html").write_text(inc_all(html))
+    print(f"built work/ experience pages ({len(data['items'])})")
+
+def build_projlib():
+    """Regenerate src/sections/projlib.html from the single source of truth so the
+    library list never diverges from the project detail pages."""
+    data = json.loads((src / "data" / "projects.json").read_text())
+    area_label = {"ai":"AI · LLM","data":"data","software":"software engineering",
+                  "robotics":"robotics","autonomy":"autonomy & Zoox","research":"research","marketing":"marketing ML"}
+    order = ["ai","data","software","robotics","autonomy","research","marketing"]
+    by = {a: [it for it in data["items"] if it.get("area")==a] for a in order}
+    blocks = []
+    for a in order:
+        items = by.get(a, [])
+        if not items:
+            continue
+        cards = []
+        for it in items:
+            sl = it["slug"]
+            where = it.get("where","")
+            where = where.split(" · ")[-1].strip() if " · " in where else where
+            cards.append(
+                '      <a class="lib-card" href="project/%s.html">\n'
+                '        <p class="lib-where hand">%s</p>\n'
+                '        <h3 class="lib-t">%s</h3>\n'
+                '        <p class="lib-sum">%s <span class="lib-open hand">open the full work →</span></p>\n'
+                '      </a>' % (sl, _esc(area_label.get(a,a)), _esc(it["title"]), _esc(it.get("summary","")))
+            )
+        blocks.append('    <h3 class="lib-group hand">%s</h3>\n    <div class="lib-grid">\n%s\n    </div>' % (_esc(area_label.get(a,a)), "\n".join(cards)))
+    out = ('<!-- GENERATED from src/data/projects.json by build.py: edit the data, not this file. -->\n'
+           '<section class="chapter" id="projlib" data-tab="Projects" aria-labelledby="projlib-title">\n'
+           '  <header class="chapter-head page">\n'
+           '    <p class="chapter-kicker hand">the full library</p>\n'
+           '    <h2 id="projlib-title" class="chapter-title">Every build, in one list</h2>\n'
+           '    <p class="chapter-lede">%d projects, each with its own page: the film, the architecture, the numbers and the links. A card may appear under more than one area — its full story lives in one place, on its project page.</p>\n'
+           '  </header>\n  <div class="page">\n%s\n  </div>\n</section>\n' % (len(data["items"]), "\n".join(blocks)))
+    (src / "sections" / "projlib.html").write_text(out)
+    print("generated src/sections/projlib.html (%d projects)" % len(data["items"]))
+
 
 def main():
     only = sys.argv[1:] or [p[0] for p in PAGES]
@@ -205,6 +287,10 @@ def main():
         print(f"built {file}")
     if "project/" not in " ".join(only):
         build_projects()
+    if "projlib" not in " ".join(only):
+        build_projlib()
+    if "work/" not in " ".join(only):
+        build_works()
 
     js = sorted((src / "js").glob("*.js"))
     bad = [p.name for p in js if subprocess.run(["node", "--check", str(p)], capture_output=True).returncode]

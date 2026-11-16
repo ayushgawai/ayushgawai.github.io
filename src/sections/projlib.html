@@ -1,77 +1,176 @@
-<!-- Full project library: every project as a card, grouped, each linking to its own detail page.
-     Detail pages live under project/<slug>.html (built in the detail-page pass). Until then,
-     links fall back to the owning category anchor so nothing 404s. -->
+<!-- GENERATED from src/data/projects.json by build.py: edit the data, not this file. -->
 <section class="chapter" id="projlib" data-tab="Projects" aria-labelledby="projlib-title">
   <header class="chapter-head page">
     <p class="chapter-kicker hand">the full library</p>
     <h2 id="projlib-title" class="chapter-title">Every build, in one list</h2>
-    <p class="chapter-lede">The complete index. Each entry opens its own page — video, architecture, the technical depth, and the links. No company or project is repeated across the site.</p>
+    <p class="chapter-lede">29 projects, each with its own page: the film, the architecture, the numbers and the links. A card may appear under more than one area — its full story lives in one place, on its project page.</p>
   </header>
-
   <div class="page">
+    <h3 class="lib-group hand">AI · LLM</h3>
     <div class="lib-grid">
-
-      <article class="lib-card" id="lib-sentinel">
-        <p class="lib-where hand">AI · edge</p>
+      <a class="lib-card" href="project/sentinel.html">
+        <p class="lib-where hand">AI · LLM</p>
         <h3 class="lib-t">Sentinel AI</h3>
-        <p class="lib-sum">Local multi-camera safety: cheap on every frame, VLM only on escalation. <a class="hand" href="project/sentinel.html">open the full work →</a></p>
-      </article>
-
-      <article class="lib-card" id="lib-predicates">
-        <p class="lib-where hand">Zoox · data</p>
+        <p class="lib-sum">A fully local, privacy-first multi-camera safety system on the HP ZGX Nano: cheap on every frame, and expensive reasoning only when an escalation is credible. Video never leaves the machine. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/blast.html">
+        <p class="lib-where hand">AI · LLM</p>
+        <h3 class="lib-t">Blast Radius</h3>
+        <p class="lib-sum">Answers the data-engineer&#x27;s scariest question — &#x27;if I rename this upstream field, what breaks before I merge?&#x27; — with a fleet of coding agents and a human-controlled merge gate. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/carbonshift.html">
+        <p class="lib-where hand">AI · LLM</p>
+        <h3 class="lib-t">CarbonShift</h3>
+        <p class="lib-sum">GPU training that follows the grid: a 60-second control loop polls CAISO price and carbon, maps them to four Eco-Pulse states, and drives the A100&#x27;s power cap through NVML — from full 250 W down to a checkpointed pause. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/leo.html">
+        <p class="lib-where hand">AI · LLM</p>
+        <h3 class="lib-t">LEO satellite coverage-risk agent</h3>
+        <p class="lib-sum">Scores 4.67M candidate broadband-install sites for LEO-satellite obstruction risk — tree canopy and terrain, the gap between &#x27;covered on the map&#x27; and &#x27;works in practice&#x27; — with a Claude tool-use orchestrator over five deterministic tools. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/slackbot.html">
+        <p class="lib-where hand">AI · LLM</p>
+        <h3 class="lib-t">Read-only ops bot</h3>
+        <p class="lib-sum">A Slack Q&amp;A that can explain the fleet and never act on it: answers only from the published weekly snapshot, with both report and question fenced as untrusted data. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+    </div>
+    <h3 class="lib-group hand">data</h3>
+    <div class="lib-grid">
+      <a class="lib-card" href="project/predicates.html">
+        <p class="lib-where hand">data</p>
         <h3 class="lib-t">Grounded SQL predicates</h3>
-        <p class="lib-sum">LLM drafts a verification predicate that is executed and checked before it is trusted. <a class="hand" href="project/predicates.html">open the full work →</a></p>
-      </article>
-
-      <article class="lib-card" id="lib-so101">
+        <p class="lib-sum">Quality validation for ~409 active perception data miners: the LLM drafts a SQL true-positive predicate, the system executes and verifies it, and scoring is plain SQL over the full labeled population. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/transit.html">
+        <p class="lib-where hand">data</p>
+        <h3 class="lib-t">Transit Analytics</h3>
+        <p class="lib-sum">A complete transit data platform: GTFS schedules and live departures meet in one Snowflake warehouse, and a forecasting layer sits on top — served through FastAPI and a React/TypeScript operator dashboard with text-to-SQL chat. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/wikirisk.html">
+        <p class="lib-where hand">data</p>
+        <h3 class="lib-t">WikiRisk</h3>
+        <p class="lib-sum">Predicts a harmful Wikipedia edit before it lands: historical Spark ingestion over 29+ GB of revisions trains a cross-validated model, then a live Structured Streaming job scores every event as it arrives. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/fleet-reporting.html">
+        <p class="lib-where hand">data</p>
+        <h3 class="lib-t">Fleet reporting + failure tripwire</h3>
+        <p class="lib-sum">Weekly Postgres snapshots of the whole miner fleet into immutable, versioned S3 artifacts, with event-driven failure alerts that cut discovery from days to minutes. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/transitrisk.html">
+        <p class="lib-where hand">data</p>
+        <h3 class="lib-t">TransitRisk — delay forecasting</h3>
+        <p class="lib-sum">Predicts whether a station-route pair will see elevated delay in the next hour: seven classifiers, probability calibration, conformal prediction and a cost-optimal alert threshold when a miss costs 5× a false alarm. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/formulas.html">
+        <p class="lib-where hand">data</p>
+        <h3 class="lib-t">Compiling Salesforce formulas into verified dbt SQL</h3>
+        <p class="lib-sum">A metadata-driven compiler: pull formula definitions from the ObjectDetails API, walk the dependency graph depth-first, feed structured context to an LLM, and land validated SQL in version-controlled dbt models. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/latentview.html">
+        <p class="lib-where hand">data</p>
+        <h3 class="lib-t">An 800 TB HDFS → S3 migration behind a test gate</h3>
+        <p class="lib-sum">Controlled enterprise migration: AWS Data Sync moves the bytes, bash tracks every batch, and a Delta Lake + pytest validation framework proves source and destination match before go-live. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+    </div>
+    <h3 class="lib-group hand">software engineering</h3>
+    <div class="lib-grid">
+      <a class="lib-card" href="project/lsmstore.html">
+        <p class="lib-where hand">software engineering</p>
+        <h3 class="lib-t">LSMStore — LSM-tree key-value store</h3>
+        <p class="lib-sum">A Log-Structured Merge tree engine built from first principles: fsynced WAL, sorted memtables, immutable SSTables with Bloom filters, tombstones and crash-aware recovery. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/accessimed.html">
+        <p class="lib-where hand">software engineering</p>
+        <h3 class="lib-t">AccessiMed</h3>
+        <p class="lib-sum">A CLI-first accessibility scanner with reviewable fixes: Playwright + axe-core audits against WCAG 2.1 A/AA, deterministic or LLM remediation, and every change ships as a reviewed git diff into a CI gate. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/query-engine.html">
+        <p class="lib-where hand">software engineering</p>
+        <h3 class="lib-t">Columnar query engine</h3>
+        <p class="lib-sum">A mini analytical engine with an explicit plan, optimizer passes and a vectorized executor over column files with min/max skipping — checked against a row-at-a-time reference on 4M rows. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/orderbook.html">
+        <p class="lib-where hand">software engineering</p>
+        <h3 class="lib-t">Order-book matching engine</h3>
+        <p class="lib-sum">A single-instrument limit order book with O(1) cancels, correct reprice semantics and sub-microsecond tail latency on a multi-million-message replay. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/dedup-store.html">
+        <p class="lib-where hand">software engineering</p>
+        <h3 class="lib-t">Dedup store</h3>
+        <p class="lib-sum">FastCDC-style chunking with SHA-256 fingerprints and crash-resumable mark-and-sweep GC, plus replication that only sends what the far end is missing. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/capflow.html">
+        <p class="lib-where hand">software engineering</p>
+        <h3 class="lib-t">CapFlow — CDC replication</h3>
+        <p class="lib-sum">A CDC pipeline that mirrors inserts, updates and deletes from a change log into warehouse tables, reconciles row by row, and can backfill or replay from a saved LSN. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/apm-explorer.html">
+        <p class="lib-where hand">software engineering</p>
+        <h3 class="lib-t">APM trace explorer</h3>
+        <p class="lib-sum">Ingests OTLP/HTTP traces, assembles span trees and computes per-service and per-endpoint RED metrics with histogram percentiles — with a D3 service map, latency heatmap and rolling-baseline anomaly flags. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/gpu-orchestrator.html">
+        <p class="lib-where hand">software engineering</p>
+        <h3 class="lib-t">GPU job orchestrator</h3>
+        <p class="lib-sum">A scheduler API and Python SDK over 512 GPUs across AWS, GCP and on-prem pools: gang scheduling, tenant quotas, spot-preemption rollback and pool placement by cost and type. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/agent-fleet.html">
+        <p class="lib-where hand">software engineering</p>
+        <h3 class="lib-t">Agent fleet</h3>
+        <p class="lib-sum">A CLI and dashboard that gives each coding-agent task its own Git branch and worktree, shards tests across workers, and gates every diff through a review gate before a human approves. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/cicd.html">
+        <p class="lib-where hand">software engineering</p>
+        <h3 class="lib-t">Release pipelines that refuse bad changes</h3>
+        <p class="lib-sum">Git-based delivery with automated schema checks and SQL test gates: Docker-standardized environments, CI that blocks schema drift before deploy, and the release-cycle speed that comes with it. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+    </div>
+    <h3 class="lib-group hand">robotics</h3>
+    <div class="lib-grid">
+      <a class="lib-card" href="project/so101.html">
         <p class="lib-where hand">robotics</p>
         <h3 class="lib-t">SO-101 imitation learning</h3>
-        <p class="lib-sum">ACT vs SmolVLA on 50 teleoperated demos; the EEPROM fix that unblocked it. <a class="hand" href="project/so101.html">open the full work →</a></p>
-      </article>
-
-      <article class="lib-card" id="lib-wheelchair">
-        <p class="lib-where hand">research</p>
-        <h3 class="lib-t">AssistAI wheelchair</h3>
-        <p class="lib-sum">Depth-triggered, multimodal obstacle warnings; a published study of cue design. <a class="hand" href="project/wheelchair.html">open the full work →</a></p>
-      </article>
-
-      <article class="lib-card" id="lib-transit">
-        <p class="lib-where hand">data platform</p>
-        <h3 class="lib-t">Transit Analytics</h3>
-        <p class="lib-sum">GTFS and live departures into a forecasting operator dashboard. <a class="hand" href="project/transit.html">open the full work →</a></p>
-      </article>
-
-      <article class="lib-card" id="lib-lsmstore">
-        <p class="lib-where hand">systems</p>
-        <h3 class="lib-t">LSM-tree key-value store</h3>
-        <p class="lib-sum">WAL recovery, Bloom-filtered SSTables, tombstones, crash-aware compaction. <a class="hand" href="project/lsmstore.html">open the full work →</a></p>
-      </article>
-
-      <article class="lib-card" id="lib-blast">
-        <p class="lib-where hand">agents · hackathon</p>
-        <h3 class="lib-t">Blast Radius</h3>
-        <p class="lib-sum">One schema rename caught across three repos before merge by an agent fleet. <a class="hand" href="project/blast.html">open the full work →</a></p>
-      </article>
-
-      <article class="lib-card" id="lib-carbonshift">
-        <p class="lib-where hand">AI · hackathon</p>
-        <h3 class="lib-t">CarbonShift</h3>
-        <p class="lib-sum">GPU training that follows the grid on a 60-second control loop. <a class="hand" href="project/carbonshift.html">open the full work →</a></p>
-      </article>
-
-      <article class="lib-card" id="lib-leo">
-        <p class="lib-where hand">AI · geospatial</p>
-        <h3 class="lib-t">LEO coverage-risk agent</h3>
-        <p class="lib-sum">A tool-use agent scoring 4.7M satellite sites against canopy and terrain. <a class="hand" href="project/leo.html">open the full work →</a></p>
-      </article>
-
-      <article class="lib-card" id="lib-mmm">
-        <p class="lib-where hand">marketing ML</p>
-        <h3 class="lib-t">MarketMIX (MMM + MTA)</h3>
-        <p class="lib-sum">Bayesian mix model plus survival MTA feeding a constrained SLSQP budget optimizer. <a class="hand" href="project/mmm.html">open the full work →</a></p>
-      </article>
-
+        <p class="lib-sum">Six-joint leader/follower arms with Feetech STS3215 servos: 50 teleoperated demonstrations, ACT trained from scratch on a ResNet-18 backbone and SmolVLA fine-tuning, then physical pick-and-place rollouts with video-measured error. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/warehouse.html">
+        <p class="lib-where hand">robotics</p>
+        <h3 class="lib-t">Warehouse case perception</h3>
+        <p class="lib-sum">Detects cases in RGB-D warehouse frames and tracks them in 3D: YOLO/OpenCV detection, Kalman prediction, two-stage Hungarian assignment through occlusion, and depth back-projection to XYZ. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/obstacle.html">
+        <p class="lib-where hand">robotics</p>
+        <h3 class="lib-t">Real-time obstacle alert policy</h3>
+        <p class="lib-sum">A hardware-independent wheelchair obstacle-alert prototype: multithreaded camera/LiDAR fusion mapping boxes to bearings, and a distance-triggered STOP/CAUTION policy with hysteresis and confirming frames. <span class="lib-open hand">open the full work →</span></p>
+      </a>
     </div>
-    <p class="lib-note hand pencil">Full detail pages are being built out — a card's "open the full work" link falls back to its section until then.</p>
+    <h3 class="lib-group hand">autonomy &amp; Zoox</h3>
+    <div class="lib-grid">
+      <a class="lib-card" href="project/zoox.html">
+        <p class="lib-where hand">autonomy &amp; Zoox</p>
+        <h3 class="lib-t">Zoox — perception data platform</h3>
+        <p class="lib-sum">The umbrella for the Zoox perception work: automated quality validation across ~409 data miners, weekly fleet snapshots, and a read-only ops Q&amp;A — the single source for the company&#x27;s story. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+    </div>
+    <h3 class="lib-group hand">research</h3>
+    <div class="lib-grid">
+      <a class="lib-card" href="project/wheelchair.html">
+        <p class="lib-where hand">research</p>
+        <h3 class="lib-t">AssistAI — wheelchair obstacle alert</h3>
+        <p class="lib-sum">An AI obstacle-alert system for power wheelchairs where the real contribution is the human-machine interface: depth-triggered, multimodal warnings — twelve tactors plus speech or tone cues — measured by how fast a real person responds. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+      <a class="lib-card" href="project/eyetracking.html">
+        <p class="lib-where hand">research</p>
+        <h3 class="lib-t">Visual attention, measured</h3>
+        <p class="lib-sum">Whether eye and brain signals can objectively distinguish global, selective and sustained visual attention — built as a reproducible pipeline over Pupil Labs streams, and published in SAGE / HFES 2026. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+    </div>
+    <h3 class="lib-group hand">marketing ML</h3>
+    <div class="lib-grid">
+      <a class="lib-card" href="project/mmm.html">
+        <p class="lib-where hand">marketing ML</p>
+        <h3 class="lib-t">MarketMIX — MMM + MTA budget optimizer</h3>
+        <p class="lib-sum">A unified marketing-measurement system: a Bayesian mix model and a survival multi-touch model over 16M journey events, joined by Shapley attribution and a constrained SLSQP optimizer that hands back a spendable budget plan. <span class="lib-open hand">open the full work →</span></p>
+      </a>
+    </div>
   </div>
 </section>

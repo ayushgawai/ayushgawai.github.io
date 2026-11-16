@@ -71,3 +71,13 @@ a.hack-card:hover .hack-cta, a.sw-card:hover .sw-cta { text-decoration: underlin
 @media (max-width: 560px) {
   .hack-grid, .lib-grid, .sw-grid, .rec-grid { grid-template-columns: 1fr; }
 }
+
+/* project library: area group headings */
+.lib-group { font: 600 var(--t-lg)/1 var(--f-hand); color: var(--blue);
+  margin: calc(var(--u) * 2.5) 0 calc(var(--u) * 1.2); }
+.lib-card { display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: inherit;
+  background: var(--paper-card); border: 1.5px solid var(--ink); border-radius: 4px;
+  padding: 16px 14px; box-shadow: var(--shadow-card); transition: transform .18s var(--ease-out); }
+.lib-card:hover { transform: translateY(-3px) rotate(-.3deg); }
+.lib-card .lib-open { display: block; margin-top: 6px; color: var(--blue); }
+.lib-card:hover .lib-open { text-decoration: underline; }

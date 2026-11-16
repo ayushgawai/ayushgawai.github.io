@@ -443,6 +443,16 @@ a.hack-card:hover .hack-cta, a.sw-card:hover .sw-cta { text-decoration: underlin
   .hack-grid, .lib-grid, .sw-grid, .rec-grid { grid-template-columns: 1fr; }
 }
 
+/* project library: area group headings */
+.lib-group { font: 600 var(--t-lg)/1 var(--f-hand); color: var(--blue);
+  margin: calc(var(--u) * 2.5) 0 calc(var(--u) * 1.2); }
+.lib-card { display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: inherit;
+  background: var(--paper-card); border: 1.5px solid var(--ink); border-radius: 4px;
+  padding: 16px 14px; box-shadow: var(--shadow-card); transition: transform .18s var(--ease-out); }
+.lib-card:hover { transform: translateY(-3px) rotate(-.3deg); }
+.lib-card .lib-open { display: block; margin-top: 6px; color: var(--blue); }
+.lib-card:hover .lib-open { text-decoration: underline; }
+
 /* 08-project.css */
 /* Project detail pages (project/<slug>.html): the single home for one project's
    full story — film, numbers, architecture depth, decisions, stack, links. */
@@ -499,6 +509,48 @@ a.hack-card:hover .hack-cta, a.sw-card:hover .sw-cta { text-decoration: underlin
 
 @media (max-width: 820px) {
   .proj-two, .proj-rows { grid-template-columns: 1fr; gap: calc(var(--u) * 2); }
+}
+
+/* 09-work.css */
+/* Experience detail pages (work/<slug>.html) + the "main stops" mini-cards on the
+   experience trail. Reuses notebook tokens; .fact/.deep-list/.proj-* come from 08-project.css. */
+
+.work { scroll-margin-top: 80px; }
+
+/* two-column: record numbers left, story right */
+.work-two { display: grid; grid-template-columns: minmax(0, 360px) 1fr; gap: calc(var(--u) * 3);
+  padding: calc(var(--u) * 1.5) 0; border-top: 1.5px dashed var(--grid-major); }
+.work-two .proj-sub { margin: 0 0 calc(var(--u) * 1); }
+.work-projs .btn { margin-bottom: 8px; }
+
+/* the five mini-cards at the top of the experience trail */
+.xp-cards-wrap { margin-bottom: calc(var(--u) * 2.5); }
+.xp-cards { list-style: none; margin: 0; padding: 0; display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr)); gap: calc(var(--u) * 1.2); }
+.xp-mini { position: relative; display: flex; flex-direction: column; gap: 3px;
+  background: var(--paper-card); border: 1.5px solid var(--ink); border-radius: 4px;
+  padding: 14px 14px 12px; box-shadow: var(--shadow-card); transform: rotate(-.5deg); }
+.xp-mini:nth-child(even) { transform: rotate(.5deg); }
+.xp-mini::before { content: ""; position: absolute; top: -10px; left: 50%; width: 70px; height: 20px;
+  transform: translateX(-50%) rotate(-2deg); background: var(--tape); mix-blend-mode: multiply;
+  clip-path: polygon(3% 0, 97% 4%, 100% 50%, 96% 100%, 2% 96%, 0 50%); }
+.xp-mini-org { font: 800 1rem/1.15 var(--f-print); color: var(--ink); letter-spacing: -.01em; }
+.xp-mini-hand { font-size: var(--t-xs); color: var(--ink-3); }
+.xp-mini-go { margin-top: auto; font-size: var(--t-xs); color: var(--blue); text-decoration: none; }
+.xp-mini-go:hover { text-decoration: underline; }
+.xp-cards-note { margin-top: calc(var(--u) * 1.5); color: var(--ink-3); }
+
+/* "full page →" affordance on the trail stops */
+.pt-more { font: 600 13px var(--f-print); color: var(--blue); text-decoration: none;
+  padding: 4px 8px; border: 1.25px solid rgba(35,70,176,.4); border-radius: 4px 9px 5px 8px; }
+.pt-more:hover { text-decoration: underline; background: rgba(35,70,176,.06); }
+
+@media (max-width: 1000px) {
+  .xp-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .work-two { grid-template-columns: 1fr; gap: calc(var(--u) * 2); }
+}
+@media (max-width: 600px) {
+  .xp-cards { grid-template-columns: 1fr 1fr; }
 }
 
 /* 10-hero.css */
