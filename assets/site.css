@@ -264,6 +264,8 @@ main { position: relative; overflow-x: clip; }  /* rotated tape/doodles must nev
 }
 #top .hero-copy a, #top .hero-copy button { pointer-events: auto; }
 #top .hero-main { position: relative; max-width: 62rem; }
+/* each line shrinks to its text so the canvas layout (10-hero.js) can hang tags beside it */
+@media (min-width: 761px) { #top .hero-main > * { width: fit-content; } }
 
 #top .hero-name {
   font: 800 var(--t-hero)/.88 var(--f-print); letter-spacing: -.045em; margin: 0 0 calc(var(--u) * .75) -.04em;
@@ -280,7 +282,7 @@ main { position: relative; overflow-x: clip; }  /* rotated tape/doodles must nev
 
 /* the "there's a breeze" note, with an arrow up at the mobile */
 #top .hero-hint {
-  position: absolute; right: 4%; top: calc(var(--u) * -3); margin: 0;
+  position: absolute; right: 0; bottom: 0; margin: 0;
   display: flex; align-items: flex-start; gap: 4px; font-size: var(--t-md); color: var(--blue);
   transform: rotate(-3deg); line-height: 1.25;
 }
@@ -305,15 +307,18 @@ main { position: relative; overflow-x: clip; }  /* rotated tape/doodles must nev
 @keyframes hero-rise { from { opacity: 0; transform: translateY(14px); } }
 
 
+@media (max-width: 1000px) { /* no room beside the buttons: the hint sits above the name, right-aligned */
+  #top .hero-hint { position: relative; right: auto; bottom: auto; margin: 0 0 6px auto; text-align: right; }
+  #top .hero-facts span { display: block; }
+  #top .hero-facts i { display: none; }
+}
 @media (max-width: 760px) {
   #top.hero { min-height: 0; justify-content: flex-start; padding-top: max(420px, 58svh); padding-bottom: calc(var(--u) * 2.5); }
   #top .hero-name { margin-bottom: calc(var(--u) / 2); }
   #top .hero-lede { font-size: var(--t-md); }
-  #top .hero-hint { position: relative; top: auto; right: auto; justify-content: flex-end; margin: 0 0 6px; font-size: var(--t-sm); white-space: normal; text-align: right; }
+  #top .hero-hint { justify-content: flex-end; font-size: var(--t-sm); }
   #top .hero-hint-arrow { margin-top: -26px; width: 34px; height: 40px; }
   #top .hero-social { margin-left: 4px; }
-  #top .hero-facts span { display: block; }
-  #top .hero-facts i { display: none; }
   #top .hero-note { width: min(17rem, calc(100vw - 32px)); }
 }
 
@@ -1727,7 +1732,7 @@ main { position: relative; overflow-x: clip; }  /* rotated tape/doodles must nev
 /* films: four generated project films (Remotion, silent + captioned) as taped notebook reels.
    Native <video preload="none">: only the poster loads until a visitor presses play. */
 
-#films .fl-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(var(--u) * 3) calc(var(--u) * 2); }
+#films .fl-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(var(--u) * 3) calc(var(--u) * 1.5); }
 #films .fl-card { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
 
 /* a reel taped into the notebook */
@@ -1738,6 +1743,8 @@ main { position: relative; overflow-x: clip; }  /* rotated tape/doodles must nev
 #films .fl-card:nth-child(2) .fl-frame { transform: rotate(.7deg); }
 #films .fl-card:nth-child(3) .fl-frame { transform: rotate(.4deg); }
 #films .fl-card:nth-child(4) .fl-frame { transform: rotate(-.45deg); }
+#films .fl-card:nth-child(5) .fl-frame { transform: rotate(.55deg); }
+#films .fl-card:nth-child(6) .fl-frame { transform: rotate(-.3deg); }
 #films .fl-frame .tape { z-index: 3; }
 #films .fl-card:nth-child(even) .tape { left: 32%; transform: translateX(-50%) rotate(4deg); }
 #films .fl-frame video {
@@ -1751,11 +1758,12 @@ main { position: relative; overflow-x: clip; }  /* rotated tape/doodles must nev
 #films .fl-tag { font: 600 14px/1 var(--f-print); color: var(--ink-3); }
 
 #films .fl-title { font-size: var(--t-lg); letter-spacing: -.01em; margin: calc(var(--u) * 1.25) 0 8px; }
-#films .fl-cap { font-size: var(--t-md); line-height: 1.55; color: var(--ink); max-width: 56ch; margin: 0 0 16px; }
+#films .fl-cap { font-size: var(--t-md); line-height: 1.5; color: var(--ink); max-width: 56ch; margin: 0 0 16px; }
 #films .fl-cap code { font-size: .88em; background: rgba(35, 70, 176, .07); padding: 1px 5px; border-radius: 3px; overflow-wrap: anywhere; }
 #films .fl-card .btn { margin-top: auto; }
 #films .fl-note { margin: auto 0 0; font-size: var(--t-md); }
 
+@media (max-width: 1100px) { #films .fl-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(var(--u) * 3) calc(var(--u) * 2); } }
 @media (max-width: 760px) {
   #films .fl-grid { grid-template-columns: 1fr; gap: calc(var(--u) * 2.5); }
   #films .fl-frame { padding: 8px 8px 0; }

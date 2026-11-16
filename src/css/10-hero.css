@@ -18,6 +18,8 @@
 }
 #top .hero-copy a, #top .hero-copy button { pointer-events: auto; }
 #top .hero-main { position: relative; max-width: 62rem; }
+/* each line shrinks to its text so the canvas layout (10-hero.js) can hang tags beside it */
+@media (min-width: 761px) { #top .hero-main > * { width: fit-content; } }
 
 #top .hero-name {
   font: 800 var(--t-hero)/.88 var(--f-print); letter-spacing: -.045em; margin: 0 0 calc(var(--u) * .75) -.04em;
@@ -34,7 +36,7 @@
 
 /* the "there's a breeze" note, with an arrow up at the mobile */
 #top .hero-hint {
-  position: absolute; right: 4%; top: calc(var(--u) * -3); margin: 0;
+  position: absolute; right: 0; bottom: 0; margin: 0;
   display: flex; align-items: flex-start; gap: 4px; font-size: var(--t-md); color: var(--blue);
   transform: rotate(-3deg); line-height: 1.25;
 }
@@ -59,14 +61,17 @@
 @keyframes hero-rise { from { opacity: 0; transform: translateY(14px); } }
 
 
+@media (max-width: 1000px) { /* no room beside the buttons: the hint sits above the name, right-aligned */
+  #top .hero-hint { position: relative; right: auto; bottom: auto; margin: 0 0 6px auto; text-align: right; }
+  #top .hero-facts span { display: block; }
+  #top .hero-facts i { display: none; }
+}
 @media (max-width: 760px) {
   #top.hero { min-height: 0; justify-content: flex-start; padding-top: max(420px, 58svh); padding-bottom: calc(var(--u) * 2.5); }
   #top .hero-name { margin-bottom: calc(var(--u) / 2); }
   #top .hero-lede { font-size: var(--t-md); }
-  #top .hero-hint { position: relative; top: auto; right: auto; justify-content: flex-end; margin: 0 0 6px; font-size: var(--t-sm); white-space: normal; text-align: right; }
+  #top .hero-hint { justify-content: flex-end; font-size: var(--t-sm); }
   #top .hero-hint-arrow { margin-top: -26px; width: 34px; height: 40px; }
   #top .hero-social { margin-left: 4px; }
-  #top .hero-facts span { display: block; }
-  #top .hero-facts i { display: none; }
   #top .hero-note { width: min(17rem, calc(100vw - 32px)); }
 }

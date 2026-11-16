@@ -60,9 +60,11 @@
     S = mobile ? 1.05 : 1.1;
     FS = Math.max(14, 12 * S); // tag labels never render below 14px
     const hb = hero.getBoundingClientRect();
-    const obs = [...hero.querySelectorAll("[data-clear]")].map((el) => el.getBoundingClientRect()).filter((b) => b.width > 0)
+    // desktop: each line of copy is its own obstacle (CSS shrinks them to fit-content), so strings can hang down beside the name
+    const main = hero.querySelector(".hero-main");
+    const obs = (mobile ? [main] : [...main.children]).map((el) => el.getBoundingClientRect()).filter((b) => b.width > 0)
       .map((b) => ({ l: b.left - hb.left, r: b.right - hb.left, t: b.top - hb.top }));
-    const mg = mobile ? 8 : 64, pad = mobile ? 44 : 16;
+    const mg = mobile ? 8 : 40, pad = mobile ? 44 : 16;
     const limitAt = (x0, x1) => { let L = H - 16; for (const o of obs) if (x1 > o.l - mg && x0 < o.r + mg) L = Math.min(L, o.t - pad); return L; };
 
     const rnd = NB.rng(11);
