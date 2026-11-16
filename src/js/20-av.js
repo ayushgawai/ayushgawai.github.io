@@ -13,7 +13,7 @@
   // phones see a crop around the car and the detection zone so the hand lettering stays legible
   const mq = matchMedia("(max-width: 700px)");
   let DET = 860; // sweep reach (screen x); shorter on the phone crop so catches happen in view
-  const fit = () => { svg.setAttribute("viewBox", mq.matches ? "150 40 640 410" : "0 40 1200 420"); DET = mq.matches ? 740 : 860; };
+  const fit = () => { svg.setAttribute("viewBox", mq.matches ? "160 50 580 400" : "0 40 1200 420"); DET = mq.matches ? 715 : 860; };
   fit(); mq.addEventListener("change", fit);
 
   const L = 2800, V = 130, PAST = 540; // loop length, road speed (units/s), sweep reach and car front (screen x)
@@ -66,8 +66,8 @@
     c.className = "av-card"; c.setAttribute("aria-hidden", "true");
     c.innerHTML = `<b>mined event</b>${o.g.dataset.tag}`;
     stage.appendChild(c);
-    const x0 = a.left + a.width / 2 - W.left - 64, y0 = a.top + a.height / 2 - W.top - 24;
-    const x1 = ok ? b.left + b.width / 2 - W.left - 64 : x0 - 40, y1 = ok ? b.top + b.height / 2 - W.top - 24 : sr.bottom - W.top - 30;
+    const x0 = a.left + a.width / 2 - W.left - 78, y0 = a.top + a.height / 2 - W.top - 24;
+    const x1 = ok ? b.left + b.width / 2 - W.left - 78 : x0 - 40, y1 = ok ? b.top + b.height / 2 - W.top - 24 : sr.bottom - W.top - 30;
     const T = (x, y, s, r) => `translate(${x}px, ${y}px) scale(${s}) rotate(${r}deg)`;
     c.animate([
       { transform: T(x0, y0, 0.3, 0), opacity: 0 },

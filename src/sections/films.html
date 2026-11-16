@@ -1,0 +1,63 @@
+<section class="chapter" id="films" data-tab="Films" aria-labelledby="films-title">
+  <header class="chapter-head page">
+    <p class="chapter-kicker hand">project films · silent, captioned</p>
+    <h2 id="films-title" class="chapter-title">Four systems, drawn out in 90 seconds</h2>
+    <p class="chapter-lede">Each film sketches the architecture, then walks one event through it step by step. They play muted with captions, and nothing downloads until you press play.</p>
+  </header>
+
+  <div class="page">
+    <div class="fl-grid">
+      <article class="fl-card" aria-labelledby="fl-cs-t">
+        <figure class="fl-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <video controls preload="none" playsinline poster="assets/video/carbonshift-poster.webp" width="1920" height="1080" aria-labelledby="fl-cs-t" aria-describedby="fl-cs-d">
+            <source src="assets/video/carbonshift.mp4" type="video/mp4">
+          </video>
+          <figcaption class="fl-meta"><span class="hand pencil">reel 1 · 1:31</span><span class="fl-tag">control loop</span></figcaption>
+        </figure>
+        <h3 class="fl-title" id="fl-cs-t">CarbonShift</h3>
+        <p class="fl-cap" id="fl-cs-d">A 60-second loop polls CAISO grid price and carbon, maps them to GREEN, NORMAL, AMBER or RED, and sets the A100 power cap through NVML, from 250 W down to a checkpointed pause. The ~43% carbon and ~37% cost savings are simulated.</p>
+        <a class="btn" href="https://github.com/ayushgawai/carbonshift" target="_blank" rel="noopener">Code on GitHub</a>
+      </article>
+
+      <article class="fl-card" aria-labelledby="fl-tr-t">
+        <figure class="fl-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <video controls preload="none" playsinline poster="assets/video/transit-poster.webp" width="1920" height="1080" aria-labelledby="fl-tr-t" aria-describedby="fl-tr-d">
+            <source src="assets/video/transit.mp4" type="video/mp4">
+          </video>
+          <figcaption class="fl-meta"><span class="hand pencil">reel 2 · 1:32</span><span class="fl-tag">data platform</span></figcaption>
+        </figure>
+        <h3 class="fl-title" id="fl-tr-t">Transit Analytics</h3>
+        <p class="fl-cap" id="fl-tr-d">Airflow lands BART and VTA GTFS every 6 h while a Kafka producer streams live departures into Snowflake <code>LANDING</code>. dbt builds route marts, and Snowflake ML forecasts demand 7 days ahead behind FastAPI and a React dashboard.</p>
+        <a class="btn" href="https://github.com/ayushgawai/transit-system" target="_blank" rel="noopener">Code on GitHub</a>
+      </article>
+
+      <article class="fl-card" aria-labelledby="fl-ma-t">
+        <figure class="fl-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <video controls preload="none" playsinline poster="assets/video/multiplayer-agents-poster.webp" width="1920" height="1080" aria-labelledby="fl-ma-t" aria-describedby="fl-ma-d">
+            <source src="assets/video/multiplayer-agents.mp4" type="video/mp4">
+          </video>
+          <figcaption class="fl-meta"><span class="hand pencil">reel 3 · 1:37</span><span class="fl-tag">human + agent sessions</span></figcaption>
+        </figure>
+        <h3 class="fl-title" id="fl-ma-t">Multiplayer Agent Sessions</h3>
+        <p class="fl-cap" id="fl-ma-d">Every human and agent action is one versioned <code>SessionEvent</code> with a gapless <code>seq</code>, stored append-only in Postgres and fanned out over Redis and WebSocket. Catch-up, intent, merge arbitration and routing models (M1 to M4) share one <code>/v1/models/{id}/predict</code> endpoint.</p>
+        <a class="btn" href="https://github.com/ayushgawai/multiplayer-agent-sessions" target="_blank" rel="noopener">Code on GitHub</a>
+      </article>
+
+      <article class="fl-card" aria-labelledby="fl-io-t">
+        <figure class="fl-frame">
+          <span class="tape" aria-hidden="true"></span>
+          <video controls preload="none" playsinline poster="assets/video/iot-garden-poster.webp" width="1920" height="1080" aria-labelledby="fl-io-t" aria-describedby="fl-io-d">
+            <source src="assets/video/iot-garden.mp4" type="video/mp4">
+          </video>
+          <figcaption class="fl-meta"><span class="hand pencil">reel 4 · 1:23</span><span class="fl-tag">edge to cloud</span></figcaption>
+        </figure>
+        <h3 class="fl-title" id="fl-io-t">IoT Smart Garden</h3>
+        <p class="fl-cap" id="fl-io-d">ESP32 soil-moisture, temperature and humidity readings travel over MQTT to Azure IoT Hub and Azure SQL. Python checks flag sensor faults before Power Automate sends alerts and Power BI reports device health.</p>
+        <p class="fl-note hand pencil">no public repo for this one</p>
+      </article>
+    </div>
+  </div>
+</section>

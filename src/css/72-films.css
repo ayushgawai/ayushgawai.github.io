@@ -1,0 +1,39 @@
+/* films: four generated project films (Remotion, silent + captioned) as taped notebook reels.
+   Native <video preload="none">: only the poster loads until a visitor presses play. */
+
+#films .fl-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(var(--u) * 3) calc(var(--u) * 2); }
+#films .fl-card { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
+
+/* a reel taped into the notebook */
+#films .fl-frame {
+  position: relative; width: 100%; margin: 0; padding: 12px 12px 0;
+  background: var(--paper-card); box-shadow: var(--shadow-card); transform: rotate(-.6deg);
+}
+#films .fl-card:nth-child(2) .fl-frame { transform: rotate(.7deg); }
+#films .fl-card:nth-child(3) .fl-frame { transform: rotate(.4deg); }
+#films .fl-card:nth-child(4) .fl-frame { transform: rotate(-.45deg); }
+#films .fl-frame .tape { z-index: 3; }
+#films .fl-card:nth-child(even) .tape { left: 32%; transform: translateX(-50%) rotate(4deg); }
+#films .fl-frame video {
+  display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: var(--paper);
+  border: 1.5px solid var(--ink); border-radius: 2px;
+}
+#films .fl-frame video:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+#films .fl-meta { display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 42px; margin: 4px 0 0; }
+#films .fl-meta .hand { font-size: var(--t-sm); }
+#films .fl-tag { font: 600 14px/1 var(--f-print); color: var(--ink-3); }
+
+#films .fl-title { font-size: var(--t-lg); letter-spacing: -.01em; margin: calc(var(--u) * 1.25) 0 8px; }
+#films .fl-cap { font-size: var(--t-md); line-height: 1.55; color: var(--ink); max-width: 56ch; margin: 0 0 16px; }
+#films .fl-cap code { font-size: .88em; background: rgba(35, 70, 176, .07); padding: 1px 5px; border-radius: 3px; overflow-wrap: anywhere; }
+#films .fl-card .btn { margin-top: auto; }
+#films .fl-note { margin: auto 0 0; font-size: var(--t-md); }
+
+@media (max-width: 760px) {
+  #films .fl-grid { grid-template-columns: 1fr; gap: calc(var(--u) * 2.5); }
+  #films .fl-frame { padding: 8px 8px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #films .fl-frame { transform: none !important; }
+}

@@ -1,5 +1,6 @@
 /* 00-core.js */
-;/* Shared helpers. Every section script is concatenated after this file (alphabetical) into assets/site.js.
+try {
+/* Shared helpers. Every section script is concatenated after this file (alphabetical) into assets/site.js.
    Each section file must be self-contained: wrap in an IIFE, never leak globals besides window.NB. */
 (() => {
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -57,8 +58,10 @@ document.addEventListener("click", (e) => {
   v.classList.add("is-playing"); v.append(f);
 });
 
+} catch (e) { console.error('[00-core.js]', e); }
 /* 10-hero.js */
-;/* Hero cover: a hand-drawn mobile. Ink stars morph and "boil"; verlet strings hang paper tags with tool logos.
+try {
+/* Hero cover: a hand-drawn mobile. Ink stars morph and "boil"; verlet strings hang paper tags with tool logos.
    Pointer velocity is wind; tags can be grabbed and flung; click a tag for a note on where the tool was used. */
 (() => {
   const hero = document.getElementById("top");
@@ -157,19 +160,31 @@ document.addEventListener("click", (e) => {
     let left2 = n - k.reduce((a, b) => a + b, 0);
     for (let s = 0; left2 > 0; s = (s + 1) % nStars) if (k[s] < stars[s].cap) { k[s]++; left2--; }
 
+    // place tags so none overlap at rest: a row that would collide is skipped and the tool moves on to the next star
+    ctx.font = `500 ${FS}px ${HAND}`;
+    const hole0 = 10.5 * S, placed = [];
+    const hits = (b) => placed.some((q) => b[0] < q[2] && b[2] > q[0] && b[1] < q[3] && b[3] > q[1]);
     ropes = [];
-    let ti = 0, P = 0;
+    let ti = 0, P = 0, carry = 0;
     stars.forEach((st, s) => {
-      const rows = [...Array(st.cap).keys()].sort(() => rnd() - 0.5).slice(0, k[s]).sort((a, b) => a - b);
-      rows.forEach((row, j) => {
-        const tool = chosen[ti++];
-        const side = (j + s) % 2 ? 1 : -1;
-        const off = side * (0.25 + rnd() * 0.55) * (k[s] > 1 ? 1 : 0.3) * (mobile ? 0.4 : 1);
-        const holeY = st.top0 + row * rowH + (rnd() - 0.5) * 10 * S;
+      const want = k[s] + carry, picks = [];
+      for (const row of [...Array(st.cap).keys()].sort(() => rnd() - 0.5)) {
+        if (picks.length >= want || ti >= chosen.length) break;
+        const tool = chosen[ti];
+        const side = (picks.length + s) % 2 ? 1 : -1;
+        const off = side * (0.25 + rnd() * 0.55) * (want > 1 ? 1 : 0.3) * (mobile ? 0.4 : 1);
+        const holeY = st.top0 + row * rowH + (rnd() - 0.5) * (mobile ? 4 : 8) * S;
+        const w = tagWidth(tool, ctx.measureText(tool.name).width + 4), cx = st.x - Math.sin(off - st.rot) * 0.6 * st.R;
+        const box = [cx - w / 2 - 8, holeY - hole0 - 4, cx + w / 2 + 8, holeY - hole0 + tagH + 4];
+        if (hits(box)) continue;
+        placed.push(box); picks.push({ tool, off, holeY }); ti++;
+      }
+      carry = want - picks.length;
+      picks.sort((a, b) => a.holeY - b.holeY).forEach(({ tool, off, holeY }) => {
         const L = holeY - st.y;
         const segs = Math.max(6, Math.min(14, Math.round(L / 26)));
         const r = { tool, star: st, off, L, segs, seg: L / segs, cur: L / segs, a0: P, com: P + segs + 1, d: tagH / 2 - 10 * S,
-          h: tagH, hole0: 10.5 * S, w: 60 * S, delay: 0, phi: 0, om: 0, spin: rnd() < 0.5 ? -1 : 1, seed: rnd() * 100,
+          h: tagH, hole0, w: 60 * S, delay: 0, phi: 0, om: 0, spin: rnd() < 0.5 ? -1 : 1, seed: rnd() * 100,
           lift: 0, tilt: (rnd() - 0.5) * 0.14, th: 0, c: 1, s: 0, sx: 1, img: null, hov: null, back: null, depth: holeY };
         tool.rope = r; ropes.push(r); P += segs + 2;
       });
@@ -214,8 +229,8 @@ document.addEventListener("click", (e) => {
   }
   const STRING_ANGLE = Math.PI; // attach toward the bottom of the star
   function anchorIdx(r) { let a = (STRING_ANGLE + r.off - r.star.rot) / TAU; a -= Math.floor(a); return Math.round(a * NS) % NS; }
-  function anchorX(r) { const st = r.star, i = anchorIdx(r), rr = (st.r[i] || st.R * 0.5) * 0.82; return st.x + rr * (COS[i] * Math.cos(st.rot) - SIN[i] * Math.sin(st.rot)); }
-  function anchorY(r) { const st = r.star, i = anchorIdx(r), rr = (st.r[i] || st.R * 0.5) * 0.82; return st.y + rr * (COS[i] * Math.sin(st.rot) + SIN[i] * Math.cos(st.rot)); }
+  function anchorX(r) { const st = r.star, i = anchorIdx(r), rr = 0.35 * st.R + 0.4 * (st.r[i] || st.R * 0.5); return st.x + rr * (COS[i] * Math.cos(st.rot) - SIN[i] * Math.sin(st.rot)); }
+  function anchorY(r) { const st = r.star, i = anchorIdx(r), rr = 0.35 * st.R + 0.4 * (st.r[i] || st.R * 0.5); return st.y + rr * (COS[i] * Math.sin(st.rot) + SIN[i] * Math.cos(st.rot)); }
 
   function drawStar(st) {
     const c = Math.cos(st.rot), s = Math.sin(st.rot);
@@ -344,13 +359,17 @@ document.addEventListener("click", (e) => {
     }
     return { c, ox: pad + hx, oy: pad + hy, cw, ch };
   }
+  function tagWidth(t, tw) {
+    if (!(logos ? logos.get(t.slug) : t.slug)) tw *= t.name.length > 5 ? 1.15 : 1.5; // text-only tags use a bigger word
+    return Math.min(innerWidth < 760 ? 100 : 128, Math.max(54 * S, tw + 16 * S));
+  }
   function buildImages() {
     fontOK = !document.fonts || document.fonts.check(`500 12px ${HAND}`);
     for (const r of ropes) {
       const t = r.tool, path = logos && logos.get(t.slug);
-      ctx.font = path ? `500 ${FS}px ${HAND}` : `700 ${(t.name.length > 5 ? 15 : 19) * S}px ${HAND}`;
+      ctx.font = `500 ${FS}px ${HAND}`;
       const tw = ctx.measureText(t.name).width;
-      r.w = Math.min(innerWidth < 760 ? 100 : 128, Math.max(54 * S, tw + 16 * S));
+      r.w = tagWidth(t, tw);
       r.img = tagImage(r, 0); r.back = tagImage(r, 2); r.hov = null;
     }
   }
@@ -532,8 +551,10 @@ document.addEventListener("click", (e) => {
   });
 })();
 
+} catch (e) { console.error('[10-hero.js]', e); }
 /* 20-av.js */
-;/* Autonomy chapter: robotaxi street loop, red-pencil catches, event cards into the validation pipeline. */
+try {
+/* Autonomy chapter: robotaxi street loop, red-pencil catches, event cards into the validation pipeline. */
 (() => {
   const root = document.getElementById("av");
   if (!root || !window.NB) return;
@@ -548,7 +569,7 @@ document.addEventListener("click", (e) => {
   // phones see a crop around the car and the detection zone so the hand lettering stays legible
   const mq = matchMedia("(max-width: 700px)");
   let DET = 860; // sweep reach (screen x); shorter on the phone crop so catches happen in view
-  const fit = () => { svg.setAttribute("viewBox", mq.matches ? "150 40 640 410" : "0 40 1200 420"); DET = mq.matches ? 740 : 860; };
+  const fit = () => { svg.setAttribute("viewBox", mq.matches ? "160 50 580 400" : "0 40 1200 420"); DET = mq.matches ? 715 : 860; };
   fit(); mq.addEventListener("change", fit);
 
   const L = 2800, V = 130, PAST = 540; // loop length, road speed (units/s), sweep reach and car front (screen x)
@@ -601,8 +622,8 @@ document.addEventListener("click", (e) => {
     c.className = "av-card"; c.setAttribute("aria-hidden", "true");
     c.innerHTML = `<b>mined event</b>${o.g.dataset.tag}`;
     stage.appendChild(c);
-    const x0 = a.left + a.width / 2 - W.left - 64, y0 = a.top + a.height / 2 - W.top - 24;
-    const x1 = ok ? b.left + b.width / 2 - W.left - 64 : x0 - 40, y1 = ok ? b.top + b.height / 2 - W.top - 24 : sr.bottom - W.top - 30;
+    const x0 = a.left + a.width / 2 - W.left - 78, y0 = a.top + a.height / 2 - W.top - 24;
+    const x1 = ok ? b.left + b.width / 2 - W.left - 78 : x0 - 40, y1 = ok ? b.top + b.height / 2 - W.top - 24 : sr.bottom - W.top - 30;
     const T = (x, y, s, r) => `translate(${x}px, ${y}px) scale(${s}) rotate(${r}deg)`;
     c.animate([
       { transform: T(x0, y0, 0.3, 0), opacity: 0 },
@@ -633,304 +654,451 @@ document.addEventListener("click", (e) => {
   NB.loop(svg, (dt) => { off += V * dt; place(off); });
 })();
 
+} catch (e) { console.error('[20-av.js]', e); }
 /* 30-robots.js */
-;/* robots chapter: leader/follower SO-101 arms (2-link IK, wrist kept pointing down), cube pick-and-place,
-   camera frames stacking into the dataset pile, packets on the bus cable. */
+try {
+/* robots chapter: leader/follower SO-101 arms (2-link IK, wrist kept pointing down), cube pick-and-place,
+   camera frames stacking into the dataset pile, packets on the bus cable; obstacle-alert state machine;
+   warehouse track through occlusion. */
 (() => {
-  const svg = document.querySelector("#robots .rb-svg");
-  if (!svg) return;
-  const q = (s, r = svg) => r.querySelector(s);
-  const L1 = 150, L2 = 140, D = Math.PI / 180;
-  const arm = (id, bx) => {
-    const g = q("#" + id);
-    return { bx, l1: q(".rb-l1", g), l2: q(".rb-l2", g), wr: q(".rb-wr", g), jaw: q(".rb-jaw", g) };
-  };
-  const lead = arm("rb-lead", 170), fol = arm("rb-fol", 540);
-  const SY = 400; /* shoulder height */
-  const cube = q("#rb-cube"), count = q("#rb-count");
-  const frames = [...svg.querySelectorAll(".rb-frame")];
-  const pkts = [...svg.querySelectorAll(".rb-pkt")];
-  const cable = q("#rb-cable"), cableLen = cable.getTotalLength();
+  const root = document.getElementById("robots");
+  if (!root) return;
+  const SVGNS = "http://www.w3.org/2000/svg";
 
-  /* wrist targets relative to the shoulder: [dx, dy, gripOpen, seconds to next] */
-  const K = [
-    [70, -130, 1, .7],   /* home (hold) */
-    [70, -130, 1, .9],
-    [140, -90, 1, .7],   /* above the cube */
-    [140, -20, 1, .45],  /* down */
-    [140, -20, 0, .7],   /* close */
-    [150, -110, 0, .9],  /* lift */
-    [230, -100, 0, .7],  /* carry over the X */
-    [230, -20, 0, .45],  /* lower */
-    [230, -20, 1, .6],   /* release */
-    [230, -100, 1, .9]   /* back up, then home */
-  ];
-  const T = K.reduce((s, k) => s + k[3], 0);
-  const starts = []; K.reduce((s, k, i) => (starts[i] = s, s + k[3]), 0);
-  const ease = (x) => x * x * (3 - 2 * x);
-  function sample(t) {
-    t = ((t % T) + T) % T;
-    let i = K.length - 1; while (starts[i] > t) i--;
-    const A = K[i], B = K[(i + 1) % K.length], f = ease((t - starts[i]) / A[3]);
-    return { i, f, x: A[0] + (B[0] - A[0]) * f, y: A[1] + (B[1] - A[1]) * f, open: A[2] + (B[2] - A[2]) * f };
-  }
-  function ik(x, y) {
-    const d = Math.min(Math.hypot(x, y), L1 + L2 - 1);
-    const th = Math.atan2(x, -y) / D;
-    const beta = Math.acos((L1 * L1 + d * d - L2 * L2) / (2 * L1 * d)) / D;
-    const gam = Math.acos((L1 * L1 + L2 * L2 - d * d) / (2 * L1 * L2)) / D;
-    const a1 = th - beta, a2 = 180 - gam;
-    return [a1, a2, 180 - a1 - a2];
-  }
-  function pose(a, s) {
-    const [a1, a2, a3] = ik(s.x, s.y);
-    a.l1.setAttribute("transform", `translate(0 -70) rotate(${a1.toFixed(2)})`);
-    a.l2.setAttribute("transform", `translate(0 -150) rotate(${a2.toFixed(2)})`);
-    a.wr.setAttribute("transform", `translate(0 -140) rotate(${a3.toFixed(2)})`);
-    if (a.jaw) a.jaw.setAttribute("transform", `translate(${(s.open * 9).toFixed(2)} 0)`);
-  }
+  /* ---------- SO-101 leader / follower ---------- */
+  const svg = root.querySelector(".rb-svg");
+  if (svg) {
+    const q = (s, r = svg) => r.querySelector(s);
+    const L1 = 150, L2 = 140, D = Math.PI / 180;
+    const arm = (id, bx) => {
+      const g = q("#" + id);
+      return { bx, l1: q(".rb-l1", g), l2: q(".rb-l2", g), wr: q(".rb-wr", g), jaw: q(".rb-jaw", g) };
+    };
+    const lead = arm("rb-lead", 170), fol = arm("rb-fol", 540);
+    const SY = 400; /* shoulder height */
+    const cube = q("#rb-cube"), count = q("#rb-count");
+    const frames = [...svg.querySelectorAll(".rb-frame")];
+    const pkts = [...svg.querySelectorAll(".rb-pkt")];
+    const cable = q("#rb-cable"), cableLen = cable.getTotalLength();
 
-  const START = [680, 450], GOAL = [772, 450];
-  let demo = 1, lastCycle = 0;
-  function placeCube(s) {
-    let x, y, op = 1;
-    if (s.i >= 4 && s.i <= 7) { x = fol.bx + s.x; y = SY + s.y + 70; }      /* held by the follower */
-    else if (s.i >= 8) { [x, y] = GOAL; }
-    else if (s.i === 0) { [x, y] = GOAL; op = 1 - s.f; }                     /* next demo: old cube clears */
-    else { [x, y] = START; op = s.i === 1 ? s.f : 1; }                       /* and a fresh one appears */
-    cube.setAttribute("transform", `translate(${x.toFixed(1)} ${y.toFixed(1)})`);
-    cube.setAttribute("opacity", op.toFixed(2));
-  }
+    /* phones: crop the empty label margins (labels are hidden there; the key list carries them) */
+    const mq = matchMedia("(max-width: 640px)");
+    const fit = () => svg.setAttribute("viewBox", mq.matches ? "100 172 930 352" : "0 150 1060 430");
+    fit(); mq.addEventListener("change", fit);
 
-  const lag = .28;
-  function render(t) {
-    pose(lead, sample(t));
-    const s = sample(t - lag);
-    pose(fol, s);
-    placeCube(s);
-    const cyc = Math.floor((t - lag) / T);
-    if (cyc !== lastCycle) { lastCycle = cyc; demo = demo % 50 + 1; count.textContent = `demo ${demo} / 50`; }
-    /* frames: camera lens → arc → top of the pile */
-    frames.forEach((el, k) => {
-      const u = ((t / 2.4 + k / frames.length) % 1);
-      const x = 872 + 88 * u, y = 345 - 70 * Math.sin(Math.PI * u) + 76 * u;
-      el.setAttribute("transform", `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${(-14 + 18 * u).toFixed(1)}) scale(${(1 - .25 * u).toFixed(3)})`);
-      el.setAttribute("opacity", (u < .1 ? u * 10 : u > .85 ? (1 - u) / .15 : 1).toFixed(2));
+    /* wrist targets relative to the shoulder: [dx, dy, gripOpen, seconds to next] */
+    const K = [
+      [70, -130, 1, .7], [70, -130, 1, .9], [140, -90, 1, .7], [140, -20, 1, .45], [140, -20, 0, .7],
+      [150, -110, 0, .9], [230, -100, 0, .7], [230, -20, 0, .45], [230, -20, 1, .6], [230, -100, 1, .9]
+    ];
+    const T = K.reduce((s, k) => s + k[3], 0);
+    const starts = []; K.reduce((s, k, i) => (starts[i] = s, s + k[3]), 0);
+    const ease = (x) => x * x * (3 - 2 * x);
+    const sample = (t) => {
+      t = ((t % T) + T) % T;
+      let i = K.length - 1; while (starts[i] > t) i--;
+      const A = K[i], B = K[(i + 1) % K.length], f = ease((t - starts[i]) / A[3]);
+      return { i, f, x: A[0] + (B[0] - A[0]) * f, y: A[1] + (B[1] - A[1]) * f, open: A[2] + (B[2] - A[2]) * f };
+    };
+    const ik = (x, y) => {
+      const d = Math.min(Math.hypot(x, y), L1 + L2 - 1);
+      const th = Math.atan2(x, -y) / D;
+      const beta = Math.acos((L1 * L1 + d * d - L2 * L2) / (2 * L1 * d)) / D;
+      const gam = Math.acos((L1 * L1 + L2 * L2 - d * d) / (2 * L1 * L2)) / D;
+      const a1 = th - beta, a2 = 180 - gam;
+      return [a1, a2, 180 - a1 - a2];
+    };
+    const pose = (a, s) => {
+      const [a1, a2, a3] = ik(s.x, s.y);
+      a.l1.setAttribute("transform", `translate(0 -70) rotate(${a1.toFixed(2)})`);
+      a.l2.setAttribute("transform", `translate(0 -150) rotate(${a2.toFixed(2)})`);
+      a.wr.setAttribute("transform", `translate(0 -140) rotate(${a3.toFixed(2)})`);
+      if (a.jaw) a.jaw.setAttribute("transform", `translate(${(s.open * 9).toFixed(2)} 0)`);
+    };
+
+    const START = [680, 450], GOAL = [772, 450];
+    let demo = 1, lastCycle = 0;
+    const placeCube = (s) => {
+      let x, y, op = 1;
+      if (s.i >= 4 && s.i <= 7) { x = fol.bx + s.x; y = SY + s.y + 70; }  /* held by the follower */
+      else if (s.i >= 8) { [x, y] = GOAL; }
+      else if (s.i === 0) { [x, y] = GOAL; op = 1 - s.f; }                 /* next demo: old cube clears */
+      else { [x, y] = START; op = s.i === 1 ? s.f : 1; }                   /* and a fresh one appears */
+      cube.setAttribute("transform", `translate(${x.toFixed(1)} ${y.toFixed(1)})`);
+      cube.setAttribute("opacity", op.toFixed(2));
+    };
+
+    const lag = .28;
+    const render = (t) => {
+      pose(lead, sample(t));
+      const s = sample(t - lag);
+      pose(fol, s);
+      placeCube(s);
+      const cyc = Math.floor((t - lag) / T);
+      if (cyc !== lastCycle) { lastCycle = cyc; demo = demo % 50 + 1; count.textContent = `demo ${demo} / 50`; }
+      frames.forEach((el, k) => {
+        const u = (t / 2.4 + k / frames.length) % 1;
+        const x = 872 + 88 * u, y = 345 - 70 * Math.sin(Math.PI * u) + 76 * u;
+        el.setAttribute("transform", `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${(-14 + 18 * u).toFixed(1)}) scale(${(1 - .25 * u).toFixed(3)})`);
+        el.setAttribute("opacity", (u < .1 ? u * 10 : u > .85 ? (1 - u) / .15 : 1).toFixed(2));
+      });
+      pkts.forEach((el, k) => {
+        const p = cable.getPointAtLength(((t * .7 + k / pkts.length) % 1) * cableLen);
+        el.setAttribute("cx", p.x.toFixed(1)); el.setAttribute("cy", p.y.toFixed(1));
+      });
+    };
+
+    let clock = 1.2, playing = !NB.reduced;
+    render(NB.reduced ? 5.0 : clock); /* static frame: cube lifted mid-carry */
+    if (NB.reduced) { frames.forEach((el) => el.setAttribute("opacity", 0)); pkts.forEach((el) => el.style.display = "none"); }
+    NB.loop(svg, (dt) => { if (playing) { clock += dt; render(clock); } });
+
+    const btn = root.querySelector(".rb-pause");
+    if (NB.reduced) btn.hidden = true;
+    btn.addEventListener("click", () => {
+      playing = !playing;
+      btn.textContent = playing ? "pause the arms" : "play the arms";
+      btn.setAttribute("aria-pressed", String(!playing));
     });
-    /* joint-angle packets on the cable, leader → follower */
-    pkts.forEach((el, k) => {
-      const p = cable.getPointAtLength(((t * .7 + k / pkts.length) % 1) * cableLen);
-      el.setAttribute("cx", p.x.toFixed(1)); el.setAttribute("cy", p.y.toFixed(1));
-    });
   }
 
-  let clock = 1.2, playing = !NB.reduced;
-  render(NB.reduced ? 5.0 : clock); /* static frame: cube lifted mid-carry */
-  if (NB.reduced) { frames.forEach((el) => el.setAttribute("opacity", 0)); pkts.forEach((el) => el.style.display = "none"); }
-  NB.loop(svg, (dt) => { if (playing) { clock += dt; render(clock); } });
+  /* index cards: bars grow in when the row scrolls into view */
+  const cards = root.querySelector(".rb-cards");
+  if (cards) NB.onVisible(cards);
 
-  const btn = document.querySelector("#robots .rb-pause");
-  if (NB.reduced) btn.hidden = true;
-  btn.addEventListener("click", () => {
-    playing = !playing;
-    btn.textContent = playing ? "pause the arms" : "play the arms";
-    btn.setAttribute("aria-pressed", String(!playing));
-  });
+  /* ---------- obstacle alert: range rings + debounced state machine ---------- */
+  const obs = root.querySelector(".rb-obs");
+  if (obs) {
+    const person = obs.querySelector("#rb-person"), dist = obs.querySelector(".rb-dist");
+    const sweep = obs.querySelector("#rb-sweep"), stateT = obs.querySelector("#rb-state");
+    const ticksG = obs.querySelector("#rb-ticks");
+    const N = 10, ticks = [];
+    for (let i = 0; i < N; i++) {
+      const r = document.createElementNS(SVGNS, "rect");
+      r.setAttribute("x", i * 18); r.setAttribute("y", 4); r.setAttribute("width", 13); r.setAttribute("height", 13); r.setAttribute("rx", 2);
+      r.setAttribute("class", "rb-tick"); ticksG.append(r); ticks.push(r);
+    }
+    const COL = ["#2E7D5B", "#C9A100", "#D2412F"], NAMES = ["clear", "caution", "stop"];
+    const PX = 120, CX = 300, CY = 372, TH = 20 * Math.PI / 180;
+    const ease = (x) => x * x * (3 - 2 * x);
+    const CYC = 13;
+    const distAt = (t) => {
+      t %= CYC;
+      if (t < 5) return 2.7 - 1.95 * ease(t / 5);
+      if (t < 6.4) return .75;
+      if (t < 11.4) return .75 + 1.95 * ease((t - 6.4) / 5);
+      return 2.7;
+    };
+    let level = 0, up = 0, down = 0, acc = 0, sw = 0;
+    const hist = Array(N).fill(0);
+    const step = (d) => {   /* one perception frame */
+      const stopTh = level === 2 ? 1.25 : 1.0, cautTh = level >= 1 ? 2.25 : 2.0;
+      const raw = d < stopTh ? 2 : d < cautTh ? 1 : 0;
+      if (raw > level) { down = 0; if (++up >= 2) { level = raw; up = 0; } }
+      else if (raw < level) { up = 0; if (++down >= 5) { level = raw; down = 0; } }
+      else { up = down = 0; }
+      hist.push(raw); hist.shift();
+    };
+    const draw = (d) => {
+      person.setAttribute("transform", `translate(${(CX + Math.sin(TH) * d * PX).toFixed(1)} ${(CY - Math.cos(TH) * d * PX).toFixed(1)})`);
+      dist.textContent = "person · " + d.toFixed(1) + " m";
+      ticks.forEach((r, i) => { r.setAttribute("fill", COL[hist[i]]); r.setAttribute("stroke", COL[hist[i]]); r.setAttribute("fill-opacity", i === N - 1 ? 1 : .55); });
+      obs.dataset.state = NAMES[level];
+      stateT.textContent = NAMES[level].toUpperCase();
+    };
+    let t = 0;
+    if (NB.reduced) { for (let k = 0; k < 40; k++) step(.9); draw(.9); }
+    else {
+      draw(distAt(0));
+      NB.loop(obs, (dt) => {
+        t += dt; acc += dt;
+        while (acc >= .1) { acc -= .1; step(distAt(t)); }   /* 10 Hz frames */
+        draw(distAt(t));
+        sw += dt;
+        const ph = (sw / 1.8) % 2, a = ph < 1 ? -90 + 180 * ph : 270 - 180 * ph;
+        sweep.setAttribute("transform", `translate(${CX} ${CY}) rotate(${a.toFixed(1)}) scale(${ph < 1 ? 1 : -1} 1)`);
+      });
+    }
+  }
+
+  /* ---------- warehouse: Kalman-predicted box while the case is behind the pillar ---------- */
+  const wh = root.querySelector(".rb-wh");
+  if (wh) {
+    const kase = wh.querySelector("#rb-case"), trk = wh.querySelector("#rb-track");
+    const box = wh.querySelector("#rb-trk-box"), lbl = wh.querySelector("#rb-trk-t");
+    const PER = 6, X0 = 40, X1 = 360;
+    let t = 0, mode = "";
+    const setMode = (m) => {
+      if (m === mode) return; mode = m;
+      box.classList.toggle("is-pred", m === "pred"); lbl.classList.toggle("is-pred", m === "pred");
+      lbl.textContent = m === "pred" ? "#7 · predicted" : m === "re" ? "#7 · re-matched" : "#7 · tracked";
+    };
+    const draw = (tt) => {
+      const u = (tt % PER) / PER, x = X0 + (X1 - X0) * u;
+      kase.setAttribute("transform", `translate(${x.toFixed(1)} 150)`);
+      const hidden = Math.abs(x - 200) < 34;
+      /* constant-velocity prediction drifts a little while hidden, then snaps back on re-association */
+      const tx = hidden ? x + (x - 166) * .22 : x;
+      trk.setAttribute("transform", `translate(${tx.toFixed(1)} 150)`);
+      trk.setAttribute("opacity", u > .94 ? ((1 - u) / .06).toFixed(2) : u < .04 ? (u / .04).toFixed(2) : 1);
+      setMode(hidden ? "pred" : x > 234 && x < 290 ? "re" : "trk");
+    };
+    draw(NB.reduced ? PER * .5 : 0);
+    if (!NB.reduced) NB.loop(wh, (dt) => { t += dt; draw(t); });
+  }
 })();
 
+} catch (e) { console.error('[30-robots.js]', e); }
 /* 35-research.js */
-;/* research chapter: gaze scanpath cycling + wheelchair alert loop */
+try {
+/* research chapter: eye-tracking scanpath over two sketched images (three task modes) + wheelchair alert loop */
 (() => {
+  const root = document.getElementById("research");
+  if (!root) return;
   const $ = (id) => document.getElementById(id);
+  const SVGNS = "http://www.w3.org/2000/svg";
+  /* phones: crop to the action (in-SVG labels are hidden there; HTML carries them) */
+  const mq = matchMedia("(max-width: 640px)");
+  const fit = () => {
+    const g = $("r-gaze-svg"), c = $("r-chair-svg");
+    if (g) g.setAttribute("viewBox", mq.matches ? "24 44 952 314" : "0 0 1000 420");
+    if (c) c.setAttribute("viewBox", mq.matches ? "30 20 650 350" : "0 0 1000 400");
+  };
+  fit(); mq.addEventListener("change", fit);
 
-  /* ---------- study 1: eye-tracking scanpath ---------- */
+  /* ---------- study 1: scanpath ---------- */
   const gaze = $("r-gaze-svg");
   if (gaze) {
-    const fixes = $("r-fixes"), sacc = $("r-saccades"), cur = $("r-cursor"), dot = $("r-cursor-dot");
+    const fixG = $("r-fixes"), sacc = $("r-sacc"), cur = $("r-gaze"), countEl = $("r-count"), cap = $("r-mode-cap");
+    const coverA = $("r-coverA"), coverB = $("r-coverB");
+    const diffs = [...gaze.querySelectorAll("#r-diffs circle")];
+    const btns = [...root.querySelectorAll(".r-mb")];
+    /* [x, y, radius ~ fixation duration]; image B sits 498 px right of image A */
     const MODES = {
-      global: [[110, 105, 12], [250, 250, 16], [358, 244, 12], [160, 290, 10], [300, 200, 9]],
-      sel: [[251, 252, 17], [110, 105, 8], [358, 244, 9], [160, 290, 10], [251, 252, 14]],
-      sus: [[110, 105, 9], [250, 250, 9], [110, 105, 9], [358, 244, 9], [250, 250, 9], [300, 200, 9]]
+      global: { f: [[108, 124, 22], [226, 236, 28], [366, 234, 24], [304, 114, 16], [140, 300, 14], [400, 312, 12], [282, 304, 18]],
+        cap: "task 1 · describe the whole picture: one image, long fixations spread across it" },
+      sel: { f: [[226, 200, 14], [724, 200, 14], [209, 253, 18], [707, 253, 24], [366, 234, 12], [864, 234, 12], [368, 126, 12], [866, 124, 22], [108, 124, 10], [606, 124, 10]],
+        cap: "task 2 · spot the difference: both images at once, short back-and-forth saccades between matching spots" },
+      seq: { f: [[108, 124, 16], [304, 114, 14], [224, 258, 22], [366, 234, 18], [606, 124, 16], [802, 114, 14], [722, 258, 22], [864, 234, 18], [866, 124, 16]], sw: 4,
+        cap: "task 3 · sequential comparison: A first, then B on its own, compared across time instead of side by side" }
     };
-    const seq = ["global", "sel", "sus"];
-    const btns = { global: $("r-mode-global"), sel: $("r-mode-sel"), sus: $("r-mode-sus") };
-    const diff = $("r-diffmark");
-    let mode = "global", t = 0, auto = !NB.reduced;
+    const ORDER = ["global", "sel", "seq"], SACC = .22, HOLD = 1.8;
+    let mode = "global", t = 0, auto = true, shown = -1, plan;
 
-    function setModeUi(m) {
-      Object.keys(btns).forEach((k) => {
-        const on = k === m;
-        btns[k].classList.toggle("is-on", on);
-        btns[k].setAttribute("aria-pressed", String(on));
-      });
-      if (diff) diff.style.display = m === "sel" ? "" : "none";
-    }
+    const build = (m) => {
+      let s = 0; const st = MODES[m].f.map((f) => { const a = s; s += SACC + f[2] / 22; return a; });
+      plan = { st, end: s };
+    };
+    const setCovers = (k) => {
+      const M = MODES[mode];
+      let a = false, b = false, bt = "not shown";
+      if (mode === "global") b = true;
+      else if (mode === "seq") { if (k < M.sw) { b = true; bt = "B comes next"; } else a = true; }
+      coverA.classList.toggle("is-on", a); coverB.classList.toggle("is-on", b);
+      coverB.querySelector("text").textContent = bt;
+    };
+    const addFix = (k) => {
+      const [x, y, r] = MODES[mode].f[k];
+      const g = document.createElementNS(SVGNS, "g"); g.setAttribute("class", "r-fix");
+      const c = document.createElementNS(SVGNS, "circle"); c.setAttribute("cx", x); c.setAttribute("cy", y); c.setAttribute("r", r);
+      const n = document.createElementNS(SVGNS, "text"); n.setAttribute("x", x); n.setAttribute("y", y); n.textContent = k + 1;
+      g.append(c, n); fixG.append(g);
+    };
+    const showUpTo = (k) => {   /* fixations 0..k visible */
+      while (shown < k) addFix(++shown);
+      countEl.textContent = shown + 1;
+      if (mode === "sel") { diffs[0].classList.toggle("is-on", shown >= 3); diffs[1].classList.toggle("is-on", shown >= 3); diffs[2].classList.toggle("is-on", shown >= 7); diffs[3].classList.toggle("is-on", shown >= 7); }
+    };
+    const reset = (m) => {
+      mode = m; t = 0; shown = -1; fixG.textContent = ""; sacc.setAttribute("d", ""); countEl.textContent = "0";
+      diffs.forEach((d) => d.classList.remove("is-on"));
+      build(m); setCovers(0); cap.textContent = MODES[m].cap;
+      btns.forEach((b) => { const on = b.dataset.mode === m; b.classList.toggle("is-on", on); b.setAttribute("aria-pressed", String(on)); });
+    };
+    const render = () => {
+      const F = MODES[mode].f, st = plan.st;
+      let k = F.length - 1; while (k > 0 && st[k] > t) k--;
+      const inSacc = t - st[k] < SACC && k > 0;
+      const p = inSacc ? (t - st[k]) / SACC : 1;
+      const prev = F[Math.max(0, k - 1)], tgt = F[k];
+      const cx = prev[0] + (tgt[0] - prev[0]) * p, cy = prev[1] + (tgt[1] - prev[1]) * p;
+      showUpTo(inSacc ? k - 1 : k);
+      setCovers(inSacc ? k - 1 : k);
+      if (mode === "seq") { const past = (inSacc ? k - 1 : k) >= MODES.seq.sw; [...fixG.children].forEach((g, i) => { g.style.opacity = past && i < MODES.seq.sw ? .3 : 1; }); }
+      /* sequential mode: no saccade line across the swap, the pictures were never on screen together */
+      const from = mode === "seq" && k >= MODES.seq.sw ? MODES.seq.sw : 0;
+      const pts = F.slice(from, k).map((f) => f[0] + " " + f[1]);
+      if (!(mode === "seq" && k === MODES.seq.sw)) pts.push(cx.toFixed(1) + " " + cy.toFixed(1));
+      else pts.push(F[k][0] + " " + F[k][1]);
+      sacc.setAttribute("d", "M" + pts.join(" L"));
+      const done = t > plan.end;
+      cur.setAttribute("cx", (mode === "seq" && k === MODES.seq.sw && inSacc ? tgt[0] : cx).toFixed(1));
+      cur.setAttribute("cy", (mode === "seq" && k === MODES.seq.sw && inSacc ? tgt[1] : cy).toFixed(1));
+      cur.style.opacity = done ? 0 : 1;
+    };
 
-    function drawPath(key, progress) {
-      const P = MODES[key], pts = P.slice(0, Math.max(2, Math.min(P.length, Math.ceil(progress * P.length))));
-      let d = "M" + pts[0][0] + " " + pts[0][1];
-      for (let i = 1; i < pts.length; i++) d += " L" + pts[i][0] + " " + pts[i][1];
-      sacc.setAttribute("d", d);
-      fixes.innerHTML = "";
-      pts.forEach((f, i) => {
-        const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        c.setAttribute("cx", f[0]); c.setAttribute("cy", f[1]); c.setAttribute("r", f[2]);
-        c.setAttribute("fill", "url(#hatch-blue)");
-        c.setAttribute("stroke", "var(--blue)"); c.setAttribute("stroke-width", "1.6");
-        c.style.opacity = i === pts.length - 1 && progress * P.length < P.length - 1 ? .35 : 1;
-        fixes.appendChild(c);
-      });
-      const li = pts.length - 1;
-      [cur, dot].forEach((el) => { el.setAttribute("cx", pts[li][0]); el.setAttribute("cy", pts[li][1]); });
-    }
-
-    NB.loop(gaze, (dt) => {
-      if (!auto) return;
+    reset("global");
+    if (NB.reduced) { t = plan.end + 1; render(); }
+    else NB.loop(gaze, (dt) => {
       t += dt;
-      const perFix = 1.4;
-      const full = t / (perFix * MODES[mode].length);
-      if (full >= 1.15) {
-        mode = seq[(seq.indexOf(mode) + 1) % seq.length];
-        t = 0;
-        setModeUi(mode);
-        return;
-      }
-      const p = Math.min(1, t / (perFix * MODES[mode].length));
-      drawPath(mode, p);
-      const done = p >= .97;
-      cur.setAttribute("opacity", done ? 0 : 1);
-      dot.setAttribute("opacity", done ? 0 : 1);
+      if (t > plan.end + HOLD) reset(auto ? ORDER[(ORDER.indexOf(mode) + 1) % ORDER.length] : mode);
+      render();
     });
-
-    Object.keys(btns).forEach((k) => {
-      btns[k].addEventListener("click", () => {
-        auto = false; t = 0;
-        setModeUi(k);
-        drawPath(k, 1);
-        cur.setAttribute("opacity", 0);
-        dot.setAttribute("opacity", 0);
-      });
-    });
-
-    if (NB.reduced) { setModeUi("global"); drawPath("global", 1); }
+    btns.forEach((b) => b.addEventListener("click", () => {
+      auto = false; reset(b.dataset.mode);
+      if (NB.reduced) { t = plan.end + 1; render(); }
+    }));
   }
 
-  /* ---------- study 2: wheelchair obstacle alert loop ---------- */
+  /* ---------- study 2: wheelchair alert loop ---------- */
   const chair = $("r-chair-svg");
   if (chair) {
-    const ped = $("r-ped");
-    const CUES = {
-      inst: { text: "“Stop. Person ahead.”", label: "instructional cue" },
-      info: { text: "“Person on your right, about 1 m.”", label: "informative cue" }
-    };
-    document.querySelectorAll("#research .r-cuebtn").forEach((b) => {
-      b.addEventListener("click", () => {
-        const c = CUES[b.dataset.cue];
-        document.querySelectorAll("#research .r-cuebtn").forEach((o) => o.classList.toggle("is-on", o === b));
-        $("r-cue").textContent = c.text;
-        $("r-cue-label").textContent = c.label;
-      });
-    });
+    const ped = $("r-ped"), z = $("r-z"), tag = chair.querySelector(".r-tag");
+    const wire = $("r-wire"), cmd = $("r-cmd"), wireLen = wire.getTotalLength();
+    const stages = [...root.querySelectorAll(".r-pipe li")];
+    const CUES = { inst: "“Stop. Person ahead.”", info: "“Person on your left.”" };
+    root.querySelectorAll(".r-cuebtn").forEach((b) => b.addEventListener("click", () => {
+      root.querySelectorAll(".r-cuebtn").forEach((o) => { o.classList.toggle("is-on", o === b); o.setAttribute("aria-pressed", String(o === b)); });
+      $("r-cue").textContent = CUES[b.dataset.cue];
+    }));
 
-    let tt = 0;
-    const cycle = 7, approachEnd = 3.2, holdEnd = 5.2;
-    const easeIO = (v) => v * v * (3 - 2 * v);
-    NB.loop(chair, (dt) => {
-      tt = (tt + dt) % cycle;
-      let x, alert = false;
-      if (tt < approachEnd) x = 460 - 88 * easeIO(tt / approachEnd);
-      else if (tt < holdEnd) { x = 372; alert = true; }
-      else x = 372 + 88 * easeIO((tt - holdEnd) / (cycle - holdEnd));
-      ped.setAttribute("transform", `translate(${x} 0)`);
+    const X0 = 900, XS = 435, V = 103.3, PXM = 150, FRONT = 300, BLUE = 615, RED = 450, LAG = 1.65, CYC = 9.5;
+    const tBlue = (X0 - BLUE) / V;
+    let lastZ = "";
+    const fitTag = () => { const bb = z.getBBox(); tag.setAttribute("x", bb.x - 6); tag.setAttribute("y", bb.y - 3); tag.setAttribute("width", bb.width + 12); tag.setAttribute("height", bb.height + 6); };
+    const stage = (s) => stages.forEach((li, i) => li.classList.toggle("is-on", i === s));
+    const draw = (tt) => {
+      const x = Math.max(XS, X0 - V * tt);
+      ped.setAttribute("transform", `translate(${x.toFixed(1)} 0)`);
+      ped.setAttribute("opacity", tt > 8 ? Math.max(0, 1 - (tt - 8) / .7).toFixed(2) : 1);
+      const zt = "person " + ((x - FRONT) / PXM).toFixed(1) + " m";
+      if (zt !== lastZ) { lastZ = zt; z.textContent = zt; fitTag(); }
+      chair.classList.toggle("is-still", x <= XS);
+      const alert = x <= RED && tt < 8.2;
       chair.classList.toggle("is-alert", alert);
-    });
-    if (NB.reduced) { ped.setAttribute("transform", "translate(372 0)"); chair.classList.add("is-alert"); }
+      const c = tt - tBlue;   /* haptic command in flight for LAG seconds */
+      if (c > 0 && c < LAG) { const p = wire.getPointAtLength(wireLen * c / LAG); cmd.setAttribute("cx", p.x); cmd.setAttribute("cy", p.y); cmd.style.opacity = 1; }
+      else cmd.style.opacity = 0;
+      if (alert) stage(tt - (X0 - RED) / V > 1.4 ? 5 : 4);
+      else if (x <= BLUE && tt < 8.2) stage(3);
+      else stage(tt < 8.2 ? Math.floor(tt / .35) % 3 : -1);
+    };
+    let t = 0;
+    fitTag();
+    if (NB.reduced) draw(5.5);
+    else NB.loop(chair, (dt) => { t = (t + dt) % CYC; draw(t); });
   }
 })();
 
+} catch (e) { console.error('[35-research.js]', e); }
 /* 40-ai.js */
-;/* #ai — generate → execute → verify → store loop. A slip travels the track; pass 1 fails and goes back
-   round with the evidence, pass 2 passes and is filed, then the LLM steps out of the loop. */
+try {
+/* #ai — (1) generate → execute → verify → store loop: a slip travels the track; pass 1 fails and goes back
+   round with the evidence, pass 2 passes and is filed, then the LLM steps out of the loop.
+   (2) tiny stepper for [data-stepper] sketches: adds .on to [data-s] elements in order, holds, resets. */
 (() => {
-  const svg = document.getElementById("ai-loop");
-  if (!svg || !window.NB) return;
+  if (!window.NB) return;
   const $ = (id) => document.getElementById(id);
-  const track = $("ai-track"), exit = $("ai-exit"), slip = $("ai-slip"), llm = $("ai-llm");
-  const pass = $("ai-pass"), pred = $("ai-pred"), result = $("ai-result");
-  const L = track.getTotalLength(), LE = exit.getTotalLength();
 
-  const near = (x, y) => { // track length closest to a point
-    let best = 0, bd = Infinity;
-    for (let s = 0; s < L; s += 2) { const p = track.getPointAtLength(s), d = (p.x - x) ** 2 + (p.y - y) ** 2; if (d < bd) { bd = d; best = s; } }
-    return best;
-  };
-  const EXE = near(460, 244), VER = near(280, 384);
+  /* ---------- the loop machine ---------- */
+  const svg = $("ai-loop");
+  if (svg) {
+    const track = $("ai-track"), exit = $("ai-exit"), slip = $("ai-slip"), llm = $("ai-llm");
+    const pass = $("ai-pass"), pred = $("ai-pred"), result = $("ai-result");
+    const CARDS = [
+      ["pass 1 · first draft", "= 'REVERSE'", "✗ 0 rows: not an observed label", "is-bad"],
+      ["pass 2 · with the evidence", "LIKE '%LIGHTS_REVERSE%'", "✓ counts match the vocabulary", "is-good"],
+      ["filed · canonical SQL", "LIKE '%LIGHTS_REVERSE%'", "scoring reruns it, no LLM", "is-filed"],
+    ];
+    let card = 0;
+    const setCard = (i) => { card = i; pass.textContent = CARDS[i][0]; pred.textContent = CARDS[i][1]; result.innerHTML = "&nbsp;"; result.className = "ai-result hand"; };
+    const showResult = () => { result.textContent = CARDS[card][2]; result.classList.add(CARDS[card][3]); };
+    const cls = (name, on) => svg.classList.toggle(name, on);
+    const llmAt = (k) => llm.setAttribute("transform", k ? `translate(${(380 * k).toFixed(1)} ${(-14 * k - 40 * Math.sin(Math.PI * k)).toFixed(1)})` : "");
+    const finish = () => { setCard(2); showResult(); ["is-ok", "is-filed", "is-out"].forEach((c) => cls(c, true)); slip.classList.add("is-gone"); llmAt(1); };
 
-  const CARDS = [
-    ["pass 1 · first draft", "  = 'REVERSE'", "0 rows: not an observed label", "is-bad"],
-    ["pass 2 · redrafted with evidence", "  LIKE '%LIGHTS_REVERSE%'", "counts match the vocabulary ✓", "is-good"],
-    ["filed · canonical SQL", "  LIKE '%LIGHTS_REVERSE%'", "scoring reruns it, no LLM", "is-filed"],
-  ];
-  let card = 0;
-  const setCard = (i) => { card = i; pass.textContent = CARDS[i][0]; pred.textContent = CARDS[i][1]; result.textContent = " "; result.setAttribute("class", "svg-hand ai-result"); };
-  const showResult = () => { result.textContent = CARDS[card][2]; result.classList.add(CARDS[card][3]); };
-  const cls = (name, on) => svg.classList.toggle(name, on);
-  const put = (p, r = 0) => slip.setAttribute("transform", `translate(${p.x.toFixed(1)} ${p.y.toFixed(1)}) rotate(${r.toFixed(1)})`);
-  const at = (s) => track.getPointAtLength(((s % L) + L) % L);
-  const llmAt = (k) => llm.setAttribute("transform", k ? `translate(${(206 * k).toFixed(1)} ${(-8 * k - 26 * Math.sin(Math.PI * k)).toFixed(1)})` : "");
+    // Geometry is read lazily (first visible frame): getTotalLength can throw on a path that has never been laid out.
+    let geo = null;
+    const measure = () => {
+      try {
+        const L = track.getTotalLength(), LE = exit.getTotalLength();
+        if (!(L > 0 && LE > 0)) return null;
+        const near = (x, y) => { let best = 0, bd = Infinity; for (let s = 0; s < L; s += 2) { const p = track.getPointAtLength(s), d = (p.x - x) ** 2 + (p.y - y) ** 2; if (d < bd) { bd = d; best = s; } } return best; };
+        return { L, LE, EXE: near(470, 250), VER: near(330, 410) };
+      } catch (e) { return null; }
+    };
 
-  const finish = () => { setCard(2); showResult(); ["is-ok", "is-filed", "is-out"].forEach((c) => cls(c, true)); slip.classList.add("is-gone"); llmAt(1); };
-  if (NB.reduced) { finish(); return; }
-
-  const pause = (d, on) => ({ d, on });
-  const move = (d, a, b, on) => ({ d, on, f: (k) => put(at(a + (b - a) * k), Math.sin(k * Math.PI) * -6) });
-  const T = [
-    pause(1.4, () => setCard(0)),
-    move(1.3, 0, EXE),
-    pause(0.9, () => cls("at-exe", true)),
-    move(1.1, EXE, VER, () => cls("at-exe", false)),
-    pause(1.6, () => { cls("is-x", true); showResult(); }),
-    move(1.9, VER, L, () => cls("is-retry", true)),
-    pause(0.5, () => cls("is-x", false)),
-    pause(1.3, () => { cls("is-retry", false); setCard(1); }),
-    move(1.3, 0, EXE),
-    pause(0.9, () => cls("at-exe", true)),
-    move(1.1, EXE, VER, () => cls("at-exe", false)),
-    pause(1.4, () => { cls("is-ok", true); showResult(); }),
-    { d: 1.1, f: (k) => put(exit.getPointAtLength(LE * k), k * -14) },
-    pause(0.5, () => { cls("is-filed", true); slip.classList.add("is-gone"); }),
-    { d: 1.4, on: () => cls("is-out", true), f: llmAt },
-    pause(5, () => { setCard(2); showResult(); cls("is-ok", false); }),
-  ];
-  const reset = () => {
-    ["is-x", "is-ok", "is-filed", "is-out", "is-retry", "at-exe"].forEach((c) => cls(c, false));
-    slip.classList.remove("is-gone"); llmAt(0); put(at(0));
-  };
-
-  const ease = (t) => (t < .5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
-  let i = 0, t = 0, started = false;
-  reset();
-  NB.loop(svg, (dt) => {
-    const s = T[i];
-    if (!started) { started = true; s.on && s.on(); }
-    t += dt;
-    s.f && s.f(ease(Math.min(1, t / s.d)));
-    if (t >= s.d) {
-      t = 0; started = false; i++;
-      if (i >= T.length) { i = 0; reset(); }
+    if (NB.reduced) finish();
+    else {
+      const put = (p, r = 0) => slip.setAttribute("transform", `translate(${p.x.toFixed(1)} ${p.y.toFixed(1)}) rotate(${r.toFixed(1)})`);
+      const at = (s) => track.getPointAtLength(((s % geo.L) + geo.L) % geo.L);
+      const pause = (d, on) => ({ d, on });
+      const move = (d, a, b, on) => ({ d, on, f: (k) => { const A = a(), B = b(); put(at(A + (B - A) * k), Math.sin(k * Math.PI) * -6); } });
+      const g = (key) => () => (key === 0 ? 0 : geo[key]);
+      const T = [
+        pause(1.4, () => setCard(0)),
+        move(1.3, g(0), g("EXE")),
+        pause(0.9, () => cls("at-exe", true)),
+        move(1.1, g("EXE"), g("VER"), () => cls("at-exe", false)),
+        pause(1.8, () => { cls("is-x", true); showResult(); }),
+        move(1.9, g("VER"), g("L"), () => cls("is-retry", true)),
+        pause(0.5, () => cls("is-x", false)),
+        pause(1.3, () => { cls("is-retry", false); setCard(1); }),
+        move(1.3, g(0), g("EXE")),
+        pause(0.9, () => cls("at-exe", true)),
+        move(1.1, g("EXE"), g("VER"), () => cls("at-exe", false)),
+        pause(1.6, () => { cls("is-ok", true); showResult(); }),
+        { d: 1.1, f: (k) => put(exit.getPointAtLength(geo.LE * k), k * -14) },
+        pause(0.5, () => { cls("is-filed", true); slip.classList.add("is-gone"); }),
+        { d: 1.4, on: () => cls("is-out", true), f: llmAt },
+        pause(5, () => { setCard(2); showResult(); cls("is-ok", false); }),
+      ];
+      const reset = () => {
+        ["is-x", "is-ok", "is-filed", "is-out", "is-retry", "at-exe"].forEach((c) => cls(c, false));
+        slip.classList.remove("is-gone"); llmAt(0); put(at(0));
+      };
+      const ease = (t) => (t < .5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
+      let i = 0, t = 0, started = false, dead = false;
+      NB.loop(svg, (dt) => {
+        if (dead) return;
+        if (!geo) { geo = measure(); if (!geo) { dead = true; finish(); return; } reset(); }
+        const s = T[i];
+        if (!started) { started = true; s.on && s.on(); }
+        t += dt;
+        s.f && s.f(ease(Math.min(1, t / s.d)));
+        if (t >= s.d) { t = 0; started = false; i++; if (i >= T.length) { i = 0; reset(); } }
+      });
     }
+  }
+
+  /* ---------- steppers ---------- */
+  document.querySelectorAll("#ai [data-stepper]").forEach((el) => {
+    const items = [...el.querySelectorAll("[data-s]")];
+    const max = Math.max(...items.map((n) => +n.dataset.s));
+    const show = (k) => items.forEach((n) => n.classList.toggle("on", +n.dataset.s <= k));
+    if (NB.reduced) return show(max);
+    const step = +el.dataset.stepper || .6, HOLD = 6;
+    let k = 0, t = 0;
+    NB.loop(el, (dt) => {
+      t += dt;
+      if (t < step) return;
+      t = 0; k = (k + 1) % (max + HOLD); show(k);
+    });
   });
 })();
 
+} catch (e) { console.error('[40-ai.js]', e); }
 /* 45-data.js */
-;/* #data: a hand-inked pipeline drawn from config. Tabs re-route it between three real pipelines;
+try {
+/* #data: a hand-inked pipeline drawn from config. Tabs re-route it between three real pipelines;
    packets flow through, and one failing packet per cycle is hooked out into quarantine. */
 (() => {
   const fig = document.querySelector("#data .data-sketch");
-  if (!fig) return;
-  const svg = fig.querySelector(".data-svg"), canvas = svg.querySelector(".data-canvas");
-  const board = fig.querySelector(".data-board"), noteEl = fig.querySelector(".data-note");
-  const panel = document.getElementById("data-panel"), bodies = [...panel.querySelectorAll(".data-pb")];
+  const svg = fig && fig.querySelector(".data-svg"), canvas = svg && svg.querySelector(".data-canvas");
+  const board = fig && fig.querySelector(".data-board"), noteEl = fig && fig.querySelector(".data-note");
+  const panel = document.getElementById("data-panel");
+  if (!canvas || !board || !noteEl || !panel) return; // markup out of sync: fail quietly, never throw
+  const bodies = [...panel.querySelectorAll(".data-pb")];
   const tabs = [...fig.querySelectorAll(".tab")];
   const HINT = noteEl.innerHTML;
 
@@ -940,10 +1108,10 @@ document.addEventListener("click", (e) => {
       st: [
         { k: "antenna", name: "GTFS feeds", sub: ["BART + VTA", "static + real-time"], note: "Static schedules and real-time vehicle feeds from two operators, BART and VTA." },
         { k: "log", name: "Kafka", sub: ["producer → consumer"], note: "A Kafka producer and consumer carry near-real-time vehicle events, with dedup and replay." },
-        { k: "valve", name: "Airflow", sub: ["3 DAGs on AWS MWAA"], note: "Three DAGs: GTFS incremental ingestion, streaming ingestion and ML forecasting." },
+        { k: "valve", name: "Airflow", sub: ["3 DAGs on MWAA"], note: "Three DAGs: GTFS incremental ingestion, streaming ingestion and ML forecasting." },
         { k: "gate", name: "checks", sub: ["late · malformed · dupes"], note: "Live events are aligned to static stop IDs; late or malformed location samples and duplicates are pulled aside." },
-        { k: "wh", name: "Snowflake + dbt", sub: ["landing → analytics"], note: "Snowflake landing and analytics schemas; dbt builds route-level performance aggregates." },
-        { k: "screen", name: "FastAPI + React", sub: ["operator dashboard"], note: "FastAPI serves a React/TypeScript operator dashboard with maps and metrics; heavy ETL and training stay off this path." }
+        { k: "wh", name: "Snowflake", sub: ["dbt · landing →", "analytics schemas"], note: "Snowflake landing and analytics schemas; dbt builds route-level performance aggregates." },
+        { k: "screen", name: "FastAPI", sub: ["React/TS operator", "dashboard"], note: "FastAPI serves a React/TypeScript operator dashboard with maps and metrics; heavy ETL and training stay off this path." }
       ],
       ann: [[0, ["stop IDs ≠ live events:", "align them first"]], [2, ["ingest, stream,", "forecast"]], [5, ["+ Azure Databricks", "& Power BI KPIs"]]]
     },
@@ -953,7 +1121,7 @@ document.addEventListener("click", (e) => {
         { k: "tank", name: "Salesforce", sub: ["formula fields"], note: "Formula fields recalculate in real time but never update LastModified, so incremental loads missed them and pipelines fell back to full refreshes." },
         { k: "funnel", name: "formula compiler", sub: ["metadata → SQL"], note: "Pulls formula definitions from the Salesforce API, walks every field dependency depth-first, and an LLM drafts SQL from that structured context." },
         { k: "valve", name: "Matillion", sub: ["incremental upserts"], note: "Change detection and incremental upserts replace full-table refreshes." },
-        { k: "wh", name: "Snowflake + dbt", sub: ["versioned, clustered"], note: "Generated SQL lives in version-controlled dbt models; partitioning and Snowflake clustering cut scan volume." },
+        { k: "wh", name: "Snowflake", sub: ["versioned dbt models", "clustered tables"], note: "Generated SQL lives in version-controlled dbt models; partitioning and Snowflake clustering cut scan volume." },
         { k: "gate", name: "reconcile", sub: ["samples vs live CRM"], note: "Automated samples of warehouse output are compared with the live CRM; any mismatch is flagged before deployment." },
         { k: "screen", name: "dashboards", sub: ["for leadership"], note: "Leadership and go-to-market dashboards read numbers that were verified, not assumed." }
       ],
@@ -966,10 +1134,10 @@ document.addEventListener("click", (e) => {
         { k: "pump", name: "DataSync", sub: ["+ bash tracking"], note: "AWS DataSync moves the data; bash scripts copy, track each batch and keep a record of what moved." },
         { k: "bucket", name: "S3", sub: ["data lake"], note: "S3 becomes the data lake; Spark and Snowflake carry the transformation layer, re-tuned until one model ran in 6 min instead of 18." },
         { k: "gate", name: "pytest checks", sub: ["99.6% accuracy"], note: "Python and pytest-style checks compare source and destination: row mismatches, null anomalies and type drift are flagged before go-live." },
-        { k: "valve", name: "Airflow → MWAA", sub: ["modular DAGs"], note: "Legacy Airflow moved to managed MWAA patterns: containerized operators, modular DAGs, isolated tests, better retries." },
-        { k: "bell", name: "SLA alerts", sub: ["CloudWatch · SNS", "· Lambda"], note: "CloudWatch metrics, SNS alerts and Lambda triggers catch SLA breaches and job failures before the client does." }
+        { k: "valve", name: "MWAA", sub: ["modular Airflow DAGs"], note: "Legacy Airflow moved to managed MWAA patterns: containerized operators, modular DAGs, isolated tests, better retries." },
+        { k: "bell", name: "SLA alerts", sub: ["CloudWatch, SNS", "+ Lambda"], note: "CloudWatch metrics, SNS alerts and Lambda triggers catch SLA breaches and job failures before the client does." }
       ],
-      ann: [[0, ["moved in tracked", "batches"]], [4, ["containerized", "operators"]], [5, ["~45% fewer client", "escalations"]]]
+      ann: [[0, ["moved in tracked", "batches"]], [2, ["one model:", "18 → 6 min"]], [5, ["~45% fewer client", "escalations"]]]
     }
   };
 
@@ -1049,11 +1217,11 @@ document.addEventListener("click", (e) => {
   let mode = "transit", vert = false, S = null;
   function geo(n, gi) {
     if (!vert) {
-      const y = 206, xs = [...Array(n)].map((_, i) => 95 + i * 182);
-      return { W: 1100, H: 440, s: 1, pts: xs.map((x) => [x, y]), bin: [xs[gi], 334], pivot: [xs[gi] + 88, 284] };
+      const y = 236, xs = [...Array(n)].map((_, i) => 100 + i * 180);
+      return { W: 1100, H: 500, s: 1.3, pts: xs.map((x) => [x, y]), bin: [xs[gi], 392], pivot: [xs[gi] + 74, 384] };
     }
-    const gap = 118, y0 = 76, ys = [...Array(n)].map((_, i) => y0 + i * gap);
-    return { W: 380, H: y0 + (n - 1) * gap + 70, s: .8, pts: ys.map((y) => [118, y]), bin: [46, ys[gi] + 46], pivot: [40, ys[gi] - 26] };
+    const gap = 128, y0 = 80, ys = [...Array(n)].map((_, i) => y0 + i * gap);
+    return { W: 380, H: y0 + (n - 1) * gap + 80, s: .95, pts: ys.map((y) => [138, y]), bin: [54, ys[gi] + 50], pivot: [52, ys[gi] - 28] };
   }
 
   function render() {
@@ -1065,7 +1233,7 @@ document.addEventListener("click", (e) => {
     /* pipe: two wobbly walls + flange ticks between stations */
     h += '<g class="boil pipe">';
     if (!vert) {
-      h += ln(x0, y0 - 11, x1, y1 - 11, "ink", 1.4) + ln(x0, y0 + 11, x1, y1 + 11, "ink", 1.4);
+      h += ln(x0, y0 - 13, x1, y1 - 13, "ink", 1.4) + ln(x0, y0 + 13, x1, y1 + 13, "ink", 1.4);
       for (let i = 0; i < n - 1; i++) { const m = (g.pts[i][0] + g.pts[i + 1][0]) / 2; h += ln(m - 4, y0 - 16, m - 4, y0 + 16, "ink-thin") + ln(m + 4, y0 - 16, m + 4, y0 + 16, "ink-thin"); }
     } else {
       h += ln(x0 - 11, y0, x1 - 11, y1, "ink", 1.4) + ln(x0 + 11, y0, x1 + 11, y1, "ink", 1.4);
@@ -1078,26 +1246,27 @@ document.addEventListener("click", (e) => {
     /* stations */
     c.st.forEach((s, i) => {
       const [x, y] = g.pts[i], gate = s.k === "gate";
-      const lx = vert ? 172 : x, anchor = vert ? "start" : "middle";
-      const ly = vert ? y - 4 : gate ? y - 94 : y + 76;
+      const lx = vert ? 190 : x, anchor = vert ? "start" : "middle";
+      const ly = vert ? y - 6 : gate ? y - 132 : y + 98;
       let lab = `<text class="svg-hand lbl" x="${lx}" y="${ly}" text-anchor="${anchor}">${s.name}</text>`;
-      s.sub.forEach((t, k) => { lab += `<text class="svg-print sub" x="${lx}" y="${ly + (vert ? 20 : 22) + k * 18}" text-anchor="${anchor}">${t}</text>`; });
-      h += `<g class="st${gate ? " gate" : ""}" data-i="${i}" style="--i:${i}" tabindex="0" role="button" aria-label="${s.name}: ${s.note}">` +
-        `<rect class="hit" x="${vert ? x - 50 : x - 88}" y="${vert ? y - 56 : y - 70}" width="${vert ? 300 : 176}" height="${vert ? 112 : 190}"/>` +
+      s.sub.forEach((t, k) => { lab += `<text class="svg-print sub" x="${lx}" y="${ly + 24 + k * 21}" text-anchor="${anchor}">${t}</text>`; });
+      h += `<g class="st st-${s.k}${gate ? " gate" : ""}" data-i="${i}" style="--i:${i}" tabindex="0" role="button" aria-label="${s.name}: ${s.note}">` +
+        `<rect class="hit" x="${vert ? x - 60 : x - 88}" y="${vert ? y - 60 : y - 150}" width="${vert ? 310 : 176}" height="${vert ? 120 : 300}"/>` +
         `<g class="boil"><g transform="translate(${x} ${y}) scale(${g.s})">${G[s.k]()}</g></g>${lab}</g>`;
     });
     /* quarantine bin, stacked rejects, hook arm */
     const [bx, by] = g.bin, bw = vert ? 30 : 42, bh = vert ? 46 : 56;
     h += `<g class="bin rough">${ln(bx - bw, by, bx - bw + 9, by + bh)}${ln(bx - bw + 9, by + bh, bx + bw - 9, by + bh)}${ln(bx + bw - 9, by + bh, bx + bw, by)}${ln(bx - bw - 5, by, bx + bw + 5, by)}</g>`;
-    h += `<text class="svg-hand qlbl" x="${bx}" y="${by + bh + (vert ? 20 : 26)}" text-anchor="middle">quarantine</text>`;
+    h += `<text class="svg-hand qlbl" x="${bx}" y="${by + bh + (vert ? 22 : 28)}" text-anchor="middle">quarantine</text>`;
     const slots = vert ? [[-12, 36], [8, 37], [-2, 22]] : [[-17, 46], [5, 47], [-6, 30]];
     h += slots.map(([dx, dy], i) => `<g class="stk" data-k="${i}" transform="translate(${bx + dx} ${by + dy}) rotate(${(i - 1) * 9})">${BAD}</g>`).join("");
     h += `<g class="arm"><path class="ink-red arm-l"/><circle class="pivot" cx="${g.pivot[0]}" cy="${g.pivot[1]}" r="4"/></g>`;
     /* annotations (desktop only; mobile reads the result line) */
     if (!vert) c.ann.forEach(([i, lines, red]) => {
       const x = g.pts[i][0], cls = red ? "ink-red" : "ink-blue";
-      h += `<g class="ann${red ? " red" : ""}">${lines.map((t, k) => `<text class="svg-hand" x="${x}" y="${48 + k * 22}" text-anchor="middle">${t}</text>`).join("")}` +
-        `<path class="${cls} thin" d="M${x + 6} ${84} q16 24 2 ${y0 - 150}" marker-end="url(#arrowhead)"/></g>`;
+      const [tx, an] = i === 0 ? [x - 52, "start"] : i === n - 1 ? [x + 52, "end"] : [x, "middle"];
+      h += `<g class="ann${red ? " red" : ""}">${lines.map((t, k) => `<text class="svg-hand" x="${tx}" y="${40 + k * 24}" text-anchor="${an}">${t}</text>`).join("")}` +
+        `<path class="${cls} thin" d="M${x + 4} 82 q14 26 0 ${y0 - 82 - 62 * g.s - 8}" marker-end="url(#arrowhead)"/></g>`;
     });
     canvas.innerHTML = h;
     canvas.classList.remove("fresh"); void canvas.getBBox(); canvas.classList.add("fresh");
@@ -1172,55 +1341,124 @@ document.addEventListener("click", (e) => {
     });
   });
 
-  const check = () => { const v = board.clientWidth < 900; if (v !== vert || !S) { vert = v; render(); } };
+  const check = () => { const v = board.clientWidth < 920; if (v !== vert || !S) { vert = v; render(); } };
   new ResizeObserver(check).observe(board);
   check();
   if (!NB.reduced) NB.loop(fig, (dt, t) => S && frame(t));
 })();
 
-/* 55-automation.js */
-;/* #automation — hover/focus a mechanism card to show which pattern it demonstrates.
-   All the motion itself is CSS (paused offscreen via data-anim); this only swaps the
-   caption so keyboard and touch users get the same “which one” feedback as a hover. */
+} catch (e) { console.error('[45-data.js]', e); }
+/* 50-agents.js */
+try {
+/* #agents — (1) the read-only ops bot: click a suggested question, the answer types out in handwriting;
+   "ignore your rules" shows the guardrail. Plays question 1 once on first view so the log isn't empty.
+   (2) Blast Radius: a stepper adds .on to [data-s] elements stage by stage (data-until hides them again). */
 (() => {
-  const sk = document.querySelector("#automation .auto-sketch");
-  if (!sk) return;
-  const note = sk.querySelector("#auto-mode-note");
-  if (!note) return;
+  const reduced = !!(window.NB && NB.reduced);
 
-  const defaultText = note.textContent;
-  const text = {
-    sched: "Left: the clock. The gear turns once a week, aggregates the fleet, and publishes one snapshot — the dashboard, digest and owner DMs all read it.",
-    event: "Right: the event. A run flips to FAILED, the wire trips, the bell rings, and an alert with a deep link is out within minutes. Opt-in, default off."
-  };
+  /* ---------- the notebook chat ---------- */
+  const chat = document.getElementById("agent-chat");
+  if (chat) {
+    const log = document.getElementById("agent-chat-log");
+    const btns = [...chat.querySelectorAll("button[data-q]")];
+    const SRC = "Source · published weekly report · read-only";
+    const REPLIES = [
+      { a: "2 of your 14 miners failed this week: miner-A (no ground-truth rows in the window) and miner-B (run timed out). You were DM'd when each run failed.", s: SRC },
+      { a: "miner-C: precision 0.94 this week, up from 0.91. That's true-positive labeled events over effective generated events, with canceled and failed-download work excluded.", s: SRC },
+      { guard: true, a: "I can't. I'm read-only: no tools, no database access, no way to rerun or change a miner. Your message is treated as untrusted text, not an instruction. I can tell you which miners failed or what their precision is.", s: "Guardrail · zero tools · fenced untrusted input · bounded context" },
+    ];
+    const scroll = () => { log.scrollTop = log.scrollHeight; };
+    const addMsg = (text, cls) => {
+      const m = document.createElement("div");
+      m.className = "msg " + cls + " flash";
+      const t = document.createElement("span"); t.className = "msg-text"; t.textContent = text; m.append(t);
+      log.append(m); scroll();
+      return m;
+    };
+    let busy = false;
+    const answer = (idx) => {
+      if (busy) return;
+      busy = true;
+      const r = REPLIES[idx];
+      btns.forEach((b) => (b.disabled = true));
+      btns[idx].setAttribute("aria-pressed", "true");
+      addMsg(btns[idx].textContent, "msg-q");
+      const m = addMsg("", "msg-a" + (r.guard ? " guard" : ""));
+      const textEl = m.firstChild, src = document.createElement("span");
+      src.className = "src"; m.append(src);
+      const done = () => { textEl.textContent = r.a; src.textContent = r.s; scroll(); busy = false; btns.forEach((b) => (b.disabled = false)); };
+      if (reduced) return done();
+      let i = 0;
+      setTimeout(function tick() {
+        i += 2;
+        if (i >= r.a.length) return done();
+        textEl.textContent = r.a.slice(0, i);
+        textEl.insertAdjacentHTML("beforeend", '<span class="caret"></span>');
+        scroll();
+        setTimeout(tick, 20);
+      }, 350);
+    };
+    btns.forEach((b, i) => b.addEventListener("click", () => answer(i)));
+    let primed = false;
+    if (window.NB) NB.onVisible(chat, () => { if (!primed) { primed = true; setTimeout(() => answer(0), 700); } });
+  }
 
-  sk.querySelectorAll(".auto-mech").forEach((m) => {
-    const set = () => { note.textContent = text[m.dataset.mech]; };
-    const clear = () => { note.textContent = defaultText; };
-    m.addEventListener("mouseenter", set);
-    m.addEventListener("focus", set);
-    m.addEventListener("click", set);
-    m.addEventListener("mouseleave", clear);
-    m.addEventListener("blur", clear);
-  });
+  /* ---------- Blast Radius stage script ---------- */
+  const br = document.querySelector("#agents .br-svg");
+  if (br) {
+    const items = [...br.querySelectorAll("[data-s]")];
+    const MAX = 7, HOLD = 3; // stages 1..7, then hold the green state for 3 beats before resetting
+    const show = (k) => {
+      items.forEach((n) => { const s = +n.dataset.s, u = n.dataset.until ? +n.dataset.until : 99; n.classList.toggle("on", s <= k && k <= u); });
+      br.classList.toggle("is-run", k >= 1);
+      br.classList.toggle("is-pending", k >= 5 && k <= 6);
+      br.classList.toggle("is-green", k >= 7);
+    };
+    if (reduced || !window.NB) show(MAX);
+    else {
+      const step = +br.dataset.step || 1.9;
+      let k = 0, t = 0;
+      show(0);
+      NB.loop(br, (dt) => {
+        t += dt;
+        if (t < (k === 0 ? 0.8 : step)) return;
+        t = 0; k = (k + 1) % (MAX + HOLD); show(Math.min(k, MAX));
+      });
+    }
+  }
 })();
 
+} catch (e) { console.error('[50-agents.js]', e); }
+/* 55-automation.js */
+try {
+/* #automation: all motion is CSS. This only advances the week number on the snapshot page
+   each time the scheduled cycle restarts, so every "week" publishes a new immutable report. */
+(() => {
+  const page = document.querySelector("#automation .as-page");
+  const wk = page && page.querySelector(".as-wk");
+  if (!wk || NB.reduced) return;
+  let n = 23;
+  page.addEventListener("animationiteration", () => { wk.textContent = `wk ${n = n >= 52 ? 1 : n + 1}`; });
+})();
+
+} catch (e) { console.error('[55-automation.js]', e); }
 /* 60-security.js */
-;/* 60 — security: hover/focus a guardrail to spotlight it in the sketch (motion itself is CSS) */
+try {
+/* 60 — security: hover/focus a guardrail fact to spotlight it in the fence sketch (motion itself is CSS) */
 (() => {
   "use strict";
   const sec = document.getElementById("security");
   if (!sec) return;
   const svg = sec.querySelector(".sec-svg");
-  const items = [...sec.querySelectorAll(".sec-li")];
+  const items = [...sec.querySelectorAll(".sec-fact[data-part]")];
   if (!svg) return;
 
   const set = (li) => {
     const part = li && li.dataset.part;
     svg.classList.toggle("is-focus", !!part);
-    if (part) svg.dataset.part = part; else delete svg.dataset.part;
+    svg.dataset.part = part || "";
     items.forEach((o) => o.classList.toggle("is-on", o === li));
-    svg.querySelectorAll(".sec-p").forEach((g) => g.classList.toggle("is-on", !!part && g.classList.contains("p-" + part)));
+    svg.querySelectorAll(".sec-part").forEach((g) => g.classList.toggle("is-on", !!part && g.classList.contains("p-" + part)));
   };
   items.forEach((li) => {
     li.addEventListener("mouseenter", () => set(li));
@@ -1230,260 +1468,161 @@ document.addEventListener("click", (e) => {
   });
 })();
 
+} catch (e) { console.error('[60-security.js]', e); }
 /* 65-systems.js */
-;/* 65 — systems: tabbed sketches (LSM write/read, query pushdown, roofline climb) */
+try {
+/* 65 — systems: tabbed sketches (LSM write/read, query pushdown, roofline climb) synced to the entry on the right.
+   Each sketch is a pure render(t) of a looping timeline; NB.loop only runs it while the pane is visible. */
 (() => {
   "use strict";
-  if (!window.NB) return;
   const sec = document.getElementById("systems");
-  if (!sec) return;
+  if (!sec || !window.NB) return;
 
-  const reduced = NB.reduced;
-  const clamp01 = (v) => Math.max(0, Math.min(1, v));
-  const easeIO = (p) => p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
-  const $ = (sel, root) => (root || sec).querySelector(sel);
-
-  /* ---------- tabs ---------- */
+  /* ---------- tabs + entry sync (WAI-ARIA tabs, arrow keys) ---------- */
   const tabs = [...sec.querySelectorAll(".sys-tab")];
   const panes = [...sec.querySelectorAll(".sys-pane")];
-
-  function setTab(i, focus) {
-    tabs.forEach((t, k) => {
-      t.setAttribute("aria-selected", String(k === i));
-      t.tabIndex = k === i ? 0 : -1;
-    });
-    panes.forEach((p, k) => {
-      p.hidden = k !== i;
-      p.classList.toggle("is-open", k === i);
-    });
+  const entries = [...sec.querySelectorAll(".sys-entry")];
+  const setTab = (i, focus) => {
+    tabs.forEach((t, k) => { t.setAttribute("aria-selected", String(k === i)); t.tabIndex = k === i ? 0 : -1; });
+    panes.forEach((p, k) => { p.hidden = k !== i; });
+    entries.forEach((e, k) => e.classList.toggle("is-active", k === i));
     if (focus) tabs[i].focus();
-  }
-
+  };
   tabs.forEach((t, i) => {
     t.addEventListener("click", () => setTab(i));
     t.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
-        e.preventDefault();
-        const d = e.key === "ArrowRight" ? 1 : -1;
-        setTab((i + d + tabs.length) % tabs.length, true);
-      }
+      const d = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+      if (d) { e.preventDefault(); setTab((i + d + tabs.length) % tabs.length, true); }
     });
   });
-  setTab(0);
 
-  /* ---------- per-pane animations ---------- */
-  const lsm = $(".sys-lsm", sec);
-  const qe = $(".sys-qe", sec);
-  const roof = $(".sys-roof", sec);
-
-  /* LSM: a key is written (dot along WAL → memtable → SSTable), then a read
-     walks memtable → SST new → SST old → bloom "no"/"maybe" hit box. */
-  if (lsm) {
-    const wdot = $(".sys-wdot", lsm);
-    const rdot = $(".sys-rdot", lsm);
-    const maybe = $(".sys-maybe", lsm);
-    const no = $(".sys-no", lsm);
-    const hitbox = $(".sys-hitbox", lsm);
-    const hitcheck = $(".sys-hitcheck", lsm);
-    const getk = $(".sys-getk", lsm);
-    const cp = $(".sys-cp", lsm);
-    const cplab = $(".sys-cplab", lsm);
-
-    // write path: WAL(84,64) → mem(234,64) → sst new(454,62)
-    const wpath = [
-      [84, 64, 120],   // t 0–0.3 hold at WAL
-      [234, 64],       // t 0.3–0.6 to memtable
-      [234, 64, 150],  // hold
-      [454, 62]        // t 0.75–1.0 flush to newest SSTable
-    ];
-    // read path: mem(84,338) → sst new(244,338) → sst old(404,338) → hit(526,338)
-    const rpath = [
-      [44, 338, 160],
-      [84, 338],
-      [84, 338, 140],
-      [244, 338],
-      [244, 338, 140],
-      [404, 338],
-      [404, 338, 140],
-      [520, 338]
-    ];
-
-    const sample = (path, p) => {
-      let acc = 0;
-      let x = path[0][0], y = path[0][1];
-      for (let i = 0; i < path.length; i++) {
-        const seg = path[i];
-        const dur = seg.length > 2 ? seg[2] : 200;
-        if (i < path.length - 1 && p * 1000 < acc + dur) {
-          const lp = clamp01((p * 1000 - acc) / dur);
-          const nx = path[i + 1][0], ny = path[i + 1][1];
-          return [x + (nx - x) * lp, y + (ny - y) * lp];
-        }
-        acc += dur;
-        if (i < path.length - 1) { x = path[i + 1][0]; y = path[i + 1][1]; }
-      }
-      return [x, y];
-    };
-
-    const LSM_T = 9;
-    if (reduced) {
-      wdot.setAttribute("cx", "84"); wdot.setAttribute("cy", "64");
-      rdot.setAttribute("cx", "520"); rdot.setAttribute("cy", "338");
-      hitbox.style.stroke = "var(--green)";
-      hitcheck.style.opacity = "1";
-      getk.style.opacity = "0";
-      cplab.style.opacity = "1";
-    } else {
-      NB.loop(lsm, (_dt, t) => {
-        const c = (t % LSM_T);
-        // write half: 0–3.5 s
-        const w = c < 3.2 ? sample(wpath, clamp01(c / 3.0)) : null;
-        // read half: 4–8 s
-        const r = c >= 4 && c < 8 ? sample(rpath, clamp01((c - 4) / 3.6)) : null;
-        // compaction pulse near end
-        const cpP = c >= 7.6 && c < 9 ? clamp01((c - 7.6) / 0.4) : 0;
-
-        if (w) {
-          wdot.setAttribute("cx", w[0].toFixed(1));
-          wdot.setAttribute("cy", w[1].toFixed(1));
-          wdot.style.opacity = "1";
-        } else wdot.style.opacity = "0";
-
-        if (r) {
-          rdot.setAttribute("cx", r[0].toFixed(1));
-          rdot.setAttribute("cy", r[1].toFixed(1));
-          rdot.style.opacity = "1";
-          // bloom verdicts appear as the dot reaches each table
-          no.style.opacity = r[0] > 160 && r[0] < 244 ? "1" : "0";
-          maybe.style.opacity = r[0] > 320 && r[0] < 404 ? "1" : "0";
-          const hit = r[0] > 480;
-          hitbox.style.stroke = hit ? "var(--green)" : "";
-          hitcheck.style.opacity = hit ? "1" : "0";
-          getk.style.opacity = "0";
-        } else {
-          rdot.style.opacity = "0";
-          no.style.opacity = "0";
-          maybe.style.opacity = "0";
-          getk.style.opacity = c < 4 ? "1" : "0";
-        }
-
-        if (cplab) cplab.style.opacity = cpP ? "1" : "0";
-        if (cp) cp.style.opacity = cpP ? "0.9" : "0";
-      });
+  /* ---------- timeline helpers ---------- */
+  const ease = (p) => (p < 0.5 ? 2 * p * p : 1 - (-2 * p + 2) ** 2 / 2);
+  const clamp = (v) => Math.max(0, Math.min(1, v));
+  const ramp = (c, a, b) => ease(clamp((c - a) / (b - a)));          // 0 → 1 between a and b
+  const on = (c, a, b) => c >= a && c < b;
+  // keyframes [[t, x, y], ...] → eased position at time c
+  const track = (kf, c) => {
+    if (c <= kf[0][0]) return kf[0].slice(1);
+    for (let i = 1; i < kf.length; i++) {
+      const [t1, x1, y1] = kf[i], [t0, x0, y0] = kf[i - 1];
+      if (c < t1) { const p = ease((c - t0) / (t1 - t0)); return [x0 + (x1 - x0) * p, y0 + (y1 - y0) * p]; }
     }
+    return kf[kf.length - 1].slice(1);
+  };
+  const stepText = (steps, c) => { let s = steps[0][1]; for (const [t, txt] of steps) if (c >= t) s = txt; return s; };
+
+  function run(svg, T, tFinal, render) {
+    if (!svg) return;
+    if (NB.reduced) { render(tFinal); return; }
+    render(0);
+    NB.loop(svg, (_dt, t) => render(t % T));
   }
 
-  /* Query engine: Filter node slides down into the Scan; the row group
-     whose min/max exclude the predicate gets crossed out, then the plan
-     settles and the annotation fades in. */
-  if (qe) {
-    const filt = $(".sys-filter", qe);
-    const arrow = $(".sys-pd-arrow", qe);
-    const flab = $(".sys-filterq", qe);
-    const skip = $(".sys-skip", qe);
-    const skipX = skip ? skip.querySelectorAll("[style]") : [];
-    const skipLab = skip && skip.querySelector(".sys-lab.red");
-    const rgNote = $(".sys-rg-note", qe);
+  /* ---------- 1 · LSM: put k → WAL → memtable; get j → memtable → Bloom no → Bloom maybe, found; compaction ---------- */
+  (() => {
+    const svg = sec.querySelector(".sys-lsm"); if (!svg) return;
+    const q = (s) => svg.querySelector(s);
+    const dw = q(".sys-dot-w"), dr = q(".sys-dot-r"), wal = q(".sys-wal-new"), k = q(".sys-k"), mem = q(".sys-mem"),
+      b3 = q(".sys-bits3"), b2 = q(".sys-bits2"), s3 = q(".sys-sst3"), s2 = q(".sys-sst2"), found = q(".sys-found"),
+      ghost = q(".sys-ghost"), status = q(".sys-status");
+    const W = [[0.2, 62, 44], [1.2, 62, 118], [1.7, 62, 118], [2.7, 212, 92]];
+    const R = [[3.2, 290, 236], [4.0, 202, 122], [4.8, 202, 122], [5.4, 352, 66], [6.4, 352, 66], [7.0, 352, 120]];
+    const S = [[0, "put k: append to the WAL, fsync"], [1.6, "insert k into the sorted memtable"],
+      [3.2, "get j: memtable first, a miss"], [4.8, "newest SSTable: Bloom says no, skip"],
+      [6.4, "next SSTable: Bloom says maybe, found"], [8.4, "compaction merges SSTables into one"]];
+    const T = 11;
+    run(svg, T, 7.8, (c) => {
+      const [wx, wy] = track(W, c), [rx, ry] = track(R, c);
+      dw.setAttribute("cx", wx); dw.setAttribute("cy", wy); dw.style.opacity = on(c, 0.2, 2.9) ? 1 : 0;
+      dr.setAttribute("cx", rx); dr.setAttribute("cy", ry); dr.style.opacity = on(c, 3.2, 8.3) ? 1 : 0;
+      wal.style.opacity = on(c, 1.2, T - 0.5) ? 1 : 0;
+      k.style.opacity = on(c, 2.6, T - 0.5) ? 1 : 0;
+      mem.classList.toggle("is-miss", on(c, 4.0, 4.8));
+      b3.classList.toggle("is-no", on(c, 5.4, 6.4)); s3.classList.toggle("is-miss", on(c, 5.4, 6.4));
+      b2.classList.toggle("is-maybe", on(c, 7.0, 8.4)); s2.classList.toggle("is-hit", on(c, 7.0, 8.4));
+      found.style.opacity = on(c, 7.2, 8.4) ? 1 : 0;
+      const g = ramp(c, 8.6, 9.8);
+      ghost.setAttribute("transform", `translate(0 ${(152 * g).toFixed(1)})`);
+      ghost.style.opacity = on(c, 8.5, 10.4) ? 1 : 0;
+      const txt = stepText(S, c); if (status.textContent !== txt) status.textContent = txt;
+    });
+  })();
 
-    const QE_T = 8;
-    if (reduced) {
-      filt.setAttribute("transform", "translate(0,104)");
-      arrow.style.opacity = "0";
-      flab.style.opacity = "1";
-      if (skipX.length) skipX.forEach((n) => (n.style.opacity = "1"));
-      if (skipLab) skipLab.style.opacity = "1";
-      if (rgNote) rgNote.style.opacity = "1";
-    } else {
-      NB.loop(qe, (_dt, t) => {
-        const c = t % QE_T;
-        const slideP = easeIO(clamp01((c - 0.6) / 1.6));   // slide 0.6–2.2
-        const skipP = clamp01((c - 3.0) / 0.5);             // cross-out
-        const noteP = clamp01((c - 3.8) / 0.5);
-        const resetP = c > QE_T - 0.8;
+  /* ---------- 2 · Query engine: Filter pushed into the scan; min/max stats skip row group 2 ---------- */
+  (() => {
+    const svg = sec.querySelector(".sys-qe"); if (!svg) return;
+    const q = (s) => svg.querySelector(s);
+    const filt = q(".sys-filter"), pred = q(".sys-pred"), pill = q(".sys-pill"), arrow = q(".sys-scanarrow"),
+      ok = q(".sys-ok"), x = q(".sys-skipx"), rg2 = q(".sys-rg2"), status = q(".sys-status");
+    const S = [[0, "the plan, as written"], [1.4, "optimizer pushes the filter into the scan"],
+      [3.4, "scan reads row-group min / max first"], [4.8, "group 2: max 41 < 50, never decoded"]];
+    const T = 9;
+    run(svg, T, 6.5, (c) => {
+      const back = ramp(c, 8.3, 8.9);
+      const s = ramp(c, 1.4, 3.0) * (1 - back);
+      filt.setAttribute("transform", `translate(0 ${(72 * s).toFixed(1)})`);
+      filt.style.opacity = 1 - ramp(c, 2.2, 3.0) * (1 - back);
+      pred.setAttribute("transform", `translate(0 ${(72 * s).toFixed(1)})`);
+      pill.style.opacity = s > 0.95 ? 1 : 0;
+      arrow.style.opacity = on(c, 3.4, 8.3) ? 1 : 0;
+      ok.style.opacity = x.style.opacity = on(c, 4.8, 8.3) ? 1 : 0;
+      rg2.style.opacity = on(c, 4.8, 8.3) ? 0.45 : 1;
+      const txt = stepText(S, c); if (status.textContent !== txt) status.textContent = txt;
+    });
+  })();
 
-        if (!resetP) {
-          filt.setAttribute("transform", `translate(${0}px, ${slideP * 104}px)`);
-          arrow.style.opacity = slideP > 0.05 && slideP < 0.9 ? "1" : "0";
-          flab.style.opacity = slideP > 0.9 ? "1" : "0";
-          skipX.forEach((n) => (n.style.opacity = String(skipP)));
-          if (skipLab) skipLab.style.opacity = String(skipP);
-          if (rgNote) rgNote.style.opacity = String(noteP);
-        } else {
-          const rp = easeIO((c - (QE_T - 0.8)) / 0.8);
-          filt.setAttribute("transform", `translate(0, ${104 * (1 - rp)}px)`);
-          flab.style.opacity = String(1 - rp);
-          skipX.forEach((n) => (n.style.opacity = String(1 - rp)));
-          if (skipLab) skipLab.style.opacity = String(1 - rp);
-          if (rgNote) rgNote.style.opacity = String(1 - rp);
-        }
-      });
-    }
-  }
-
-  /* Roofline: the SGEMM point climbs 1.27 → 13.17 → 36.11 GFLOP/s,
-     arcs drawn between states, red pencil circle on the final point. */
-  if (roof) {
-    const p1 = $(".sys-rp1", roof);
-    const p2 = $(".sys-rp2", roof);
-    const a1 = $(".sys-roofarc1", roof);
-    const a2 = $(".sys-roofarc2", roof);
-    const ring = $(".sys-roofring", roof);
-
-    const RF_T = 7;
-    if (reduced) {
-      [p1, p2, a1, a2, ring].forEach((el) => el && (el.style.opacity = "1"));
-    } else {
-      NB.loop(roof, (_dt, t) => {
-        const c = t % RF_T;
-        const s1 = easeIO(clamp01((c - 0.4) / 1.2));   // state 1 in
-        const s2 = easeIO(clamp01((c - 3.2) / 1.2));   // state 2 in
-        const resetP = c > RF_T - 1.0;
-        const fade = resetP ? 1 - easeIO((c - (RF_T - 1.0)) / 1.0) : 1;
-        p1.style.opacity = String(s1 * fade);
-        p2.style.opacity = String(s2 * fade);
-        a1.style.opacity = s1 > 0.4 && s2 < 0.4 ? String(0.9 * fade) : "0";
-        a2.style.opacity = s2 > 0.6 ? String(0.9 * fade) : "0";
-        ring.style.opacity = s2 > 0.9 ? String(fade) : "0";
-      });
-    }
-  }
+  /* ---------- 3 · Roofline: SGEMM 1.27 → 13.17 → 36.11 GFLOP/s ---------- */
+  (() => {
+    const svg = sec.querySelector(".sys-roof"); if (!svg) return;
+    const q = (s) => svg.querySelector(s);
+    const pt = q(".sys-pt"), trail = q(".sys-trail"), l1 = q(".sys-l1"), l2 = q(".sys-l2"), status = q(".sys-status");
+    const P = [[0.8, 200, 290], [2.4, 200, 188], [3.8, 200, 188], [5.4, 330, 144]];
+    const S = [[0, "scalar loops: 1.27 GFLOP/s"], [0.8, "loop reorder: 13.17 GFLOP/s, 10.4×"], [3.8, "cache blocking + OpenMP: 36.11 GFLOP/s"]];
+    const T = 9.5;
+    run(svg, T, 7, (c) => {
+      const [px, py] = track(P, c);
+      pt.setAttribute("cx", px); pt.setAttribute("cy", py);
+      pt.style.opacity = c > T - 0.5 ? 0 : 1;
+      const fade = c > T - 0.9 ? 0 : 1;
+      l1.style.opacity = on(c, 2.3, T) ? fade : 0;
+      l2.style.opacity = on(c, 5.3, T) ? fade : 0;
+      trail.style.opacity = c > 1 ? 0.7 * fade : 0;
+      const txt = stepText(S, c); if (status.textContent !== txt) status.textContent = txt;
+    });
+  })();
 })();
 
+} catch (e) { console.error('[65-systems.js]', e); }
 /* 70-demos.js */
-;/* demos: click-to-load video facades + CarbonShift slide flipper. No iframes exist until a visitor presses play. */
+try {
+/* demos: the transit diagram's packets are SMIL; run them only while the sketch is on screen, never under reduced motion. */
 (() => {
-  const root = document.getElementById("demos");
-  if (!root) return;
+  const svg = document.querySelector("#demos .dm-tr");
+  if (!svg || !svg.pauseAnimations) return;
+  svg.pauseAnimations();
+  if (NB.reduced) return;
+  NB.onVisible(svg, () => svg.unpauseAnimations(), () => svg.pauseAnimations());
+})();
 
-  root.addEventListener("click", (e) => {
-    const play = e.target.closest(".dm-play");
-    if (play) {
-      const f = document.createElement("iframe");
-      f.src = play.dataset.embed;
-      f.title = play.dataset.title;
-      f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
-      f.allowFullscreen = true;
-      f.referrerPolicy = "strict-origin-when-cross-origin";
-      f.loading = "lazy";
-      play.replaceWith(f);
-      f.focus();
-      return;
-    }
-    const s = e.target.closest(".dm-slides");
-    if (s) {
-      const srcs = s.dataset.slides.split("|"), alts = s.dataset.alts.split("|");
-      const i = ((+s.dataset.i || 0) + 1) % srcs.length;
-      s.dataset.i = i;
-      const img = s.querySelector("img");
-      img.src = srcs[i]; img.alt = alts[i];
-      s.querySelector(".dm-slide-count b").textContent = i + 1;
-      s.setAttribute("aria-label", `Show next CarbonShift slide (${i + 1} of ${srcs.length})`);
-    }
+} catch (e) { console.error('[70-demos.js]', e); }
+/* 72-films.js */
+try {
+/* films: one reel at a time. Starting a film pauses any other; scrolling a playing film offscreen pauses it. */
+(() => {
+  const root = document.getElementById("films");
+  if (!root) return;
+  const vids = [...root.querySelectorAll("video")];
+  vids.forEach((v) => {
+    v.addEventListener("play", () => vids.forEach((o) => o !== v && !o.paused && o.pause()));
+    if (window.NB) NB.onVisible(v, () => {}, () => v.paused || v.pause());
   });
 })();
 
+} catch (e) { console.error('[72-films.js]', e); }
 /* 75-path.js */
-;/* path: draws the route through the stop dots (rebuilt on resize), reveals it with scroll progress, toggles stop notes. */
+try {
+/* path: draws the route through the stop dots (rebuilt on resize), reveals it with scroll progress, toggles stop notes. */
 (() => {
   const trail = document.querySelector("#path .pt-trail");
   if (!trail) return;
@@ -1523,7 +1662,7 @@ document.addEventListener("click", (e) => {
     // label the Nagpur → San José leg (the U-turn into the SJSU row) beside the line
     const sj = stops.findIndex((s) => s.hasAttribute("data-move"));
     move.classList.toggle("is-on", multi && sj > 0);
-    if (multi && sj > 0) { move.style.left = "14px"; move.style.top = (pts[sj - 1].y + pts[sj].y) / 2 + "px"; move.dataset.at = sj; }
+    if (multi && sj > 0) { move.style.left = "34px"; move.style.top = (pts[sj].y - 26) + "px"; move.dataset.at = sj; }
     const pl = pts[pts.length - 2];
     next.setAttribute("d", `M${pl.x} ${pl.y}` + last);
     update();
@@ -1556,8 +1695,10 @@ document.addEventListener("click", (e) => {
   });
 })();
 
+} catch (e) { console.error('[75-path.js]', e); }
 /* 80-gallery.js */
-;/* gallery: native <dialog> lightbox for the scrapbook photos */
+try {
+/* gallery: native <dialog> lightbox for the scrapbook photos */
 (() => {
   const root = document.getElementById("gallery");
   const dlg = root && root.querySelector(".lightbox");
@@ -1593,8 +1734,10 @@ document.addEventListener("click", (e) => {
   dlg.addEventListener("close", () => { opener && opener.focus(); });
 })();
 
+} catch (e) { console.error('[80-gallery.js]', e); }
 /* 85-resume.js */
-;/* resume: track tabs swap the PDF; the preview iframe only loads once the section is near the viewport (desktop only). */
+try {
+/* resume: track tabs swap the PDF; the preview iframe only loads once the section is near the viewport (desktop only). */
 (() => {
   const root = document.getElementById("resume");
   if (!root) return;
@@ -1625,3 +1768,5 @@ document.addEventListener("click", (e) => {
     if (near) load();
   });
 })();
+
+} catch (e) { console.error('[85-resume.js]', e); }

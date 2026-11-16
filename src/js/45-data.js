@@ -2,10 +2,11 @@
    packets flow through, and one failing packet per cycle is hooked out into quarantine. */
 (() => {
   const fig = document.querySelector("#data .data-sketch");
-  if (!fig) return;
-  const svg = fig.querySelector(".data-svg"), canvas = svg.querySelector(".data-canvas");
-  const board = fig.querySelector(".data-board"), noteEl = fig.querySelector(".data-note");
-  const panel = document.getElementById("data-panel"), bodies = [...panel.querySelectorAll(".data-pb")];
+  const svg = fig && fig.querySelector(".data-svg"), canvas = svg && svg.querySelector(".data-canvas");
+  const board = fig && fig.querySelector(".data-board"), noteEl = fig && fig.querySelector(".data-note");
+  const panel = document.getElementById("data-panel");
+  if (!canvas || !board || !noteEl || !panel) return; // markup out of sync: fail quietly, never throw
+  const bodies = [...panel.querySelectorAll(".data-pb")];
   const tabs = [...fig.querySelectorAll(".tab")];
   const HINT = noteEl.innerHTML;
 
@@ -15,10 +16,10 @@
       st: [
         { k: "antenna", name: "GTFS feeds", sub: ["BART + VTA", "static + real-time"], note: "Static schedules and real-time vehicle feeds from two operators, BART and VTA." },
         { k: "log", name: "Kafka", sub: ["producer → consumer"], note: "A Kafka producer and consumer carry near-real-time vehicle events, with dedup and replay." },
-        { k: "valve", name: "Airflow", sub: ["3 DAGs on AWS MWAA"], note: "Three DAGs: GTFS incremental ingestion, streaming ingestion and ML forecasting." },
+        { k: "valve", name: "Airflow", sub: ["3 DAGs on MWAA"], note: "Three DAGs: GTFS incremental ingestion, streaming ingestion and ML forecasting." },
         { k: "gate", name: "checks", sub: ["late · malformed · dupes"], note: "Live events are aligned to static stop IDs; late or malformed location samples and duplicates are pulled aside." },
-        { k: "wh", name: "Snowflake + dbt", sub: ["landing → analytics"], note: "Snowflake landing and analytics schemas; dbt builds route-level performance aggregates." },
-        { k: "screen", name: "FastAPI + React", sub: ["operator dashboard"], note: "FastAPI serves a React/TypeScript operator dashboard with maps and metrics; heavy ETL and training stay off this path." }
+        { k: "wh", name: "Snowflake", sub: ["dbt · landing →", "analytics schemas"], note: "Snowflake landing and analytics schemas; dbt builds route-level performance aggregates." },
+        { k: "screen", name: "FastAPI", sub: ["React/TS operator", "dashboard"], note: "FastAPI serves a React/TypeScript operator dashboard with maps and metrics; heavy ETL and training stay off this path." }
       ],
       ann: [[0, ["stop IDs ≠ live events:", "align them first"]], [2, ["ingest, stream,", "forecast"]], [5, ["+ Azure Databricks", "& Power BI KPIs"]]]
     },
@@ -28,7 +29,7 @@
         { k: "tank", name: "Salesforce", sub: ["formula fields"], note: "Formula fields recalculate in real time but never update LastModified, so incremental loads missed them and pipelines fell back to full refreshes." },
         { k: "funnel", name: "formula compiler", sub: ["metadata → SQL"], note: "Pulls formula definitions from the Salesforce API, walks every field dependency depth-first, and an LLM drafts SQL from that structured context." },
         { k: "valve", name: "Matillion", sub: ["incremental upserts"], note: "Change detection and incremental upserts replace full-table refreshes." },
-        { k: "wh", name: "Snowflake + dbt", sub: ["versioned, clustered"], note: "Generated SQL lives in version-controlled dbt models; partitioning and Snowflake clustering cut scan volume." },
+        { k: "wh", name: "Snowflake", sub: ["versioned dbt models", "clustered tables"], note: "Generated SQL lives in version-controlled dbt models; partitioning and Snowflake clustering cut scan volume." },
         { k: "gate", name: "reconcile", sub: ["samples vs live CRM"], note: "Automated samples of warehouse output are compared with the live CRM; any mismatch is flagged before deployment." },
         { k: "screen", name: "dashboards", sub: ["for leadership"], note: "Leadership and go-to-market dashboards read numbers that were verified, not assumed." }
       ],
@@ -41,10 +42,10 @@
         { k: "pump", name: "DataSync", sub: ["+ bash tracking"], note: "AWS DataSync moves the data; bash scripts copy, track each batch and keep a record of what moved." },
         { k: "bucket", name: "S3", sub: ["data lake"], note: "S3 becomes the data lake; Spark and Snowflake carry the transformation layer, re-tuned until one model ran in 6 min instead of 18." },
         { k: "gate", name: "pytest checks", sub: ["99.6% accuracy"], note: "Python and pytest-style checks compare source and destination: row mismatches, null anomalies and type drift are flagged before go-live." },
-        { k: "valve", name: "Airflow → MWAA", sub: ["modular DAGs"], note: "Legacy Airflow moved to managed MWAA patterns: containerized operators, modular DAGs, isolated tests, better retries." },
-        { k: "bell", name: "SLA alerts", sub: ["CloudWatch · SNS", "· Lambda"], note: "CloudWatch metrics, SNS alerts and Lambda triggers catch SLA breaches and job failures before the client does." }
+        { k: "valve", name: "MWAA", sub: ["modular Airflow DAGs"], note: "Legacy Airflow moved to managed MWAA patterns: containerized operators, modular DAGs, isolated tests, better retries." },
+        { k: "bell", name: "SLA alerts", sub: ["CloudWatch, SNS", "+ Lambda"], note: "CloudWatch metrics, SNS alerts and Lambda triggers catch SLA breaches and job failures before the client does." }
       ],
-      ann: [[0, ["moved in tracked", "batches"]], [4, ["containerized", "operators"]], [5, ["~45% fewer client", "escalations"]]]
+      ann: [[0, ["moved in tracked", "batches"]], [2, ["one model:", "18 → 6 min"]], [5, ["~45% fewer client", "escalations"]]]
     }
   };
 
@@ -124,11 +125,11 @@
   let mode = "transit", vert = false, S = null;
   function geo(n, gi) {
     if (!vert) {
-      const y = 206, xs = [...Array(n)].map((_, i) => 95 + i * 182);
-      return { W: 1100, H: 440, s: 1, pts: xs.map((x) => [x, y]), bin: [xs[gi], 334], pivot: [xs[gi] + 88, 284] };
+      const y = 236, xs = [...Array(n)].map((_, i) => 100 + i * 180);
+      return { W: 1100, H: 500, s: 1.3, pts: xs.map((x) => [x, y]), bin: [xs[gi], 392], pivot: [xs[gi] + 74, 384] };
     }
-    const gap = 118, y0 = 76, ys = [...Array(n)].map((_, i) => y0 + i * gap);
-    return { W: 380, H: y0 + (n - 1) * gap + 70, s: .8, pts: ys.map((y) => [118, y]), bin: [46, ys[gi] + 46], pivot: [40, ys[gi] - 26] };
+    const gap = 128, y0 = 80, ys = [...Array(n)].map((_, i) => y0 + i * gap);
+    return { W: 380, H: y0 + (n - 1) * gap + 80, s: .95, pts: ys.map((y) => [138, y]), bin: [54, ys[gi] + 50], pivot: [52, ys[gi] - 28] };
   }
 
   function render() {
@@ -140,7 +141,7 @@
     /* pipe: two wobbly walls + flange ticks between stations */
     h += '<g class="boil pipe">';
     if (!vert) {
-      h += ln(x0, y0 - 11, x1, y1 - 11, "ink", 1.4) + ln(x0, y0 + 11, x1, y1 + 11, "ink", 1.4);
+      h += ln(x0, y0 - 13, x1, y1 - 13, "ink", 1.4) + ln(x0, y0 + 13, x1, y1 + 13, "ink", 1.4);
       for (let i = 0; i < n - 1; i++) { const m = (g.pts[i][0] + g.pts[i + 1][0]) / 2; h += ln(m - 4, y0 - 16, m - 4, y0 + 16, "ink-thin") + ln(m + 4, y0 - 16, m + 4, y0 + 16, "ink-thin"); }
     } else {
       h += ln(x0 - 11, y0, x1 - 11, y1, "ink", 1.4) + ln(x0 + 11, y0, x1 + 11, y1, "ink", 1.4);
@@ -153,26 +154,27 @@
     /* stations */
     c.st.forEach((s, i) => {
       const [x, y] = g.pts[i], gate = s.k === "gate";
-      const lx = vert ? 172 : x, anchor = vert ? "start" : "middle";
-      const ly = vert ? y - 4 : gate ? y - 94 : y + 76;
+      const lx = vert ? 190 : x, anchor = vert ? "start" : "middle";
+      const ly = vert ? y - 6 : gate ? y - 132 : y + 98;
       let lab = `<text class="svg-hand lbl" x="${lx}" y="${ly}" text-anchor="${anchor}">${s.name}</text>`;
-      s.sub.forEach((t, k) => { lab += `<text class="svg-print sub" x="${lx}" y="${ly + (vert ? 20 : 22) + k * 18}" text-anchor="${anchor}">${t}</text>`; });
-      h += `<g class="st${gate ? " gate" : ""}" data-i="${i}" style="--i:${i}" tabindex="0" role="button" aria-label="${s.name}: ${s.note}">` +
-        `<rect class="hit" x="${vert ? x - 50 : x - 88}" y="${vert ? y - 56 : y - 70}" width="${vert ? 300 : 176}" height="${vert ? 112 : 190}"/>` +
+      s.sub.forEach((t, k) => { lab += `<text class="svg-print sub" x="${lx}" y="${ly + 24 + k * 21}" text-anchor="${anchor}">${t}</text>`; });
+      h += `<g class="st st-${s.k}${gate ? " gate" : ""}" data-i="${i}" style="--i:${i}" tabindex="0" role="button" aria-label="${s.name}: ${s.note}">` +
+        `<rect class="hit" x="${vert ? x - 60 : x - 88}" y="${vert ? y - 60 : y - 150}" width="${vert ? 310 : 176}" height="${vert ? 120 : 300}"/>` +
         `<g class="boil"><g transform="translate(${x} ${y}) scale(${g.s})">${G[s.k]()}</g></g>${lab}</g>`;
     });
     /* quarantine bin, stacked rejects, hook arm */
     const [bx, by] = g.bin, bw = vert ? 30 : 42, bh = vert ? 46 : 56;
     h += `<g class="bin rough">${ln(bx - bw, by, bx - bw + 9, by + bh)}${ln(bx - bw + 9, by + bh, bx + bw - 9, by + bh)}${ln(bx + bw - 9, by + bh, bx + bw, by)}${ln(bx - bw - 5, by, bx + bw + 5, by)}</g>`;
-    h += `<text class="svg-hand qlbl" x="${bx}" y="${by + bh + (vert ? 20 : 26)}" text-anchor="middle">quarantine</text>`;
+    h += `<text class="svg-hand qlbl" x="${bx}" y="${by + bh + (vert ? 22 : 28)}" text-anchor="middle">quarantine</text>`;
     const slots = vert ? [[-12, 36], [8, 37], [-2, 22]] : [[-17, 46], [5, 47], [-6, 30]];
     h += slots.map(([dx, dy], i) => `<g class="stk" data-k="${i}" transform="translate(${bx + dx} ${by + dy}) rotate(${(i - 1) * 9})">${BAD}</g>`).join("");
     h += `<g class="arm"><path class="ink-red arm-l"/><circle class="pivot" cx="${g.pivot[0]}" cy="${g.pivot[1]}" r="4"/></g>`;
     /* annotations (desktop only; mobile reads the result line) */
     if (!vert) c.ann.forEach(([i, lines, red]) => {
       const x = g.pts[i][0], cls = red ? "ink-red" : "ink-blue";
-      h += `<g class="ann${red ? " red" : ""}">${lines.map((t, k) => `<text class="svg-hand" x="${x}" y="${48 + k * 22}" text-anchor="middle">${t}</text>`).join("")}` +
-        `<path class="${cls} thin" d="M${x + 6} ${84} q16 24 2 ${y0 - 150}" marker-end="url(#arrowhead)"/></g>`;
+      const [tx, an] = i === 0 ? [x - 52, "start"] : i === n - 1 ? [x + 52, "end"] : [x, "middle"];
+      h += `<g class="ann${red ? " red" : ""}">${lines.map((t, k) => `<text class="svg-hand" x="${tx}" y="${40 + k * 24}" text-anchor="${an}">${t}</text>`).join("")}` +
+        `<path class="${cls} thin" d="M${x + 4} 82 q14 26 0 ${y0 - 82 - 62 * g.s - 8}" marker-end="url(#arrowhead)"/></g>`;
     });
     canvas.innerHTML = h;
     canvas.classList.remove("fresh"); void canvas.getBBox(); canvas.classList.add("fresh");
@@ -247,7 +249,7 @@
     });
   });
 
-  const check = () => { const v = board.clientWidth < 900; if (v !== vert || !S) { vert = v; render(); } };
+  const check = () => { const v = board.clientWidth < 920; if (v !== vert || !S) { vert = v; render(); } };
   new ResizeObserver(check).observe(board);
   check();
   if (!NB.reduced) NB.loop(fig, (dt, t) => S && frame(t));

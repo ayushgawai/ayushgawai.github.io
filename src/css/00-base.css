@@ -22,7 +22,7 @@
   --f-print: "Hanken Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
   /* type scale (≈1.25 modular) */
-  --t-xs: .8125rem;
+  --t-xs: .875rem;
   --t-sm: .9375rem;
   --t-md: 1.0625rem;
   --t-lg: 1.375rem;
@@ -87,7 +87,7 @@ ul, ol { margin: 0; padding: 0; }
 
 /* ---------- page frame ---------- */
 .page { width: 100%; max-width: var(--page-max); margin: 0 auto; padding: 0 var(--gutter); }
-main { position: relative; }
+main { position: relative; overflow-x: clip; }  /* rotated tape/doodles must never cause sideways scroll */
 
 /* ---------- chapter template ----------
 <section class="chapter" id="x" data-tab="Label" aria-labelledby="x-title">
@@ -223,7 +223,7 @@ main { position: relative; }
   background: var(--paper-card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 84 84'%3E%3Cpath d='M33 25 L60 41.5 L33.5 59 Z' fill='%23D2412F' stroke='%231F2329' stroke-width='2.4' stroke-linejoin='round'/%3E%3C/svg%3E") center/84px no-repeat;
   border: 2.5px solid var(--ink); border-radius: 52% 48% 50% 46% / 47% 52% 48% 53%; box-shadow: 3px 4px 0 var(--ink); transition: transform .2s var(--ease-out); }
 .video:hover::after { transform: translate(-50%, -50%) rotate(3deg) scale(1.06); }
-.video .video-label { position: absolute; left: 12px; bottom: 10px; font: 600 var(--t-xs)/1 var(--f-print); color: #fff; background: rgba(31,35,41,.72); padding: 6px 9px; border-radius: 4px; }
+.video .video-label { position: absolute; left: 12px; bottom: 10px; font: 600 .875rem/1 var(--f-print); color: #fff; background: rgba(31,35,41,.72); padding: 6px 9px; border-radius: 4px; }
 .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .video.is-playing::after, .video.is-playing .video-label { display: none; }
 

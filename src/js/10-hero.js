@@ -97,19 +97,31 @@
     let left2 = n - k.reduce((a, b) => a + b, 0);
     for (let s = 0; left2 > 0; s = (s + 1) % nStars) if (k[s] < stars[s].cap) { k[s]++; left2--; }
 
+    // place tags so none overlap at rest: a row that would collide is skipped and the tool moves on to the next star
+    ctx.font = `500 ${FS}px ${HAND}`;
+    const hole0 = 10.5 * S, placed = [];
+    const hits = (b) => placed.some((q) => b[0] < q[2] && b[2] > q[0] && b[1] < q[3] && b[3] > q[1]);
     ropes = [];
-    let ti = 0, P = 0;
+    let ti = 0, P = 0, carry = 0;
     stars.forEach((st, s) => {
-      const rows = [...Array(st.cap).keys()].sort(() => rnd() - 0.5).slice(0, k[s]).sort((a, b) => a - b);
-      rows.forEach((row, j) => {
-        const tool = chosen[ti++];
-        const side = (j + s) % 2 ? 1 : -1;
-        const off = side * (0.25 + rnd() * 0.55) * (k[s] > 1 ? 1 : 0.3) * (mobile ? 0.4 : 1);
-        const holeY = st.top0 + row * rowH + (rnd() - 0.5) * 10 * S;
+      const want = k[s] + carry, picks = [];
+      for (const row of [...Array(st.cap).keys()].sort(() => rnd() - 0.5)) {
+        if (picks.length >= want || ti >= chosen.length) break;
+        const tool = chosen[ti];
+        const side = (picks.length + s) % 2 ? 1 : -1;
+        const off = side * (0.25 + rnd() * 0.55) * (want > 1 ? 1 : 0.3) * (mobile ? 0.4 : 1);
+        const holeY = st.top0 + row * rowH + (rnd() - 0.5) * (mobile ? 4 : 8) * S;
+        const w = tagWidth(tool, ctx.measureText(tool.name).width + 4), cx = st.x - Math.sin(off - st.rot) * 0.6 * st.R;
+        const box = [cx - w / 2 - 8, holeY - hole0 - 4, cx + w / 2 + 8, holeY - hole0 + tagH + 4];
+        if (hits(box)) continue;
+        placed.push(box); picks.push({ tool, off, holeY }); ti++;
+      }
+      carry = want - picks.length;
+      picks.sort((a, b) => a.holeY - b.holeY).forEach(({ tool, off, holeY }) => {
         const L = holeY - st.y;
         const segs = Math.max(6, Math.min(14, Math.round(L / 26)));
         const r = { tool, star: st, off, L, segs, seg: L / segs, cur: L / segs, a0: P, com: P + segs + 1, d: tagH / 2 - 10 * S,
-          h: tagH, hole0: 10.5 * S, w: 60 * S, delay: 0, phi: 0, om: 0, spin: rnd() < 0.5 ? -1 : 1, seed: rnd() * 100,
+          h: tagH, hole0, w: 60 * S, delay: 0, phi: 0, om: 0, spin: rnd() < 0.5 ? -1 : 1, seed: rnd() * 100,
           lift: 0, tilt: (rnd() - 0.5) * 0.14, th: 0, c: 1, s: 0, sx: 1, img: null, hov: null, back: null, depth: holeY };
         tool.rope = r; ropes.push(r); P += segs + 2;
       });
@@ -154,8 +166,8 @@
   }
   const STRING_ANGLE = Math.PI; // attach toward the bottom of the star
   function anchorIdx(r) { let a = (STRING_ANGLE + r.off - r.star.rot) / TAU; a -= Math.floor(a); return Math.round(a * NS) % NS; }
-  function anchorX(r) { const st = r.star, i = anchorIdx(r), rr = (st.r[i] || st.R * 0.5) * 0.82; return st.x + rr * (COS[i] * Math.cos(st.rot) - SIN[i] * Math.sin(st.rot)); }
-  function anchorY(r) { const st = r.star, i = anchorIdx(r), rr = (st.r[i] || st.R * 0.5) * 0.82; return st.y + rr * (COS[i] * Math.sin(st.rot) + SIN[i] * Math.cos(st.rot)); }
+  function anchorX(r) { const st = r.star, i = anchorIdx(r), rr = 0.35 * st.R + 0.4 * (st.r[i] || st.R * 0.5); return st.x + rr * (COS[i] * Math.cos(st.rot) - SIN[i] * Math.sin(st.rot)); }
+  function anchorY(r) { const st = r.star, i = anchorIdx(r), rr = 0.35 * st.R + 0.4 * (st.r[i] || st.R * 0.5); return st.y + rr * (COS[i] * Math.sin(st.rot) + SIN[i] * Math.cos(st.rot)); }
 
   function drawStar(st) {
     const c = Math.cos(st.rot), s = Math.sin(st.rot);
@@ -284,13 +296,17 @@
     }
     return { c, ox: pad + hx, oy: pad + hy, cw, ch };
   }
+  function tagWidth(t, tw) {
+    if (!(logos ? logos.get(t.slug) : t.slug)) tw *= t.name.length > 5 ? 1.15 : 1.5; // text-only tags use a bigger word
+    return Math.min(innerWidth < 760 ? 100 : 128, Math.max(54 * S, tw + 16 * S));
+  }
   function buildImages() {
     fontOK = !document.fonts || document.fonts.check(`500 12px ${HAND}`);
     for (const r of ropes) {
       const t = r.tool, path = logos && logos.get(t.slug);
-      ctx.font = path ? `500 ${FS}px ${HAND}` : `700 ${(t.name.length > 5 ? 15 : 19) * S}px ${HAND}`;
+      ctx.font = `500 ${FS}px ${HAND}`;
       const tw = ctx.measureText(t.name).width;
-      r.w = Math.min(innerWidth < 760 ? 100 : 128, Math.max(54 * S, tw + 16 * S));
+      r.w = tagWidth(t, tw);
       r.img = tagImage(r, 0); r.back = tagImage(r, 2); r.hov = null;
     }
   }

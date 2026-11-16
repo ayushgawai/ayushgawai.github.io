@@ -17,13 +17,15 @@
   
 }
 #top .hero-copy a, #top .hero-copy button { pointer-events: auto; }
-#top .hero-main { position: relative; max-width: 50rem; }
+#top .hero-main { position: relative; max-width: 62rem; }
 
 #top .hero-name {
   font: 800 var(--t-hero)/.88 var(--f-print); letter-spacing: -.045em; margin: 0 0 calc(var(--u) * .75) -.04em;
 }
-#top .hero-lede { font-size: var(--t-lg); line-height: 1.4; color: var(--ink); max-width: 34ch; margin-bottom: calc(var(--u) / 2); }
-#top .hero-facts { font-size: var(--t-md); line-height: 1.55; color: var(--ink-2); max-width: 60ch; margin-bottom: calc(var(--u) / 2); }
+#top .hero-lede { font-size: var(--t-lg); line-height: 1.4; color: var(--ink); max-width: 36ch; margin-bottom: calc(var(--u) / 2); }
+#top .hero-facts { font-size: 1.125rem; font-weight: 500; line-height: 1.5; color: var(--ink); margin-bottom: calc(var(--u) / 2); }
+#top .hero-facts span { white-space: nowrap; }
+#top .hero-facts i { font-style: normal; color: var(--ink-3); margin: 0 .2em; }
 #top .hero-status { font-size: var(--t-md); margin: 0; transform: rotate(-.8deg); transform-origin: left; max-width: 44ch; }
 #top .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: calc(var(--u) / 2); margin-top: var(--u); }
 #top .hero-social { font-size: var(--t-sm); color: var(--ink-3); margin-left: calc(var(--u) / 2); }
@@ -32,9 +34,9 @@
 
 /* the "there's a breeze" note, with an arrow up at the mobile */
 #top .hero-hint {
-  position: absolute; right: 0; top: calc(var(--u) * -2.2); margin: 0;
+  position: absolute; right: 4%; top: calc(var(--u) * -3); margin: 0;
   display: flex; align-items: flex-start; gap: 4px; font-size: var(--t-md); color: var(--blue);
-  transform: rotate(-3deg); white-space: nowrap;
+  transform: rotate(-3deg); line-height: 1.25;
 }
 #top .hero-hint-arrow { flex: none; margin-top: -30px; overflow: visible; }
 #top .hero-hint-touch { display: none; }
@@ -64,5 +66,7 @@
   #top .hero-hint { position: relative; top: auto; right: auto; justify-content: flex-end; margin: 0 0 6px; font-size: var(--t-sm); white-space: normal; text-align: right; }
   #top .hero-hint-arrow { margin-top: -26px; width: 34px; height: 40px; }
   #top .hero-social { margin-left: 4px; }
+  #top .hero-facts span { display: block; }
+  #top .hero-facts i { display: none; }
   #top .hero-note { width: min(17rem, calc(100vw - 32px)); }
 }

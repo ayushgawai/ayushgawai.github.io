@@ -2,150 +2,265 @@
   <header class="chapter-head page">
     <p class="chapter-kicker hand">the screening room · press play</p>
     <h2 id="demos-title" class="chapter-title">Watch the builds run</h2>
-    <p class="chapter-lede">Recorded demos of the systems in this notebook, playable right here. Nothing loads until you press play, so the page stays fast.</p>
+    <p class="chapter-lede">Recorded demos, playable in place. Nothing loads until you press play; builds without a recording run as moving diagrams.</p>
   </header>
 
-  <!-- shared hand-drawn play button -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-    <symbol id="dm-play-sym" viewBox="0 0 100 100">
-      <path d="M50 7 C74 6 94 24 93 50 C92 75 73 94 49 93 C25 92 7 74 8 49 C9 26 27 8 52 8" fill="#FCFBF7" stroke="#1F2329" stroke-width="3.2" stroke-linecap="round"/>
-      <path d="M53 12 C76 14 90 33 88 55" fill="none" stroke="#1F2329" stroke-width="1.4" stroke-linecap="round" opacity=".55"/>
-      <path d="M40 31 L71 49.5 L40.5 69 Z" fill="url(#hatch)" stroke="#1F2329" stroke-width="3.2" stroke-linejoin="round"/>
-    </symbol>
-  </svg>
-
   <div class="page">
-    <!-- featured -->
-    <article class="dm-feature" aria-labelledby="dm-leo-t">
-      <figure class="dm-still dm-still--big">
-        <span class="tape" aria-hidden="true"></span>
-        <div class="dm-screen">
-          <button class="dm-play" type="button" data-embed="https://www.loom.com/embed/70303e4b0399499c865463a79cd17a84?autoplay=1" data-title="LEO satellite coverage risk: data, architecture and UI demo (Loom)" aria-label="Play the LEO satellite coverage risk demo video, 6 minutes, Loom">
+    <!-- ===== featured: LEO ===== -->
+    <article class="project dm-feature" aria-labelledby="dm-leo-t">
+      <div class="project-media">
+        <figure class="dm-frame dm-frame--big">
+          <span class="tape" aria-hidden="true"></span>
+          <button class="video" type="button" data-loom="70303e4b0399499c865463a79cd17a84" data-title="LEO satellite coverage risk: data, architecture and UI walkthrough (Loom)">
             <img src="assets/img/demos/leo.webp" alt="" width="1280" height="720" loading="lazy" decoding="async">
-            <svg class="dm-play-btn" aria-hidden="true"><use href="#dm-play-sym"/></svg>
+            <span class="video-label">Walkthrough · Loom</span>
           </button>
-        </div>
-        <figcaption class="dm-frame-meta"><span class="hand pencil">6 min walkthrough · Loom</span><span class="dm-reel" aria-hidden="true">reel 1</span></figcaption>
-      </figure>
-      <div class="dm-feature-notes">
-        <p class="dm-eyebrow hand">featured · geospatial agent</p>
-        <h3 id="dm-leo-t">LEO satellite coverage risk</h3>
-        <p class="dm-problem">A location can count as “served” by satellite broadband and still lose the signal to trees or terrain. Which of North Carolina's candidate locations are at risk?</p>
-        <ul class="dm-facts">
-          <li><b>Built:</b> the data chain from canopy, elevation and land-cover rasters to a risk tier for every location, plus a Claude tool-use orchestrator over five deterministic tools (ingest, sample, score, validate, report).</li>
-          <li><b>Result:</b> <span class="marker">4,674,905 locations scored</span>, 100 of 100 counties covered, 0.0% missing environmental values, a 250-test suite.</li>
+          <figcaption class="dm-frame-meta"><span class="hand pencil">feature reel · geospatial agent</span><span class="dm-reel" aria-hidden="true">reel 1</span></figcaption>
+        </figure>
+      </div>
+      <div class="project-body">
+        <p class="project-where hand">Ready Builders Challenge · March 2026</p>
+        <h3 class="project-title" id="dm-leo-t">LEO satellite coverage risk</h3>
+        <p class="project-sum">Scores tree and terrain obstruction risk for LEO broadband at every candidate site in North Carolina by sampling NLCD canopy and land-cover rasters and USGS 3DEP elevation and slope. A Claude tool-use orchestrator sequences five deterministic Python tools over file-based state, so row data never enters the prompt.</p>
+        <ul class="facts">
+          <li><b>4.67M</b> sites scored</li>
+          <li><b>100/100</b> counties covered</li>
+          <li><b>5</b> deterministic tools</li>
+          <li><b>250</b> tests</li>
         </ul>
         <div class="btn-row">
-          <a class="btn" href="https://github.com/ayushgawai/Ready_Builders_Challenge" target="_blank" rel="noopener">Repository</a>
+          <a class="btn" href="https://github.com/ayushgawai/Ready_Builders_Challenge" target="_blank" rel="noopener">Code on GitHub</a>
           <a class="btn blue" href="https://www.loom.com/share/70303e4b0399499c865463a79cd17a84" target="_blank" rel="noopener">Open on Loom</a>
         </div>
+        <details class="deep"><summary>Technical deep dive</summary>
+          <div class="deep-body">
+            <h4>Data chain</h4>
+            <p>Location IDs and coordinates join NLCD and USGS canopy rasters, USGS 3DEP elevation with derived slope, and NLCD land-cover classes. Each site is spatially sampled, component-scored into HIGH, MODERATE or LOW tiers against Starlink installation guidance, and validated for coordinates and coverage before a scored CSV, charts and reports are written.</p>
+            <h4>Agent architecture</h4>
+            <ul>
+              <li>Claude tool use picks the next step across <code>ingest_locations</code>, <code>sample_environment</code>, <code>score_risk</code>, <code>validate_results</code> and <code>generate_report</code>.</li>
+              <li>Python does all geospatial and numeric work; state passes as artifact paths, never as rows.</li>
+              <li>A pipeline-only mode runs the same functions with no LLM, so results are reproducible.</li>
+              <li>Interactive tools answer coordinate, address, area, polygon and nearby-alternative queries over precomputed scores, behind a map and search UI.</li>
+            </ul>
+            <h4>March 2026 run</h4>
+            <p>4,674,905 of 4,674,905 sites scored; 100 of 100 counties; 0.0% missing environmental values; tiers HIGH 19.4%, MODERATE 31.3%, LOW 49.3%.</p>
+          </div>
+        </details>
       </div>
     </article>
 
     <p class="dm-grid-label hand"><span>more reels</span></p>
 
     <div class="dm-grid">
-      <!-- Sentinel -->
+      <!-- Sentinel AI -->
       <article class="dm-card" aria-labelledby="dm-sen-t">
-        <figure class="dm-still">
+        <figure class="dm-frame">
           <span class="tape" aria-hidden="true"></span>
-          <div class="dm-screen">
-            <button class="dm-play" type="button" data-embed="https://www.youtube-nocookie.com/embed/MFF1DICU6Ow?autoplay=1&amp;rel=0" data-title="Sentinel AI demo (YouTube)" aria-label="Play the Sentinel AI demo video, YouTube">
-              <img src="assets/img/demos/sentinel.webp" alt="" width="960" height="540" loading="lazy" decoding="async">
-              <svg class="dm-play-btn" aria-hidden="true"><use href="#dm-play-sym"/></svg>
-            </button>
-          </div>
-          <figcaption class="dm-frame-meta"><span class="hand pencil">hackathon demo · YouTube</span><span class="dm-stamp-win">Winner</span></figcaption>
+          <button class="video" type="button" data-yt="MFF1DICU6Ow" data-title="Sentinel AI: live demo (YouTube)">
+            <img src="assets/img/demos/sentinel.webp" alt="" width="960" height="540" loading="lazy" decoding="async">
+            <span class="video-label">Live demo · YouTube</span>
+          </button>
+          <span class="dm-stamp-win" aria-hidden="true">Winner</span>
+          <figcaption class="dm-frame-meta"><span class="hand pencil">edge video safety</span></figcaption>
         </figure>
-        <h3 id="dm-sen-t">Sentinel AI</h3>
-        <p class="dm-problem">Camera walls need someone watching every feed. Sentinel screens video on site and escalates only credible incidents.</p>
-        <p class="dm-role"><b>Role:</b> team of five; owned the video and frame-streaming backend, async event routing, alert triggers and incident logging.</p>
-        <p class="dm-result"><b>Result:</b> won the HP × SJSU Edge AI Hackathon; six-feed wall at 13–14 fps. Demo calls went to a teammate, never to real 911.</p>
-        <p class="dm-links"><a href="https://github.com/ayushgawai/campus_sentinel" target="_blank" rel="noopener">Repository</a><a href="https://youtu.be/MFF1DICU6Ow" target="_blank" rel="noopener">YouTube</a></p>
+        <p class="project-where hand">HP × SJSU Edge AI Hackathon · winner</p>
+        <h3 class="project-title" id="dm-sen-t">Sentinel AI</h3>
+        <p class="project-sum">YOLO26s-pose tracking and per-track temporal rules on an HP ZGX Nano gate a 16-frame evidence bundle into a local Qwen3-VL-30B-A3B FP8 classifier. Owned the frame-streaming backend, async event routing, alert triggers and incident log.</p>
+        <ul class="facts">
+          <li><b>13–14</b> fps, six-feed wall</li>
+          <li><b>16</b> frames per VLM call</li>
+          <li><b>6</b> incident classes</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn" href="https://github.com/ayushgawai/campus_sentinel" target="_blank" rel="noopener">Code on GitHub</a>
+        </div>
+        <details class="deep"><summary>Technical deep dive</summary>
+          <div class="deep-body">
+            <h4>Escalation funnel</h4>
+            <p>Frame decode feeds a person detector and tracker; per-track rules (weapon, fall, run, loitering, sudden change) score events, and only credible ones open a 16-frame window for Qwen3-VL served through HP Z Runtime, which returns WEAPON, FIGHT, THEFT, RUN, MEDICAL or BENIGN plus a person description. Cheap per-frame perception carries the volume; VLM reasoning is spent only on ambiguous, high-impact events.</p>
+            <h4>Backend</h4>
+            <p>Severity thresholds drive an incident state machine (NEW, ALERTED, DISPATCH_PENDING, DISPATCHED, TRACKING, RESOLVED or DISMISSED) with SQLite history and REST, WebSocket and MJPEG console updates. A voice-dispatch path needs human confirmation, has a kill switch, one call per incident and a fixed camera-to-address map.</p>
+            <h4>Ownership and caveats</h4>
+            <p>Team project; owned the video and frame-streaming backend, async event routing, alert triggers and incident logging. Wall throughput rose from about 3&nbsp;fps to 13–14&nbsp;fps with three full-analysis feeds; 640 of 649 frames matched the demo clip's labels (not a formal benchmark). Demo calls never reached real 911.</p>
+          </div>
+        </details>
       </article>
 
       <!-- Blast Radius -->
       <article class="dm-card" aria-labelledby="dm-br-t">
-        <figure class="dm-still">
+        <figure class="dm-frame">
           <span class="tape" aria-hidden="true"></span>
-          <div class="dm-screen">
-            <button class="dm-play" type="button" data-embed="https://www.youtube-nocookie.com/embed/9MtxDeI03c0?autoplay=1&amp;rel=0" data-title="Blast Radius demo (YouTube)" aria-label="Play the Blast Radius demo video, YouTube">
-              <img src="assets/img/demos/blast-radius.webp" alt="" width="960" height="540" loading="lazy" decoding="async">
-              <svg class="dm-play-btn" aria-hidden="true"><use href="#dm-play-sym"/></svg>
-            </button>
-          </div>
-          <figcaption class="dm-frame-meta"><span class="hand pencil">multi-agent demo · YouTube</span></figcaption>
+          <button class="video" type="button" data-yt="9MtxDeI03c0" data-title="Blast Radius: AI agents that catch a schema change's damage before merge (YouTube)">
+            <img src="assets/img/demos/blast-radius.webp" alt="" width="960" height="540" loading="lazy" decoding="async">
+            <span class="video-label">Multi-agent demo · YouTube</span>
+          </button>
+          <figcaption class="dm-frame-meta"><span class="hand pencil">WeMakeDevs · Nov 2026</span></figcaption>
         </figure>
-        <h3 id="dm-br-t">Blast Radius</h3>
-        <p class="dm-problem">Rename one upstream field: which repos, dbt models, ML features and dashboards break before the merge?</p>
-        <p class="dm-role"><b>Role:</b> built with Manav Patel; coding agents test each downstream repo in its own checkout.</p>
-        <p class="dm-result"><b>Result:</b> renaming <code>user_id</code> to <code>account_id</code> broke six checks, produced three fix PRs, and the merge gate waited for the real owners.</p>
-        <p class="dm-links"><a href="https://github.com/ayushgawai/blast-radius" target="_blank" rel="noopener">Repository</a><a href="https://youtu.be/9MtxDeI03c0" target="_blank" rel="noopener">YouTube</a></p>
+        <p class="project-where hand">Schema-change impact · Nov 2026</p>
+        <h3 class="project-title" id="dm-br-t">Blast Radius</h3>
+        <p class="project-sum">A coordinator agent fans an upstream field rename out to analytics, ML-feature and dashboard agents, each testing the branch in its own git checkout and reporting the exact failing file and check. The upstream required check stays pending until every downstream owner approves in Slack.</p>
+        <ul class="facts">
+          <li><b>6</b> broken checks caught</li>
+          <li><b>3</b> fix PRs opened</li>
+          <li><b>3</b> agent runtimes</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn" href="https://github.com/ayushgawai/blast-radius" target="_blank" rel="noopener">Code on GitHub</a>
+        </div>
+        <details class="deep"><summary>Technical deep dive</summary>
+          <div class="deep-body">
+            <h4>Flow</h4>
+            <p>An upstream PR posts to a schema-changes room; the impact coordinator (Claude Code) broadcasts an impact-checker role to linked analytics, ML-feature and dashboard rooms. Claude Code, Codex and OpenCode agents run the upstream branch against local tests in independent checkouts, open Jira tickets and fix PRs, then wait for owner authorization while the coordinator writes a durable impact report.</p>
+            <h4>Demo run</h4>
+            <p>Renaming <code>user_id</code> to <code>account_id</code> broke six checks across dbt models, ML features and dashboard SQL, produced three coordinated fix PRs, and rejected a non-owner's approval; the gate turned green only after the real owners approved. A harmless optional-column rename reports no impact.</p>
+            <h4>Design</h4>
+            <p>Two-person team project. Bounded agent ownership, independent tests, least privilege, an audit trail and a human-controlled merge gate.</p>
+          </div>
+        </details>
       </article>
 
-      <!-- CarbonShift (no video: slides) -->
+      <!-- CarbonShift -->
       <article class="dm-card" aria-labelledby="dm-cs-t">
-        <figure class="dm-still">
+        <figure class="dm-frame">
           <span class="tape" aria-hidden="true"></span>
-          <div class="dm-screen dm-screen--slides">
-            <button class="dm-slides" type="button" data-slides="assets/img/demos/carbonshift.webp|assets/img/demos/carbonshift-architecture.webp" data-alts="CarbonShift overview: clean or dirty grid power feeds a decision core that throttles or boosts GPU training.|CarbonShift architecture: grid price and carbon APIs, arbitration engine, GPU controller with checkpointing, FastAPI backend and live dashboard." aria-label="Show next CarbonShift slide (1 of 2)">
-              <img src="assets/img/demos/carbonshift.webp" alt="CarbonShift overview: clean or dirty grid power feeds a decision core that throttles or boosts GPU training." width="960" height="523" loading="lazy" decoding="async">
-              <span class="dm-slide-count hand" aria-hidden="true">slide <b>1</b>/2 · tap for next</span>
-            </button>
-          </div>
-          <figcaption class="dm-frame-meta"><span class="hand pencil">slides from Devpost · no video</span></figcaption>
+          <button class="video" type="button" data-yt="OkEENwR6-Gk" data-title="CarbonShift demo (YouTube)">
+            <img src="assets/img/demos/carbonshift-demo.webp" alt="" width="960" height="540" loading="lazy" decoding="async">
+            <span class="video-label">Demo · YouTube</span>
+          </button>
+          <figcaption class="dm-frame-meta"><span class="hand pencil">carbon-aware GPU training</span></figcaption>
         </figure>
-        <h3 id="dm-cs-t">CarbonShift</h3>
-        <p class="dm-problem">GPU training runs at one power level no matter how dirty or expensive the grid is right now.</p>
-        <p class="dm-role"><b>Role:</b> grid-signal polling and the arbitration loop that throttles, pauses or boosts training.</p>
-        <p class="dm-result"><b>Result:</b> about 43% less carbon and 37% lower cost <em>in simulation</em>; scenario results, not datacenter savings.</p>
-        <p class="dm-links"><a href="https://github.com/ayushgawai/carbonshift" target="_blank" rel="noopener">Repository</a><a href="https://devpost.com/software/carbonshift" target="_blank" rel="noopener">Devpost</a></p>
-      </article>
-
-      <!-- Transit (no video: hand-drawn still) -->
-      <article class="dm-card" aria-labelledby="dm-tr-t">
-        <figure class="dm-still">
-          <span class="tape" aria-hidden="true"></span>
-          <div class="dm-screen dm-screen--sketch" data-anim>
-            <svg viewBox="0 0 360 203" role="img" aria-labelledby="dm-tr-svg-t">
-              <title id="dm-tr-svg-t">Sketch of the transit platform: BART and VTA feeds flow through Airflow and Kafka into Snowflake and dbt, and a FastAPI layer serves an operator dashboard.</title>
-              <g class="rough">
-                <path class="ink-thin" d="M12 34 L74 33 L75 62 L13 63 Z M12 118 L74 117 L75 146 L13 147 Z"/>
-                <path class="ink" d="M112 72 L186 71 L187 112 L113 113 Z"/>
-                <path class="ink" d="M214 72 L268 71 L269 112 L215 113 Z"/>
-                <path class="ink-thin" d="M292 44 L350 43 L351 140 L293 141 Z"/>
-                <path class="ink-thin" d="M299 124 l9 -12 l8 5 l10 -17 l9 7 l9 -13"/>
-                <path class="ink-thin" d="M299 58 h34 M299 68 h44 M299 78 h26"/>
-                <path class="ink-blue" d="M76 48 C94 49 96 76 110 84" marker-end="url(#arrowhead)"/>
-                <path class="ink-blue" d="M76 132 C94 131 96 106 110 100" marker-end="url(#arrowhead)"/>
-                <path class="ink-blue dm-tr-pulse" d="M188 92 L212 92" marker-end="url(#arrowhead)"/>
-                <path class="ink-blue dm-tr-pulse" d="M270 92 L290 92" marker-end="url(#arrowhead)"/>
-              </g>
-              <text class="svg-print" x="44" y="53" text-anchor="middle" font-size="15" font-weight="700">BART</text>
-              <text class="svg-print" x="44" y="137" text-anchor="middle" font-size="15" font-weight="700">VTA</text>
-              <text class="svg-hand" x="44" y="24" text-anchor="middle" font-size="14">GTFS + live</text>
-              <text class="svg-print" x="150" y="89" text-anchor="middle" font-size="14">Airflow</text>
-              <text class="svg-print" x="150" y="105" text-anchor="middle" font-size="14">+ Kafka</text>
-              <text class="svg-print" x="242" y="89" text-anchor="middle" font-size="14">Snow-</text>
-              <text class="svg-print" x="242" y="105" text-anchor="middle" font-size="14">flake</text>
-              <text class="svg-hand" x="242" y="132" text-anchor="middle" font-size="14">+ dbt</text>
-              <text class="svg-hand" x="322" y="160" text-anchor="middle" font-size="14">dashboard</text>
-              <text class="svg-hand" x="322" y="34" text-anchor="middle" font-size="14">FastAPI</text>
-              <text class="svg-hand" x="180" y="190" text-anchor="middle" font-size="15" style="fill:var(--red)">no video yet · drawn from the repo</text>
-            </svg>
+        <p class="project-where hand">Grid-aware training control</p>
+        <h3 class="project-title" id="dm-cs-t">CarbonShift</h3>
+        <p class="project-sum">WattTime and CAISO signals polled every ~60&nbsp;s drive a GREEN, AMBER, RED, NORMAL state machine that sets A100 power limits, with checkpointed pause and resume. FastAPI exposes control endpoints and streams telemetry over WebSocket every ~2&nbsp;s.</p>
+        <ul class="facts">
+          <li><b>~43%</b> less carbon, simulated</li>
+          <li><b>~37%</b> lower cost, simulated</li>
+          <li><b>~60&nbsp;s</b> control period</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn" href="https://github.com/ayushgawai/carbonshift" target="_blank" rel="noopener">Code on GitHub</a>
+          <a class="btn blue" href="https://devpost.com/software/carbonshift" target="_blank" rel="noopener">Devpost</a>
+        </div>
+        <details class="deep"><summary>Technical deep dive</summary>
+          <div class="deep-body">
+            <h4>Control loop</h4>
+            <p>A grid monitor (WattTime and CAISO, with a mock fallback) feeds the Eco-Pulse arbitration engine; its state sets a GPU power-limit target, and a checkpoint manager pauses and resumes training when the grid is dirtiest. A background metrics loop backs the FastAPI status endpoints, WebSocket updates and cumulative cost and carbon accounting.</p>
+            <h4>Trade-offs</h4>
+            <p>Power capping instead of pure scheduling keeps jobs progressing; the poll period and state hysteresis avoid thrashing between limits.</p>
+            <h4>Caveat</h4>
+            <p>The ~43% carbon and ~37% cost reductions are <em>simulated</em> scenario results, not measured datacenter savings. A LangGraph supervisor, planner and executor layer is a later extension; the public repo documents the mock-enabled control loop.</p>
           </div>
-          <figcaption class="dm-frame-meta"><span class="hand pencil">architecture still</span></figcaption>
-        </figure>
-        <h3 id="dm-tr-t">Transit analytics platform</h3>
-        <p class="dm-problem">BART and VTA publish schedules and live vehicle feeds that don't line up stop for stop.</p>
-        <p class="dm-role"><b>Role:</b> MSDA capstone team; also ran it on AWS S3 and MWAA and built an Azure Databricks extension.</p>
-        <p class="dm-result"><b>Result:</b> three Airflow DAGs, Kafka events, dbt models on Snowflake and a FastAPI + React operator dashboard.</p>
-        <p class="dm-links"><a href="https://github.com/ayushgawai/transit-system" target="_blank" rel="noopener">Repository</a></p>
+        </details>
       </article>
+    </div>
 
-      <!-- SO-101 (coming soon) -->
+    <!-- ===== Transit: the drawing is the demo ===== -->
+    <article class="project flip dm-wide" aria-labelledby="dm-tr-t">
+      <div class="project-media">
+        <figure class="dm-sketch" data-anim>
+          <svg class="dm-tr" viewBox="0 0 480 616" role="img" aria-labelledby="dm-tr-svgt">
+            <title id="dm-tr-svgt">Moving diagram of the transit platform: BART and VTA schedule and live feeds enter Airflow and Kafka, land in Snowflake, move through dbt models into analytics tables, and are served by FastAPI to a React operator dashboard.</title>
+            <!-- packets run underneath the paper-filled boxes, so they only show on the wires between stages -->
+            <g class="dm-pk" aria-hidden="true">
+              <circle r="7"><animateMotion dur="6s" repeatCount="indefinite" path="M116 60 L116 390 L246 390 L390 390 L386 515 L130 540"/></circle>
+              <circle r="7"><animateMotion dur="6s" begin="-4s" repeatCount="indefinite" path="M362 60 L362 390 L390 390 L386 515 L130 540"/></circle>
+              <circle r="7" class="dm-pk-x"><animateMotion dur="6s" begin="-2s" repeatCount="indefinite" path="M200 100 C250 122 290 128 330 160 L362 210 L362 390 L390 390 L386 515 L130 540"/></circle>
+            </g>
+            <g class="rough">
+              <!-- cross feeds: each operator feeds both paths -->
+              <path class="ink-blue dm-wire" d="M200 106 C250 122 290 128 330 148" marker-end="url(#arrowhead)"/>
+              <path class="ink-blue dm-wire" d="M280 106 C230 122 190 128 150 148" marker-end="url(#arrowhead)"/>
+              <path class="ink-blue" d="M116 110 L116 144" marker-end="url(#arrowhead)"/>
+              <path class="ink-blue" d="M362 110 L362 144" marker-end="url(#arrowhead)"/>
+              <path class="ink-blue" d="M116 276 L116 360" marker-end="url(#arrowhead)"/>
+              <path class="ink-blue" d="M362 276 L366 360" marker-end="url(#arrowhead)"/>
+              <path class="ink-blue" d="M164 391 L176 391" marker-end="url(#arrowhead)"/>
+              <path class="ink-blue" d="M322 391 L334 391" marker-end="url(#arrowhead)"/>
+              <path class="ink-blue" d="M390 418 L387 464" marker-end="url(#arrowhead)"/>
+              <path class="ink-blue" d="M288 515 L254 515" marker-end="url(#arrowhead)"/>
+
+              <!-- sources -->
+              <path class="ink dm-box" d="M16 18 L214 14 L218 104 L18 108 Z"/>
+              <path class="ink dm-box" d="M262 16 L462 18 L460 106 L264 104 Z"/>
+              <!-- Airflow + Kafka -->
+              <path class="ink dm-box" d="M16 152 L216 148 L214 270 L20 272 Z"/>
+              <path class="ink-thin" d="M66 222 L98 216 M134 216 L158 222"/>
+              <circle class="ink-thin dm-node" cx="56" cy="223" r="9"/><circle class="ink-thin dm-node" cx="116" cy="214" r="9"/><circle class="ink-thin dm-node" cx="176" cy="223" r="9"/>
+              <path class="ink dm-box" d="M264 150 L462 152 L464 272 L262 270 Z"/>
+              <path class="ink-thin" d="M284 204 L444 202 L444 232 L284 234 Z M304 203 v30 M324 203 v30 M344 203 v30 M364 203 v30 M384 203 v30 M404 203 v30 M424 203 v30"/>
+              <path class="dm-log" d="M286 218 L442 217"/>
+              <!-- Snowflake: landing → dbt → analytics -->
+              <path class="ink" d="M16 318 L464 314 L462 430 L18 434 Z"/>
+              <path class="ink-blue" d="M418 334 v26 M405 341 l26 12 M431 341 l-26 12"/>
+              <path class="ink dm-box" d="M38 370 L160 368 L162 414 L40 416 Z"/>
+              <path class="ink dm-box" d="M180 368 L318 370 L316 414 L182 412 Z"/><path class="dm-box-blue" d="M180 368 L318 370 L316 414 L182 412 Z"/>
+              <path class="ink dm-box" d="M338 370 L444 368 L446 414 L340 416 Z"/>
+              <!-- FastAPI + dashboard -->
+              <path class="ink dm-box" d="M292 474 L464 470 L462 560 L294 562 Z"/>
+              <path class="ink dm-box" d="M16 472 L246 476 L244 600 L18 598 Z"/>
+              <path class="ink-thin" d="M44 562 v-16 M70 562 v-30 M96 562 v-22 M122 562 v-40 M148 562 v-26"/>
+              <path class="ink-blue dm-trend" pathLength="1" d="M40 540 L70 524 L96 532 L122 510 L150 520 L176 506 L212 512"/>
+              <path class="ink-thin" d="M188 548 c0 -14 18 -14 18 0 c0 8 -9 16 -9 16 c0 0 -9 -8 -9 -16 Z"/>
+            </g>
+            <!-- labels stay off the wobble filter so they read cleanly -->
+            <g class="dm-lab">
+              <text class="svg-print dm-t" x="116" y="54" text-anchor="middle">BART</text>
+              <text class="svg-hand dm-h" x="116" y="88" text-anchor="middle">GTFS + live feed</text>
+              <text class="svg-print dm-t" x="362" y="54" text-anchor="middle">VTA</text>
+              <text class="svg-hand dm-h" x="362" y="88" text-anchor="middle">GTFS + live feed</text>
+              <text class="svg-print dm-t" x="116" y="188" text-anchor="middle">Airflow</text>
+              <text class="svg-hand dm-h" x="116" y="258" text-anchor="middle">3 DAGs</text>
+              <text class="svg-print dm-t" x="362" y="188" text-anchor="middle">Kafka</text>
+              <text class="svg-hand dm-h" x="362" y="258" text-anchor="middle">live vehicle events</text>
+              <text class="svg-print dm-t" x="240" y="352" text-anchor="middle">Snowflake</text>
+              <text class="svg-hand dm-h" x="100" y="398" text-anchor="middle">landing</text>
+              <text class="svg-hand dm-h" x="249" y="398" text-anchor="middle">dbt models</text>
+              <text class="svg-hand dm-h" x="392" y="398" text-anchor="middle">analytics</text>
+              <text class="svg-print dm-t" x="378" y="508" text-anchor="middle">FastAPI</text>
+              <text class="svg-hand dm-h" x="378" y="540" text-anchor="middle">REST + NL query</text>
+              <text class="svg-print dm-t" x="131" y="504" text-anchor="middle">React UI</text>
+              <text class="svg-hand dm-h" x="131" y="588" text-anchor="middle">operator dashboard</text>
+            </g>
+          </svg>
+          <figcaption class="hand pencil">moving diagram · drawn from the repo's architecture</figcaption>
+        </figure>
+      </div>
+      <div class="project-body">
+        <p class="project-where hand">MSDA capstone · BART + VTA</p>
+        <h3 class="project-title" id="dm-tr-t">Transit analytics platform</h3>
+        <p class="project-sum">GTFS schedules and live vehicle feeds from two operators flow through three Airflow DAGs and a Kafka producer and consumer into dbt models on Snowflake, served by FastAPI to React operator dashboards. The hard parts: joining static stop IDs to live events, late or malformed positions, and dedup on replay.</p>
+        <ul class="facts">
+          <li><b>2</b> transit operators</li>
+          <li><b>3</b> Airflow DAGs</li>
+          <li><b>AWS + Azure</b> deployments</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn" href="https://github.com/ayushgawai/transit-system" target="_blank" rel="noopener">Code on GitHub</a>
+        </div>
+        <details class="deep"><summary>Technical deep dive</summary>
+          <div class="deep-body">
+            <h4>Pipeline</h4>
+            <ul>
+              <li>Airflow DAGs: incremental GTFS ingestion, streaming ingestion and ML forecasting, across BART and VTA.</li>
+              <li>Kafka producer and consumer carry near-real-time vehicle events into Snowflake landing schemas.</li>
+              <li>dbt builds analytics schemas: route-level performance aggregates and forecast outputs.</li>
+              <li>FastAPI serves React/TypeScript dashboards (maps, metrics, natural-language queries); heavy ETL and training stay off the request path.</li>
+              <li>Docker Compose for local runs; AWS Secrets Manager for credentials.</li>
+            </ul>
+            <h4>Extensions</h4>
+            <p>Ran the platform on AWS S3 and MWAA, and built an Azure extension that models on-time performance and service-reliability KPIs in Azure Databricks (PySpark, Delta), Azure Data Factory, SQL and Power BI, with data-quality checks.</p>
+            <h4>Ownership</h4>
+            <p>Team capstone; built the AWS (S3, MWAA) deployment and the Azure Databricks extension.</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <div class="dm-duo">
+      <!-- SO-101 -->
       <article class="dm-card" aria-labelledby="dm-so-t">
-        <figure class="dm-still">
+        <figure class="dm-frame">
           <span class="tape" aria-hidden="true"></span>
           <div class="dm-screen dm-screen--soon">
             <img src="assets/img/demos/so101-topcam.webp" alt="Top camera view of the SO-101 follower arm at its start pose, with the cube on a paper grid marker and a bowl labelled B." width="640" height="480" loading="lazy" decoding="async">
@@ -153,32 +268,63 @@
           </div>
           <figcaption class="dm-frame-meta"><span class="hand pencil">top-camera frame from the dataset</span></figcaption>
         </figure>
-        <h3 id="dm-so-t">SO-101 arm, imitation learning</h3>
-        <p class="dm-problem">Teach a follower arm to pick up a cube and place it, learning from 50 teleoperated demonstrations.</p>
-        <p class="dm-role"><b>Role:</b> built with another SJSU research assistant: calibration, data collection, training and rollouts.</p>
-        <p class="dm-result"><b>Result:</b> ACT succeeded on 46 of 50 physical rollouts at a fixed cube position; ~18 ms local inference vs ~251 ms for SmolVLA.</p>
-        <p class="dm-links"><a href="https://github.com/ayushgawai/so101-lerobot" target="_blank" rel="noopener">Repository</a><a href="https://github.com/aakashvardhan/so101-lerobot" target="_blank" rel="noopener">Collaborator fork</a></p>
+        <p class="project-where hand">SJSU robotics lab · LeRobot</p>
+        <h3 class="project-title" id="dm-so-t">SO-101 arm, imitation learning</h3>
+        <p class="project-sum">ACT policy with a ResNet-18 backbone, trained from scratch on 50 teleoperated SO-101 demonstrations and compared against a SmolVLA fine-tune. Traced reverting servo IDs to a Feetech EEPROM lock that was never re-set, which unblocked calibration.</p>
+        <ul class="facts">
+          <li><b>46/50</b> picks, fixed cube position</li>
+          <li><b>~18&nbsp;ms</b> ACT vs ~251&nbsp;ms SmolVLA</li>
+          <li><b>50</b> demos, ~110k frames</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn" href="https://github.com/ayushgawai/so101-lerobot" target="_blank" rel="noopener">Code on GitHub</a>
+        </div>
+        <details class="deep"><summary>Technical deep dive</summary>
+          <div class="deep-body">
+            <h4>Setup and data flow</h4>
+            <p>Six-joint SO-101 leader and follower arms on Feetech STS3215 servos over USB motor buses, with a gripper and paired RGB cameras, calibrated and teleoperated through Hugging Face LeRobot. 50 demonstrations (about 49,633 and 59,998 frames in two datasets) passed integrity validation, then trained ACT from scratch (30k- and 60k-step runs) and fine-tuned SmolVLA (20k steps) before physical rollouts.</p>
+            <h4>Results and caveat</h4>
+            <p>ACT completed 46 of 50 pick-and-place trials at a <em>fixed</em> cube position (demo positions varied under 1&nbsp;cm), 2.49&nbsp;cm mean placement error on successes. That does not establish generalized success; randomized-position evaluation is unfinished.</p>
+            <h4>Ownership</h4>
+            <p>Two-person research build. Owned calibration, teleoperated data collection, resumable 50-trial rollout scripts, video-measured placement error, a failure taxonomy, camera-dropout handling and checkpoint-selection analysis.</p>
+            <h4>The EEPROM bug</h4>
+            <p>Follower IDs reverted after power cycles and the wrist-roll and gripper collided on one ID. The EEPROM was unlocked for an ID write and never re-locked; patching LeRobot's motor-bus setup to write <code>Lock=1</code> after ID or baud changes made IDs persist.</p>
+          </div>
+        </details>
       </article>
 
       <!-- Research -->
       <article class="dm-card" aria-labelledby="dm-rs-t">
-        <figure class="dm-still">
+        <figure class="dm-frame">
           <span class="tape" aria-hidden="true"></span>
           <div class="dm-screen">
-            <img src="assets/img/demos/research-csu.webp" alt="Jonathan Chiu, Allison Tran and Ayush Sunil Gawai standing beside a screen showing the Brain Body Connect title slide." width="960" height="541" loading="lazy" decoding="async">
+            <img src="assets/img/demos/research-csu.webp" alt="Jonathan Chiu, Allison Tran and Ayush Sunil Gawai standing beside a screen showing the Body Brain Connect title slide at the CSU research competition." width="960" height="541" loading="lazy" decoding="async">
           </div>
-          <figcaption class="dm-frame-meta"><span class="hand pencil">photo: SJSU NewsCenter</span></figcaption>
+          <figcaption class="dm-frame-meta"><span class="hand pencil">40th CSU Student Research Competition · photo: SJSU NewsCenter</span></figcaption>
         </figure>
-        <h3 id="dm-rs-t">Research, on paper</h3>
-        <p class="dm-problem">Body Brain Connect (eye tracking for visual attention) and an AI wheelchair obstacle-alert interface.</p>
-        <p class="dm-role"><b>Role:</b> graduate research assistant; eye-tracking analysis pipeline and the detection-to-alert pipeline.</p>
-        <p class="dm-result"><b>Result:</b> RSCA winner and SJSU delegate to the 40th CSU Student Research Competition; two HFES 2026 posters and an Elsevier paper.</p>
-        <ul class="dm-papers">
-          <li><a href="https://hfesam2026.conference-program.com/presentation/?id=POST409&amp;sess=sess246" target="_blank" rel="noopener">HFES poster: visual attention</a></li>
-          <li><a href="https://hfesam2026.conference-program.com/presentation/?id=POST130&amp;sess=sess257" target="_blank" rel="noopener">HFES poster: wheelchair HMI</a></li>
-          <li><a href="https://www.sciencedirect.com/science/article/pii/S1369847826002962" target="_blank" rel="noopener">Transportation Research Part F paper</a></li>
-          <li><a href="https://blogs.sjsu.edu/newsroom/2026/research-spotlight-the-body-brain-connection-at-the-csu-research-competition/" target="_blank" rel="noopener">SJSU NewsCenter spotlight</a></li>
+        <p class="project-where hand">SJSU · human factors research</p>
+        <h3 class="project-title" id="dm-rs-t">Research, on paper</h3>
+        <p class="project-sum">Eye-tracking pipeline (Pupil Labs gaze, fixation, blink and pupil streams) for a 7-participant visual-attention study, and an obstacle-alert wheelchair HMI running YOLOv10n at 30&nbsp;fps on ZED 2i RGB-D. Two HFES 2026 posters and a Transportation Research Part F article.</p>
+        <ul class="facts">
+          <li><b>24</b> participants, HMI study</li>
+          <li><b>30&nbsp;fps</b> on-board detection</li>
+          <li><b>RSCA</b> winner, CSU delegate</li>
         </ul>
+        <div class="btn-row">
+          <a class="btn" href="#research">Research chapter</a>
+        </div>
+        <details class="deep"><summary>Papers and press</summary>
+          <div class="deep-body">
+            <ul>
+              <li><a href="https://hfesam2026.conference-program.com/presentation/?id=POST409&amp;sess=sess246" target="_blank" rel="noopener">HFES 2026 poster: visual attention (eye tracking)</a></li>
+              <li><a href="https://hfesam2026.conference-program.com/presentation/?id=POST130&amp;sess=sess257" target="_blank" rel="noopener">HFES 2026 poster: wheelchair HMI</a></li>
+              <li><a href="https://www.sciencedirect.com/science/article/pii/S1369847826002962" target="_blank" rel="noopener">Transportation Research Part F article (Elsevier)</a></li>
+              <li><a href="https://blogs.sjsu.edu/newsroom/2026/research-spotlight-the-body-brain-connection-at-the-csu-research-competition/" target="_blank" rel="noopener">SJSU NewsCenter research spotlight</a></li>
+            </ul>
+            <h4>Findings and scope</h4>
+            <p>Fixation count was the strongest discriminator among the measured oculometrics. In the wheelchair study, seatback vibration plus instructional cues produced faster obstacle responses; it measures response timing, usefulness and preference, not real-world crash reduction. The published apparatus is the onboard GPU laptop with the ZED 2i; a Jetson and LiDAR C++ prototype is a separate project.</p>
+          </div>
+        </details>
       </article>
     </div>
   </div>

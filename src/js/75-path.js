@@ -38,7 +38,7 @@
     // label the Nagpur → San José leg (the U-turn into the SJSU row) beside the line
     const sj = stops.findIndex((s) => s.hasAttribute("data-move"));
     move.classList.toggle("is-on", multi && sj > 0);
-    if (multi && sj > 0) { move.style.left = "14px"; move.style.top = (pts[sj - 1].y + pts[sj].y) / 2 + "px"; move.dataset.at = sj; }
+    if (multi && sj > 0) { move.style.left = "34px"; move.style.top = (pts[sj].y - 26) + "px"; move.dataset.at = sj; }
     const pl = pts[pts.length - 2];
     next.setAttribute("d", `M${pl.x} ${pl.y}` + last);
     update();

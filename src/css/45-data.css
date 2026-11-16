@@ -1,123 +1,192 @@
 /* ============================================================
-   #data — pipeline sketch with three switchable real pipelines
-   All selectors prefixed with #data.
+   #data: one pipeline drawing (45-data.js builds it) that re-routes between three real pipelines,
+   the active pipeline's project block, then three small animated project cards.
    ============================================================ */
-#data .data-sketch { position: relative; }
+#data .data-sketch { margin: 0; position: relative; }
 
 /* --- pipeline tabs --- */
-#data .data-tabs {
-  display: flex; gap: calc(var(--u) / 2); flex-wrap: wrap;
-  margin: 0 0 calc(var(--u) / 2);
-}
+#data .data-tabs { display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 var(--u); }
 #data .data-tabs .tab {
-  font-family: var(--f-print); cursor: pointer;
-  display: inline-flex; flex-direction: column; align-items: flex-start; gap: 2px;
-  padding: 10px 16px 9px;
-  background: var(--paper-card);
-  color: var(--ink-2);
-  border: 1.5px solid var(--ink-3);
-  border-radius: 12px 4px 14px 5px;
-  transform: rotate(-.4deg);
-  transition: transform .15s var(--ease-out), box-shadow .15s var(--ease-out),
-    border-color .15s, color .15s;
+  display: inline-flex; flex-direction: column; align-items: flex-start; gap: 4px;
+  min-height: 48px; padding: 10px 18px 9px; cursor: pointer;
+  font-family: var(--f-print); color: var(--ink-2); background: var(--paper-card);
+  border: 2px solid var(--ink-3); border-radius: 14px 5px 16px 6px;
+  transform: rotate(-.5deg);
+  transition: transform .15s var(--ease-out), box-shadow .15s var(--ease-out), border-color .15s, color .15s;
 }
-#data .data-tabs .tab:nth-child(2) { transform: rotate(.5deg); }
-#data .data-tabs .tab:nth-child(3) { transform: rotate(-.6deg); }
-#data .data-tabs .tab b {
-  font-family: var(--f-hand); font-weight: 600; font-size: var(--t-sm);
-  color: var(--ink); line-height: 1.1;
-}
-#data .data-tabs .tab span { font-size: 11px; font-weight: 500; letter-spacing: .02em; }
-#data .data-tabs .tab[aria-pressed="true"] {
-  border-color: var(--blue); color: var(--blue);
-  box-shadow: 2px 3px 0 var(--blue);
-}
-#data .data-tabs .tab[aria-pressed="true"] b { color: var(--blue); }
+#data .data-tabs .tab:nth-child(2) { transform: rotate(.6deg); }
+#data .data-tabs .tab b { font: 600 1.1875rem/1.1 var(--f-hand); color: var(--ink); font-variation-settings: "INFM" 50; }
+#data .data-tabs .tab span { font-size: .875rem; font-weight: 500; }
 #data .data-tabs .tab:hover { transform: translate(-1px, -2px); box-shadow: 2px 3px 0 var(--ink-3); }
-#data .data-tabs .tab[aria-pressed="true"]:hover { box-shadow: 2px 3px 0 var(--blue); }
-#data .data-tabs .tab:active { transform: none; }
+#data .data-tabs .tab[aria-selected="true"] { border-color: var(--blue); color: var(--blue); box-shadow: 3px 4px 0 var(--blue); }
+#data .data-tabs .tab[aria-selected="true"] b { color: var(--blue); }
+#data .data-tabs .tab:active { transform: none; box-shadow: none; }
 
-/* --- drawing frame + station chips (HTML so text stays legible at any width) --- */
-#data .data-drawing { position: relative; }
-#data .data-drawing svg { width: 100%; height: auto; }
+/* --- the drawing --- */
+#data .data-board { position: relative; }
+#data .data-svg { width: 100%; height: auto; overflow: visible; }
+#data .data-svg .body { fill: var(--paper-card); }
+#data .data-svg .liq { fill: url(#hatch-blue); }
+#data .data-svg .thin { stroke-width: 1.4; }
+#data .data-svg .hit { fill: transparent; stroke: none; }
+#data .data-svg .lbl { font-size: 22px; font-weight: 600; fill: var(--ink); font-variation-settings: "INFM" 50; }
+#data .data-svg .sub { font-size: 17px; fill: var(--ink-2); }
+#data .data-svg .glyph-t { font-size: 15px; }
+#data .data-svg .ann text { font-size: 18px; fill: var(--blue); }
+#data .data-svg .ann.red text { fill: var(--red); }
+#data .data-svg .qlbl { font-size: 19px; fill: var(--red); font-weight: 600; }
+#data .data-svg .pivot { fill: var(--red); }
+#data .data-svg .arm-l { stroke-width: 2.6; }
+#data .data-svg .hatch-b { fill: url(#hatch-blue); }
+#data .data-svg .pk .p rect.ink-blue { fill: var(--paper-card); }
+#data .data-svg .pf rect, #data .data-svg .stk rect { fill: #FBEDEA; }
 
-/* packets: only the active pipeline's set is shown */
-#data .pkts { display: none; }
-#data[data-mode="transit"] .pkts.stream,
-#data[data-mode="zscaler"] .pkts.incr,
-#data[data-mode="latentview"] .pkts.batch { display: block; }
-#data .pkt, #data .pkt-fail { opacity: 0; }
+/* stations: pointer + keyboard */
+#data .data-svg .st { cursor: pointer; outline: none; }
+#data .data-svg .st .lbl, #data .data-svg .st .sub { transition: fill .15s; }
+#data .data-svg .st:hover .lbl, #data .data-svg .st.on .lbl, #data .data-svg .st:focus-visible .lbl { fill: var(--blue); }
+#data .data-svg .st:focus-visible .hit { stroke: var(--blue); stroke-width: 2; stroke-dasharray: 6 5; rx: 14px; }
 
-#data .stage {
-  position: absolute;
-  left: var(--x);
-  top: var(--row);
-  transform: translateX(-50%);
-  width: 0; height: 0;
+/* idle motion inside the glyphs */
+#data .data-svg .spin { transform-box: fill-box; transform-origin: center; animation: dt-spin 6s linear infinite; }
+#data .data-svg .valve .spin, #data .data-svg .st-valve .spin { animation-duration: 7s; }
+#data .data-svg .spin.fast { animation-duration: 1.6s; }
+@keyframes dt-spin { to { transform: rotate(360deg); } }
+#data .data-svg .sig path { animation: dt-sig 2.4s ease-in-out infinite; }
+#data .data-svg .sig path:nth-child(n+3) { animation-delay: .3s; }
+@keyframes dt-sig { 0%, 100% { opacity: .25; } 40% { opacity: 1; } }
+#data .data-svg .cell { fill: var(--blue); opacity: 0; animation: dt-cell 2.5s linear infinite; animation-delay: calc(var(--c) * .5s); }
+@keyframes dt-cell { 0%, 100% { opacity: 0; } 10%, 30% { opacity: .22; } 45% { opacity: 0; } }
+
+/* gate: green check normally, red cross while the hook is pulling a reject */
+#data .data-svg .ok, #data .data-svg .nok { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; transition: opacity .2s; }
+#data .data-svg .ok { stroke: var(--green); }
+#data .data-svg .nok { stroke: var(--red); opacity: 0; }
+#data .data-svg .gate.catch .ok { opacity: 0; }
+#data .data-svg .gate.catch .nok { opacity: 1; }
+
+/* SLA bell (LatentView) swings when a reject is caught */
+#data .data-svg .swing { transform-box: fill-box; transform-origin: 50% 0; }
+#data .data-svg .ring { opacity: 0; transition: opacity .2s; }
+#data .data-svg .st-bell.catch .swing { animation: dt-swing .45s ease-in-out infinite alternate; }
+#data .data-svg .st-bell.catch .ring { opacity: 1; }
+@keyframes dt-swing { from { transform: rotate(-12deg); } to { transform: rotate(12deg); } }
+
+/* fresh drawing (first render + every tab switch) inks itself in */
+#data .data-canvas.fresh [pathLength="1"] { stroke-dasharray: 1; animation: dt-draw 1.1s var(--ease-out) both; }
+#data .data-canvas.fresh .st [pathLength="1"] { animation-delay: calc(var(--i) * .08s); }
+#data .data-canvas.fresh text { animation: dt-fade .6s .35s both; }
+@keyframes dt-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes dt-fade { from { opacity: 0; } }
+
+/* station note under the drawing */
+#data .data-note { margin: 12px 0 0; min-height: 3.2em; font-size: var(--t-md); line-height: 1.5; color: var(--ink-2); max-width: 80ch; }
+#data .data-note b { font: 600 1.125rem/1 var(--f-hand); color: var(--blue); margin-right: .35em; }
+
+/* --- the active pipeline's project block --- */
+#data .data-panel { margin-top: calc(var(--u) * 2); }
+#data .data-pb { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 0 calc(var(--u) * 2); align-items: start; }
+#data .data-pb[hidden] { display: none; }
+#data .data-pb .project-sum { max-width: 60ch; }
+#data .data-pb .project-sum code { font-size: .88em; background: rgba(35,70,176,.07); padding: 1px 5px; border-radius: 3px; }
+#data .data-pb .btn-row { margin-top: calc(var(--u) / 2); }
+#data .data-pb .facts { flex-direction: column; gap: 18px; margin: 34px 0 0; padding-left: var(--u); border-left: 2px dashed var(--grid-major); }
+#data .data-pb .facts li { font-size: var(--t-md); }
+#data .data-pb .facts b { font-size: 2rem; }
+#data .data-pb .deep { grid-column: 1 / -1; }
+@media (max-width: 900px) {
+  #data .data-pb { grid-template-columns: 1fr; }
+  #data .data-pb .facts { flex-direction: row; gap: 14px 26px; margin-top: var(--u); padding-left: 0; border-left: 0; }
+  #data .data-pb .facts b { font-size: 1.625rem; }
 }
-#data .stage.top { --row: 32%; }
-#data .stage.low { --row: 71%; }
-#data .stage::before {
-  content: attr(data-name);
-  position: absolute; left: 0; top: -1.15em;
-  transform: translateX(-50%);
-  font-family: var(--f-hand); font-weight: 500; font-size: var(--t-sm);
-  color: var(--ink);
-  padding: 4px 10px;
-  background: var(--paper-card);
-  border: 1.25px solid rgba(31, 35, 41, .45);
-  border-radius: 10px 3px 11px 4px;
-  box-shadow: 1px 2px 0 rgba(31, 35, 41, .1);
-  cursor: help;
-  white-space: nowrap;
-  transition: border-color .15s, box-shadow .15s;
-}
-#data .stage.low::before { top: 1.15em; }
-#data .stage:focus-visible { z-index: 3; }
-#data .stage:hover::before, #data .stage:focus-visible::before {
-  border-color: var(--blue);
-  box-shadow: 1px 2px 0 rgba(35, 70, 176, .35);
-  z-index: 3;
-}
 
-/* result card, bottom-left of the drawing */
-#data .data-result {
-  position: absolute; left: 48px; bottom: 14px;
-  font-family: var(--f-hand); font-weight: 500; font-size: 15px;
-  color: var(--ink-2); line-height: 1.45;
-  background: var(--paper-card);
-  padding: 7px 14px;
-  border: 1.25px dashed var(--ink-3);
-  border-radius: 5px 14px 6px 12px;
-  max-width: 250px;
+/* --- more pipelines --- */
+#data .data-more { margin-top: calc(var(--u) * 4); }
+#data .data-more-title { font-size: var(--t-xl); margin-bottom: calc(var(--u) * 1.5); transform: rotate(-.8deg); transform-origin: left; display: inline-block; }
+#data .data-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(var(--u) * 2); align-items: start; }
+@media (max-width: 1099px) {
+  #data .data-cards { grid-template-columns: 1fr; gap: calc(var(--u) * 3); }
+  #data .data-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 calc(var(--u) * 2); align-content: start; }
+  #data .data-card .mini { grid-row: 1 / span 7; margin: 0; }
 }
-#data .data-result em { color: var(--red); font-style: normal; font-weight: 600; }
+@media (max-width: 640px) { #data .data-card { display: block; } #data .data-card .mini { margin-bottom: var(--u); } }
+#data .data-card { position: relative; }
+#data .data-card .mini { width: 100%; height: auto; overflow: visible; margin-bottom: var(--u); }
+#data .data-card h4 { font-size: var(--t-lg); letter-spacing: -.01em; margin: 0 0 8px; }
+#data .data-card h4 a { color: var(--ink); text-decoration-color: var(--ink-3); }
+#data .data-card > p:not(.project-where) { font-size: var(--t-md); color: var(--ink); margin: 0; }
+#data .data-card .project-where { font-size: var(--t-sm); margin: 0 0 2px; }
+#data .data-card .facts { margin-top: 16px; }
+#data .data-card .btn-row { margin-top: 18px; }
+#data .tags { margin-top: calc(var(--u) * 2.5); }
+#data .tags li { font-size: .875rem; }
 
-/* caption + per-station note line */
-#data .data-sketch figcaption { margin-top: calc(var(--u) / 3); min-height: 1.6em; }
-#data #data-line-note { font-size: var(--t-sm); display: inline-block; transform: rotate(-.5deg); }
-#data .data-note {
-  margin-top: calc(var(--u) / 4); min-height: 2.4em;
-  font-size: 14px; line-height: 1.45;
+/* mini sketch typography (sized so 14px+ survives the ~0.83 scale of a 300px card) */
+#data .mini .mini-l { font-size: 17px; }
+#data .mini .mini-l.red { fill: var(--red); }
+#data .mini .mini-s { font-size: 16px; fill: var(--ink-2); }
+#data .mini .mini-num { font-size: 19px; font-weight: 700; }
+
+/* TransitRisk: a ball rolls down the expected-cost curve and settles at the minimum */
+#data .tr-ball { fill: var(--ink); offset-path: path("M50 46 C 76 150, 96 168, 122 166 S 230 128, 334 64"); offset-rotate: 0deg; animation: dt-roll 6s cubic-bezier(.45,0,.55,1) infinite; }
+@keyframes dt-roll {
+  0% { offset-distance: 0%; opacity: 0; } 4% { opacity: 1; }
+  28% { offset-distance: 44%; } 40% { offset-distance: 28%; } 50% { offset-distance: 38%; }
+  58% { offset-distance: 32%; } 66%, 92% { offset-distance: 37%; opacity: 1; } 100% { offset-distance: 37%; opacity: 0; }
 }
-#data .data-note .note-label { font-family: var(--f-hand); font-weight: 600; color: var(--blue); }
-#data .data-note .note-body { color: var(--ink-2); }
+#data .tr-circ { stroke-width: 2.4; opacity: 0; animation: dt-circ 6s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes dt-circ { 0%, 64% { opacity: 0; transform: scale(1.5); } 72%, 94% { opacity: 1; transform: scale(1); } 100% { opacity: 0; } }
 
-/* --- mobile: chips become numbered pencil dots; the note line carries the name --- */
+/* WikiRisk: edits stream through the scorer; one comes out red and drops to the flag */
+#data .wr-box { fill: var(--paper-card); }
+#data .wr-a { fill: var(--paper-card); stroke: var(--blue); stroke-width: 2; }
+#data .wr-b { fill: #FBEDEA; stroke: var(--red); stroke-width: 2; opacity: 0; }
+#data .wr-ev { animation: dt-flow 4.8s linear infinite; animation-delay: calc(var(--d) * -1.2s); opacity: 0; }
+@keyframes dt-flow { 0% { transform: translate(12px, 104px); opacity: 0; } 6% { opacity: 1; } 94% { opacity: 1; } 100% { transform: translate(348px, 104px); opacity: 0; } }
+#data .wr-ev.bad { animation-name: dt-flow-bad; }
+#data .wr-ev.bad .wr-b { animation: dt-redden 4.8s linear infinite; animation-delay: calc(var(--d) * -1.2s); }
+@keyframes dt-flow-bad {
+  0% { transform: translate(12px, 104px); opacity: 0; } 6% { opacity: 1; }
+  60% { transform: translate(232px, 128px); } 85% { transform: translate(296px, 170px); opacity: 1; } 100% { transform: translate(300px, 176px); opacity: 0; }
+}
+@keyframes dt-redden { 0%, 50% { opacity: 0; } 58%, 100% { opacity: 1; } }
+
+/* capflow: the LSN cursor steps down the log; each mirrored row gets its check */
+#data .cf-cur { animation: dt-lsn 6s steps(1, end) infinite; }
+@keyframes dt-lsn { 0% { transform: translateY(0); } 25% { transform: translateY(34px); } 50% { transform: translateY(68px); } 75% { transform: translateY(102px); } }
+#data .cf-ok path { fill: none; stroke: var(--green); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; opacity: 0; animation: 6s steps(1, end) infinite; }
+#data .cf-ok path:nth-child(1) { animation-name: dt-ok1; }
+#data .cf-ok path:nth-child(2) { animation-name: dt-ok2; }
+#data .cf-ok path:nth-child(3) { animation-name: dt-ok3; }
+#data .cf-ok path:nth-child(4) { animation-name: dt-ok4; }
+@keyframes dt-ok1 { 0%, 9% { opacity: 0; } 10%, 96% { opacity: 1; } 97%, 100% { opacity: 0; } }
+@keyframes dt-ok2 { 0%, 34% { opacity: 0; } 35%, 96% { opacity: 1; } 97%, 100% { opacity: 0; } }
+@keyframes dt-ok3 { 0%, 59% { opacity: 0; } 60%, 96% { opacity: 1; } 97%, 100% { opacity: 0; } }
+@keyframes dt-ok4 { 0%, 84% { opacity: 0; } 85%, 96% { opacity: 1; } 97%, 100% { opacity: 0; } }
+
 @media (max-width: 640px) {
-  #data .stage::before {
-    content: attr(data-idx);
-    width: 26px; height: 26px; padding: 0;
-    border-radius: 50% 45% 55% 48%;
-    text-align: center; line-height: 26px;
-    font-size: 13px; color: var(--blue);
-    border-color: var(--blue);
-    background: var(--paper-card);
-    transform: translate(-50%, -50%);
-    top: 0;
-  }
-  #data .stage.top { --row: 30%; }
-  #data .stage.low { --row: 73%; }
-  #data .data-result { max-width: 190px; font-size: 13px; left: 40px; bottom: 10px; }
-  #data .data-note { min-height: 3.4em; }
+  #data .data-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  #data .data-tabs .tab { padding: 8px 10px; transform: none; }
+  #data .data-tabs .tab b { font-size: 1.0625rem; }
+  #data .data-svg .lbl { font-size: 23px; }
+  #data .data-svg .sub { font-size: 17px; }
 }
+
+/* reduced motion: finished, readable drawings */
+@media (prefers-reduced-motion: reduce) {
+  #data .tr-ball { animation: none; offset-distance: 37%; }
+  #data .tr-circ { animation: none; opacity: 1; }
+  #data .wr-ev { animation: none; opacity: 1; }
+  #data .wr-ev[style*="--d:0"] { transform: translate(60px, 104px); }
+  #data .wr-ev[style*="--d:1"] { transform: translate(290px, 104px); }
+  #data .wr-ev.bad { transform: translate(296px, 170px); }
+  #data .wr-ev.bad .wr-b { animation: none; opacity: 1; }
+  #data .wr-ev[style*="--d:3"] { opacity: 0; }
+  #data .cf-cur { animation: none; transform: translateY(102px); }
+  #data .cf-ok path { animation: none !important; opacity: 1; }
+}
+
+/* inline explainer film in the Transit block */
+#data .pb-film { grid-column: 1 / -1; margin: var(--u) 0 0; max-width: 720px; }
+#data .pb-film video { width: 100%; height: auto; aspect-ratio: 16 / 9; background: var(--paper-card); box-shadow: var(--shadow-card); outline: 8px solid var(--paper-card); }
+#data .pb-film figcaption { margin-top: 14px; font-size: var(--t-sm); }

@@ -1,151 +1,189 @@
 /* ============================================================
-   #automation — two mechanisms: scheduled (weekly gear) vs
-   event-driven (tripwire + bell), plus the commerce strip & CI/CD.
-   All selectors prefixed with #automation.
+   #automation: Zoox scheduled-vs-event mechanisms, the Sneakstore Rube Goldberg strip, CI/CD gate.
+   Every animation is CSS (paused offscreen by data-anim); 55-automation.js only bumps the week number.
    ============================================================ */
-#automation .auto-dual {
-  display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * 1.5);
-  align-items: start;
-}
-@media (max-width: 900px) { #automation .auto-dual { grid-template-columns: 1fr; } }
+#automation .project { margin-top: calc(var(--u) * 5); }
+#automation .chapter-head + .page .project { margin-top: 0; }
 
-#automation .auto-mech {
-  position: relative;
-  padding: calc(var(--u) / 2) 10px calc(var(--u) / 3);
-  border: 1.5px dashed rgba(124, 130, 140, .55);
-  border-radius: 16px 5px 18px 7px;
-  background: rgba(252, 251, 247, .55);
-}
-#automation .auto-mech:nth-child(2) { border-radius: 7px 18px 5px 16px; }
-#automation .auto-mech .mech-tag {
-  position: absolute; top: -13px; left: 16px;
-  font-family: var(--f-hand); font-weight: 600; font-size: 14px;
-  color: var(--ink); background: var(--tape);
-  padding: 3px 12px;
-  border-radius: 4px 10px 5px 9px;
-  box-shadow: 0 1px 2px rgba(0,0,0,.08);
-  transform: rotate(-1deg);
-}
-#automation .auto-mech.event .mech-tag { left: auto; right: 16px; transform: rotate(1deg); }
-#automation .auto-mech:focus-visible { outline-offset: 4px; }
-
-#automation .auto-mech .mach { width: 100%; height: auto; }
-
-/* caption / mechanism note */
-#automation .auto-modes { margin-top: calc(var(--u) / 2); min-height: 1.6em; }
-#automation .auto-modes .hand { display: inline-block; transform: rotate(-.4deg); font-size: var(--t-sm); }
-
-/* ---------------- motion: the scheduled cycle (10 s week) ---------------- */
-#automation .sched .gear {
-  animation: auto-gear-spin 4s linear infinite;
-  transform-box: fill-box; transform-origin: center;
-}
-@keyframes auto-gear-spin { to { transform: rotate(360deg); } }
-
-#automation .sched .snap {
-  animation: auto-snap-cycle 10s linear infinite;
-  transform-box: fill-box;
-}
-@keyframes auto-snap-cycle {
-  0%, 44%   { transform: translateY(0);    opacity: 1; }
-  50%       { transform: translateY(-4px);  opacity: 0; }
-  56%       { transform: translateY(-14px); opacity: 1; }
-  74%       { transform: translateY(40px);  opacity: 1; }
-  92%       { transform: translateY(40px);  opacity: 0; }
-  96%,100%  { transform: translateY(0);     opacity: 0; }
-}
-/* the S3 check that appears once the snapshot lands */
-#automation .sched .s3-check { opacity: 0; animation: auto-s3-check 10s linear infinite; }
-@keyframes auto-s3-check {
-  0%, 72% { opacity: 0; } 76%, 90% { opacity: 1; } 96%, 100% { opacity: 0; }
-}
-/* dashboard + slack consumers gently pulse while serving */
-#automation .sched .consumer { animation: auto-serve-pulse 10s ease-in-out infinite; }
-@keyframes auto-serve-pulse {
-  0%, 60% { opacity: 1; } 72%, 88% { opacity: 1; transform: translateX(0); }
-  80%, 84% { opacity: .55; }
+/* --- wide project: two sketches side by side, text below --- */
+#automation .au-wide { grid-template-columns: 1fr; gap: calc(var(--u) * 1.5); }
+#automation .au-wide .project-body { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 0 calc(var(--u) * 2); align-items: start; }
+#automation .au-wide .project-sum { max-width: 60ch; }
+#automation .au-wide .facts { flex-direction: column; gap: 18px; margin: 34px 0 0; padding-left: var(--u); border-left: 2px dashed var(--grid-major); }
+#automation .au-wide .facts li { font-size: var(--t-md); }
+#automation .au-wide .facts b { font-size: 2rem; }
+#automation .au-wide .deep { grid-column: 1 / -1; }
+#automation .au-wide .btn-row { margin-top: calc(var(--u) / 2); }
+@media (max-width: 900px) {
+  #automation .au-wide .project-body { grid-template-columns: 1fr; }
+  #automation .au-wide .facts { flex-direction: row; gap: 14px 26px; margin-top: var(--u); padding-left: 0; border-left: 0; }
+  #automation .au-wide .facts b { font-size: 1.625rem; }
 }
 
-/* ---------------- motion: the event tripwire (11 s) ---------------- */
-#automation .event .auto-wire-trip { animation: auto-trip 11s linear infinite; opacity: 0; }
-@keyframes auto-trip { 0%, 40% { opacity: 0; } 44%, 58% { opacity: 1; } 68%, 100% { opacity: 0; } }
-
-#automation .event .bell-rings { opacity: 0; animation: auto-ring 11s linear infinite; }
-@keyframes auto-ring {
-  0%, 44% { opacity: 0; transform: scale(.9); }
-  50%, 60% { opacity: 1; transform: scale(1); }
-  72%, 100% { opacity: 0; transform: scale(1.04); }
+#automation .au-dual { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * 1.5); }
+@media (max-width: 820px) { #automation .au-dual { grid-template-columns: 1fr; gap: calc(var(--u) * 2); } }
+#automation .au-mech {
+  margin: 0; position: relative; padding: calc(var(--u) * 1.5) var(--u) var(--u);
+  border: 2px dashed rgba(124, 130, 140, .5); border-radius: 18px 6px 20px 8px; background: rgba(252, 251, 247, .6);
 }
-#automation .event .bell-rings { transform-box: fill-box; transform-origin: center; }
+#automation .au-mech + .au-mech { border-radius: 8px 20px 6px 18px; }
+#automation .au-tag {
+  position: absolute; top: -16px; left: 18px; margin: 0; padding: 4px 14px;
+  font: 500 var(--t-md)/1.3 var(--f-hand); color: var(--ink-2); background: var(--tape);
+  border-radius: 4px 10px 5px 9px; box-shadow: 0 1px 2px rgba(0,0,0,.08); transform: rotate(-1.2deg);
+}
+#automation .au-mech + .au-mech .au-tag { transform: rotate(1deg); }
+#automation .au-tag b { font-weight: 700; color: var(--ink); }
 
-#automation .event .auto-alert-card { animation: auto-alert-pop 11s ease-out infinite; opacity: .3; }
-@keyframes auto-alert-pop {
-  0%, 42%  { opacity: .3; }
-  48%, 66% { opacity: 1; }
-  76%, 100%{ opacity: .3; }
+/* --- shared sketch vocabulary --- */
+#automation .au-svg { width: 100%; height: auto; overflow: visible; }
+#automation .au-svg .body { fill: var(--paper-card); }
+#automation .au-svg .thin { stroke-width: 1.5; }
+#automation .au-svg .al { font-size: 18px; font-variation-settings: "INFM" 50; }
+#automation .au-svg .al.red { fill: var(--red); }
+#automation .au-svg .al.pencil { fill: var(--ink-2); }
+#automation .au-svg .ap { font-size: 15.5px; fill: var(--ink-2); }
+#automation .au-svg .ap.b { font-weight: 700; fill: var(--ink); }
+@media (max-width: 480px) { #automation .au-tag span { display: none; } }
+@media (max-width: 640px) {
+  #automation .au-svg .al { font-size: 20.5px; }
+  #automation .au-svg .ap { font-size: 18.5px; }
+  #automation .au-mech { padding: calc(var(--u) * 1.5) 10px 14px; }
+  #automation .au-shop .ap { font-size: 20.5px; }
 }
 
-#automation .event .state-dot { animation: auto-state-flip 11s linear infinite; }
-@keyframes auto-state-flip {
-  0%, 38%   { fill: var(--green); r: 6; }
-  44%, 70%  { fill: var(--red); r: 9; }
-  78%, 100% { fill: var(--green); r: 6; }
+/* ===== (a) scheduled: 8 s "week" ===== */
+#automation .as-gear { transform-box: fill-box; transform-origin: center; animation: au-tick 8s var(--ease-out) infinite; }
+@keyframes au-tick { 0% { transform: rotate(0); } 6% { transform: rotate(50deg); } 9%, 100% { transform: rotate(45deg); } }
+#automation .as-wk { font-size: 17px; font-weight: 700; fill: var(--ink); }
+#automation .as-page { transform-box: fill-box; transform-origin: 50% 0; animation: au-page 8s ease-in-out infinite; }
+@keyframes au-page {
+  0%, 8% { opacity: 0; transform: translateY(-14px) scale(.8); }
+  15% { opacity: 1; transform: translateY(0) scale(1); }
+  32% { opacity: 1; transform: translateY(0); }
+  46% { opacity: 1; transform: translateY(150px); }
+  50%, 100% { opacity: 0; transform: translateY(160px); }
 }
+#automation .as-ok { fill: none; stroke: var(--green); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; opacity: 0; animation: au-s3ok 8s linear infinite; }
+@keyframes au-s3ok { 0%, 47% { opacity: 0; } 50%, 94% { opacity: 1; } 100% { opacity: 0; } }
+#automation .as-dot { offset-path: var(--p); offset-rotate: 0deg; opacity: 0; animation: au-fan 8s ease-in-out infinite; }
+#automation .as-dot circle { fill: var(--blue); }
+@keyframes au-fan { 0%, 52% { offset-distance: 0%; opacity: 0; } 54% { opacity: 1; } 64% { offset-distance: 100%; opacity: 1; } 67%, 100% { offset-distance: 100%; opacity: 0; } }
+#automation .as-rd { animation: au-bump 8s ease-out infinite; animation-delay: calc(var(--r) * .12s); }
+@keyframes au-bump { 0%, 63% { transform: translateY(0); } 67% { transform: translateY(-7px); } 72%, 100% { transform: translateY(0); } }
+#automation .as-chart { stroke-dasharray: 1; animation: au-chart 8s ease-out infinite; }
+@keyframes au-chart { 0%, 64% { stroke-dashoffset: 1; } 74%, 96% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 1; } }
+#automation .as-hash { font-size: 20px; font-weight: 700; fill: var(--blue); }
 
-/* reduced motion: show a finished static picture of each mechanism */
+/* ===== (b) event-driven: 8 s, one quiet success, one failure that trips the wire ===== */
+#automation .ae-tok rect { fill: var(--paper-card); stroke: var(--ink); stroke-width: 2.2; }
+#automation .ae-tok.bad rect { animation: au-redden 8s linear infinite; }
+@keyframes au-redden { 0%, 46% { stroke: var(--ink); fill: var(--paper-card); } 48%, 100% { stroke: var(--red); fill: #FBEDEA; } }
+#automation .ae-tok { offset-rotate: 0deg; opacity: 0; }
+#automation .ae-tok.ok { offset-path: path("M146 88 C 196 84, 220 46, 262 42"); animation: au-tok-ok 8s ease-in-out infinite; }
+#automation .ae-tok.bad { offset-path: path("M146 104 C 196 108, 220 148, 262 152"); animation: au-tok-bad 8s ease-in-out infinite; }
+@keyframes au-tok-ok { 0%, 4% { offset-distance: 0%; opacity: 0; } 7% { opacity: 1; } 20% { offset-distance: 100%; opacity: 1; } 24%, 100% { offset-distance: 100%; opacity: 0; } }
+@keyframes au-tok-bad { 0%, 36% { offset-distance: 0%; opacity: 0; } 39% { opacity: 1; } 52% { offset-distance: 100%; opacity: 1; } 56%, 100% { offset-distance: 100%; opacity: 0; } }
+#automation .ae-run { animation: au-run 8s linear infinite; }
+@keyframes au-run { 0%, 100% { fill: var(--paper-card); } 2%, 8% { fill: #E7ECF8; } 10%, 34% { fill: var(--paper-card); } 36%, 40% { fill: #E7ECF8; } 42% { fill: var(--paper-card); } }
+#automation .ae-okpill { animation: au-okpill 8s linear infinite; }
+@keyframes au-okpill { 0%, 19% { stroke: var(--ink); } 21%, 32% { stroke: var(--green); stroke-width: 3; } 36%, 100% { stroke: var(--ink); } }
+#automation .ae-failpill { animation: au-failpill 8s linear infinite; }
+@keyframes au-failpill { 0%, 51% { fill: var(--paper-card); } 53%, 92% { fill: #FBEDEA; } 98%, 100% { fill: var(--paper-card); } }
+#automation .ae-failt { fill: var(--red); }
+#automation .ae-wire { transform-box: fill-box; transform-origin: 50% 0; animation: au-wire 8s linear infinite; }
+@keyframes au-wire { 0%, 46% { transform: none; } 47% { transform: skewX(8deg); } 48.5% { transform: skewX(-6deg); } 50% { transform: skewX(3deg); } 52%, 100% { transform: none; } }
+#automation .ae-bell { transform-box: fill-box; transform-origin: 50% 0; animation: au-bell 8s ease-in-out infinite; }
+@keyframes au-bell {
+  0%, 48% { transform: rotate(0); } 51% { transform: rotate(16deg); } 54% { transform: rotate(-14deg); } 57% { transform: rotate(11deg); }
+  60% { transform: rotate(-8deg); } 63% { transform: rotate(5deg); } 66%, 100% { transform: rotate(0); }
+}
+#automation .ae-ring { opacity: 0; animation: au-ring 8s linear infinite; }
+@keyframes au-ring { 0%, 49% { opacity: 0; } 51%, 66% { opacity: 1; } 70%, 100% { opacity: 0; } }
+#automation .ae-card { opacity: 0; animation: au-card 8s var(--ease-out) infinite; }
+@keyframes au-card { 0%, 54% { opacity: 0; transform: translateX(26px); } 60%, 92% { opacity: 1; transform: none; } 98%, 100% { opacity: 0; transform: none; } }
+#automation .ae-link { fill: var(--blue); }
+
+/* ===== Sneakstore: 10 s Rube Goldberg run ===== */
+#automation .ss-ball {
+  fill: var(--blue); stroke: var(--ink); stroke-width: 1.6;
+  offset-path: path("M60 144 L212 162 L288 167 L378 177 L400 166 L456 194 L482 204 Q486 212 486 228 L486 282 L470 292 L170 325");
+  offset-rotate: 0deg; animation: au-ball 10s linear infinite;
+}
+@keyframes au-ball {
+  0% { offset-distance: 0%; opacity: 0; } 3% { offset-distance: 0%; opacity: 1; animation-timing-function: ease-in; }
+  14% { offset-distance: 18.4%; animation-timing-function: linear; } 20% { offset-distance: 18.4%; }
+  28% { offset-distance: 38.3%; } 30% { offset-distance: 41.3%; } 38% { offset-distance: 41.3%; animation-timing-function: ease-in; }
+  46% { offset-distance: 52.1%; animation-timing-function: linear; } 51% { offset-distance: 63.8%; } 57% { offset-distance: 74.8%; }
+  63% { offset-distance: 74.8%; animation-timing-function: ease-out; } 74% { offset-distance: 100%; opacity: 1; }
+  94% { offset-distance: 100%; opacity: 1; } 98%, 100% { offset-distance: 100%; opacity: 0; }
+}
+#automation .ss-stamp { fill: rgba(46,125,91,.12); stroke: var(--green); stroke-width: 2.2; }
+#automation .ss-paidt { fill: var(--green); }
+#automation .ss-paid { transform-box: fill-box; transform-origin: center; opacity: 0; animation: au-paid 10s var(--ease-out) infinite; }
+@keyframes au-paid { 0%, 13% { opacity: 0; transform: scale(1.6) rotate(-12deg); } 16%, 94% { opacity: 1; transform: rotate(-8deg); } 98%, 100% { opacity: 0; } }
+#automation .ss-receipt { transform-box: fill-box; transform-origin: 50% 100%; animation: au-hit 10s ease-out infinite; }
+@keyframes au-hit { 0%, 13% { transform: none; } 15% { transform: rotate(4deg); } 18%, 100% { transform: none; } }
+#automation .ss-beam { transform-box: view-box; transform-origin: 432px 140px; animation: au-beam 10s ease-in-out infinite; }
+@keyframes au-beam { 0%, 29% { transform: rotate(0); } 32% { transform: rotate(-11deg); } 35% { transform: rotate(-9deg); } 40%, 100% { transform: rotate(0); } }
+#automation .ss-ok, #automation .ss-tick { fill: none; stroke: var(--green); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+#automation .ss-ok { opacity: 0; animation: au-ssok 10s linear infinite; }
+@keyframes au-ssok { 0%, 39% { opacity: 0; } 41%, 94% { opacity: 1; } 98%, 100% { opacity: 0; } }
+#automation .ss-awbt { font-size: 14px; font-weight: 700; fill: var(--blue); }
+#automation .ss-awb { opacity: 0; animation: au-awb 10s var(--ease-out) infinite; }
+@keyframes au-awb { 0%, 58% { opacity: 0; transform: translateY(-8px); } 61%, 94% { opacity: 1; transform: none; } 98%, 100% { opacity: 0; } }
+#automation .ss-screen { fill: var(--paper-card); stroke: var(--ink-3); stroke-width: 1.4; animation: au-screen 10s linear infinite; }
+@keyframes au-screen { 0%, 73% { fill: var(--paper-card); } 75%, 94% { fill: rgba(46,125,91,.14); } 98%, 100% { fill: var(--paper-card); } }
+#automation .ss-tick { opacity: 0; animation: au-sstick 10s linear infinite; }
+@keyframes au-sstick { 0%, 74% { opacity: 0; } 76%, 94% { opacity: 1; } 98%, 100% { opacity: 0; } }
+
+/* ===== CI/CD: 12 s, first run blocked at the schema check, second run ships ===== */
+#automation .ci-tok rect { fill: var(--blue); stroke: var(--ink); stroke-width: 1.8; }
+#automation .ci-tok { animation: au-ci 12s ease-in-out infinite; }
+@keyframes au-ci {
+  0% { transform: translate(60px, 132px); opacity: 0; } 2% { opacity: 1; transform: translate(60px, 132px); }
+  12% { transform: translate(160px, 132px); } 20% { transform: translate(236px, 132px); }
+  23% { transform: translate(222px, 132px); } 38% { transform: translate(222px, 132px); opacity: 1; } 42% { transform: translate(222px, 132px); opacity: 0; }
+  44% { transform: translate(60px, 132px); opacity: 0; } 47% { transform: translate(60px, 132px); opacity: 1; }
+  58% { transform: translate(160px, 132px); } 66% { transform: translate(260px, 132px); } 74% { transform: translate(360px, 132px); }
+  82% { transform: translate(460px, 132px); opacity: 1; } 96% { transform: translate(460px, 132px); opacity: 1; } 100% { transform: translate(460px, 132px); opacity: 0; }
+}
+#automation .ci-ok, #automation .ci-x { fill: none; stroke-width: 3.4; stroke-linecap: round; stroke-linejoin: round; opacity: 0; }
+#automation .ci-ok { stroke: var(--green); }
+#automation .ci-x { stroke: var(--red); animation: au-cix 12s linear infinite; }
+#automation .ci-ok[style*="--c:0"] { animation: au-ok0 12s linear infinite; }
+#automation .ci-ok[style*="--c:1"] { animation: au-ok1 12s linear infinite; }
+#automation .ci-ok[style*="--c:2"] { animation: au-ok2 12s linear infinite; }
+#automation .ci-ok[style*="--c:3"] { animation: au-ok3 12s linear infinite; }
+#automation .ci-ok[style*="--c:4"] { animation: au-ok4 12s linear infinite; }
+@keyframes au-ok0 { 0%, 3% { opacity: 0; } 4%, 41% { opacity: 1; } 43%, 48% { opacity: 0; } 49%, 97% { opacity: 1; } 99%, 100% { opacity: 0; } }
+@keyframes au-ok1 { 0%, 11% { opacity: 0; } 12%, 41% { opacity: 1; } 43%, 57% { opacity: 0; } 58%, 97% { opacity: 1; } 99%, 100% { opacity: 0; } }
+@keyframes au-ok2 { 0%, 65% { opacity: 0; } 66%, 97% { opacity: 1; } 99%, 100% { opacity: 0; } }
+@keyframes au-ok3 { 0%, 73% { opacity: 0; } 74%, 97% { opacity: 1; } 99%, 100% { opacity: 0; } }
+@keyframes au-ok4 { 0%, 81% { opacity: 0; } 82%, 97% { opacity: 1; } 99%, 100% { opacity: 0; } }
+@keyframes au-cix { 0%, 19% { opacity: 0; } 20%, 41% { opacity: 1; } 43%, 100% { opacity: 0; } }
+#automation .ci-note { opacity: 0; animation: au-cix 12s linear infinite; }
+#automation .ci-ship { opacity: 0; animation: au-ok4 12s linear infinite; }
+#automation .ci-schema { animation: au-cischema 12s linear infinite; }
+@keyframes au-cischema { 0%, 19% { stroke: var(--ink); fill: var(--paper-card); } 20%, 41% { stroke: var(--red); fill: #FBEDEA; } 43%, 100% { stroke: var(--ink); fill: var(--paper-card); } }
+#automation .ci-deploy { animation: au-cideploy 12s linear infinite; }
+@keyframes au-cideploy { 0%, 81% { stroke: var(--ink); fill: var(--paper-card); } 82%, 97% { stroke: var(--green); fill: rgba(46,125,91,.12); } 99%, 100% { stroke: var(--ink); fill: var(--paper-card); } }
+
+/* reduced motion: a finished picture of each mechanism */
 @media (prefers-reduced-motion: reduce) {
-  #automation .sched .snap { opacity: 1 !important; transform: translateY(40px) !important; animation: none !important; }
-  #automation .sched .s3-check { opacity: 1 !important; animation: none !important; }
-  #automation .event .auto-wire-trip { opacity: 1 !important; animation: none !important; }
-  #automation .event .bell-rings { opacity: 1 !important; animation: none !important; }
-  #automation .event .auto-alert-card { opacity: 1 !important; animation: none !important; }
-  #automation .event .state-dot { fill: var(--red) !important; animation: none !important; }
-  #automation .gear { animation: none !important; }
+  #automation .as-gear, #automation .as-dot, #automation .as-rd, #automation .ae-wire, #automation .ae-bell,
+  #automation .ss-receipt, #automation .ss-beam, #automation .ae-run, #automation .ae-okpill { animation: none !important; }
+  #automation .as-page { animation: none !important; opacity: 1; }
+  #automation .as-ok, #automation .ae-ring, #automation .ae-card, #automation .ss-paid, #automation .ss-ok,
+  #automation .ss-awb, #automation .ss-tick, #automation .ci-ok, #automation .ci-ship { animation: none !important; opacity: 1; }
+  #automation .as-chart { animation: none !important; stroke-dashoffset: 0; }
+  #automation .ae-tok.ok { animation: none !important; opacity: 0; }
+  #automation .ae-tok.bad { animation: none !important; offset-distance: 100%; opacity: 1; }
+  #automation .ae-tok.bad rect { animation: none !important; stroke: var(--red); fill: #FBEDEA; }
+  #automation .ae-failpill { animation: none !important; fill: #FBEDEA; }
+  #automation .ss-ball { animation: none !important; offset-distance: 100%; opacity: 1; }
+  #automation .ss-screen { animation: none !important; fill: rgba(46,125,91,.14); }
+  #automation .ci-tok { animation: none !important; transform: translate(460px, 132px); }
+  #automation .ci-deploy { animation: none !important; stroke: var(--green); fill: rgba(46,125,91,.12); }
+  #automation .ci-x, #automation .ci-note, #automation .ci-schema { animation: none !important; }
 }
-
-/* ---------------- Rube-Goldberg strip ---------------- */
-#automation .auto-strip { margin-top: calc(var(--u) * 2); }
-#automation .strip-kicker { font-size: var(--t-lg); transform: rotate(-.6deg); display: inline-block; margin-bottom: calc(var(--u) / 2); }
-#automation .strip {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(var(--u) * 1.2);
-  list-style: none; counter-reset: strip; margin: 0;
-}
-#automation .strip .card { position: relative; counter-increment: strip; padding: calc(var(--u) * .8); }
-#automation .strip .card b { display: block; font-size: var(--t-lg); margin-bottom: calc(var(--u) / 4); }
-#automation .strip .card p { font-size: var(--t-sm); color: var(--ink-2); margin: 0; }
-#automation .strip .card::before {
-  content: counter(strip, decimal-leading-zero);
-  position: absolute; top: 8px; right: 12px;
-  font: 600 12px/1 var(--f-print); color: var(--ink-3);
-}
-#automation .strip .card:not(:last-child)::after {
-  content: "→";
-  position: absolute; right: calc(-1 * var(--u) * 0.9); top: 45%;
-  font-family: var(--f-hand); font-size: 22px; color: var(--blue);
-  transform: rotate(-8deg);
-}
-#automation .strip-fine { margin-top: calc(var(--u) / 2); }
-@media (max-width: 700px) {
-  #automation .strip { grid-template-columns: 1fr 1fr; }
-  #automation .strip .card:nth-child(2)::after { display: none; }
-  #automation .strip .card:nth-child(3)::after {
-    content: "↓"; right: 45%; top: -34px; transform: none;
-  }
-}
-@media (max-width: 480px) {
-  #automation .strip { grid-template-columns: 1fr; }
-  #automation .strip .card::after { display: none !important; }
-  #automation .strip .card:not(:last-child) { margin-bottom: calc(var(--u) / 2); }
-}
-
-/* ---------------- CI/CD ---------------- */
-#automation .auto-cicd { margin-top: calc(var(--u) * 2); }
-#automation .auto-cicd h3 { font-size: var(--t-lg); margin-bottom: calc(var(--u) / 2); transform: rotate(-.4deg); display: inline-block; }
-#automation .cicd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * 1.5); }
-@media (max-width: 700px) { #automation .cicd-grid { grid-template-columns: 1fr; } }
-#automation .cicd-grid .card { padding: calc(var(--u) * .9); }
-#automation .cicd-grid .card b {
-  display: block; font-family: var(--f-hand); font-weight: 600; font-size: var(--t-lg);
-  color: var(--blue); margin-bottom: calc(var(--u) / 4);
-}
-#automation .cicd-grid .card p { font-size: var(--t-sm); color: var(--ink-2); margin: 0; }

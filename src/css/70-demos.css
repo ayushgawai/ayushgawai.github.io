@@ -1,136 +1,111 @@
-/* demos: the screening room */
-#demos .dm-feature {
-  display: grid;
-  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
-  gap: calc(var(--u) * 2);
-  align-items: center;
-}
+/* demos: the screening room. Blocks use the shared .project / .video / .facts / .deep pieces from
+   00-base.css; this file styles the taped "film still" frames, the grid, and the moving transit diagram.
+   No iframes exist until a visitor presses the shared .video facade. */
+
+#demos .dm-feature { margin-top: 0; }
+#demos .project-media, #demos .dm-card { min-width: 0; }
 
 /* a film still taped into the notebook */
-#demos .dm-still {
-  position: relative;
-  margin: 0;
-  padding: 10px 10px 0;
-  background: var(--paper-card);
-  box-shadow: var(--shadow-card);
+#demos .dm-frame {
+  position: relative; margin: 0; padding: 12px 12px 0;
+  background: var(--paper-card); box-shadow: var(--shadow-card);
   transform: rotate(-.6deg);
 }
-#demos .dm-card:nth-child(3n+2) .dm-still { transform: rotate(.7deg); }
-#demos .dm-card:nth-child(3n) .dm-still { transform: rotate(-.35deg); }
-#demos .dm-still--big { padding: 14px 14px 0; transform: rotate(-.8deg); }
-#demos .dm-still .tape { z-index: 3; }
+#demos .dm-grid .dm-card:nth-child(3n+2) .dm-frame, #demos .dm-duo .dm-card:nth-child(2) .dm-frame { transform: rotate(.7deg); }
+#demos .dm-grid .dm-card:nth-child(3n) .dm-frame { transform: rotate(-.35deg); }
+#demos .dm-frame--big { padding: 14px 14px 0; transform: rotate(-.8deg); }
+#demos .dm-frame .tape { z-index: 3; }
 #demos .dm-card:nth-child(even) .tape { left: 30%; transform: translateX(-50%) rotate(4deg); }
 
-#demos .dm-screen {
-  position: relative;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  background: #16191E;
-  border: 1.5px solid var(--ink);
-  border-radius: 2px;
-}
-#demos .dm-screen > img,
-#demos .dm-screen iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-#demos .dm-screen > img { object-fit: cover; }
+/* the shared .video facade carries its own margin/outline for open paper; flush inside a taped frame */
+#demos .dm-frame .video { margin: 0; width: 100%; outline: 0; }
 
-#demos .dm-play,
-#demos .dm-slides {
-  all: unset;
-  position: absolute; inset: 0;
-  display: block; cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-#demos .dm-play img,
-#demos .dm-slides img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: filter .25s var(--ease-out), transform .5s var(--ease-out); }
-#demos .dm-play img { filter: saturate(.85) contrast(.95); }
-#demos .dm-play:hover img, #demos .dm-play:focus-visible img { filter: none; transform: scale(1.02); }
-#demos .dm-play:focus-visible, #demos .dm-slides:focus-visible { outline: 3px dashed var(--marker); outline-offset: -6px; }
-
-#demos .dm-play-btn {
-  position: absolute; left: 50%; top: 50%;
-  width: 76px; height: 76px; margin: -38px 0 0 -38px;
-  filter: url(#rough) drop-shadow(2px 3px 0 rgba(31, 35, 41, .55));
-  transition: transform .2s var(--ease-out);
-}
-#demos .dm-still--big .dm-play-btn { width: 112px; height: 112px; margin: -56px 0 0 -56px; }
-/* grid stills: the button sits in the lower-left corner so it never hides the poster's own title */
-#demos .dm-card .dm-play-btn { left: 12px; top: auto; bottom: 12px; margin: 0; width: 58px; height: 58px; }
-#demos .dm-play:hover .dm-play-btn, #demos .dm-play:focus-visible .dm-play-btn { transform: scale(1.08) rotate(-4deg); }
-#demos .dm-play:active .dm-play-btn { transform: scale(.96); }
-
-#demos .dm-slide-count {
-  position: absolute; right: 8px; bottom: 8px;
-  font-size: var(--t-xs); color: var(--ink);
-  background: var(--paper-card); padding: 3px 8px;
-  border: 1.25px solid var(--ink); border-radius: 4px 9px 5px 8px;
-}
-#demos .dm-screen--slides { background: #fff; }
-#demos .dm-screen--slides img { object-fit: contain; }
-
-#demos .dm-screen--sketch { background: var(--paper); }
-#demos .dm-screen--sketch svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-#demos .dm-tr-pulse { stroke-dasharray: 6 7; animation: dm-flow 1.2s linear infinite; }
-@keyframes dm-flow { to { stroke-dashoffset: -13; } }
-
-#demos .dm-screen--soon > img { filter: grayscale(.35) contrast(.92) brightness(1.04); }
+/* still image screens (no-video frames) */
+#demos .dm-screen { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #16191E; border: 1.5px solid var(--ink); border-radius: 2px; }
+#demos .dm-screen > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+#demos .dm-screen--soon { background: #101318; }
+#demos .dm-screen--soon > img { object-fit: contain; filter: grayscale(.3) contrast(.95) brightness(1.05); }
 #demos .dm-soon {
-  position: absolute; right: 6%; top: 10%;
-  margin: 0; padding: .35em .7em;
-  font-size: var(--t-md); line-height: 1.15; text-align: center;
+  position: absolute; right: 6%; top: 8%; margin: 0; padding: .4em .75em;
+  font-size: var(--t-md); line-height: 1.2; text-align: center;
   background: rgba(252, 251, 247, .92);
   border: 2px solid var(--red); border-radius: 48% 52% 45% 55% / 55% 45% 55% 45%;
-  transform: rotate(4deg);
+  transform: rotate(4deg); z-index: 2;
 }
-
-#demos .dm-frame-meta {
-  display: flex; justify-content: space-between; align-items: center; gap: 8px;
-  min-height: 34px; margin: 0; font-size: var(--t-xs);
-}
-#demos .dm-frame-meta .hand { font-size: var(--t-sm); }
-#demos .dm-reel { font: 600 var(--t-xs)/1 var(--f-print); color: var(--ink-3); letter-spacing: .02em; }
 #demos .dm-stamp-win {
-  font: 700 12px/1 var(--f-print); letter-spacing: .02em; color: var(--red);
-  border: 1.75px solid var(--red); border-radius: 3px; padding: 4px 6px; transform: rotate(-6deg);
+  position: absolute; top: 20px; right: 20px; z-index: 4;
+  font: 700 14px/1 var(--f-print); letter-spacing: .04em; text-transform: uppercase; color: var(--red);
+  background: var(--paper-card); border: 2px solid var(--red); border-radius: 4px; padding: 6px 9px; transform: rotate(-7deg);
+  box-shadow: 2px 3px 0 rgba(210, 65, 47, .35);
 }
 
-/* featured notes */
-#demos .dm-eyebrow { font-size: var(--t-md); margin: 0 0 .4em; }
-#demos .dm-feature h3 { font-size: var(--t-xl); letter-spacing: -.015em; margin: 0 0 .5em; }
-#demos .dm-problem { color: var(--ink-2); }
-#demos .dm-feature .dm-problem { font-size: var(--t-md); }
-#demos .dm-facts { list-style: none; font-size: var(--t-sm); }
-#demos .dm-facts li { margin-bottom: .7em; padding-left: 1.2em; position: relative; }
-#demos .dm-facts li::before { content: ""; position: absolute; left: 0; top: .6em; width: .5em; height: .5em; border: 1.5px solid var(--ink-2); border-radius: 50% 40% 55% 45%; }
+/* caption line under each frame */
+#demos .dm-frame-meta { display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 40px; margin: 6px 0 0; }
+#demos .dm-frame-meta .hand { font-size: var(--t-sm); }
+#demos .dm-reel { font: 600 14px/1 var(--f-print); color: var(--ink-3); }
 
-/* grid */
-#demos .dm-grid-label { margin: calc(var(--u) * 3.5) 0 calc(var(--u) * 1.5); font-size: var(--t-lg); display: flex; align-items: center; gap: 14px; }
-#demos .dm-grid-label::after { content: ""; flex: 1; height: 0; border-top: 1.5px dashed var(--ink-3); }
+/* divider before the grid */
+#demos .dm-grid-label { margin: calc(var(--u) * 4) 0 calc(var(--u) * 1.5); font-size: var(--t-lg); display: flex; align-items: center; gap: 14px; }
+#demos .dm-grid-label::after { content: ""; flex: 1; border-top: 1.5px dashed var(--ink-3); }
 
-#demos .dm-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: calc(var(--u) * 2.5) calc(var(--u) * 1.5);
+/* three-up reels, then the wide transit block, then a two-up row */
+#demos .dm-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(var(--u) * 2.5) calc(var(--u) * 1.5); }
+#demos .dm-wide { margin-top: calc(var(--u) * 5); align-items: center; }
+#demos .dm-duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(var(--u) * 2.5) calc(var(--u) * 2); margin-top: calc(var(--u) * 5); }
+
+/* card sizing: the shared .project-* type is sized for big blocks, so cards step it down one notch */
+#demos .dm-card .project-where { margin-top: var(--u); }
+#demos .dm-card .project-title { font-size: var(--t-lg); margin-bottom: 8px; }
+#demos .dm-card .project-sum { font-size: var(--t-md); }
+#demos .dm-card .facts { margin-top: 16px; }
+#demos .dm-card .facts b { font-size: 1.375rem; }
+#demos .dm-card .btn-row { margin-top: 16px; gap: 10px; }
+#demos .dm-card .deep { margin-top: 18px; }
+/* facts as an even grid so the numbers line up: three across, or 2×2 when there are four */
+#demos .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 18px; max-width: 480px; }
+#demos .facts:has(> li:nth-child(4)) { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 400px; }
+#demos .facts b { white-space: nowrap; }
+
+/* transit: the moving diagram is the demo */
+#demos .dm-sketch { margin: 0; }
+#demos .dm-tr { width: 100%; max-width: 560px; height: auto; margin: 0 auto; overflow: visible; }
+#demos .dm-sketch figcaption { margin-top: 12px; text-align: center; font-size: var(--t-sm); }
+#demos .dm-box { fill: var(--paper-card); }
+#demos .dm-box-blue { fill: url(#hatch-blue); opacity: .45; }
+#demos .dm-node { fill: var(--paper-card); }
+#demos .dm-wire { stroke-dasharray: 2 7; stroke-width: 1.8; }
+#demos .dm-t { font-size: 24px; font-weight: 700; letter-spacing: -.01em; }
+#demos .dm-h { font-size: 19px; }
+#demos .dm-pk circle { fill: var(--blue); stroke: var(--paper-card); stroke-width: 2.5; }
+#demos .dm-pk .dm-pk-x { fill: var(--red); }
+/* Kafka log: offsets tick along the partition */
+#demos .dm-log { fill: none; stroke: var(--blue); stroke-width: 16; stroke-dasharray: 14 26; opacity: .35; animation: dm-log 1.6s steps(2) infinite; }
+@keyframes dm-log { to { stroke-dashoffset: -40; } }
+/* the dashboard trend line redraws as data arrives */
+#demos .dm-trend { stroke-dasharray: 1; stroke-dashoffset: 1; animation: dm-trend 6s var(--ease-out) infinite; }
+@keyframes dm-trend { 0% { stroke-dashoffset: 1; } 45%, 90% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  #demos .dm-pk { display: none; }
+  #demos .dm-trend { stroke-dashoffset: 0; animation: none; }
 }
-#demos .dm-card { display: flex; flex-direction: column; min-width: 0; }
-#demos .dm-card h3 { font-size: var(--t-lg); letter-spacing: -.01em; margin: calc(var(--u) * .9) 0 .35em; }
-#demos .dm-card p { font-size: var(--t-sm); line-height: 1.5; margin: 0 0 .5em; }
-#demos .dm-card b { font-weight: 700; color: var(--ink); }
-#demos .dm-card code { font-size: .92em; background: rgba(31, 35, 41, .06); padding: 0 .25em; border-radius: 3px; }
-#demos .dm-role, #demos .dm-result { color: var(--ink-2); }
-#demos .dm-links { padding-top: .2em; display: flex; flex-wrap: wrap; gap: 4px 18px; }
-#demos .dm-links a, #demos .dm-papers a { font-weight: 600; }
-#demos .dm-papers { list-style: none; font-size: var(--t-sm); display: grid; gap: 4px; margin-top: .2em; }
-#demos .dm-papers li::before { content: "↗ "; color: var(--ink-3); }
 
 @media (max-width: 1080px) {
   #demos .dm-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  #demos .dm-feature { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+  /* the odd third reel spans the row, film still beside its notes */
+  #demos .dm-grid .dm-card:nth-child(3) { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: calc(var(--u) * 1.5); align-content: start; }
+  #demos .dm-grid .dm-card:nth-child(3) > .dm-frame { grid-row: 1 / span 7; align-self: start; }
+  #demos .dm-grid .dm-card:nth-child(3) > :not(.dm-frame) { grid-column: 2; }
+  #demos .dm-grid .dm-card:nth-child(3) > .project-where { margin-top: 0; }
 }
 @media (max-width: 900px) {
-  #demos .dm-feature { grid-template-columns: 1fr; gap: calc(var(--u) * 1.25); }
+  #demos .dm-duo { grid-template-columns: 1fr; }
+  #demos .dm-wide, #demos .dm-duo { margin-top: calc(var(--u) * 3.5); }
 }
 @media (max-width: 620px) {
-  #demos .dm-grid { grid-template-columns: 1fr; gap: calc(var(--u) * 2.5); }
-  #demos .dm-still--big .dm-play-btn { width: 80px; height: 80px; margin: -40px 0 0 -40px; }
-  #demos .dm-still--big { padding: 10px 10px 0; }
+  #demos .dm-grid, #demos .dm-grid .dm-card:nth-child(3) { grid-template-columns: 1fr; }
+  #demos .dm-grid .dm-card:nth-child(3) > .dm-frame { grid-row: auto; }
+  #demos .dm-grid .dm-card:nth-child(3) > :not(.dm-frame) { grid-column: 1; }
+  #demos .dm-grid .dm-card:nth-child(3) > .project-where { margin-top: var(--u); }
+  #demos .dm-frame--big { padding: 10px 10px 0; }
+  #demos .dm-grid-label { margin-top: calc(var(--u) * 3); }
 }

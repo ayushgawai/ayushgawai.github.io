@@ -1,276 +1,336 @@
 <section class="chapter" id="systems" data-tab="Systems" aria-labelledby="systems-title">
   <header class="chapter-head page">
     <p class="chapter-kicker hand">the layers under the application</p>
-    <h2 id="systems-title" class="chapter-title">Storage, query, performance and control planes</h2>
-    <p class="chapter-lede">Below the application layer, the hard part is mechanism: how bytes survive a crash, how a query skips data it never needs, where a chip's roofline actually sits, and how a fleet of machines stays in sync. Here is how each of those works, drawn the way they behave.</p>
+    <h2 id="systems-title" class="chapter-title">Storage engines, query engines, kernels and control planes</h2>
+    <p class="chapter-lede">How a write survives a crash, how a query skips bytes it never needs, how far a kernel sits from the roofline. Three mechanisms, drawn the way they run.</p>
   </header>
 
-  <div class="spread page sys-tabs-wrap" data-anim>
-    <figure class="sketch sys-sketch">
-      <div class="sys-tabs" role="tablist" aria-label="Storage sketches">
-        <button class="sys-tab" role="tab" id="sys-tab-lsm" aria-controls="sys-pane-lsm" aria-selected="true" tabindex="0">LSM tree</button>
-        <button class="sys-tab" role="tab" id="sys-tab-qe" aria-controls="sys-pane-qe" aria-selected="false" tabindex="-1">Query engine</button>
-        <button class="sys-tab" role="tab" id="sys-tab-roof" aria-controls="sys-pane-roof" aria-selected="false" tabindex="-1">Roofline</button>
-      </div>
+  <div class="page">
+    <article class="project sys-triple" id="p-under-app">
+      <div class="project-media">
+        <div class="sys-tabs" role="tablist" aria-label="Mechanism sketches">
+          <button class="sys-tab" type="button" role="tab" id="sys-tab-lsm" aria-controls="sys-pane-lsm" aria-selected="true" tabindex="0">LSM tree</button>
+          <button class="sys-tab" type="button" role="tab" id="sys-tab-qe" aria-controls="sys-pane-qe" aria-selected="false" tabindex="-1">Query engine</button>
+          <button class="sys-tab" type="button" role="tab" id="sys-tab-roof" aria-controls="sys-pane-roof" aria-selected="false" tabindex="-1">Roofline</button>
+        </div>
 
-      <div class="sys-pane is-open" id="sys-pane-lsm" role="tabpanel" aria-labelledby="sys-tab-lsm">
-        <svg class="sys-svg sys-lsm" viewBox="0 0 560 420" role="img" aria-label="Sketch of an LSM tree: a write travels WAL, memtable and into the newest SSTable; a read walks memtable, then SSTables newest to oldest, with Bloom filter verdicts; compaction merges the tables.">
-          <title>Writes: WAL to memtable to SSTables. Reads: newest to oldest.</title>
-          <!-- write path boxes -->
-          <g class="boil">
-            <rect class="ink" x="32" y="34" width="116" height="58" rx="6" fill="#FCFBF7"/>
-            <path class="ink-thin" d="M50 54 h60 M50 70 h84 M50 84 h44"/>
-            <rect class="ink" x="178" y="34" width="126" height="58" rx="6" fill="#FCFBF7"/>
-            <path class="ink-thin" d="M196 54 h40 M196 70 h64 M196 84 h28"/>
-            <rect class="ink" x="380" y="34" width="152" height="58" rx="6" fill="#FCFBF7"/>
-            <path class="ink-thin" d="M396 54 h44 M448 54 h44 M396 70 h80 M484 70 h24 M396 84 h36"/>
-            <path class="ink-blue" d="M148 63 L172 63" marker-end="url(#arrowhead)"/>
-            <path class="ink-blue" d="M304 63 L374 63" marker-end="url(#arrowhead)"/>
-            <rect class="ink sys-tbl" x="380" y="110" width="152" height="46" rx="6" fill="#FCFBF7"/>
-            <path class="ink-thin" d="M396 128 h92 M496 128 h16 M396 142 h56 M460 142 h40"/>
-            <rect class="ink sys-tbl" x="380" y="174" width="152" height="46" rx="6" fill="#FCFBF7"/>
-            <path class="ink-thin" d="M396 192 h76 M480 192 h24 M396 206 h60 M464 206 h40"/>
-            <path class="ink-blue" d="M456 92 L456 104" marker-end="url(#arrowhead)"/>
-            <path class="ink-blue" d="M456 156 L456 168" marker-end="url(#arrowhead)"/>
-            <path class="ink-thin sys-cp" d="M384 224 C 376 240, 376 248, 384 262 M528 224 C 536 240, 536 248, 528 262" stroke-dasharray="4 5"/>
-            <rect class="ink sys-tbl" x="380" y="268" width="152" height="44" rx="6" fill="#FCFBF7"/>
-            <path class="ink-thin" d="M396 284 h120 M396 298 h80 M396 310 h100"/>
-          </g>
-          <text class="sys-big" x="90" y="26" text-anchor="middle">WAL</text>
-          <text class="sys-lab" x="90" y="110" text-anchor="middle">fsync first</text>
-          <text class="sys-big" x="241" y="26" text-anchor="middle">memtable</text>
-          <text class="sys-lab" x="241" y="110" text-anchor="middle">sorted in memory</text>
-          <text class="sys-lab" x="339" y="56" text-anchor="middle">flush</text>
-          <text class="sys-lab" x="548" y="48" text-anchor="end">newest</text>
-          <text class="sys-lab" x="548" y="216" text-anchor="end">older</text>
-          <text class="sys-lab" x="456" y="330" text-anchor="middle">compacted table</text>
-          <text class="sys-cplab sys-lab" x="548" y="248" text-anchor="end" style="opacity:0">compaction</text>
-
-          <!-- write dot -->
-          <circle class="sys-dot sys-wdot" r="7" cx="90" cy="63" style="opacity:0"/>
-
-          <!-- read strip -->
-          <g class="sys-read">
+        <!-- 1 · LSM tree -->
+        <div class="sys-pane is-open" id="sys-pane-lsm" role="tabpanel" aria-labelledby="sys-tab-lsm">
+          <svg class="sys-svg sys-lsm" viewBox="0 0 480 380" role="img" aria-label="LSM tree. A put appends to the write-ahead log and is fsynced, then inserted into the sorted memtable, which flushes to immutable SSTables. A get checks the memtable, then SSTables newest to oldest; a Bloom filter says no for the newest table and maybe for the next, where the key is found. Compaction merges the SSTables into one.">
+            <text class="sys-big" x="62" y="30" text-anchor="middle">WAL</text>
+            <text class="sys-big" x="202" y="30" text-anchor="middle">memtable</text>
+            <text class="sys-big" x="393" y="30" text-anchor="middle">SSTables</text>
             <g class="boil">
-              <rect class="ink-thin" x="36" y="352" width="96" height="44" rx="5" fill="#FCFBF7"/>
-              <rect class="ink-thin" x="196" y="352" width="96" height="44" rx="5" fill="#FCFBF7"/>
-              <rect class="ink-thin" x="356" y="352" width="96" height="44" rx="5" fill="#FCFBF7"/>
-              <rect class="ink-thin sys-hitbox" x="476" y="352" width="80" height="44" rx="5" fill="#FCFBF7"/>
-              <path class="ink-green sys-hitcheck" d="M492 376 l8 10 14 -16" style="opacity:0"/>
-              <path class="ink-thin" d="M432 374 L470 374 M372 374 L324 374 M232 374 L184 374" marker-end="url(#arrowhead)"/>
+              <rect class="ink" x="12" y="44" width="100" height="96" rx="6" fill="#FCFBF7"/>
+              <path class="ink-thin" d="M24 62 h70 M24 76 h56 M24 90 h74 M24 104 h48"/>
+              <rect class="ink sys-mem" x="142" y="44" width="120" height="96" rx="6" fill="#FCFBF7"/>
+              <rect class="ink sys-sst3" x="318" y="44" width="150" height="44" rx="6" fill="#FCFBF7"/>
+              <rect class="ink sys-sst2" x="318" y="98" width="150" height="44" rx="6" fill="#FCFBF7"/>
+              <rect class="ink" x="318" y="152" width="150" height="44" rx="6" fill="#FCFBF7"/>
+              <path class="ink-thin" d="M330 202 C 330 226, 393 222, 393 244 M456 202 C 456 226, 393 222, 393 244"/>
+              <rect class="ink" x="318" y="250" width="150" height="44" rx="6" fill="#FCFBF7"/>
+              <path class="ink-thin" d="M332 266 h62 M402 266 h50 M332 280 h96"/>
             </g>
-            <text class="sys-lab" x="84" y="344" text-anchor="middle">memtable</text>
-            <text class="sys-lab" x="244" y="344" text-anchor="middle">SST · new</text>
-            <text class="sys-lab" x="404" y="344" text-anchor="middle">SST · old</text>
-            <text class="sys-lab" x="516" y="344" text-anchor="middle">found</text>
-            <text class="sys-lab sys-maybe" x="244" y="410" text-anchor="middle" style="opacity:0">bloom: maybe</text>
-            <text class="sys-lab sys-no" x="404" y="410" text-anchor="middle" style="opacity:0">bloom: no</text>
-            <text class="sys-lab sys-getk" x="28" y="374">get k</text>
-            <circle class="sys-dot sys-rdot" r="7" cx="28" cy="374" style="opacity:0"/>
-          </g>
-        </svg>
-        <figcaption>Writes are durable before they are visible: the WAL is fsynced, the sorted memtable flushes to immutable SSTables, and compaction merges the tables. A read checks the memtable, then the newest SSTable first; a Bloom filter can rule a table out in memory. <a class="sys-repo-link" href="https://github.com/ayushgawai/LSMStore" rel="noopener" target="_blank">LSMStore, Java · unbenchmarked</a></figcaption>
-      </div>
+            <path class="ink-blue" d="M114 92 L 136 92" marker-end="url(#arrowhead)"/>
+            <path class="ink-blue" d="M266 66 L 312 66" marker-end="url(#arrowhead)"/>
+            <text class="sys-lab" x="292" y="54" text-anchor="middle">flush</text>
+            <path class="ink-blue sys-wal-new" d="M24 118 h64"/>
+            <!-- sorted keys -->
+            <text class="sys-key" x="160" y="100">a</text>
+            <text class="sys-key" x="186" y="100">f</text>
+            <text class="sys-key sys-k" x="212" y="100">k</text>
+            <text class="sys-key" x="238" y="100">q</text>
+            <!-- bloom bits per table -->
+            <g class="sys-bits sys-bits3">
+              <rect x="328" y="60" width="11" height="11"/><rect x="342" y="60" width="11" height="11" class="on"/><rect x="356" y="60" width="11" height="11"/><rect x="370" y="60" width="11" height="11" class="on"/><rect x="384" y="60" width="11" height="11"/>
+            </g>
+            <g class="sys-bits sys-bits2">
+              <rect x="328" y="114" width="11" height="11" class="on"/><rect x="342" y="114" width="11" height="11"/><rect x="356" y="114" width="11" height="11" class="on"/><rect x="370" y="114" width="11" height="11" class="on"/><rect x="384" y="114" width="11" height="11"/>
+            </g>
+            <g class="sys-bits">
+              <rect x="328" y="168" width="11" height="11"/><rect x="342" y="168" width="11" height="11" class="on"/><rect x="356" y="168" width="11" height="11"/><rect x="370" y="168" width="11" height="11"/><rect x="384" y="168" width="11" height="11" class="on"/>
+            </g>
+            <text class="sys-tl" x="458" y="72" text-anchor="end">new</text>
+            <text class="sys-tl" x="458" y="180" text-anchor="end">old</text>
+            <path class="ink-green sys-found" d="M428 120 l7 9 15 -18"/>
+            <text class="sys-lab" x="62" y="166" text-anchor="middle">fsync first</text>
+            <text class="sys-lab" x="202" y="166" text-anchor="middle">sorted, in RAM</text>
+            <text class="sys-lab" x="306" y="278" text-anchor="end">compaction</text>
+            <text class="sys-lab sys-ink" x="12" y="214">crash? replay the WAL</text>
+            <path class="ink-thin sys-replay" d="M30 196 C 22 180, 22 160, 30 146" stroke-dasharray="3 5" marker-end="url(#arrowhead)"/>
+            <!-- compaction ghost -->
+            <rect class="sys-ghost" x="318" y="98" width="150" height="44" rx="6"/>
+            <!-- moving keys -->
+            <circle class="sys-dot sys-dot-w" r="8" cx="62" cy="50"/>
+            <circle class="sys-dot sys-dot-r" r="8" cx="290" cy="230"/>
+            <!-- narration -->
+            <path class="ink-thin sys-rule" d="M12 326 C 160 323, 320 328, 468 325"/>
+            <text class="sys-status" x="12" y="362">put k: append to the WAL, fsync</text>
+          </svg>
+        </div>
 
-      <div class="sys-pane" id="sys-pane-qe" role="tabpanel" aria-labelledby="sys-tab-qe" hidden>
-        <svg class="sys-svg sys-qe" viewBox="0 0 560 420" role="img" aria-label="Sketch of a query plan tree where a Filter node slides down into the Scan, and row groups are skipped using min and max statistics.">
-          <title>Filter pushdown slides the predicate down into the scan.</title>
-          <g class="boil">
-            <rect class="ink" x="60" y="30" width="150" height="44" rx="8" fill="#FCFBF7"/>
-            <text class="sys-node-lab" x="135" y="57" text-anchor="middle">Aggregate</text>
-            <rect class="ink" x="60" y="158" width="150" height="44" rx="8" fill="#FCFBF7"/>
-            <text class="sys-node-lab" x="135" y="185" text-anchor="middle">HashJoin</text>
-            <rect class="ink" x="60" y="286" width="150" height="44" rx="8" fill="#FCFBF7"/>
-            <text class="sys-node-lab" x="135" y="313" text-anchor="middle">Scan</text>
-            <path class="ink-thin" d="M135 74 L135 158 M135 202 L135 286"/>
-          </g>
-          <g class="sys-filter">
-            <rect class="ink" x="60" y="90" width="150" height="44" rx="8" fill="#FCFBF7"/>
-            <text class="sys-node-lab" x="135" y="117" text-anchor="middle">Filter</text>
-          </g>
-          <path class="ink-blue sys-pd-arrow" d="M222 112 L242 96" marker-end="url(#arrowhead)" style="opacity:0"/>
-          <text class="sys-lab sys-pd-lab" x="248" y="108" style="opacity:0">pushed down</text>
-          <text class="sys-node-lab sys-filterq" x="135" y="344" text-anchor="middle" style="opacity:0">x &gt; 50 now evaluated at the scan</text>
-
-          <g class="sys-rg">
-            <text class="sys-lab" x="330" y="86">row groups in the file</text>
+        <!-- 2 · Query engine -->
+        <div class="sys-pane" id="sys-pane-qe" role="tabpanel" aria-labelledby="sys-tab-qe" hidden>
+          <svg class="sys-svg sys-qe" viewBox="0 0 480 412" role="img" aria-label="Query plan tree: Aggregate over HashJoin, whose children are Project over Filter over Scan of lineitem, and Scan of orders. The optimizer pushes the Filter price greater than 50 down into the lineitem scan. The scan reads row-group min and max statistics and skips row group 2, whose maximum is 41, before decoding it.">
             <g class="boil">
-              <rect class="ink-thin" x="330" y="100" width="180" height="42" rx="5" fill="#FCFBF7"/>
-              <rect class="ink-thin sys-rg2" x="330" y="154" width="180" height="42" rx="5" fill="#FCFBF7"/>
-              <rect class="ink-thin" x="330" y="208" width="180" height="42" rx="5" fill="#FCFBF7"/>
-              <path class="ink-thin" d="M510 100 v42 M510 154 v42 M510 208 v42"/>
-              <path class="ink-thin" d="M344 121 h76 M344 229 h76"/>
+              <path class="ink-thin" d="M120 54 V86 M104 126 L 70 158 M136 126 L 182 158 M64 198 V302"/>
+              <rect class="ink" x="64" y="14" width="112" height="40" rx="8" fill="#FCFBF7"/>
+              <rect class="ink" x="64" y="86" width="112" height="40" rx="8" fill="#FCFBF7"/>
+              <rect class="ink" x="8" y="158" width="112" height="40" rx="8" fill="#FCFBF7"/>
+              <rect class="ink" x="132" y="158" width="100" height="40" rx="8" fill="#FCFBF7"/>
+              <rect class="ink" x="8" y="302" width="112" height="40" rx="8" fill="#FCFBF7"/>
             </g>
-            <text class="sys-lab" x="330" y="130">min / max</text>
-            <text class="sys-lab" x="330" y="258">min / max</text>
-            <g class="sys-skip">
-              <path class="ink-red sys-skipx" d="M344 160 L364 190 M364 160 L344 190" style="opacity:0"/>
-              <text class="sys-lab red sys-skiplab" x="376" y="184" style="opacity:0">skipped</text>
+            <text class="sys-node" x="120" y="41" text-anchor="middle">Aggregate</text>
+            <text class="sys-node" x="120" y="113" text-anchor="middle">HashJoin</text>
+            <text class="sys-node" x="64" y="185" text-anchor="middle">Project</text>
+            <text class="sys-node" x="182" y="185" text-anchor="middle">Scan</text>
+            <text class="sys-lab" x="182" y="222" text-anchor="middle">orders</text>
+            <text class="sys-node" x="64" y="329" text-anchor="middle">Scan</text>
+            <text class="sys-lab" x="64" y="366" text-anchor="middle">lineitem</text>
+            <!-- the filter that gets pushed down -->
+            <g class="sys-filter">
+              <rect class="ink" x="8" y="230" width="112" height="40" rx="8" fill="#FCFBF7"/>
+              <text class="sys-node" x="64" y="257" text-anchor="middle">Filter</text>
             </g>
-            <text class="sys-lab sys-rg-note" x="330" y="300" style="opacity:0">group 2 holds no x &gt; 50, so it is never deserialized</text>
-          </g>
-        </svg>
-        <figcaption>The plan is rewritten, then executed in batches: constant folding, filter pushdown into the scan, and unused-column pruning. Row-group min/max stats skip groups before they are deserialized; about 1,500 randomized queries were checked against a row-at-a-time reference interpreter. <a class="sys-repo-link" href="https://github.com/ayushgawai/query-engine" rel="noopener" target="_blank">query-engine, C++20</a></figcaption>
+            <g class="sys-pred">
+              <rect class="sys-pill" x="128" y="234" width="110" height="34" rx="17"/>
+              <text class="sys-lab" x="183" y="257" text-anchor="middle">price &gt; 50</text>
+            </g>
+            <path class="ink-blue sys-scanarrow" d="M240 322 C 258 318, 262 290, 270 262" marker-end="url(#arrowhead)"/>
+            <!-- verification stamp -->
+            <g class="sys-stamp">
+              <path class="ink-green" d="M222 34 l6 8 12 -15"/>
+              <text class="sys-lab green" x="248" y="40">~1,500 random queries</text>
+              <text class="sys-lab green" x="248" y="66">= reference interpreter</text>
+            </g>
+            <!-- row groups -->
+            <text class="sys-lab sys-ink" x="270" y="112">row groups · price</text>
+            <g class="boil">
+              <rect class="ink-thin sys-rg1" x="270" y="124" width="200" height="44" rx="5" fill="#FCFBF7"/>
+              <rect class="ink-thin sys-rg2" x="270" y="180" width="200" height="44" rx="5" fill="#FCFBF7"/>
+              <rect class="ink-thin sys-rg3" x="270" y="236" width="200" height="44" rx="5" fill="#FCFBF7"/>
+            </g>
+            <text class="sys-rgt" x="284" y="153">1</text><text class="sys-lab sys-ink" x="306" y="153">min 12 · max 88</text>
+            <text class="sys-rgt" x="284" y="209">2</text><text class="sys-lab sys-ink" x="306" y="209">min 3 · max 41</text>
+            <text class="sys-rgt" x="284" y="265">3</text><text class="sys-lab sys-ink" x="306" y="265">min 47 · max 96</text>
+            <path class="ink-green sys-ok" d="M242 146 l6 8 13 -16 M242 258 l6 8 13 -16"/>
+            <path class="sys-skipx" d="M276 186 L 464 220 M464 186 L 276 220"/>
+            <!-- narration -->
+            <path class="ink-thin sys-rule" d="M12 380 C 160 377, 320 382, 468 379"/>
+            <text class="sys-status" x="12" y="406">the plan, as written</text>
+          </svg>
+        </div>
+
+        <!-- 3 · Roofline -->
+        <div class="sys-pane" id="sys-pane-roof" role="tabpanel" aria-labelledby="sys-tab-roof" hidden>
+          <svg class="sys-svg sys-roof" viewBox="0 0 480 400" role="img" aria-label="Hand-drawn roofline chart, log scale. The SGEMM point climbs from 1.27 GFLOP/s to 13.17 after loop reordering, a 10.4 times gain, then to 36.11 GFLOP/s with cache blocking plus OpenMP.">
+            <g class="boil">
+              <path class="ink" d="M56 24 L 56 320 L 466 320"/>
+              <path class="ink" d="M56 316 C 140 232, 220 150, 300 70 C 340 68, 400 70, 466 69"/>
+            </g>
+            <text class="sys-lab sys-ink" transform="translate(150 180) rotate(-45)" text-anchor="middle">memory bandwidth</text>
+            <text class="sys-lab sys-ink" x="384" y="56" text-anchor="middle">compute roof</text>
+            <text class="sys-lab sys-ink" x="262" y="352" text-anchor="middle">arithmetic intensity →</text>
+            <text class="sys-lab sys-ink" transform="translate(34 172) rotate(-90)" text-anchor="middle">GFLOP/s (log)</text>
+            <path class="ink-blue sys-trail" d="M200 290 L 200 188 C 240 170, 290 152, 330 144" stroke-dasharray="4 6"/>
+            <circle class="sys-p0" cx="200" cy="290" r="7"/>
+            <text class="sys-num" x="186" y="297" text-anchor="end">1.27</text>
+            <g class="sys-l1">
+              <text class="sys-num" x="214" y="214">13.17</text>
+              <text class="sys-lab" x="214" y="256">loop reorder</text>
+              <text class="sys-lab" x="214" y="280">10.4×</text>
+            </g>
+            <g class="sys-l2">
+              <text class="sys-num red" x="346" y="138">36.11</text>
+              <text class="sys-lab red" x="346" y="166">blocking</text>
+              <text class="sys-lab red" x="346" y="190">+ OpenMP</text>
+              <path class="ink-red rough" d="M306 144 a24 20 0 1 0 48 0 a24 20 0 1 0 -48 0"/>
+            </g>
+            <circle class="sys-pt" cx="200" cy="290" r="8"/>
+            <text class="sys-status" x="12" y="390">scalar loops: 1.27 GFLOP/s</text>
+          </svg>
+        </div>
       </div>
 
-      <div class="sys-pane" id="sys-pane-roof" role="tabpanel" aria-labelledby="sys-tab-roof" hidden>
-        <svg class="sys-svg sys-roof" viewBox="0 0 560 420" role="img" aria-label="Hand-drawn roofline chart where the SGEMM point climbs from 1.27 to 13.17 to 36.11 GFLOP per second.">
-          <title>The SGEMM point climbs the roofline.</title>
-          <g class="boil">
-            <path class="ink" d="M70 44 L70 330 L516 330"/>
-            <path class="ink-thin" d="M70 250 L516 250" stroke-dasharray="4 7" stroke-opacity=".3"/>
-            <path class="ink-thin" d="M70 170 L516 170" stroke-dasharray="4 7" stroke-opacity=".3"/>
-            <path class="ink" d="M70 322 C 140 310, 200 190, 272 120 C 302 100, 342 94, 516 92"/>
-          </g>
-          <text class="sys-lab" x="512" y="76" text-anchor="end">roofline</text>
-          <text class="sys-lab" x="268" y="106" text-anchor="end">knee</text>
-          <text class="sys-lab" x="380" y="356" text-anchor="middle">arithmetic intensity</text>
-          <text class="sys-lab" x="40" y="190" text-anchor="middle" transform="rotate(-90 40 190)">GFLOP/s</text>
+      <div class="project-body sys-entries">
+        <article class="sys-entry is-active" data-pane="lsm" id="sys-entry-lsm">
+          <p class="project-where hand">LSMStore · Java 17</p>
+          <h3 class="project-title">An LSM-tree key-value store</h3>
+          <p class="project-sum">Fsynced write-ahead log, sorted TreeMap memtable, and immutable SSTables published by temp-file + atomic rename. Reads go newest to oldest, and per-table Bloom filters (10 bits/key, 7 hashes) answer most misses without a disk read.</p>
+          <ul class="facts">
+            <li><b>fsync</b>before the memtable</li>
+            <li><b>10 b/key</b>Bloom, 7 hashes</li>
+            <li><b>WAL replay</b>on restart</li>
+          </ul>
+          <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/LSMStore" target="_blank" rel="noopener">Code on GitHub</a></div>
+          <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
+            <h4>Write path</h4>
+            <p>Append-and-fsync to the WAL, then insert into a sorted TreeMap memtable. A full memtable flushes to an immutable sorted SSTable written to a temporary file and published by atomic rename, so readers only ever see whole tables.</p>
+            <h4>Read path</h4>
+            <p>Memtable first, then SSTables newest to oldest using in-memory key-offset indexes. Each table's Bloom filter is checked before its index, so a negative verdict costs no I/O. Deletes are tombstones that shadow older values.</p>
+            <h4>Compaction and recovery</h4>
+            <p>A four-SSTable trigger merges tables in memory into one compacted table (a simple merge trigger, not leveled compaction). Startup replays the WAL and drops only a truncated final record.</p>
+            <p>The public README says <em>not benchmarked yet</em>, so no throughput numbers are claimed here.</p>
+          </div></details>
+        </article>
 
-          <g class="sys-rp0">
-            <circle r="7" cx="200" cy="292" style="fill:var(--ink-3)"/>
-            <text class="sys-lab" x="192" y="316" text-anchor="end">1.27</text>
-            <text class="sys-lab" x="192" y="334" text-anchor="end">scalar loops</text>
-          </g>
-          <g class="sys-rp1" style="opacity:0">
-            <circle r="7" cx="290" cy="150" style="fill:var(--blue)"/>
-            <text class="sys-lab" x="302" y="136">13.17 · 10.4×</text>
-            <text class="sys-lab" x="302" y="154">loop reorder</text>
-          </g>
-          <g class="sys-rp2" style="opacity:0">
-            <circle r="8" cx="430" cy="102" style="fill:var(--red)"/>
-            <text class="sys-lab red" x="420" y="86" text-anchor="end">36.11</text>
-            <text class="sys-lab red" x="420" y="104" text-anchor="end">blocking + OpenMP</text>
-          </g>
-          <path class="ink-blue sys-roofarc1" d="M212 284 C 250 232, 264 178, 282 158" style="opacity:0"/>
-          <path class="ink-blue sys-roofarc2" d="M300 142 C 350 116, 380 108, 418 104" style="opacity:0"/>
-          <path class="ink-red rough sys-roofring" d="M398 102 a32 24 0 1 0 64 0 a32 24 0 1 0 -64 0" style="opacity:0"/>
-        </svg>
-        <figcaption>SGEMM on a CPU roofline: reorder the loops and 1.27 GFLOP/s climbs to 13.17, then cache blocking plus OpenMP reaches 36.11 GFLOP/s. The point moves toward the roofline's knee, not away from it. <a class="sys-repo-link" href="https://github.com/ayushgawai/SiliconBench" rel="noopener" target="_blank">SiliconBench, C++</a></figcaption>
+        <article class="sys-entry" data-pane="qe" id="sys-entry-qe">
+          <p class="project-where hand">query-engine · C++20</p>
+          <h3 class="project-title">A vectorized columnar query engine</h3>
+          <p class="project-sum">Logical plans are rewritten by constant folding, filter pushdown through projections and joins, and column pruning, then executed in 2,048-row batches over column and selection vectors. Per-column min/max stats in each row group let the scan skip groups before deserializing them.</p>
+          <ul class="facts">
+            <li><b>2,048</b>rows per batch</li>
+            <li><b>~1,500</b>random queries vs a reference</li>
+            <li><b>~4M</b>TPC-H-like line items</li>
+          </ul>
+          <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/query-engine" target="_blank" rel="noopener">Code on GitHub</a></div>
+          <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
+            <h4>Plan and optimizer</h4>
+            <ul>
+              <li>Explicit logical plan: Scan, Filter, Project, Aggregate, HashJoin, Limit.</li>
+              <li>Passes: constant folding, filter pushdown through projections and joins into scans, unused-column pruning. Pushdown has to stay correct across outer joins and aggregates.</li>
+            </ul>
+            <h4>Executor and file format</h4>
+            <ul>
+              <li>Batch-at-a-time vectorized execution over column vectors with selection vectors, 2,048 rows per batch.</li>
+              <li>Row-group columnar files with dictionary encoding, footer metadata and per-column min/max stats for data skipping.</li>
+            </ul>
+            <h4>Verification</h4>
+            <p>About 1,500 randomized queries checked against a row-at-a-time reference interpreter on TPC-H-like data (about 4M line items, 1M orders).</p>
+          </div></details>
+        </article>
+
+        <article class="sys-entry" data-pane="roof" id="sys-entry-roof">
+          <p class="project-where hand">SiliconBench · C++ · ARM NEON / x86 SIMD</p>
+          <h3 class="project-title">A CPU roofline and kernel harness</h3>
+          <p class="project-sum">Dot product, STREAM triad and SGEMM in scalar, NEON / OpenMP SIMD, reordered and cache-blocked variants, verified on odd lengths and non-square matrices and reported as the median GFLOP/s of warmed, repeated runs with perf counters.</p>
+          <ul class="facts">
+            <li><b>1.27 → 36.11</b>GFLOP/s SGEMM</li>
+            <li><b>10.4×</b>from loop reordering</li>
+            <li><b>median</b>of warmed runs</li>
+          </ul>
+          <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/SiliconBench" target="_blank" rel="noopener">Code on GitHub</a></div>
+          <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
+            <h4>The SGEMM climb</h4>
+            <p>Reordering the loop nest lifted SGEMM from 1.27 to 13.17 GFLOP/s (10.4×) by making the inner loop walk memory contiguously. Cache blocking plus OpenMP then reached 36.11 GFLOP/s: tiles are reused from cache and spread across cores, moving the kernel toward the compute roof.</p>
+            <h4>Method</h4>
+            <p>Every variant is checked for correctness first, including odd lengths and non-square shapes. Warmups, repeated runs and median reporting keep numbers stable; perf counters and arithmetic-intensity reasoning place each kernel on the roofline. Targets AWS Graviton and Inferentia2 with the AWS Neuron SDK and NKI.</p>
+          </div></details>
+        </article>
       </div>
-    </figure>
-
-    <div class="notes sys-notes">
-      <h3>Why these three</h3>
-      <p>Each sketch is a different layer under the application: durable bytes on disk, the query planner, and a chip's performance roof. The mechanism is the point, not a throughput number.</p>
-      <h3>Numbers, or not</h3>
-      <p class="meta">LSMStore is deliberately unbenchmarked; the public repo says so. The query engine is verified by checking about 1,500 randomized queries against a row-at-a-time reference interpreter, and SiliconBench carries its measured GFLOP/s figures.</p>
-    </div>
+    </article>
   </div>
 
+  <!-- bench log -->
   <div class="page sys-log-wrap">
     <div class="sys-log-head">
       <h3>Bench log</h3>
-      <p class="hand sys-log-kicker">entries from the lab</p>
+      <p class="hand sys-log-kicker">more from the lab, each linked to its repo</p>
     </div>
     <ul class="sys-log">
       <li class="sys-row">
-        <span class="sys-row-l">lakelog</span>
-        <span class="sys-row-r">Delta/Iceberg-style transaction log: optimistic commits via an atomic link, snapshots, and time travel.</span>
-        <a class="sys-link" href="https://github.com/ayushgawai/lakelog" rel="noopener" target="_blank" aria-label="lakelog on GitHub"></a>
+        <a class="sys-row-l" href="https://github.com/ayushgawai/lakelog" target="_blank" rel="noopener">lakelog</a>
+        <span class="sys-row-r">Delta/Iceberg-style transaction log in Java: optimistic writers commit through an atomic filesystem link so exactly one wins each version; snapshots, checkpoints every 10 versions, time travel.</span>
       </li>
       <li class="sys-row">
-        <span class="sys-row-l">pg-wal-lab</span>
-        <span class="sys-row-r">Postgres C extension for WAL and MVCC inspection, with a crash-recovery harness built against Postgres 14–16.</span>
-        <a class="sys-link" href="https://github.com/ayushgawai/pg-wal-lab" rel="noopener" target="_blank" aria-label="pg-wal-lab on GitHub"></a>
+        <a class="sys-row-l" href="https://github.com/ayushgawai/pg-wal-lab" target="_blank" rel="noopener">pg-wal-lab</a>
+        <span class="sys-row-r">PostgreSQL C extension for WAL and MVCC inspection plus a crash-recovery harness, built with PGXS against Postgres 14–16 in CI.</span>
       </li>
       <li class="sys-row">
-        <span class="sys-row-l">orderbook-engine</span>
-        <span class="sys-row-r">C++20 price-time priority matching: about 4.68M messages/s with a p99 of about 900 ns on a 2M-message replay.</span>
-        <a class="sys-link" href="https://github.com/ayushgawai/orderbook-engine" rel="noopener" target="_blank" aria-label="orderbook-engine on GitHub"></a>
+        <a class="sys-row-l" href="https://github.com/ayushgawai/orderbook-engine" target="_blank" rel="noopener">orderbook-engine</a>
+        <span class="sys-row-r">C++20 price-time matching with O(1) cancel via an order-ID index: <b>~4.68M msgs/s</b>, <b>p99 ~900 ns</b> on a 2M-message replay.</span>
       </li>
       <li class="sys-row">
-        <span class="sys-row-l">edge-llm-roofline</span>
-        <span class="sys-row-r">An analytical LLM-inference model for edge NPUs; its estimates match Jetson Orin and RTX 4090 measurements at 8.7% MAPE.</span>
-        <a class="sys-link" href="https://github.com/ayushgawai/edge-llm-roofline" rel="noopener" target="_blank" aria-label="edge-llm-roofline on GitHub"></a>
+        <a class="sys-row-l" href="https://github.com/ayushgawai/edge-llm-roofline" target="_blank" rel="noopener">edge-llm-roofline</a>
+        <span class="sys-row-r">Analytical prefill/decode model for LLMs on edge NPUs, within <b>8.7% MAPE</b> of Jetson Orin and RTX 4090 measurements.</span>
       </li>
       <li class="sys-row">
-        <span class="sys-row-l">gpu attention lab</span>
-        <span class="sys-row-r">On an RTX 5090, fused attention cut peak memory from 16,648 to 264 MiB at 16k tokens.</span>
-        <a class="sys-link" href="https://github.com/ayushgawai/data266-9689/tree/main/hw2.5" rel="noopener" target="_blank" aria-label="gpu attention lab on GitHub"></a>
+        <a class="sys-row-l" href="https://github.com/ayushgawai/data266-9689/tree/main/hw2.5" target="_blank" rel="noopener">gpu attention lab</a>
+        <span class="sys-row-r">RTX 5090: fused attention cut peak memory <b>16,648 → 264 MiB</b> at 16k tokens and latency 46.81 → 27.07 ms.</span>
       </li>
       <li class="sys-row">
-        <span class="sys-row-l">spec-decode-lab</span>
-        <span class="sys-row-r">A draft model proposes tokens and a target model scores them in a batch, so the sequential passes drop while the output stays correct.</span>
-        <a class="sys-link" href="https://github.com/ayushgawai/spec-decode-lab" rel="noopener" target="_blank" aria-label="spec-decode-lab on GitHub"></a>
+        <a class="sys-row-l" href="https://github.com/ayushgawai/spec-decode-lab" target="_blank" rel="noopener">spec-decode-lab</a>
+        <span class="sys-row-r">distilgpt2 drafts k tokens, gpt2-medium verifies them in one batch; accept/reject with probability correction preserves the target distribution.</span>
       </li>
       <li class="sys-row">
-        <span class="sys-row-l">llm-shard-planner</span>
-        <span class="sys-row-r">Plans dense and mixture-of-experts inference across devices, eliminating plans that exceed memory and ranking by prefill and decode.</span>
-        <a class="sys-link" href="https://github.com/ayushgawai/llm-shard-planner" rel="noopener" target="_blank" aria-label="llm-shard-planner on GitHub"></a>
+        <a class="sys-row-l" href="https://github.com/ayushgawai/llm-shard-planner" target="_blank" rel="noopener">llm-shard-planner</a>
+        <span class="sys-row-r">Enumerates tensor, expert and pipeline parallel plans for dense and MoE models, drops those over HBM, ranks by prefill latency and decode throughput.</span>
       </li>
       <li class="sys-row">
-        <span class="sys-row-l">gpu-job-orchestrator</span>
-        <span class="sys-row-r">Go scheduler over 512 GPUs across AWS, GCP and on-prem, with gang scheduling and spot preemption rollback.</span>
-        <a class="sys-link" href="https://github.com/ayushgawai/gpu-job-orchestrator" rel="noopener" target="_blank" aria-label="gpu-job-orchestrator on GitHub"></a>
+        <a class="sys-row-l" href="https://github.com/ayushgawai/dataflow-fusion-compiler" target="_blank" rel="noopener">dataflow-fusion-compiler</a>
+        <span class="sys-row-r">torch.fx → typed SSA IR, producer-consumer fusion and SRAM-fitting placement on a PE grid; cycles are modeled, not measured silicon.</span>
       </li>
       <li class="sys-row">
-        <span class="sys-row-l">fleet-control-plane</span>
-        <span class="sys-row-r">Go control plane with versioned desired versus reported config shadows, stale-version rejection, and heartbeat liveness.</span>
-        <a class="sys-link" href="https://github.com/ayushgawai/fleet-control-plane" rel="noopener" target="_blank" aria-label="fleet-control-plane on GitHub"></a>
+        <a class="sys-row-l" href="https://github.com/ayushgawai/gpu-job-orchestrator" target="_blank" rel="noopener">gpu-job-orchestrator</a>
+        <span class="sys-row-r">Go scheduler over <b>512 GPUs</b> in AWS, GCP and on-prem pools: gang scheduling, tenant quotas, rollback to the last checkpoint on spot preemption.</span>
       </li>
       <li class="sys-row">
-        <span class="sys-row-l">dedup-store</span>
-        <span class="sys-row-r">FastCDC content-defined chunking with SHA-256 fingerprints and a crash-resumable garbage collector.</span>
-        <a class="sys-link" href="https://github.com/ayushgawai/dedup-store" rel="noopener" target="_blank" aria-label="dedup-store on GitHub"></a>
+        <a class="sys-row-l" href="https://github.com/ayushgawai/fleet-control-plane" target="_blank" rel="noopener">fleet-control-plane</a>
+        <span class="sys-row-r">Go device control plane: versioned desired vs reported config shadows, conditional writes that reject stale versions, TTL heartbeats.</span>
       </li>
       <li class="sys-row">
-        <span class="sys-row-l">sensor-hub-firmware</span>
-        <span class="sys-row-r">Host-simulated hardware abstraction with 1 kHz sensor reads and a lock-free ring; no deployed MCU.</span>
-        <a class="sys-link" href="https://github.com/ayushgawai/sensor-hub-firmware" rel="noopener" target="_blank" aria-label="sensor-hub-firmware on GitHub"></a>
+        <a class="sys-row-l" href="https://github.com/ayushgawai/dedup-store" target="_blank" rel="noopener">dedup-store</a>
+        <span class="sys-row-r">C++20 FastCDC chunking with SHA-256 fingerprints and a journaled mark-and-sweep GC that resumes after a crash.</span>
+      </li>
+      <li class="sys-row">
+        <a class="sys-row-l" href="https://github.com/ayushgawai/sensor-hub-firmware" target="_blank" rel="noopener">sensor-hub-firmware</a>
+        <span class="sys-row-r">Host-simulated HAL with 1 kHz sensor reads into a lock-free ring buffer; no deployed MCU.</span>
       </li>
     </ul>
   </div>
 
-  <div class="page sys-cloud" data-anim>
+  <!-- cloud -->
+  <div class="page sys-cloud">
     <div class="sys-cloud-head">
       <h3>Cloud</h3>
-      <p>The control-plane side of the stack: multi-cloud services, containers and config, plus one grid-aware training job.</p>
     </div>
     <div class="sys-cloud-grid">
       <div class="sys-cloud-col">
         <h4>AWS</h4>
-        <ul class="tags sys-tags">
-          <li>S3</li><li>EC2</li><li>Lambda</li><li>ECS / EKS</li>
-          <li>Glue</li><li>Athena</li><li>Redshift</li><li>MWAA</li><li>IAM</li>
-        </ul>
+        <ul class="tags sys-tags"><li>S3</li><li>EC2</li><li>Lambda</li><li>ECS / EKS</li><li>Glue</li><li>Athena</li><li>Redshift</li><li>MWAA</li><li>IAM</li></ul>
       </div>
       <div class="sys-cloud-col">
-        <h4>Azure</h4>
-        <ul class="tags sys-tags">
-          <li>Data Factory</li><li>Databricks</li><li>IoT Hub</li>
-        </ul>
-        <h4>GCP</h4>
-        <ul class="tags sys-tags">
-          <li>GKE</li>
-        </ul>
+        <h4>Azure · GCP</h4>
+        <ul class="tags sys-tags"><li>Data Factory</li><li>Databricks</li><li>IoT Hub</li><li>GKE</li></ul>
       </div>
       <div class="sys-cloud-col">
-        <h4>Containers and config</h4>
-        <ul class="tags sys-tags">
-          <li>Docker</li><li>Kubernetes</li><li>Helm</li><li>ArgoCD</li><li>Terraform</li>
-        </ul>
+        <h4>Containers and IaC</h4>
+        <ul class="tags sys-tags"><li>Docker</li><li>Kubernetes</li><li>Helm</li><li>ArgoCD</li><li>Terraform</li></ul>
       </div>
     </div>
 
-    <div class="sys-carbon card tilt-l">
-      <div class="sys-carbon-in">
-        <svg class="sys-carbon-doodle" viewBox="0 0 48 48" aria-hidden="true"><g class="rough">
-          <rect class="ink-thin" x="4" y="6" width="16" height="36" rx="2"/>
-          <rect class="ink-thin" x="24" y="14" width="16" height="28" rx="2"/>
-          <path class="ink-thin" d="M8 14 h8 M8 20 h8 M8 26 h8 M28 22 h8 M28 28 h8"/>
-          <path class="ink-blue" d="M12 40 v-8 M32 40 v-16"/>
-          <circle class="ink-red" cx="40" cy="10" r="5"/>
-        </svg>
-        <div class="sys-carbon-tx">
-          <h3>CarbonShift</h3>
-          <p>GPU training that adapts its power limits, or pauses, to live grid carbon intensity and price, with GREEN, AMBER and RED states and checkpointing. FastAPI with live WebSocket updates. In simulation it cut carbon about 43% and cost about 37%.</p>
-          <div class="btn-row">
-            <a class="btn" href="https://devpost.com/software/carbonshift" rel="noopener" target="_blank">Devpost</a>
-            <a class="btn blue" href="https://github.com/ayushgawai/carbonshift" rel="noopener" target="_blank">github.com/ayushgawai/carbonshift</a>
-          </div>
-        </div>
+    <article class="project sys-carbon" id="p-carbonshift">
+      <div class="project-media">
+        <button class="video" data-yt="OkEENwR6-Gk" data-title="CarbonShift demo" aria-label="Play the CarbonShift demo video">
+          <img src="assets/img/demos/carbonshift-demo.webp" alt="" loading="lazy" width="1280" height="720">
+          <span class="video-label">Demo video</span>
+        </button>
       </div>
-    </div>
+      <div class="project-body">
+        <p class="project-where hand">CarbonShift · Devpost</p>
+        <h3 class="project-title">GPU training that follows the grid</h3>
+        <p class="project-sum">A control loop polls WattTime + CAISO carbon intensity and price every ~60 s and drives a GREEN / AMBER / RED state machine that sets A100 power limits or pauses training at a checkpoint. FastAPI exposes control and status; a WebSocket streams cost and carbon every ~2 s.</p>
+        <ul class="facts">
+          <li><b>~43%</b>less carbon, simulated</li>
+          <li><b>~37%</b>lower cost, simulated</li>
+          <li><b>60 s</b>grid poll</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn" href="https://github.com/ayushgawai/carbonshift" target="_blank" rel="noopener">Code on GitHub</a>
+          <a class="btn blue" href="https://devpost.com/software/carbonshift" target="_blank" rel="noopener">Devpost</a>
+        </div>
+        <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
+          <h4>Control loop</h4>
+          <ul>
+            <li>Grid monitor on WattTime and CAISO data with a mock fallback, polled about every 60 s.</li>
+            <li>Eco-Pulse arbitration engine with GREEN, AMBER, RED and NORMAL states driving a GPU power controller (A100 power limits).</li>
+            <li>Pause and resume around a checkpoint manager, so a pause never loses training progress.</li>
+            <li>FastAPI control and status endpoints, a background metrics loop, WebSocket updates about every 2 s, cumulative cost and carbon reporting.</li>
+          </ul>
+          <h4>What the numbers are</h4>
+          <p>The ~43% carbon and ~37% cost reductions are scenario results in simulation, not measured datacenter savings.</p>
+        </div></details>
+      </div>
+    </article>
   </div>
 </section>

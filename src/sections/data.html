@@ -2,52 +2,58 @@
   <header class="chapter-head page">
     <p class="chapter-kicker hand">LatentView ’21–’23 · Zscaler ’24–’25 · Zoox ’26</p>
     <h2 id="data-title" class="chapter-title">Pipelines that catch their own mistakes</h2>
-    <p class="chapter-lede">Four years of data engineering. Every pipeline has a <span class="marker">validation gate</span>, and records that fail it go to quarantine instead of a dashboard.</p>
+    <p class="chapter-lede">Four years of data engineering. Every pipeline ends in a <span class="marker">validation gate</span>: rows that fail it are quarantined before they reach a dashboard.</p>
   </header>
 
   <div class="page">
-    <figure class="sketch data-sketch" data-anim>
+    <figure class="data-sketch" data-anim>
       <div class="data-tabs" role="tablist" aria-label="Choose a pipeline">
-        <button class="tab" type="button" role="tab" id="data-tab-transit" aria-controls="data-panel" aria-selected="true" data-pipe="transit"><b>Transit</b><span>streaming + batch</span></button>
-        <button class="tab" type="button" role="tab" id="data-tab-zscaler" aria-controls="data-panel" aria-selected="false" tabindex="-1" data-pipe="zscaler"><b>Zscaler</b><span>2024 – 2025</span></button>
-        <button class="tab" type="button" role="tab" id="data-tab-latentview" aria-controls="data-panel" aria-selected="false" tabindex="-1" data-pipe="latentview"><b>LatentView</b><span>2021 – 2023</span></button>
+        <button class="tab" type="button" role="tab" id="data-tab-transit" aria-controls="data-panel" aria-selected="true" data-pipe="transit"><b>Transit</b><span>streaming</span></button>
+        <button class="tab" type="button" role="tab" id="data-tab-zscaler" aria-controls="data-panel" aria-selected="false" tabindex="-1" data-pipe="zscaler"><b>Zscaler</b><span>2024–25</span></button>
+        <button class="tab" type="button" role="tab" id="data-tab-latentview" aria-controls="data-panel" aria-selected="false" tabindex="-1" data-pipe="latentview"><b>LatentView</b><span>2021–23</span></button>
       </div>
       <div class="data-board">
         <svg class="data-svg" viewBox="0 0 1100 440" role="img" aria-labelledby="data-svg-title">
           <title id="data-svg-title">Hand-drawn pipeline of tanks, valves and pipes. Data packets flow through each stage; at the validation gate a red-pencil hook pulls a failing packet into a quarantine bin.</title>
           <g class="data-canvas"></g>
         </svg>
-        <p class="data-note" aria-live="polite"><b>Hover, tap or tab</b> to a station to see what it does.</p>
       </div>
+      <figcaption class="data-note" aria-live="polite"><b>Hover, tap or tab</b> to a station to see what it does.</figcaption>
     </figure>
 
     <div class="data-panel" id="data-panel" role="tabpanel" aria-labelledby="data-tab-transit">
       <article class="data-pb" data-pipe="transit" id="p-transit">
         <div class="pb-head">
           <p class="project-where hand">Transit analytics platform · SJSU MSDA capstone</p>
-          <h3 class="project-title">BART + VTA feeds to an operator dashboard</h3>
-          <p class="project-sum">GTFS static and GTFS-realtime feeds land through a Kafka producer/consumer, three Airflow DAGs on MWAA load Snowflake, and dbt builds route-level aggregates. FastAPI serves a React/TypeScript dashboard, with heavy ETL and model training kept off the read path.</p>
+          <h3 class="project-title">BART + VTA real-time feeds to an operator dashboard</h3>
+          <p class="project-sum">GTFS static and GTFS-realtime feeds enter through a Kafka producer/consumer; three Airflow DAGs on AWS MWAA load Snowflake landing and analytics schemas, and dbt builds route-level performance aggregates. FastAPI serves a React/TypeScript dashboard, with heavy ETL and model training kept off the read path.</p>
           <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/transit-system" target="_blank" rel="noopener">Code on GitHub</a></div>
         </div>
-        <ul class="facts"><li><b>2</b> transit operators</li><li><b>3</b> Airflow DAGs</li><li><b>AWS + Azure</b> two deployments</li></ul>
+        <ul class="facts"><li><b>2</b> transit operators, 1 schema</li><li><b>3</b> Airflow DAGs on MWAA</li><li><b>AWS + Azure</b> two deployments</li></ul>
+        <figure class="pb-film">
+          <video controls preload="none" playsinline poster="assets/video/transit-poster.webp" width="1920" height="1080" aria-label="90-second explainer: the Transit pipeline drawn step by step">
+            <source src="assets/video/transit.mp4" type="video/mp4">
+          </video>
+          <figcaption class="hand">90-second explainer: feeds → Kafka → Airflow → Snowflake/dbt → FastAPI, drawn step by step</figcaption>
+        </figure>
         <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
-          <p>Team capstone. Ran the pipeline on AWS S3 and MWAA and built the Azure extension.</p>
+          <p>Team capstone. Ran the pipeline on AWS S3 and MWAA, and built the Azure Databricks extension.</p>
           <h4>Data flow</h4>
           <ul>
-            <li>Sources: BART and VTA GTFS schedules plus real-time vehicle feeds.</li>
-            <li>Kafka producer and consumer for near-real-time events.</li>
+            <li>Sources: BART and VTA GTFS schedules plus GTFS-realtime vehicle feeds.</li>
+            <li>Kafka producer and consumer carry near-real-time vehicle events.</li>
             <li>Airflow DAGs: GTFS incremental ingestion, streaming ingestion, ML forecasting.</li>
             <li>Snowflake landing and analytics schemas; dbt transformations, forecast models and route-level performance aggregates.</li>
-            <li>FastAPI REST layer feeding React/TypeScript dashboards with maps, metrics and natural-language query assistance. Docker Compose and AWS Secrets Manager.</li>
+            <li>FastAPI REST layer feeding React/TypeScript dashboards with maps, metrics and natural-language query assistance. Docker Compose; credentials in AWS Secrets Manager.</li>
           </ul>
           <h4>Hard parts</h4>
           <ul>
-            <li>Static stop IDs don’t line up with live events, so events are aligned before loading.</li>
-            <li>Late and malformed location samples; dedup and replay.</li>
+            <li>Static stop IDs don’t line up with live events, so events are aligned to the static schedule before loading.</li>
+            <li>Late and malformed location samples: dedup and replay instead of trusting arrival order.</li>
             <li>Fast API responses without putting ETL or training on the dashboard path.</li>
           </ul>
           <h4>Azure extension</h4>
-          <p>On-time performance and service-reliability KPIs modeled in Azure Databricks (PySpark, Delta), orchestrated by Data Factory, with SQL, data quality checks and Power BI.</p>
+          <p>On-time performance and service-reliability KPIs modeled in Azure Databricks (PySpark, Delta Lake), orchestrated by Azure Data Factory, with SQL data quality checks and Power BI reporting.</p>
         </div></details>
       </article>
 
@@ -55,38 +61,38 @@
         <div class="pb-head">
           <p class="project-where hand">Zscaler · Data Engineer · 2024–2025</p>
           <h3 class="project-title">Compiling Salesforce formulas into incremental SQL</h3>
-          <p class="project-sum">Formula fields recompute without touching <code>LastModified</code>, so incremental loads missed changes and fell back to full refreshes. A metadata compiler walks each formula’s dependency graph depth-first, has an LLM emit SQL from that structured context, and lands it in versioned dbt models fed by Matillion upserts. Sampled rows are reconciled against live CRM before anything deploys.</p>
+          <p class="project-sum">Formula fields recompute without bumping <code>LastModified</code>, so incremental loads missed changes and fell back to full refreshes. A metadata compiler walks each formula’s dependency graph depth-first, has an LLM emit SQL from that structured context, and lands it in versioned dbt models fed by Matillion upserts. Sampled rows are reconciled against live CRM before deploy.</p>
         </div>
-        <ul class="facts"><li><b>~80%</b> lower reporting latency</li><li><b>~35%</b> faster queries</li><li><b>LLM → SQL</b> reconciled vs live CRM</li></ul>
+        <ul class="facts"><li><b>~80%</b> lower reporting latency</li><li><b>~35%</b> faster queries</li><li><b>DFS → SQL</b> formula dependency compiler</li></ul>
         <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
           <h4>Problem</h4>
-          <p>Leadership dashboards and adoption metrics depended on Salesforce data whose formula fields recalculate in real time but never update <code>LastModifiedTimestamp</code>. Incremental logic broke, full-table refreshes raised latency and warehouse cost, and nested, undocumented field dependencies left no way to trace impact.</p>
+          <p>Leadership dashboards and adoption metrics depended on Salesforce formula fields that recalculate in real time but never update <code>LastModifiedTimestamp</code>. Incremental logic broke, full-table refreshes raised latency and warehouse cost, and nested, undocumented field dependencies left no way to trace impact.</p>
           <h4>Metadata compiler</h4>
           <ul>
             <li>Pull formula definitions through the Salesforce ObjectDetails API.</li>
             <li>Depth-first traversal maps every upstream field dependency; each formula gets a structured JSON context.</li>
-            <li>The dependency graph and formula logic go to an LLM, which generates SQL; output lands in dbt models, so the logic becomes deterministic, versioned and reviewable.</li>
+            <li>Dependency graph plus formula logic go to an LLM, which generates SQL; output lands in dbt models, so the logic becomes deterministic, versioned and reviewable.</li>
           </ul>
           <h4>Ingestion</h4>
           <ul>
             <li>Change detection and incremental upserts replace full-table refreshes; modular transformation layers.</li>
-            <li>Partitioning and Snowflake clustering for location attributes cut scan volume on spatial-style queries.</li>
+            <li>Partitioning and Snowflake clustering on location attributes cut scan volume for spatial-style queries.</li>
           </ul>
           <h4>Verification</h4>
           <ul>
-            <li>Because LLM-generated SQL is a risk, automated sampling compares warehouse output with the live CRM and flags discrepancies programmatically; reconciliation dashboards track it.</li>
-            <li>Git workflows with automated schema checks and SQL tests in GitHub Actions; Docker for consistent environments.</li>
+            <li>LLM-generated SQL is a risk, so automated sampling compares warehouse output with the live CRM and flags discrepancies programmatically; reconciliation dashboards track it.</li>
+            <li>Git workflows with automated schema checks and SQL tests in GitHub Actions; Docker for identical environments.</li>
           </ul>
           <h4>Also</h4>
-          <p>API integrations for LinkedIn Campaign, Asana and Jira, normalized into the warehouse for marketing and delivery dashboards. Stack: Python, SQL, Snowflake, dbt, Matillion, AWS (S3, EC2), Docker, GitHub Actions.</p>
+          <p>API integrations for LinkedIn Campaign, Asana and Jira, schema-normalized into the warehouse for marketing and delivery dashboards. Stack: Python, SQL, Snowflake, dbt, Matillion, AWS (S3, EC2), Docker, GitHub Actions.</p>
         </div></details>
       </article>
 
       <article class="data-pb" data-pipe="latentview" id="p-latentview" hidden>
         <div class="pb-head">
           <p class="project-where hand">LatentView Analytics · Data Engineer · 2021–2023</p>
-          <h3 class="project-title">An 800 TB HDFS → S3 migration with a test gate</h3>
-          <p class="project-sum">AWS DataSync moved the data while bash scripts tracked every copied batch. A Python/pytest framework diffed source and destination for row mismatches, null anomalies and type drift before go-live. Legacy Airflow moved to MWAA-style DAGs, and CloudWatch → SNS → Lambda enforced SLAs.</p>
+          <h3 class="project-title">An 800 TB HDFS → S3 migration behind a test gate</h3>
+          <p class="project-sum">AWS DataSync moved the data while bash scripts tracked every copied batch. A Python/pytest framework diffed source and destination for row mismatches, null anomalies and type drift before go-live. Legacy Airflow moved to MWAA-style modular DAGs, and CloudWatch → SNS → Lambda enforced client SLAs.</p>
         </div>
         <ul class="facts"><li><b>~800 TB</b> migrated</li><li><b>99.6%</b> validation accuracy</li><li><b>~45%</b> fewer client escalations</li><li><b>18 → 6 min</b> one reporting model</li></ul>
         <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
@@ -98,100 +104,111 @@
             <li>Programmatic source-vs-destination comparison: row mismatches, null anomalies, type inconsistencies, all flagged before release.</li>
           </ul>
           <h4>Monitoring and SLAs</h4>
-          <p>CloudWatch metrics, SNS alerting and Lambda triggers on top of Airflow detect SLA breaches and job failures and log root-cause traces, which cut client escalations by about 45%.</p>
+          <p>CloudWatch metrics, SNS alerting and Lambda triggers on top of Airflow detect SLA breaches and job failures and log root-cause traces; client escalations fell about 45%.</p>
           <h4>Orchestration</h4>
           <p>Legacy Airflow upgraded to managed MWAA-style patterns: containerized operators, modular DAGs, isolated per-workflow tests, better retries, fewer failed deploys.</p>
           <h4>Performance</h4>
-          <p>Layered CTEs restructured, partitioning re-planned (pruning instead of wide scans), resources and query plans tuned: one major reporting model went from about 18 to 6 minutes. Stack: Python, Spark/Databricks, Snowflake, S3, Lambda, CloudWatch, Airflow.</p>
+          <p>Layered CTEs restructured, partitioning re-planned for pruning instead of wide scans, resources and query plans tuned: one major reporting model went from about 18 to 6 minutes. Stack: Python, Spark/Databricks, Snowflake, S3, Lambda, CloudWatch, Airflow.</p>
         </div></details>
       </article>
     </div>
   </div>
 
   <div class="page data-more">
-    <h3 class="data-more-title">More pipelines</h3>
+    <h3 class="data-more-title hand">More pipelines, each with its own check</h3>
     <div class="data-cards">
       <article class="data-card" id="p-transitrisk">
-        <svg class="mini" viewBox="0 0 360 210" role="img" aria-label="Expected cost against alert threshold: a dot rolls down the cost curve and settles at the minimum, threshold 0.163.">
+        <svg class="mini" viewBox="0 0 360 230" role="img" aria-label="Expected cost against alert threshold: a ball rolls down the cost curve and settles at the minimum, threshold 0.163, where a miss costs five times a false alarm." data-anim>
           <g class="boil">
-            <path class="ink" d="M40 22 V176 H336" pathLength="1"/>
-            <path class="ink-blue" d="M44 40 C 70 150, 90 160, 108 158 S 220 120, 330 52" pathLength="1"/>
-            <path class="ink-thin" d="M108 168 V182" />
+            <path class="ink" d="M44 20 V180 H340" pathLength="1"/>
+            <path class="ink-blue mini-curve" d="M50 46 C 76 150, 96 168, 122 166 S 230 128, 334 64" pathLength="1"/>
           </g>
-          <circle class="mini-dot" r="7" cx="108" cy="158"/>
-          <circle class="ink-red mini-circ" cx="108" cy="158" r="17"/>
-          <text class="svg-print mini-t" x="108" y="202" text-anchor="middle">0.163</text>
-          <text class="svg-hand mini-h" x="160" y="200">alert threshold</text>
-          <text class="svg-hand mini-h" x="200" y="36">miss = 5× false alarm</text>
-          <text class="svg-print mini-s" x="30" y="16">expected cost</text>
+          <path class="ink-thin" d="M122 174 V188" stroke-dasharray="3 3"/>
+          <circle class="tr-ball" r="8"/>
+          <circle class="ink-red tr-circ" cx="122" cy="166" r="19"/>
+          <text class="svg-print mini-num" x="122" y="210" text-anchor="middle">0.163</text>
+          <text class="svg-hand mini-l" x="176" y="208">cost-optimal threshold</text>
+          <text class="svg-hand mini-l red" x="214" y="40" text-anchor="middle">miss = 5× false alarm</text>
+          <text class="svg-print mini-s" x="54" y="16">expected cost</text>
         </svg>
+        <p class="project-where hand">DATA 245 · ML</p>
         <h4><a href="https://github.com/ayushgawai/transitrisk" target="_blank" rel="noopener">TransitRisk</a></h4>
-        <p>Next-hour delay forecasting per station-route pair. Seven calibrated classifiers over 38 leakage-audited features, with conformal prediction intervals; the alert threshold minimizes expected cost.</p>
-        <ul class="facts"><li><b>0.163</b> cost-optimal threshold</li><li><b>38</b> features</li></ul>
+        <p>Next-hour delay risk per station-route pair from 38 leakage-audited features. Seven calibrated classifiers with conformal intervals; the alert threshold minimizes expected cost, not error.</p>
+        <ul class="facts"><li><b>0.163</b> alert threshold</li><li><b>38</b> features</li></ul>
         <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/transitrisk" target="_blank" rel="noopener">Code on GitHub</a></div>
         <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
           <ul>
-            <li>~1.2M generated transit events, cleaning and a leakage audit before feature engineering.</li>
-            <li>Naive Bayes, logistic regression, kNN, decision tree, random forest, SVM and XGBoost, with probability calibration.</li>
-            <li>Threshold picked where a missed delay costs 5× a false alarm: 0.163. Conformal prediction, SHAP, weather and stress tests, ablations, what-if analysis.</li>
-            <li>Streamlit dashboard with per-route gauges and a live-feed replay; 15 tests for features, leakage, conformal coverage and targets. Course project (DATA 245).</li>
+            <li>~1.2M generated transit events; cleaning and a leakage audit before feature engineering.</li>
+            <li>Naive Bayes, logistic regression, kNN, decision tree, random forest, SVM and XGBoost, all probability-calibrated.</li>
+            <li>Threshold chosen where a missed delay costs 5× a false alarm: 0.163. Conformal prediction, SHAP, weather and stress tests, ablations, what-if analysis.</li>
+            <li>Streamlit dashboard with per-route gauges and a live-feed replay; 15 tests covering features, leakage, conformal coverage and targets.</li>
           </ul>
         </div></details>
       </article>
 
       <article class="data-card" id="p-wikirisk">
-        <svg class="mini" viewBox="0 0 360 210" role="img" aria-label="Wikipedia edit events stream into a Spark scoring window; risky edits are flagged red.">
+        <svg class="mini" viewBox="0 0 360 230" role="img" aria-label="Wikipedia edit events stream into a Spark Structured Streaming scorer; a risky edit comes out flagged red." data-anim>
+          <text class="svg-hand mini-l" x="14" y="30">live edits</text>
+          <g class="wr-evs">
+            <g class="wr-ev" style="--d:0"><rect class="wr-a" x="-8" y="-8" width="16" height="16" rx="2"/></g>
+            <g class="wr-ev" style="--d:1"><rect class="wr-a" x="-8" y="-8" width="16" height="16" rx="2"/></g>
+            <g class="wr-ev bad" style="--d:2"><rect class="wr-a" x="-8" y="-8" width="16" height="16" rx="2"/><rect class="wr-b" x="-8" y="-8" width="16" height="16" rx="2"/></g>
+            <g class="wr-ev" style="--d:3"><rect class="wr-a" x="-8" y="-8" width="16" height="16" rx="2"/></g>
+          </g>
           <g class="boil">
-            <path class="ink" d="M140 54 h120 v104 h-120 z" pathLength="1"/>
-            <path class="ink-thin" d="M14 106 H140 M260 106 H346" pathLength="1"/>
+            <path class="ink-thin" d="M12 104 H128 M232 104 H348" pathLength="1"/>
+            <path class="ink wr-box" d="M128 52 h104 v104 h-104 z" pathLength="1"/>
+            <path class="ink-red" d="M232 128 C 262 132, 280 150, 300 176" marker-end="url(#arrowhead)" pathLength="1"/>
           </g>
-          <text class="svg-hand mini-h" x="200" y="88" text-anchor="middle">Spark</text>
-          <text class="svg-print mini-s" x="200" y="112" text-anchor="middle">Structured</text>
-          <text class="svg-print mini-s" x="200" y="130" text-anchor="middle">Streaming</text>
-          <g class="mini-ev">
-            <rect class="ev" x="-7" y="-7" width="14" height="14" rx="2" style="--d:0"/>
-            <rect class="ev" x="-7" y="-7" width="14" height="14" rx="2" style="--d:1"/>
-            <rect class="ev bad" x="-7" y="-7" width="14" height="14" rx="2" style="--d:2"/>
-            <rect class="ev" x="-7" y="-7" width="14" height="14" rx="2" style="--d:3"/>
-          </g>
-          <text class="svg-hand mini-h" x="14" y="40">edit events</text>
-          <text class="svg-hand mini-h red" x="350" y="190" text-anchor="end">risky → flag</text>
+          <text class="svg-hand mini-l" x="180" y="88" text-anchor="middle">Spark</text>
+          <text class="svg-print mini-s" x="180" y="112" text-anchor="middle">Structured</text>
+          <text class="svg-print mini-s" x="180" y="132" text-anchor="middle">Streaming</text>
+          <text class="svg-hand mini-l red" x="346" y="206" text-anchor="end">risky → flag</text>
+          <text class="svg-hand mini-l" x="346" y="80" text-anchor="end">scored</text>
         </svg>
+        <p class="project-where hand">Spark · streaming ML</p>
         <h4><a href="https://github.com/ayushgawai/WikiRisk" target="_blank" rel="noopener">WikiRisk</a></h4>
-        <p>Edit-risk scoring: Spark batch ingestion of revision history trains a SparkML model, and Structured Streaming scores live Wikimedia EventStreams edits.</p>
+        <p>Spark batch over 29+ GB of Wikipedia revisions trains a SparkML edit-risk model; Structured Streaming scores live Wikimedia EventStreams edits against it.</p>
         <ul class="facts"><li><b>89.61%</b> recall</li><li><b>11.16M</b> training rows</li></ul>
         <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/WikiRisk" target="_blank" rel="noopener">Code on GitHub</a></div>
         <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
           <ul>
-            <li>Historical ingestion over 29+ GB of decompressed Wikipedia revisions.</li>
-            <li>SparkML cross-validation tracked in MLflow; 89.61% recall and 0.762 ROC AUC on held-out test data.</li>
+            <li>Historical ingestion over 29+ GB of decompressed Wikipedia revisions into 11.16M training rows.</li>
+            <li>SparkML cross-validation tracked in MLflow: 89.61% recall and 0.762 ROC AUC on held-out test data.</li>
             <li>Parquet event archive, SQLite serving store, FastAPI health and search endpoints with tests.</li>
           </ul>
         </div></details>
       </article>
 
       <article class="data-card" id="p-capflow">
-        <svg class="mini" viewBox="0 0 360 210" role="img" aria-label="A change log of inserts, updates and deletes; an LSN cursor advances row by row and each change is mirrored to the target table, then reconciled.">
+        <svg class="mini" viewBox="0 0 360 230" role="img" aria-label="A change log of inserts, updates and deletes; an LSN cursor advances row by row, each change is mirrored to the target table and checked off by reconciliation." data-anim>
           <g class="boil">
-            <path class="ink" d="M24 30 h120 v156 h-120 z M216 30 h120 v156 h-120 z" pathLength="1"/>
-            <path class="ink-thin" d="M24 62 h120 M24 92 h120 M24 122 h120 M24 152 h120 M216 62 h120 M216 92 h120 M216 122 h120 M216 152 h120"/>
+            <path class="ink" d="M52 40 h112 v170 h-112 z M236 40 h112 v170 h-112 z" pathLength="1"/>
+            <path class="ink-thin" d="M52 76 h112 M52 110 h112 M52 144 h112 M52 178 h112 M236 76 h112 M236 110 h112 M236 144 h112 M236 178 h112"/>
           </g>
-          <text class="svg-print mini-s" x="84" y="22" text-anchor="middle">change log</text>
-          <text class="svg-print mini-s" x="276" y="22" text-anchor="middle">target</text>
-          <text class="svg-hand mini-h" x="40" y="83">I</text><text class="svg-hand mini-h" x="40" y="113">U</text>
-          <text class="svg-hand mini-h red" x="40" y="143">D</text><text class="svg-hand mini-h" x="40" y="173">I</text>
-          <g class="mini-cur"><path class="ink-red" d="M8 0 h14 M16 -6 l6 6 -6 6"/><text class="svg-hand mini-h red" x="62" y="6">LSN</text></g>
-          <path class="ink-blue mini-mv" d="M150 0 H206" marker-end="url(#arrowhead)"/>
-          <g class="mini-ok"><path d="M300 77 l6 6 11 -13"/><path d="M300 107 l6 6 11 -13"/><path d="M300 137 l6 6 11 -13"/><path d="M300 167 l6 6 11 -13"/></g>
+          <text class="svg-print mini-s" x="108" y="30" text-anchor="middle">change log</text>
+          <text class="svg-print mini-s" x="292" y="30" text-anchor="middle">target</text>
+          <text class="svg-hand mini-l" x="68" y="99">INSERT</text><text class="svg-hand mini-l" x="68" y="133">UPDATE</text>
+          <text class="svg-hand mini-l red" x="68" y="167">DELETE</text><text class="svg-hand mini-l" x="68" y="201">INSERT</text>
+          <g class="cf-cur">
+            <text class="svg-hand mini-l red" x="4" y="84">LSN</text>
+            <path class="ink-red" d="M8 95 h34 M35 88 l7 7 -7 7"/>
+            <path class="ink-blue" d="M170 93 H228" marker-end="url(#arrowhead)"/>
+          </g>
+          <g class="cf-ok">
+            <path d="M310 92 l7 7 13 -15"/><path d="M310 126 l7 7 13 -15"/>
+            <path d="M310 160 l7 7 13 -15"/><path d="M310 194 l7 7 13 -15"/>
+          </g>
         </svg>
+        <p class="project-where hand">CDC · replication</p>
         <h4><a href="https://github.com/ayushgawai/capflow" target="_blank" rel="noopener">capflow</a></h4>
-        <p>SQL Server-style change data capture: reads inserts, updates and deletes from a change log, advances commit-LSN cursors, mirrors into warehouse tables and reconciles source vs target row by row.</p>
-        <ul class="facts"><li><b>row-level</b> reconciliation</li><li><b>replay</b> from saved LSN</li></ul>
+        <p>SQL Server-style change data capture: replays inserts, updates and deletes from a change log, advances commit-LSN cursors, and reconciles source vs target row by row.</p>
+        <ul class="facts"><li><b>row-level</b> reconciliation</li><li><b>replay</b> from any saved LSN</li></ul>
         <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/capflow" target="_blank" rel="noopener">Code on GitHub</a></div>
         <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
           <ul>
             <li>Python pipeline; commit-LSN cursors make each apply step resumable and idempotent.</li>
-            <li>Lag reporting between the source log and the mirrored tables.</li>
+            <li>Lag reporting between the source log and the mirrored warehouse tables.</li>
             <li>Backfill and replay from any saved LSN after a failure or schema fix.</li>
           </ul>
         </div></details>

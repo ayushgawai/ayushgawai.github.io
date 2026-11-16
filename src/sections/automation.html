@@ -1,191 +1,351 @@
 <section class="chapter" id="automation" data-tab="Automation" aria-labelledby="automation-title">
   <header class="chapter-head page">
-    <p class="chapter-kicker hand">Zoox perception fleet · Sneakstore.in · release pipelines</p>
+    <p class="chapter-kicker hand">Zoox perception fleet · Sneakstore.in · CI/CD</p>
     <h2 id="automation-title" class="chapter-title">Make the system tell people, so they don’t have to check</h2>
-    <p class="chapter-lede">The perception data-mining fleet runs ~400 miners producing on the order of
-      <span class="marker">90M events a week</span>. The boring question is “is it still working?” Two mechanisms answer it: a scheduled one and an event-driven one — and the sketch runs both.</p>
+    <p class="chapter-lede">Scheduled jobs for things that summarize, event hooks for things that break. Both push the answer to the person who owns it: <span class="marker">compute once, publish once, serve many.</span></p>
   </header>
 
-  <div class="spread page">
-    <figure class="sketch auto-sketch" data-anim data-mode="sched">
-      <div class="auto-dual">
-        <!-- (a) SCHEDULED: compute once, publish once, serve many -->
-        <div class="auto-mech sched" tabindex="0" data-mech="sched" aria-label="Scheduled weekly report: gear turns once a week, aggregates fleet metrics, writes an immutable snapshot to S3, which a dashboard and Slack digest read">
-          <span class="mech-tag">scheduled</span>
-          <svg class="mach draw" viewBox="0 0 470 430" role="img" aria-labelledby="am-sched-t">
-            <title id="am-sched-t">A clock gear turns once a week, aggregates fleet metrics, drops an immutable report page into an S3 bucket; a static dashboard and a Slack digest read it.</title>
-            <g class="boil">
-              <!-- clock gear -->
-              <g id="auto-gear" class="gear">
-                <circle cx="80" cy="84" r="34" class="ink"/>
-                <g class="gear-teeth">
-                  <rect x="74" y="42" width="12" height="12" rx="2" class="ink-thin"/>
-                  <rect x="74" y="114" width="12" height="12" rx="2" class="ink-thin"/>
-                  <rect x="38" y="78" width="12" height="12" rx="2" class="ink-thin"/>
-                  <rect x="110" y="78" width="12" height="12" rx="2" class="ink-thin"/>
-                  <rect x="49" y="53" width="11" height="11" rx="2" class="ink-thin" transform="rotate(45 54.5 58.5)"/>
-                  <rect x="100" y="53" width="11" height="11" rx="2" class="ink-thin" transform="rotate(-45 105.5 58.5)"/>
-                  <rect x="49" y="104" width="11" height="11" rx="2" class="ink-thin" transform="rotate(-45 54.5 109.5)"/>
-                  <rect x="100" y="104" width="11" height="11" rx="2" class="ink-thin" transform="rotate(45 105.5 109.5)"/>
+  <!-- 1 · Zoox: scheduled snapshot vs event-driven tripwire -->
+  <div class="page">
+    <article class="project au-wide" id="p-fleet-reporting">
+      <div class="project-media">
+        <div class="au-dual">
+          <figure class="au-mech" data-anim>
+            <figcaption class="au-tag"><b>Scheduled</b><span> · compute once, serve many</span></figcaption>
+            <svg class="au-svg au-sched" viewBox="0 0 440 560" role="img" aria-labelledby="au-sched-t">
+              <title id="au-sched-t">A weekly cron gear ticks, a job aggregates the week of fleet metrics, an immutable JSON snapshot page drops into an S3 bucket, and a dashboard, a Slack digest and per-owner DMs all read that one snapshot.</title>
+              <!-- cron gear -->
+              <g transform="translate(80 104)">
+                <g class="as-gear">
+                  <path class="ink body" d="M35.6 -11.6 L49.2 -9.4 L48.9 9.3 L36.3 11.8 L34.1 17.4 L40.6 27.6 L27.6 40.5 L17.6 34.5 L11.6 35.7 L9.3 48.6 L-9.6 50.1 L-11.7 36.1 L-17.6 34.5 L-28.1 41.3 L-41.6 28.3 L-33.2 16.9 L-36.4 11.8 L-49.8 9.5 L-49.2 -9.4 L-36.6 -11.9 L-34.2 -17.4 L-40.6 -27.6 L-28.4 -41.8 L-17.3 -34.0 L-11.6 -35.8 L-9.2 -48.2 L9.5 -49.8 L11.7 -36.1 L17.5 -34.2 L28.5 -42.0 L41.7 -28.3 L34.6 -17.6Z"/>
+                  <circle class="ink-thin" r="22"/>
+                  <path class="ink" d="M0 0 V-16 M0 0 L11 6"/>
+                  <circle r="3.5" fill="var(--ink)"/>
                 </g>
-                <path d="M80 62 v22 h16" class="ink-thin"/>
-                <circle cx="80" cy="84" r="3.5" class="ink-thin" fill="var(--ink)"/>
               </g>
-              <text x="80" y="140" text-anchor="middle" class="svg-hand" font-size="16">once / week</text>
-              <!-- pipe from gear to aggregator -->
-              <path d="M118 96 C 150 96, 160 96, 186 96" class="ink"/>
-              <!-- aggregator: little funnel + metrics -->
-              <g class="rough">
-                <path d="M186 60 h56 l-14 28 h-28 z" class="ink"/>
-                <path d="M204 88 h20 v10 h-20 z" class="ink-thin"/>
-                <path d="M196 128 q8 -14 16 0 M218 132 q8 -14 16 0 M186 146 q8 -14 16 0" class="ink-thin" stroke-dasharray="2 3"/>
+              <text class="svg-hand al" x="80" y="186" text-anchor="middle">weekly cron</text>
+              <g class="boil">
+                <path class="ink-blue" d="M134 104 C 146 102, 156 104, 168 103" marker-end="url(#arrowhead)"/>
+                <path class="ink body" d="M178 58 C 260 55, 340 57, 426 56 C 428 90, 427 130, 428 160 C 340 162, 260 161, 178 162 C 176 128, 177 92, 178 58Z"/>
+                <path class="ink-blue" d="M302 166 C 301 178, 303 186, 302 196" marker-end="url(#arrowhead)"/>
               </g>
-              <text x="214" y="168" text-anchor="middle" class="svg-hand" font-size="15">aggregates runs, <tspan x="214" dy="18">failures, volume</tspan></text>
-              <!-- pipe down to snapshot page -->
-              <path d="M214 186 C 214 210, 214 214, 214 228" class="ink"/>
-              <!-- the paper snapshot -->
-              <g class="snap" id="auto-snap">
-                <rect x="178" y="228" width="72" height="88" rx="3" class="ink"/>
-                <text x="214" y="252" text-anchor="middle" class="svg-print" font-size="12" font-weight="700">week 23</text>
-                <path d="M190 264 h48 M190 274 h48 M190 284 h34 M190 294 h48 M190 304 h24" class="ink-thin"/>
-                <path d="M238 306 l6 6 12 -14" class="ink-thin" stroke="var(--green)"/>
+              <text class="svg-hand al" x="302" y="94" text-anchor="middle">aggregate the week</text>
+              <text class="svg-print ap" x="302" y="122" text-anchor="middle">runs · failures</text>
+              <text class="svg-print ap" x="302" y="146" text-anchor="middle">volume · precision</text>
+              <!-- immutable snapshot page (drops into the bucket) -->
+              <g class="as-page">
+                <path class="ink body" d="M262 204 H326 L342 220 V304 H262 Z"/>
+                <path class="ink-thin" d="M326 204 V220 H342"/>
+                <text class="svg-print as-wk" x="300" y="240" text-anchor="middle">wk 23</text>
+                <path class="ink-thin" d="M274 254 H330 M274 268 H330 M274 282 H318 M274 294 H326"/>
               </g>
-              <!-- S3 bucket doodle -->
-              <g class="rough">
-                <path d="M268 258 q46 -18 92 0 v40 q-46 18 -92 0 z" class="ink"/>
-                <ellipse cx="314" cy="258" rx="46" ry="14" class="ink"/>
-                <text x="314" y="290" text-anchor="middle" class="svg-hand" font-size="15">S3</text>
-                <path class="s3-check" d="M292 316 l8 9 14 -17" class="ink" stroke="var(--green)" stroke-width="2.4"/>
+              <text class="svg-hand al" x="244" y="238" text-anchor="end">immutable</text>
+              <text class="svg-hand al" x="244" y="262" text-anchor="end">JSON snapshot</text>
+              <!-- S3 bucket -->
+              <g class="boil">
+                <path class="ink body" d="M236 364 C 238 392, 244 418, 250 440 C 284 452, 320 452, 354 440 C 360 418, 366 392, 368 364"/>
+                <ellipse class="ink body" cx="302" cy="364" rx="66" ry="14"/>
+                <path class="ink-thin" d="M244 400 C 282 412, 322 412, 360 400" stroke-dasharray="3 5"/>
               </g>
-              <!-- two consumers: dashboard + slack -->
-              <g class="consumer rough">
-                <rect x="330" y="330" width="92" height="62" rx="8" class="ink"/>
-                <path d="M342 372 l14 -16 12 10 16 -20 8 8" class="ink-thin" stroke="var(--blue)"/>
-                <text x="376" y="352" text-anchor="middle" class="svg-print" font-size="12" font-weight="600">dashboard</text>
+              <text class="svg-hand al as-s3" x="302" y="432" text-anchor="middle">S3</text>
+              <path class="as-ok" d="M380 340 l8 9 15 -18"/>
+              <text class="svg-print ap" x="226" y="404" text-anchor="end">versioned</text>
+              <text class="svg-print ap" x="226" y="426" text-anchor="end">by week</text>
+              <!-- fan-out to three readers -->
+              <g class="boil">
+                <path class="ink-blue thin as-fan" d="M284 452 C 230 466, 140 462, 104 476" marker-end="url(#arrowhead)"/>
+                <path class="ink-blue thin as-fan" d="M296 454 C 280 462, 256 466, 244 476" marker-end="url(#arrowhead)"/>
+                <path class="ink-blue thin as-fan" d="M320 452 C 344 462, 364 466, 372 476" marker-end="url(#arrowhead)"/>
               </g>
-              <g class="consumer rough">
-                <path d="M430 344 h30 q8 0 8 8 v18 q0 8 -8 8 h-30 q-4 0 -4 -4 v-26 q0 -4 4 -4 z" class="ink-blue"/>
-                <path d="M432 356 q10 -4 20 0 q-10 4 -20 0 M432 366 q10 -4 14 0" class="ink-blue" stroke-width="1.4"/>
+              <g class="as-dot" style="--p:path('M284 452 C 230 466, 140 462, 104 476')"><circle r="5"/></g>
+              <g class="as-dot" style="--p:path('M296 454 C 280 462, 256 466, 244 476')"><circle r="5"/></g>
+              <g class="as-dot" style="--p:path('M320 452 C 344 462, 364 466, 372 476')"><circle r="5"/></g>
+              <!-- readers -->
+              <g class="as-rd" style="--r:0">
+                <rect class="ink body" x="62" y="484" width="72" height="44" rx="4"/>
+                <path class="ink-blue as-chart" d="M70 518 L86 504 L98 512 L112 494 L126 498" pathLength="1"/>
+                <path class="ink-thin" d="M98 528 V536 M86 538 H110"/>
               </g>
-              <text x="386" y="414" text-anchor="middle" class="svg-hand" font-size="15">digest <tspan x="452" dy="-2">+ owner DMs</tspan></text>
-            </g>
-          </svg>
-        </div>
+              <g class="as-rd" style="--r:1">
+                <path class="ink body" d="M212 486 H276 Q284 486 284 494 V516 Q284 524 276 524 H232 L220 536 L222 524 H212 Q204 524 204 516 V494 Q204 486 212 486Z"/>
+                <text class="svg-print as-hash" x="226" y="512">#</text>
+                <path class="ink-thin" d="M240 500 H272 M240 510 H264"/>
+              </g>
+              <g class="as-rd" style="--r:2">
+                <path class="ink body" d="M352 498 h44 v28 h-44z M352 498 l22 15 22 -15"/>
+                <path class="ink body" d="M344 490 h44 v28 h-44z M344 490 l22 15 22 -15"/>
+                <path class="ink body" d="M336 482 h44 v28 h-44z M336 482 l22 15 22 -15"/>
+              </g>
+              <text class="svg-hand al" x="98" y="556" text-anchor="middle">dashboard</text>
+              <text class="svg-hand al" x="244" y="556" text-anchor="middle">digest</text>
+              <text class="svg-hand al" x="370" y="556" text-anchor="middle">owner DMs</text>
+            </svg>
+          </figure>
 
-        <!-- (b) EVENT-DRIVEN: the tripwire -->
-        <div class="auto-mech event" tabindex="0" data-mech="event" aria-label="Event-driven: when a miner run flips to failed, a tripwire rings a bell and an alert with a deep link is sent within minutes">
-          <svg class="mach draw" viewBox="0 0 470 430" role="img" aria-labelledby="am-event-t">
-            <title id="am-event-t">A run state flips to FAILED and trips a wire: a bell rings and an alert with a deep link goes out within minutes; noisy miners stay opt-in, default off.</title>
-            <g class="boil">
-              <!-- run-state machine -->
-              <g class="rough">
-                <rect x="40" y="56" width="112" height="40" rx="20" class="ink-thin"/>
-                <text x="96" y="81" text-anchor="middle" class="svg-print" font-size="14" font-weight="600">RUN</text>
-                <circle class="state-dot" cx="150" cy="76" r="6" fill="var(--green)"/>
+          <figure class="au-mech" data-anim>
+            <figcaption class="au-tag"><b>Event-driven</b><span> · ring on the transition</span></figcaption>
+            <svg class="au-svg au-event" viewBox="0 0 440 560" role="img" aria-labelledby="au-event-t">
+              <title id="au-event-t">A run leaves RUNNING. One succeeds quietly. The next flips to FAILED, crosses a tripwire on that transition, rings a bell, and a Slack alert with the run ID and a deep link slides out within minutes. Alerts are opt-in per miner; backfills default to off.</title>
+              <!-- state machine -->
+              <g class="boil">
+                <rect class="ink body ae-run" x="16" y="74" width="128" height="44" rx="22"/>
+                <rect class="ink body ae-okpill" x="270" y="20" width="156" height="42" rx="21"/>
+                <rect class="ink-red body ae-failpill" x="270" y="132" width="156" height="42" rx="21"/>
+                <path class="ink-thin" d="M146 88 C 196 84, 220 46, 262 42" marker-end="url(#arrowhead)"/>
+                <path class="ink-thin" d="M146 104 C 196 108, 220 148, 262 152" marker-end="url(#arrowhead)"/>
               </g>
-              <path d="M152 88 a12 12 0 0 1 -4 -20" class="ink-thin" stroke-dasharray="3 3"/>
-              <!-- tripwire -->
-              <path d="M180 76 h120" class="ink" />
-              <path d="M180 76 h120" class="ink-red auto-wire-trip" stroke-dasharray="6 4" opacity="0"/>
-              <g class="rough">
-                <path d="M300 56 v40" class="ink-thin"/>
-                <path d="M292 96 l8 10 8 -10" class="ink"/>
+              <text class="svg-print ap b" x="80" y="102" text-anchor="middle">RUNNING</text>
+              <text class="svg-print ap b ae-okt" x="348" y="47" text-anchor="middle">SUCCEEDED</text>
+              <text class="svg-print ap b ae-failt" x="348" y="159" text-anchor="middle">FAILED</text>
+              <!-- tripwire across the FAILED edge -->
+              <g class="ae-wire">
+                <path class="ink-red" d="M212 108 C 214 128, 210 148, 213 170" stroke-width="2.6"/>
+                <path class="ink" d="M204 106 H220 M205 172 H221"/>
               </g>
-              <text x="240" y="52" text-anchor="middle" class="svg-hand" font-size="14">state change trips the wire</text>
+              <text class="svg-hand al red" x="226" y="206">tripwire</text>
+              <!-- run tokens -->
+              <g class="ae-tok ok"><rect x="-9" y="-9" width="18" height="18" rx="3"/></g>
+              <g class="ae-tok bad"><rect x="-9" y="-9" width="18" height="18" rx="3"/></g>
+              <!-- string from the wire down to the bell -->
+              <path class="ink-thin" d="M213 174 C 200 210, 130 200, 104 240" stroke-dasharray="4 4"/>
               <!-- bell -->
-              <g id="auto-bell" class="rough">
-                <path d="M322 130 q0 -26 22 -26 q22 0 22 26 v10 q10 4 8 10 h-68 q-2 -6 8 -10 z" class="ink"/>
-                <path d="M336 156 a8 8 0 0 0 16 0" class="ink-thin"/>
-                <circle cx="344" cy="98" r="4" class="ink-thin"/>
-                <path class="bell-rings" d="M372 108 q14 6 14 22 M380 100 q20 12 20 34" class="ink-red" stroke-width="1.6"/>
-                <path class="bell-rings" d="M316 108 q-14 6 -14 22" class="ink-red" stroke-width="1.6"/>
+              <g transform="translate(100 248)">
+                <g class="ae-bell">
+                  <circle class="ink-thin" cx="0" cy="-2" r="5"/>
+                  <path class="ink body" d="M-34 58 Q-26 50 -26 26 Q-26 4 0 2 Q26 4 26 26 Q26 50 34 58Z"/>
+                  <path class="ink" d="M-38 59 H38"/>
+                  <circle class="ink-thin" cx="0" cy="66" r="6"/>
+                </g>
+                <g class="ae-ring">
+                  <path class="ink-red" d="M38 10 q14 14 10 36"/>
+                  <path class="ink-red" d="M48 0 q22 22 14 52"/>
+                  <path class="ink-red" d="M-38 10 q-14 14 -10 36"/>
+                </g>
               </g>
-              <text x="344" y="196" text-anchor="middle" class="svg-hand" font-size="14">within minutes</text>
-              <!-- alert card -->
-              <g id="auto-alert" class="rough auto-alert-card">
-                <rect x="250" y="220" width="180" height="86" rx="6" class="ink"/>
-                <path d="M266 238 h148" class="ink-thin"/>
-                <path d="M266 244 v14 q0 10 10 10 h40 q10 0 10 -10 v-14 z" class="ink-thin" transform="scale(.55) translate(212 214)"/>
-                <text x="268" y="248" class="svg-print" font-size="12" font-weight="700" fill="var(--red)">FAILED</text>
-                <text x="268" y="272" class="svg-hand" font-size="14">miner · run · time</text>
-                <text x="268" y="292" class="svg-hand" font-size="14">deep link ↗</text>
+              <text class="svg-hand al red" x="100" y="356" text-anchor="middle">within minutes</text>
+              <!-- Slack alert card -->
+              <g class="ae-card">
+                <rect class="ink body" x="196" y="236" width="234" height="112" rx="8"/>
+                <circle cx="216" cy="264" r="6" fill="var(--red)"/>
+                <text class="svg-print ap b" x="230" y="270">miner run FAILED</text>
+                <text class="svg-print ap" x="212" y="300">miner · run ID · time</text>
+                <text class="svg-hand al ae-link" x="212" y="330">open the run ↗</text>
+                <path class="ink-blue thin" d="M212 336 H338"/>
               </g>
-              <!-- run states: ok vs failed -->
-              <g class="rough">
-                <rect x="60" y="252" width="92" height="34" rx="17" class="ink-thin"/>
-                <text x="106" y="273" text-anchor="middle" class="svg-print" font-size="13">RUNNING… ok</text>
-                <rect x="60" y="300" width="92" height="34" rx="17" class="ink-red"/>
-                <text x="106" y="321" text-anchor="middle" class="svg-print" font-size="13" fill="var(--red)">FAILED</text>
+              <!-- opt-in switches -->
+              <g class="boil">
+                <rect class="ink body" x="20" y="410" width="64" height="32" rx="16"/>
+                <rect class="ink body" x="20" y="468" width="64" height="32" rx="16"/>
               </g>
-              <path d="M152 268 h40 v18 h-40" class="ink-thin" marker-end="url(#arrowhead)"/>
-              <text x="236" y="272" class="svg-hand" font-size="13">the flip rings the bell</text>
-              <!-- opt-in note -->
-              <g class="rough">
-                <rect x="60" y="356" width="180" height="48" rx="6" class="ink-thin"/>
-                <text x="72" y="376" class="svg-hand" font-size="13.5">opt-in per miner — noisy</text>
-                <text x="72" y="394" class="svg-hand" font-size="13.5">backfills default to off</text>
-              </g>
-            </g>
-          </svg>
+              <circle cx="68" cy="426" r="11" fill="var(--blue)"/>
+              <circle class="ink-thin" cx="36" cy="484" r="11" fill="var(--paper-card)"/>
+              <text class="svg-hand al" x="100" y="432">alerts on: opted in</text>
+              <text class="svg-hand al pencil" x="100" y="490">backfill: off by default</text>
+              <text class="svg-print ap" x="20" y="540">missing config key = opted out</text>
+            </svg>
+          </figure>
         </div>
       </div>
 
-      <figcaption class="auto-modes">
-        <span class="hand" id="auto-mode-note">Left runs on the clock. Right runs on the event. Pick a mechanism — the sketch shows which one.</span>
-      </figcaption>
-    </figure>
-
-    <div class="notes">
-      <h3>Two mechanisms, one philosophy</h3>
-      <p><b>Scheduled</b> — the weekly fleet report. A gear turns once a week, aggregates runs, failures and mined volume, and writes one immutable JSON snapshot to S3. The static dashboard, the Slack digest and each owner’s DM all read <i>the same</i> published artifact: <span class="marker">compute once, publish once, serve many.</span></p>
-      <p><b>Event-driven</b> — near-real-time failure alerts. The tripwire sits exactly where a run’s state changes: when a run flips to FAILED, the bell rings and an alert with a deep link is out <i>within minutes</i>. Opt-in per miner, default off, so noisy backfills don’t page the team.</p>
-      <p>Failure discovery moved from days (a periodic team review) to minutes.</p>
-
-      <h3>Sneakstore.in, the shop-floor version</h3>
-      <p>Before the data jobs: as founder of Sneakstore.in (2020–22), a bootstrapped sneaker resale turned e-commerce, the same idea showed up at the register. Every order, payment and shipment below is a small automation that made the shop run itself.</p>
-      <p class="meta">Ran paid Instagram, Facebook and Google Ads daily for two years, A/B testing creatives and audiences while tracking ROAS.</p>
-    </div>
+      <div class="project-body">
+        <div class="au-head">
+          <p class="project-where hand">Zoox · Perception data-mining fleet · 2026</p>
+          <h3 class="project-title">Weekly snapshots for the fleet, a tripwire for failures</h3>
+          <p class="project-sum">A scheduled job aggregates the last complete Monday-to-Monday window into an immutable, versioned JSON snapshot on S3; a zero-backend TypeScript + Chart.js dashboard, a Slack digest and per-owner DMs all read that one artifact. Failure alerts hook the miner run-state transition instead of polling, so a FAILED run reaches its owner with the run ID and a deep link within minutes.</p>
+          <div class="btn-row"><a class="btn blue" href="#p-slackbot">The ops bot reads the same snapshot</a></div>
+        </div>
+        <ul class="facts">
+          <li><b>days → minutes</b> failure discovery</li>
+          <li><b>~409</b> active miners in each report</li>
+          <li><b>1 snapshot</b> dashboard · digest · DMs</li>
+          <li><b>opt-in</b> alerts per miner, default off</li>
+        </ul>
+        <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
+          <h4>Scheduled: weekly fleet report</h4>
+          <ul>
+            <li>Flow: platform Postgres → Python/SQL aggregation → <code>performance_report_&lt;week&gt;.json</code> → S3 → <code>manifest.json</code> → dashboard and Slack. Deployed as a recurring Airflow workload.</li>
+            <li>Metrics over the previous complete Monday-to-Monday window: active miners, runs, success and failure rates, mined-event volume, owner- and miner-level performance, validation precision, failure concentration, week-over-week comparisons.</li>
+            <li>Snapshots are immutable once published; the manifest gives the dashboard the available history. Computation is separated from presentation: the expensive aggregation runs once and every consumer reads the same artifact.</li>
+          </ul>
+          <h4>Zero-backend dashboard</h4>
+          <p>Vite + TypeScript + Chart.js, static HTML/CSS loading the published snapshots directly. No application backend: cheap to serve, reproducible, and isolated from the production platform. Fleet KPI cards, a filterable and sortable miner table, owner and miner filters, computed insights (miners driving disproportionate failures, high-volume miners with low precision, week-over-week trends), detail drawers and shareable URL state.</p>
+          <h4>Push delivery</h4>
+          <ul>
+            <li>A shared Slack notification utility with a Vault-backed bot token and least-privilege policies became the delivery primitive for digests, owner summaries, failure alerts and interactive tooling.</li>
+            <li>The weekly digest posts fleet health, volume, failures, precision and notable miners with dashboard links; each owner gets a DM of only their miners with a dashboard link pre-filtered to their scope.</li>
+          </ul>
+          <h4>Event-driven: failure alerts</h4>
+          <ul>
+            <li>Notification logic sits in the miner run-state transition: on <code>FAILED</code> the owner or channel gets miner identity, run ID, state, timestamp and a deep link to the run.</li>
+            <li>Why not poll: the transition is the most accurate place to detect failure. Hooking it cut detection latency, duplicate logic and unnecessary database scans. Weekly analytics stay scheduled; failures are delivered on the event.</li>
+            <li>Opt-in control: a per-miner notification key in the miner config, exposed in the UI with a precise read-modify-write of only that key so other settings stay untouched. A missing key means opted out, so noisy backfills and experiments stay quiet without a new config database.</li>
+          </ul>
+          <p>Internal work, so no public repository.</p>
+        </div></details>
+      </div>
+    </article>
   </div>
 
-  <!-- Rube-Goldberg strip: the commerce pipeline -->
-  <div class="page auto-strip">
-    <p class="hand strip-kicker">order → paid → shipped → tracked — no one touches it</p>
-    <ol class="strip" data-anim>
-      <li class="card tilt-l">
-        <span class="tape"></span>
-        <b class="hand">order</b>
-        <p>Customer buys on the store; WooCommerce emits the order event.</p>
-      </li>
-      <li class="card">
-        <b class="hand">payment</b>
-        <p>Instamojo webhook confirms it, and the payment is reconciled against the ledger before anything ships.</p>
-      </li>
-      <li class="card tilt-r">
-        <b class="hand">shipment</b>
-        <p>A Shiprocket shipment is created automatically; the tracking ID is generated with no manual courier step.</p>
-      </li>
-      <li class="card">
-        <b class="hand">tracking</b>
-        <p>Shipping status syncs back to the customer. Funnel and cohort dashboards plus A/B tests decide what to change next.</p>
-      </li>
-    </ol>
-    <p class="meta strip-fine">Feb 2020 – Aug 2022 · bootstrapped · first-hand measurement of channels, funnels, ROAS.</p>
+  <!-- 2 · Sneakstore: order-to-doorstep Rube Goldberg -->
+  <div class="page">
+    <article class="project" id="p-sneakstore">
+      <div class="project-media" data-anim>
+        <svg class="au-svg au-shop" viewBox="0 0 520 420" role="img" aria-labelledby="au-shop-t">
+          <title id="au-shop-t">A Rube Goldberg strip: an order drops a ball that hits the payment webhook receipt, which stamps PAID; it tips a reconciliation scale, falls down a chute into a Shiprocket parcel that gets a tracking label, and rolls on to a phone that lights up with a shipped status.</title>
+          <text class="svg-hand al" x="70" y="30" text-anchor="middle">order</text>
+          <text class="svg-hand al" x="250" y="30" text-anchor="middle">payment webhook</text>
+          <text class="svg-hand al" x="432" y="30" text-anchor="middle">reconcile</text>
+          <!-- ramps -->
+          <g class="boil">
+            <path class="ink" d="M30 150 C 90 157, 150 164, 216 172" stroke-width="3"/>
+            <path class="ink" d="M282 176 C 316 180, 346 183, 380 186" stroke-width="3"/>
+            <path class="ink" d="M496 206 V288 M474 214 V272" stroke-width="3"/>
+            <path class="ink" d="M500 298 C 400 312, 290 322, 150 336" stroke-width="3"/>
+            <path class="ink-thin" d="M36 150 l-6 12 M70 154 l-6 12 M104 158 l-6 12 M138 162 l-6 12 M172 166 l-6 12 M206 170 l-6 12"/>
+            <path class="ink-thin" d="M290 177 l-6 12 M324 181 l-6 12 M358 185 l-6 12"/>
+            <path class="ink-thin" d="M460 304 l-6 12 M420 308 l-6 12 M380 312 l-6 12 M340 316 l-6 12 M300 320 l-6 12 M260 324 l-6 12 M220 328 l-6 12 M180 332 l-6 12"/>
+          </g>
+          <!-- 1 · order: shopping bag -->
+          <g class="boil">
+            <path class="ink body" d="M44 76 H96 L100 136 H40 Z"/>
+            <path class="ink" d="M58 76 C 58 54, 82 54, 82 76"/>
+            <path class="ink-thin" d="M52 118 C 54 106, 62 102, 68 108 C 74 112, 84 112, 88 116 Q 90 120 86 122 H52 Z"/>
+          </g>
+          <!-- ball -->
+          <circle class="ss-ball" r="9"/>
+          <!-- 2 · webhook receipt -->
+          <g class="ss-receipt">
+            <path class="ink body" d="M222 60 H278 V162 L271 156 L264 162 L257 156 L250 162 L243 156 L236 162 L229 156 L222 162 Z"/>
+            <path class="ink-thin" d="M232 78 H268 M232 92 H262 M232 106 H268"/>
+            <g class="ss-paid"><rect x="226" y="118" width="48" height="26" rx="4" class="ss-stamp"/><text class="svg-print ap b ss-paidt" x="250" y="137" text-anchor="middle">PAID</text></g>
+          </g>
+          <!-- 3 · reconciliation scale -->
+          <g class="boil">
+            <path class="ink" d="M432 198 V140 M410 200 H454"/>
+          </g>
+          <g class="ss-beam">
+            <path class="ink" d="M394 140 H470"/>
+            <path class="ink-thin" d="M400 140 L388 170 M400 140 L412 170 M464 140 L452 170 M464 140 L476 170"/>
+            <path class="ink body" d="M382 170 Q400 184 418 170 Z"/>
+            <path class="ink body" d="M446 170 Q464 184 482 170 Z"/>
+          </g>
+          <circle cx="432" cy="140" r="4.5" fill="var(--ink)"/>
+          <text class="svg-print ap" x="432" y="70" text-anchor="middle">paid = ledger</text>
+          <path class="ss-ok" d="M418 96 l8 9 15 -18"/>
+          <!-- 4 · Shiprocket parcel -->
+          <g class="boil">
+            <path class="ink body" d="M344 262 H414 V312 H344 Z"/>
+            <path class="ink-thin" d="M379 262 V312 M344 278 H414"/>
+          </g>
+          <g class="ss-awb"><rect class="ink-blue body" x="352" y="286" width="44" height="20" rx="2"/><text class="svg-print ss-awbt" x="374" y="301" text-anchor="middle">AWB</text></g>
+          <!-- 5 · phone -->
+          <g class="boil">
+            <rect class="ink body" x="84" y="232" width="56" height="96" rx="9"/>
+            <path class="ink-thin" d="M104 320 H120"/>
+          </g>
+          <g class="ss-phone">
+            <rect x="92" y="246" width="40" height="64" rx="2" class="ss-screen"/>
+            <path class="ss-tick" d="M101 278 l7 8 14 -17"/>
+          </g>
+          <text class="svg-hand al" x="379" y="370" text-anchor="middle">Shiprocket shipment</text>
+          <text class="svg-print ap" x="379" y="394" text-anchor="middle">auto + tracking ID</text>
+          <text class="svg-hand al" x="112" y="370" text-anchor="middle">status → customer</text>
+        </svg>
+      </div>
+      <div class="project-body">
+        <p class="project-where hand">Sneakstore.in · Founder · 2020–2022</p>
+        <h3 class="project-title">Order to doorstep with no manual courier step</h3>
+        <p class="project-sum">A WooCommerce order triggers an Instamojo payment whose webhook confirms the transaction; payment status is reconciled before fulfilment. A confirmed order auto-creates a Shiprocket shipment, generates the tracking ID and syncs shipping status back to the customer.</p>
+        <ul class="facts">
+          <li><b>webhook</b> payment confirm + reconcile</li>
+          <li><b>auto</b> shipment + tracking ID</li>
+          <li><b>2 years</b> daily paid ads on ROAS</li>
+        </ul>
+        <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
+          <h4>From offline resale to a store</h4>
+          <p>Bootstrapped sneaker resale (Feb 2020 – Aug 2022) that outgrew manual operations: inventory visibility, inconsistent pricing and unpredictable repeat rates. Built a WooCommerce storefront with custom front-end workflows and inventory logic; managed hosting, deployment and SSL.</p>
+          <h4>Payments (Instamojo)</h4>
+          <ul>
+            <li>Gateway integration with webhooks for order confirmation and transaction validation.</li>
+            <li>Payment-status reconciliation and refund logic; error handling for failed transactions.</li>
+          </ul>
+          <h4>Logistics (Shiprocket)</h4>
+          <ul>
+            <li>Shipment creation automated from order triggers; tracking IDs generated by the API.</li>
+            <li>Shipping status synced back to customers, replacing manual courier handling.</li>
+          </ul>
+          <h4>Measurement</h4>
+          <ul>
+            <li>Google Analytics plus SQL exports and Python analysis: acquisition channels, conversion, cart abandonment, repeat purchase, AOV, cohorts; funnel dashboards to find drop-offs.</li>
+            <li>A/B tests on pricing tiers and promotional creatives; paid Instagram, Facebook and Google Ads run daily for two years, testing creatives and audiences against ROAS.</li>
+          </ul>
+        </div></details>
+      </div>
+    </article>
   </div>
 
-  <!-- CI/CD habits -->
-  <div class="page auto-cicd">
-    <h3 class="hand">Release pipelines stay boring on purpose</h3>
-    <div class="cicd-grid">
-      <div class="card tilt-l">
-        <span class="tape"></span>
-        <b>Coditas</b>
-        <p>Dockerized Spring Boot services with GitLab CI pipelines: automated build and deploy kept staging and production in parity, cutting the release cycle by <span class="marker">~17%</span>.</p>
+  <!-- 3 · CI/CD -->
+  <div class="page">
+    <article class="project flip" id="p-cicd">
+      <div class="project-media" data-anim>
+        <svg class="au-svg au-ci" viewBox="0 0 520 260" role="img" aria-labelledby="au-ci-t">
+          <title id="au-ci-t">A CI pipeline of five stages: commit, build, schema, SQL tests, deploy. On the first run the schema check catches drift and blocks the change; on the next run every stage gets a green check and it deploys.</title>
+          <g class="boil">
+            <path class="ink" d="M60 132 C 160 129, 360 134, 460 131" stroke-width="3"/>
+          </g>
+          <g class="ci-st">
+            <circle class="ink body" cx="60" cy="132" r="30"/>
+            <circle class="ink body" cx="160" cy="132" r="30"/>
+            <circle class="ink body ci-schema" cx="260" cy="132" r="30"/>
+            <circle class="ink body" cx="360" cy="132" r="30"/>
+            <circle class="ink body ci-deploy" cx="460" cy="132" r="30"/>
+          </g>
+          <!-- stage glyphs -->
+          <path class="ink-thin" d="M60 116 V148 M60 126 C 72 126, 72 136, 72 140"/><circle class="ink-thin" cx="60" cy="132" r="5" fill="var(--paper-card)"/>
+          <path class="ink-thin" d="M146 122 H174 V146 H146 Z M146 130 H174 M155 122 V146 M165 122 V146"/>
+          <path class="ink-thin" d="M244 120 H276 V146 H244 Z M244 128 H276 M244 137 H276 M256 120 V146"/>
+          <path class="ink-thin" d="M346 122 l4 4 7 -8 M346 134 l4 4 7 -8 M346 146 l4 4 7 -8 M362 122 H376 M362 134 H376 M362 146 H376"/>
+          <path class="ink-thin" d="M446 120 H474 V130 H446 Z M446 134 H474 V144 H446 Z"/>
+          <!-- token -->
+          <g class="ci-tok"><rect x="-10" y="-10" width="20" height="20" rx="4"/></g>
+          <!-- result marks -->
+          <path class="ci-ok" style="--c:0" d="M44 84 l7 8 14 -17"/>
+          <path class="ci-ok" style="--c:1" d="M144 84 l7 8 14 -17"/>
+          <path class="ci-ok" style="--c:2" d="M244 84 l7 8 14 -17"/>
+          <path class="ci-ok" style="--c:3" d="M344 84 l7 8 14 -17"/>
+          <path class="ci-ok" style="--c:4" d="M444 84 l7 8 14 -17"/>
+          <path class="ci-x" d="M250 72 l20 20 M270 72 l-20 20"/>
+          <text class="svg-hand al red ci-note" x="260" y="44" text-anchor="middle">drift → blocked</text>
+          <text class="svg-hand al ci-ship" x="500" y="44" text-anchor="end">prod parity</text>
+          <text class="svg-hand al" x="60" y="196" text-anchor="middle">commit</text>
+          <text class="svg-hand al" x="160" y="226" text-anchor="middle">build</text>
+          <text class="svg-hand al" x="260" y="196" text-anchor="middle">schema</text>
+          <text class="svg-hand al" x="360" y="226" text-anchor="middle">SQL tests</text>
+          <text class="svg-hand al" x="460" y="196" text-anchor="middle">deploy</text>
+        </svg>
       </div>
-      <div class="card tilt-r">
-        <span class="tape"></span>
-        <b>Zscaler</b>
-        <p>Git-based workflows with automated schema checks and SQL tests in GitHub Actions; Docker standardized the environment so “works on my machine” stopped being an excuse.</p>
+      <div class="project-body">
+        <p class="project-where hand">Coditas 2021 · Zscaler 2024–2025</p>
+        <h3 class="project-title">Release pipelines that refuse bad changes</h3>
+        <p class="project-sum">At Coditas, Spring Boot services were Dockerized and shipped through GitLab CI with automated build and deploy, keeping staging and production at parity. At Zscaler, Git workflows ran automated schema checks and SQL tests in GitHub Actions, with Docker pinning the environment.</p>
+        <ul class="facts">
+          <li><b>~17%</b> shorter release cycle</li>
+          <li><b>GitLab CI</b> Docker images</li>
+          <li><b>GitHub Actions</b> schema + SQL tests</li>
+        </ul>
+        <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
+          <h4>Coditas · Software Engineer Intern · Feb–Aug 2021</h4>
+          <ul>
+            <li>Healthcare client, production Java/Spring Boot microservices. Dockerized the services, configured GitLab CI pipelines and automated build and deploy steps for staging/production parity: release cycle ~17% shorter, fewer human deployment errors.</li>
+            <li>Same engagement: thread handling, connection pooling, caching and fewer redundant DB calls cut request failures ~33%; PostgreSQL indexing and join cleanup with Liquibase-versioned migrations gave ~2.5× query performance.</li>
+          </ul>
+          <h4>Zscaler · Data Engineer · 2024–2025</h4>
+          <ul>
+            <li>Git-based workflows with automated schema checks and SQL tests in GitHub Actions around the dbt/Snowflake models.</li>
+            <li>Docker standardized environments; debugged dependency conflicts, upstream API schema changes, compiler/runtime mismatches and environment misconfigurations.</li>
+          </ul>
+        </div></details>
       </div>
-    </div>
+    </article>
   </div>
 </section>

@@ -2,7 +2,7 @@
 #av .av-stage { position: relative; }
 
 /* street sketch */
-#av .av-fig { margin: 0 0 calc(var(--u) * 2); }
+#av .av-fig { max-width: 1680px; margin: 0 auto calc(var(--u) * 2); }
 #av .av-street { width: 100%; height: auto; overflow: hidden; }
 #av .av-fig figcaption { color: var(--ink-2); max-width: 70ch; }
 
@@ -49,11 +49,11 @@
 
 /* flying event card */
 #av .av-card {
-  position: absolute; left: 0; top: 0; z-index: 6; pointer-events: none; width: 128px;
+  position: absolute; left: 0; top: 0; z-index: 6; pointer-events: none; width: 156px;
   padding: 8px 10px 9px; background: var(--paper-card); box-shadow: var(--shadow-card); border-left: 3px solid var(--red);
-  font: 500 13px/1.25 var(--f-hand); color: var(--ink); will-change: transform, opacity;
+  font: 500 15px/1.25 var(--f-hand); color: var(--ink); will-change: transform, opacity;
 }
-#av .av-card b { display: block; font: 700 11px/1.2 var(--f-print); color: var(--ink-3); letter-spacing: .02em; }
+#av .av-card b { display: block; font: 700 14px/1.2 var(--f-print); color: var(--ink-3); letter-spacing: .02em; }
 
 /* ---------- pipeline ---------- */
 #av .av-flow-wrap { position: relative; }
@@ -92,7 +92,7 @@
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 22'%3E%3Cpath d='M3 12C13 10 26 12.5 39 11M31 4.5L40 11 32 17.5' fill='none' stroke='%231F2329' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;
 }
 #av .av-st:nth-child(4)::after { /* swoop down into the loop */
-  width: 40px; height: 150px; top: 40px; right: -42px;
+  width: 34px; height: 150px; top: 40px; right: -34px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 150'%3E%3Cpath d='M4 4C34 18 38 90 14 144M8 133L14 145 25 138' fill='none' stroke='%231F2329' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 #av .av-st:nth-child(5)::after, #av .av-st:nth-child(6)::after { right: auto; left: -46px; transform: scaleX(-1); }
@@ -117,34 +117,34 @@
 #av .av-retry path { fill: none; stroke: var(--red); stroke-width: 1.8; stroke-linecap: round; vector-effect: non-scaling-stroke; }
 #av .av-st-loop.retry .av-retry { opacity: 1; }
 
-/* ---------- notes ---------- */
-#av .av-spread { margin-top: calc(var(--u) * 4); }
-#av .notes b { font-weight: 700; }
-#av .av-rule { margin: 12px 0 calc(var(--u) * 1.5); padding: calc(var(--u) * 1.25) var(--u) var(--u); }
-#av .av-rule .hand { font-size: var(--t-lg); line-height: 1.4; margin: 0 0 .5em; font-variation-settings: "INFM" 70, "BNCE" 30; }
-#av .av-rule .meta { margin: 0; }
+/* ---------- Zoox project block: text left, facts stacked right ---------- */
+#av .av-zoox { display: block; margin-top: calc(var(--u) * 4); }
+#av .av-zoox .project-body { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: calc(var(--u) * 2); align-items: start; }
+#av .av-zoox .project-sum { max-width: 54ch; }
+#av .av-zoox .facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--u) calc(var(--u) * 1.5); margin: 4px 0 0; padding: var(--u); background: var(--paper-card); box-shadow: var(--shadow-card); transform: rotate(.6deg); }
+#av .av-zoox .facts b { font-size: 1.75rem; }
+#av .av-stack { color: var(--ink-2); font-size: var(--t-sm); }
+#av .deep-body p { margin: 0 0 .6em; }
 
-/* side projects */
-#av .av-side { margin-top: calc(var(--u) * 3); }
-#av .av-side-h { font-size: var(--t-lg); margin: 0 0 var(--u); letter-spacing: -.01em; }
-#av .av-side-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(var(--u) * 2); }
-@media (max-width: 900px) { #av .av-side-grid { grid-template-columns: 1fr; gap: var(--u); } }
-#av .av-formula { margin-top: calc(var(--u) * 1.5); padding: var(--u) 0 0; border-top: 1.5px dashed var(--grid-major); }
-#av .av-formula p { margin: 0 0 10px; }
-#av .av-formula .hand.red { font-size: var(--t-sm); margin-top: 12px; }
-#av .av-frac { display: flex; align-items: center; gap: 12px; font: 600 var(--t-md)/1.3 var(--f-print); }
-#av .av-fr { display: inline-flex; flex-direction: column; text-align: center; font-size: var(--t-sm); }
-#av .av-fr span:first-child { padding: 0 6px 5px; border-bottom: 2px solid var(--ink); }
-#av .av-fr span:last-child { padding-top: 5px; }
-#av .av-proj { padding: var(--u); }
-#av .av-proj svg { width: 100%; max-width: 320px; height: auto; margin: 0 0 12px; overflow: visible; }
-#av .av-proj h4 { font-size: var(--t-md); margin: 0 0 .4em; }
-#av .av-proj p { font-size: var(--t-sm); margin: 0; color: var(--ink-2); }
+/* ---------- side-project sketches ---------- */
+#av .av-proj .project-media svg { max-width: 540px; margin: 0 auto; }
 #av .av-hatbar { fill: url(#hatch); }
-#av .av-bl { font-size: 13px; }
+#av .av-bl { font-size: 17px; }
 #av .av-bl.red { fill: var(--red); font-weight: 700; }
-#av .av-bv { font-size: 12px; font-weight: 700; fill: var(--ink-2); }
+#av .av-bl.pencil { fill: var(--ink-2); }
+#av .av-bv { font-size: 17px; font-weight: 700; fill: var(--ink-2); }
+#av .av-bv.red { fill: var(--red); }
 #av .av-dots circle { fill: var(--ink); }
+/* bars grow in sequence, then the hybrid gets its red circle; loops while visible */
+#av .av-bar { transform-box: view-box; transform-origin: 0 200px; animation: av-grow 7s var(--ease-out) infinite; animation-delay: calc(var(--i) * .35s); }
+@keyframes av-grow { 0% { transform: scaleY(0); opacity: 0; } 12%, 88% { transform: scaleY(1); opacity: 1; } 100% { transform: scaleY(1); opacity: 0; } }
+#av .av-ring-s { fill: none; stroke: var(--red); stroke-width: 2.6; stroke-linecap: round; stroke-dasharray: 1; opacity: 1; animation: av-circle 7s ease-out infinite; }
+@keyframes av-circle { 0%, 30% { stroke-dashoffset: 1; opacity: 1; } 42%, 88% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+/* positions tick in at 10 Hz, then the futures fan out */
+#av .av-dots circle { animation: av-dot 6s linear infinite; animation-delay: calc(var(--i) * .1s); }
+@keyframes av-dot { 0% { opacity: 0; } 3%, 90% { opacity: 1; } 100% { opacity: 0; } }
+#av .av-fut { stroke-dasharray: 1; stroke-dashoffset: 1; animation: av-fut 6s ease-out infinite; animation-delay: calc(2.2s + var(--i) * .25s); }
+@keyframes av-fut { 0% { stroke-dashoffset: 1; opacity: 1; } 30%, 50% { stroke-dashoffset: 0; opacity: 1; } 63%, 100% { stroke-dashoffset: 0; opacity: 0; } }
 
 /* ---------- small screens: vertical pipeline ---------- */
 @media (max-width: 900px) {
@@ -162,8 +162,6 @@
 @media (max-width: 700px) {
   #av .av-tag { font-size: 25px; }
   #av .av-note-t { font-size: 24px; }
-  #av .av-fig { margin-left: calc(var(--gutter) * -1); margin-right: calc(var(--gutter) * -1); }
-  #av .av-fig figcaption { padding: 0 var(--gutter); }
   #av .av-loop { gap: 8px 26px; }
 }
 @media (max-width: 600px) {
@@ -173,8 +171,13 @@
   #av .av-st::after, #av .av-st:nth-child(n)::after { bottom: -34px; }
 }
 
+@media (max-width: 900px) {
+  #av .av-zoox .project-body { grid-template-columns: 1fr; gap: var(--u); }
+  #av .av-zoox .facts { transform: none; }
+}
 @media (prefers-reduced-motion: reduce) {
-  #av .av-sweep, #av .av-spin, #av .av-leg { animation: none; }
+  #av .av-sweep, #av .av-spin, #av .av-leg, #av .av-bar, #av .av-ring-s, #av .av-dots circle, #av .av-fut { animation: none; }
+  #av .av-ring-s, #av .av-fut { stroke-dashoffset: 0; }
 }
 #av .av-glass-h { fill: url(#hatch); opacity: .55; }
 #av .av-shine { stroke: var(--paper-card); stroke-width: 3.5; stroke-linecap: round; fill: none; }
@@ -186,5 +189,5 @@
 #av .av-obj.hit .av-ring { opacity: 1; }
 #av .av-k { align-self: flex-start; }
 #av .av-eg { display: block; margin-top: 6px; padding-top: 10px; border-top: 1.25px dashed var(--grid-major); font-size: var(--t-sm); line-height: 1.5; }
-#av .av-eg code { font: 600 .8125rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--ink); background: rgba(255, 224, 70, .35); padding: 1px 5px; border-radius: 3px; white-space: nowrap; }
+#av .av-eg code { font: 600 .875rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--ink); background: rgba(255, 224, 70, .35); padding: 1px 5px; border-radius: 3px; white-space: nowrap; }
 #av .av-bv.red { fill: var(--red); }
