@@ -1,0 +1,68 @@
+/* ---------- hero / cover: the tool mobile ---------- */
+#top.hero {
+  position: relative;
+  min-height: min(100vh, 1000px);
+  min-height: min(100svh, 1000px);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 0 calc(var(--u) * 2);
+  overflow: hidden;
+}
+#top .hero-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  touch-action: pan-y; -webkit-tap-highlight-color: transparent;
+}
+
+#top .hero-copy {
+  position: relative; z-index: 1; pointer-events: none;
+  
+}
+#top .hero-copy a, #top .hero-copy button { pointer-events: auto; }
+#top .hero-main { position: relative; max-width: 50rem; }
+
+#top .hero-name {
+  font: 800 var(--t-hero)/.88 var(--f-print); letter-spacing: -.045em; margin: 0 0 calc(var(--u) * .75) -.04em;
+}
+#top .hero-lede { font-size: var(--t-lg); line-height: 1.4; color: var(--ink); max-width: 34ch; margin-bottom: calc(var(--u) / 2); }
+#top .hero-facts { font-size: var(--t-md); line-height: 1.55; color: var(--ink-2); max-width: 60ch; margin-bottom: calc(var(--u) / 2); }
+#top .hero-status { font-size: var(--t-md); margin: 0; transform: rotate(-.8deg); transform-origin: left; max-width: 44ch; }
+#top .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: calc(var(--u) / 2); margin-top: var(--u); }
+#top .hero-social { font-size: var(--t-sm); color: var(--ink-3); margin-left: calc(var(--u) / 2); }
+#top .hero-social a { color: var(--ink-2); font-weight: 600; padding: 10px 2px; }
+#top .hero-social a:hover { color: var(--blue); }
+
+/* the "there's a breeze" note, with an arrow up at the mobile */
+#top .hero-hint {
+  position: absolute; right: 0; top: calc(var(--u) * -2.2); margin: 0;
+  display: flex; align-items: flex-start; gap: 4px; font-size: var(--t-md); color: var(--blue);
+  transform: rotate(-3deg); white-space: nowrap;
+}
+#top .hero-hint-arrow { flex: none; margin-top: -30px; overflow: visible; }
+#top .hero-hint-touch { display: none; }
+@media (hover: none) { #top .hero-hint-fine { display: none; } #top .hero-hint-touch { display: inline; } }
+
+/* the note a tag opens */
+#top .hero-note {
+  position: absolute; left: 0; top: 0; z-index: 3; width: 17rem; padding: 18px 16px 12px;
+  will-change: transform; pointer-events: auto;
+}
+#top .hero-note[hidden] { display: none; }
+#top .hero-note .tape { width: 64px; height: 20px; top: -9px; }
+#top .hero-note-name { font: 700 var(--t-lg)/1.1 var(--f-hand); color: var(--ink); margin: 0 0 6px; }
+#top .hero-note-line { font: 500 var(--t-md)/1.45 var(--f-hand); color: var(--blue); margin: 0; font-variation-settings: "INFM" 60, "BNCE" 15; }
+
+/* one orchestrated entrance: stars ink in, tags drop (canvas), then the name */
+@media (prefers-reduced-motion: no-preference) {
+  #top .hero-copy { animation: hero-rise .7s var(--ease-out) .95s both; }
+}
+@keyframes hero-rise { from { opacity: 0; transform: translateY(14px); } }
+
+
+@media (max-width: 760px) {
+  #top.hero { min-height: 0; justify-content: flex-start; padding-top: max(420px, 58svh); padding-bottom: calc(var(--u) * 2.5); }
+  #top .hero-name { margin-bottom: calc(var(--u) / 2); }
+  #top .hero-lede { font-size: var(--t-md); }
+  #top .hero-hint { position: relative; top: auto; right: auto; justify-content: flex-end; margin: 0 0 6px; font-size: var(--t-sm); white-space: normal; text-align: right; }
+  #top .hero-hint-arrow { margin-top: -26px; width: 34px; height: 40px; }
+  #top .hero-social { margin-left: 4px; }
+  #top .hero-note { width: min(17rem, calc(100vw - 32px)); }
+}

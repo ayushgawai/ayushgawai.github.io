@@ -1,3 +1,7 @@
 .vscode/
 .DS_Store
 *.log
+.env
+.continue/
+node_modules/
+.qa/

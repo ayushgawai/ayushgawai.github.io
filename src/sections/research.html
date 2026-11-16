@@ -1,0 +1,232 @@
+<section class="chapter" id="research" data-tab="Research" aria-labelledby="research-title">
+  <header class="chapter-head page">
+    <p class="chapter-kicker hand">SJSU · Graduate Research Assistant</p>
+    <h2 id="research-title" class="chapter-title">Human-centered AI research</h2>
+    <p class="chapter-lede">Applied Data Science × Human Factors × Audiology. Two studies: objective measures of visual attention from eye tracking, and AI-detected obstacles turned into wheelchair warnings people can act on. In the 7-participant eye-tracking pilot, <span class="marker">fixation count was the strongest task discriminator</span>; in the published 24-participant wheelchair study, seatback vibration plus instructional cues produced faster reactions.</p>
+  </header>
+
+  <!-- Study 1: eye tracking -->
+  <div class="spread page">
+    <figure class="sketch" data-anim>
+      <svg viewBox="0 0 700 430" role="img" class="draw" id="r-gaze-svg" aria-labelledby="r-gaze-t">
+        <title id="r-gaze-t">A sketched scene — sun, hills, a house and a tree — with an eye-tracking scanpath drawing itself across it: fixation dots, sized by duration, joined by saccade lines. Three task modes are switchable: global description, spot-the-difference, and sequential comparison.</title>
+
+          <!-- sketched picture, framed like a card -->
+          <g id="r-pic-main" class="rough">
+          <rect class="ink" x="48" y="48" width="400" height="280" pathLength="1"/>
+          <path class="ink-thin" d="M60 60 L436 59 M436 60 L437 316 M437 316 L60 317 M60 317 L59 60"/>
+          <g id="r-pic">
+            <circle class="ink-thin" cx="110" cy="110" r="26"/>
+            <g class="ink-thin" stroke-width="1.3">
+              <path d="M110 74 l0 -12 M110 146 l0 12 M74 110 l-12 0 M146 110 l12 0 M82 82 l-9 -9 M138 82 l9 -9 M82 138 l-9 9 M138 138 l9 9"/>
+            </g>
+            <path class="ink" pathLength="1" d="M52 296 Q140 236 230 284 T 434 268"/>
+            <path class="ink-thin" d="M60 310 L434 308"/>
+            <g class="rough">
+              <path class="ink" pathLength="1" d="M240 238 L296 238 L296 294 L240 294 Z M234 238 L268 208 L302 238"/>
+              <path class="ink-thin" d="M262 294 L262 268 L278 268 L278 294"/>
+              <rect class="hatch" x="244" y="246" width="14" height="12"/>
+            </g>
+            <g class="rough">
+              <path class="ink" pathLength="1" d="M356 294 L358 258 M340 262 Q336 234 358 230 Q382 234 378 262 Q364 272 340 262"/>
+              <path class="ink-thin" d="M348 268 L364 256 M364 268 L350 254"/>
+            </g>
+            <!-- the "different" detail, revealed in spot-the-difference mode -->
+            <g id="r-diffmark" style="display:none">
+              <circle class="ink-red" cx="251" cy="252" r="13" stroke-dasharray="4 4"/>
+              <text class="svg-hand" x="196" y="240" font-size="12">different!</text>
+              <path class="ink-red" d="M216 244 L240 250" marker-end="url(#arrowhead)" stroke-width="1.4"/>
+            </g>
+          </g>
+
+          <!-- scanpath overlay (JS-driven) -->
+          <g id="r-scan" class="boil">
+            <path id="r-saccades" class="ink-blue" d=""/>
+            <g id="r-fixes"></g>
+            <circle id="r-cursor" r="7" fill="none" stroke="var(--red)" stroke-width="2" opacity="0"/>
+            <circle id="r-cursor-dot" r="2.5" fill="var(--red)" opacity="0"/>
+          </g>
+        </g>
+
+      </svg>
+      <div class="r-modes">
+        <p class="hand" style="margin:0 0 .6em;font-size:var(--t-sm)">three task modes</p>
+        <button class="btn blue r-mb is-on" id="r-mode-global" type="button" aria-pressed="true">global description</button>
+        <button class="btn blue r-mb" id="r-mode-sel" type="button" aria-pressed="false">spot the difference</button>
+        <button class="btn blue r-mb" id="r-mode-sus" type="button" aria-pressed="false">sequential compare</button>
+        <p class="hand pencil" style="font-size:var(--t-xs);margin:.9em 0 0">fixation size = duration · red ring is the live gaze</p>
+        <p class="hand pencil" style="font-size:var(--t-xs)">Pupil Labs Core signals</p>
+      </div>
+      <figcaption>fig. 2 · a scanpath over a sketched scene. In the 7-participant pilot (ages 19–36, Pupil Labs Core), <strong>fixation count</strong> was the strongest discriminator among the measured oculometric variables. Ayush collected, cleaned, aligned and interpreted the signals.</figcaption>
+    </figure>
+
+    <div class="notes">
+      <h3>What the study measured</h3>
+      <ul>
+        <li>Seven participants, ages 19–36, across three attention tasks: global image description, selective side-by-side difference spotting, and sustained sequential comparison</li>
+        <li>Pupil Labs Core signals: gaze, fixation count and percentage, blink count and percentage, pupil diameter, task duration</li>
+        <li>Per-trial timestamps, invalid-sample handling, heatmaps and statistical comparison across conditions</li>
+        <li><strong>Fixation count</strong> — the strongest task discriminator in the small pilot</li>
+      </ul>
+      <p class="meta">The broader Body Brain Connect track adds fNIRS hemodynamic signals; that joint analysis is not part of the published eye-tracking paper. Proposed applications in accessible UI, rehabilitation and adaptive HMI are motivating directions, not yet field-tested.</p>
+    </div>
+  </div>
+
+  <!-- Study 2: wheelchair HMI -->
+  <div class="spread flip page">
+    <figure class="sketch" data-anim>
+      <svg viewBox="0 0 700 430" role="img" class="draw" id="r-chair-svg" aria-labelledby="r-chair-t">
+        <title id="r-chair-t">Sketch of a power wheelchair fitted with a ZED 2i stereo camera. A pedestrian ahead carries a YOLO detection box; a dashed 1 m boundary line separates them. When the pedestrian crosses the line, the 3-by-2 seatback tactor array pulses and a speech bubble shows either the instructional cue or the informative cue.</title>
+
+        <g class="rough">
+          <path class="ink" pathLength="1" d="M30 366 L360 364"/>
+
+          <!-- pedestrian: local coords, origin at head center; JS translates it -->
+          <g id="r-ped" transform="translate(460 0)">
+            <circle class="ink" pathLength="1" cx="0" cy="238" r="13"/>
+            <path class="ink" pathLength="1" d="M0 251 L-1 298 M-1 262 L-15 286 M-1 262 L14 284 M-1 298 L-13 332 M-1 298 L12 330 M-13 332 L-19 334 M12 330 L19 333"/>
+            <g id="r-box">
+              <path class="ink-blue" d="M-26 218 L28 217 L29 337 L-25 338 Z"/>
+              <path class="ink-thin" stroke="var(--blue)" d="M-26 218 L-26 232 M28 217 L28 231 M-25 337 L-25 323 M29 337 L29 323"/>
+              <text class="svg-print" x="-21" y="212" font-size="11" font-weight="700" fill="var(--blue)">person · 0.93</text>
+            </g>
+          </g>
+
+          <!-- 1 m trigger line -->
+          <line class="ink-red" x1="360" y1="366" x2="352" y2="214" stroke-dasharray="7 7"/>
+          <text class="svg-hand" x="300" y="200" font-size="13">~1 m trigger line</text>
+
+          <!-- wheelchair -->
+          <g class="rough">
+            <circle class="ink" pathLength="1" cx="120" cy="330" r="34"/>
+            <circle class="ink-thin" cx="120" cy="330" r="3"/>
+            <g class="ink-thin" stroke-width="1.3">
+              <path d="M120 296 L120 330 M96 316 L120 330 M144 316 L120 330 M96 344 L120 330 M144 344 L120 330"/>
+            </g>
+            <path class="ink" pathLength="1" d="M138 300 L188 298 L190 342 L140 343 Z M188 252 L189 300 M140 296 L188 252"/>
+            <path class="ink-thin" d="M146 296 L184 295 M188 296 L196 296"/>
+            <circle class="ink" pathLength="1" cx="196" cy="352" r="12"/>
+            <circle class="ink-thin" cx="196" cy="352" r="2.5"/>
+            <g class="rough">
+              <circle class="ink-thin" cx="164" cy="240" r="11"/>
+              <path class="ink-thin" d="M164 251 L164 288 M164 262 L148 278 M164 262 L180 276 M164 288 L150 306 M164 288 L178 304"/>
+            </g>
+            <!-- ZED 2i on the front mast -->
+            <g class="rough">
+              <path class="ink" pathLength="1" d="M196 300 L204 262 M204 254 L232 254 L232 270 L204 270 Z"/>
+              <circle class="ink-thin" cx="216" cy="262" r="4"/>
+              <circle class="ink-thin" cx="226" cy="262" r="4"/>
+              <path class="ink-thin" d="M232 262 L238 262"/>
+              <text class="svg-hand" x="120" y="238" font-size="12.5">ZED 2i · RGB + depth @ 30 fps</text>
+              <path class="ink-blue" d="M168 244 L214 254" marker-end="url(#arrowhead)"/>
+            </g>
+            <!-- 3x2 tactor array + pulse rings -->
+            <g id="r-tactors">
+              <circle class="r-pulse" cx="186" cy="266" r="7"/>
+              <circle class="r-pulse r-p2" cx="186" cy="266" r="7"/>
+              <circle class="ink-thin" cx="183" cy="258" r="3.4"/>
+              <circle class="ink-thin" cx="190" cy="258" r="3.4"/>
+              <circle class="ink-thin" cx="183" cy="268" r="3.4"/>
+              <circle class="ink-thin" cx="190" cy="268" r="3.4"/>
+              <circle class="ink-thin" cx="183" cy="278" r="3.4"/>
+              <circle class="ink-thin" cx="190" cy="278" r="3.4"/>
+              <text class="svg-hand" x="196" y="320" font-size="12.5">3×2 seatback array</text>
+              <path class="ink-blue" d="M196 314 L189 284" marker-end="url(#arrowhead)"/>
+            </g>
+            <!-- speech bubble (JS swaps the cue text) -->
+            <g id="r-bubble" class="rough">
+              <path class="ink" pathLength="1" d="M34 128 L198 126 L200 174 L134 175 L120 192 L112 175 L36 176 Z"/>
+              <text id="r-cue" class="svg-print" x="117" y="160" text-anchor="middle" font-size="14.5" font-weight="600">“Stop. Person ahead.”</text>
+            </g>
+            <text id="r-cue-label" class="svg-hand" x="34" y="118" font-size="12.5">instructional cue</text>
+          </g>
+
+          <text class="svg-hand" x="470" y="416" font-size="12.5">YOLOv10n · conf 0.90 · ~1.65 s haptic lag, distance-compensated</text>
+        </g>
+      </svg>
+      <figcaption>fig. 3 · the perception-to-HMI loop: ZED 2i RGB-D at 30 fps feeds YOLOv10n; when a pedestrian crosses the ~1 m trigger line, the seatback tactor array pulses and a speech cue plays. Published apparatus: onboard GPU laptop, 24 participants × 24 controlled trials. Ayush built the perception-to-HMI integration, warning timing and cue logic, and the timestamped response capture.</figcaption>
+    </figure>
+
+    <div class="notes">
+      <h3>Published apparatus & findings</h3>
+      <ul>
+        <li>Onboard GPU laptop; ZED 2i RGB + depth at 30 fps; pretrained YOLOv10n pedestrian detection (confidence 0.90); box-center depth drives the ~1 m trigger</li>
+        <li>Measured ~1.65 s haptic actuation lag relative to audio, compensated by movement speed × actuation delay</li>
+        <li>24 able-bodied participants × 24 trials, 12 warning designs (vibration location × cue type × information type)</li>
+        <li><strong>Seatback vibration + instructional cues</strong> → faster reactions and higher reported usefulness than audio-only or informative cues; accuracy did not differ across conditions</li>
+      </ul>
+      <div class="r-cuetoggle">
+        <button class="btn r-cuebtn is-on" data-cue="inst" type="button">instructional cue</button>
+        <button class="btn r-cuebtn" data-cue="info" type="button">informative cue</button>
+      </div>
+      <p class="meta">Ayush's contributions: perception-to-HMI integration, warning timing and cue logic, timestamped response-time and usefulness capture, and comparative analysis (the Elsevier article credits Software, Methodology and Investigation). The published apparatus is separate from the Jetson/LiDAR C++17 prototype in the Robots chapter. The study evaluates response timing and usefulness, not demonstrated real-world crash reduction.</p>
+    </div>
+  </div>
+
+  <!-- Publications, recognition, press -->
+  <div class="spread page">
+    <div class="notes r-pubs">
+      <h3>Published, 2026</h3>
+      <ol class="r-publist">
+        <li>
+          <p class="r-title">Measuring Visual Attention Across Concurrent and Sequential Visual Perception Tasks</p>
+          <p class="meta">Proceedings of the HFES Annual Meeting (SAGE), 2026. Co-authors: J. Chiu, A. Tran, S.-Y. Huang, G. Liu, Y. Yuan, Y. Luo.</p>
+          <p class="r-links">
+            <a href="https://journals.sagepub.com/doi/full/10.1177/10711813261493593" rel="noopener">SAGE full text</a>
+            <span class="meta">·</span>
+            <a href="https://hfesam2026.conference-program.com/presentation/?id=POST409&sess=sess246" rel="noopener">HFES 2026 poster</a>
+          </p>
+        </li>
+        <li>
+          <p class="r-title">AI-Enhanced Human-Machine Interface for Power Wheelchair Navigation: Effects of Communication Strategy and Vibrotactile Feedback Location</p>
+          <p class="meta">Proceedings of the HFES Annual Meeting (SAGE), 2026. Co-authors: S. Tang, A. Shah, S.-Y. Huang, G. Liu, J. Xie, G. Huang.</p>
+          <p class="r-links">
+            <a href="https://journals.sagepub.com/eprint/T2T3XWNAEZ9PE2YBN9VY/full" rel="noopener">SAGE ePrint</a>
+            <span class="meta">·</span>
+            <a href="https://hfesam2026.conference-program.com/presentation/?id=POST130&sess=sess257" rel="noopener">HFES 2026 poster</a>
+          </p>
+        </li>
+        <li>
+          <p class="r-title">Evaluating an AI-enhanced power wheelchair obstacle alert system: Effects of multimodal warning design on warning-response behavior</p>
+          <p class="meta">Transportation Research Part F: Traffic Psychology and Behaviour, Vol. 123, Article 103801 (Elsevier), 2026. Co-authors: S. Tang, A. Shah, S.-Y. Huang, G. Liu, J. Xie, G. Huang.</p>
+          <p class="r-links">
+            <a href="https://www.sciencedirect.com/science/article/pii/S1369847826002962" rel="noopener">ScienceDirect</a>
+          </p>
+        </li>
+      </ol>
+
+      <h3>Recognition</h3>
+      <ul>
+        <li>Winner, SJSU RSCA Research Competition; SJSU delegate to the 40th CSU Student Research Competition</li>
+        <li>RSCA Fellowship Awardee</li>
+        <li>Presented at the SJSU AI Center for Civic and Social Good grand opening</li>
+      </ul>
+
+      <h3>Press</h3>
+      <ul>
+        <li><a href="https://blogs.sjsu.edu/newsroom/2026/research-spotlight-the-body-brain-connection-at-the-csu-research-competition/" rel="noopener">SJSU NewsCenter</a> — research spotlight: the Body Brain Connection at the CSU Research Competition</li>
+        <li><a href="https://blogs.sjsu.edu/idsprofiles/2025/11/23/harnessing-the-power-of-community-with-ayush-sunil-gawai/" rel="noopener">IDS profile</a> — “Harnessing the Power of Community”</li>
+      </ul>
+
+      <p class="meta">Also exploring, in a separate SJSU track: language-model training and tuning for scientific-literature understanding and research-paper writing.</p>
+    </div>
+
+    <div class="r-scrap">
+      <div class="card tilt-l">
+        <span class="tape"></span>
+        <p class="hand red" style="font-size:var(--t-lg); margin:0">winner, SJSU RSCA</p>
+        <p class="meta" style="margin:.3em 0 0">university-wide research competition · 2026</p>
+      </div>
+      <div class="card tilt-r" style="margin-top:var(--u)">
+        <span class="tape"></span>
+        <p class="hand" style="font-size:var(--t-lg); margin:0">delegate, 40th CSU</p>
+        <p class="meta" style="margin:.3em 0 0">SJSU delegate to the CSU Student Research Competition</p>
+      </div>
+      <div class="card tilt-l" style="margin-top:var(--u)">
+        <span class="tape"></span>
+        <p class="hand" style="font-size:var(--t-lg); margin:0">RSCA Fellowship</p>
+        <p class="meta" style="margin:.3em 0 0">fellowship awardee, SJSU</p>
+      </div>
+    </div>
+  </div>
+</section>

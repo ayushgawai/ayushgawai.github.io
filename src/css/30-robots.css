@@ -1,0 +1,77 @@
+/* ---------- Robots chapter (SO-101 / LeRobot) ---------- */
+#robots .rb-fig { margin: 0 0 calc(var(--u) * 2); }
+#robots .rb-svg { width: 100%; height: auto; overflow: visible; }
+
+#robots .rb-fill { fill: var(--paper-card); }
+#robots .rb-hat { fill: url(#hatch); stroke: none; opacity: .8; }
+#robots .rb-cable { fill: none; stroke: var(--ink-2); stroke-width: 2.4; stroke-linecap: round; }
+#robots .rb-pkt { fill: var(--blue); }
+#robots .rb-start { stroke: var(--ink-3); stroke-width: 2; stroke-dasharray: 4 5; fill: none; }
+#robots .rb-x { stroke-width: 3.2; }
+#robots .rb-fov { fill: var(--blue); fill-opacity: .045; stroke: var(--blue); stroke-opacity: .4; stroke-width: 1.4; stroke-dasharray: 6 6; stroke-linejoin: round; }
+#robots .rb-rec { fill: var(--red); animation: rb-blink 1.2s ease-in-out infinite alternate; }
+@keyframes rb-blink { from { opacity: .2; } to { opacity: 1; } }
+
+#robots .rb-pile path, #robots .rb-frame rect, #robots .rb-frame path { fill: var(--paper-card); stroke: var(--blue); stroke-width: 1.8; stroke-linejoin: round; stroke-linecap: round; }
+#robots .rb-frame path { fill: rgba(35, 70, 176, .1); stroke-width: 1.2; }
+
+
+#robots .rb-cube-face { fill: var(--marker); }
+#robots .rb-cube-top { fill: #FFF1A8; }
+#robots .rb-cube-side { fill: url(#hatch); }
+
+#robots .rb-lbl { font-size: 18px; font-weight: 700; }
+#robots .rb-note { font-size: 19px; paint-order: stroke; stroke: var(--paper); stroke-width: 6px; stroke-linejoin: round; }
+#robots .rb-pencil { fill: var(--ink-2); }
+#robots .rb-redt { fill: var(--red); }
+#robots .rb-count { font-size: 14px; font-weight: 700; fill: var(--blue); letter-spacing: .02em; }
+
+#robots .rb-key { display: none; }
+#robots .rb-cap { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--u); margin-top: var(--u); }
+#robots .rb-cap .hand { font-size: var(--t-sm); max-width: 72ch; }
+#robots .rb-pause { flex: none; min-height: 40px; padding: .45em 1em; font-size: var(--t-xs); }
+
+/* ---------- cards row ---------- */
+#robots .rb-cards { display: grid; grid-template-columns: 5fr 5fr 3fr; gap: calc(var(--u) * 1.5); align-items: start; margin-bottom: calc(var(--u) * 3); }
+#robots .card { padding: var(--u); }
+#robots .card h3 { font-size: var(--t-md); margin: 0 0 calc(var(--u) / 2); letter-spacing: -.005em; }
+#robots .card p { font-size: var(--t-sm); margin: 0; }
+#robots .rb-lat svg { width: 100%; height: auto; margin: 0 0 calc(var(--u) / 2); }
+#robots .rb-bar { fill: url(#hatch-blue); stroke: var(--blue); stroke-width: 1.8; }
+#robots .rb-onbar { paint-order: stroke; stroke: var(--paper-card); stroke-width: 5px; }
+#robots .rb-result { display: flex; align-items: baseline; gap: .5em; line-height: 1.35; }
+#robots .rb-big { font: 700 var(--t-xl)/1 var(--f-print); letter-spacing: -.02em; background: linear-gradient(104deg, transparent .1em, var(--marker) .15em, var(--marker) calc(100% - .1em), transparent); padding: 0 .12em; flex: none; }
+#robots .rb-caveat { margin-top: calc(var(--u) / 2) !important; font-size: var(--t-sm); }
+
+#robots .rb-debug { background: var(--paper-card); border-left: 3px solid var(--red); }
+#robots .rb-debug h3 { font-size: var(--t-lg); font-weight: 600; margin-bottom: calc(var(--u) / 2); }
+#robots .rb-steps { list-style: none; margin: 0; padding: 0; }
+#robots .rb-steps li { font-size: var(--t-sm); line-height: 1.45; margin: 0 0 .7em; padding: 0; }
+#robots .rb-steps li::before { content: none; }
+#robots .rb-steps .hand { display: block; font-size: var(--t-sm); line-height: 1.2; }
+#robots .rb-stamp { font: 700 .9em var(--f-print); background: var(--paper); border: 1.5px solid var(--ink); border-radius: 4px 8px 4px 8px; padding: .05em .4em; box-shadow: 1px 2px 0 var(--ink); white-space: nowrap; }
+#robots .rb-ok { margin-top: .9em !important; color: var(--green); font-size: var(--t-md) !important; font-weight: 600; }
+
+#robots .rb-photo { display: flex; justify-content: center; padding-top: calc(var(--u) / 2); }
+#robots .rb-polaroid { position: relative; background: var(--paper-card); border: 1.5px dashed var(--ink-3); box-shadow: var(--shadow-card); padding: 12px 12px 6px; width: 100%; max-width: 240px; transform: rotate(2.2deg); }
+#robots .rb-polaroid img { width: 100%; height: auto; }
+#robots .rb-polaroid p { margin: 8px 0 2px; font-size: var(--t-sm); text-align: center; }
+
+/* ---------- related work ---------- */
+#robots .rb-more h3 { font-size: var(--t-lg); margin: 0 0 var(--u); letter-spacing: -.01em; }
+#robots .rb-repos { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--u); }
+#robots .rb-repos li { border-top: 2px solid var(--ink); padding-top: calc(var(--u) / 2); font-size: var(--t-sm); line-height: 1.5; color: var(--ink-2); }
+#robots .rb-repos a { display: block; font-weight: 700; font-size: var(--t-md); margin-bottom: .3em; overflow-wrap: anywhere; }
+
+@media (max-width: 1000px) {
+  #robots .rb-cards { grid-template-columns: 1fr 1fr; }
+  #robots .rb-repos { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  #robots .rb-t { display: none; }
+  #robots .rb-key { display: block; margin: var(--u) 0 0; padding-left: 1.4em; font-size: var(--t-sm); }
+  #robots .rb-key li { margin-bottom: .3em; }
+  #robots .rb-cap { flex-direction: column; gap: calc(var(--u) / 2); }
+  #robots .rb-cards, #robots .rb-repos { grid-template-columns: 1fr; }
+  #robots .rb-polaroid { max-width: 220px; }
+}

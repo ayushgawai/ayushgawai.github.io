@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ayush Gawai — field notebook</title>
+<meta name="description" content="Ayush Gawai builds data, AI and robotics systems that people can trust: autonomous-vehicle data infrastructure at Zoox, robot learning and human-centered AI research at SJSU, and data platforms at Zscaler and LatentView.">
+<meta name="author" content="Ayush Gawai">
+<meta name="theme-color" content="#F6F5F0">
+<link rel="canonical" href="https://ayushgawai.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ayush Gawai — field notebook">
+<meta property="og:description" content="Data, AI, autonomy and robotics systems — drawn out in a notebook.">
+<meta property="og:url" content="https://ayushgawai.github.io/">
+<meta property="og:image" content="https://ayushgawai.github.io/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400..800;1,400&family=Shantell+Sans:wght,BNCE,INFM@300..800,-100..100,0..100&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Ayush Gawai","url":"https://ayushgawai.github.io/","jobTitle":"Data, AI and robotics systems engineer","alumniOf":"San José State University","sameAs":["https://github.com/ayushgawai","https://www.linkedin.com/in/ayushgawai"]}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- shared SVG defs: hand-drawn filters + hatch pattern. Use class="boil" (animated) or "rough" (static) on line art. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="boil" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="1" result="n">
+        <animate attributeName="seed" values="1;7;13" dur="0.42s" calcMode="discrete" repeatCount="indefinite"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="4" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(40)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#1F2329" stroke-width="1" stroke-opacity=".45"/>
+    </pattern>
+    <pattern id="hatch-blue" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#2346B0" stroke-width="1" stroke-opacity=".5"/>
+    </pattern>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1.5 L8 5 L1.5 8.8" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+</svg>
+
+<nav class="tabs" aria-label="Notebook sections">
+  <a href="#top" style="--tab:#EFE6C8">Cover</a>
+  <a href="#av" style="--tab:#DCE8F2">Autonomy</a>
+  <a href="#robots" style="--tab:#F3D9CF">Robots</a>
+  <a href="#research" style="--tab:#E3DDF0">Research</a>
+  <a href="#ai" style="--tab:#D8ECDF">AI · LLM</a>
+  <a href="#data" style="--tab:#F2E3C4">Data</a>
+  <a href="#agents" style="--tab:#DDE6F6">Agents</a>
+  <a href="#automation" style="--tab:#EADFD3">Automation</a>
+  <a href="#security" style="--tab:#F0D6D6">Security</a>
+  <a href="#systems" style="--tab:#DDE9E6">Systems</a>
+  <a href="#demos" style="--tab:#F4EDB8">Demos</a>
+  <a href="#films" style="--tab:#F6E2C9">Films</a>
+  <a href="#path" style="--tab:#E6E1D5">Path</a>
+  <a href="#gallery" style="--tab:#E9DDEA">Scrapbook</a>
+  <a href="#resume" style="--tab:#D9E9F0">Resume</a>
+  <a href="#contact" style="--tab:#EFE6C8">Contact</a>
+</nav>
+
+<main id="main">
+<!-- @include sections/hero.html -->
+<!-- @include sections/av.html -->
+<!-- @include sections/robots.html -->
+<!-- @include sections/research.html -->
+<!-- @include sections/ai.html -->
+<!-- @include sections/data.html -->
+<!-- @include sections/agents.html -->
+<!-- @include sections/automation.html -->
+<!-- @include sections/security.html -->
+<!-- @include sections/systems.html -->
+<!-- @include sections/demos.html -->
+<!-- @include sections/path.html -->
+<!-- @include sections/gallery.html -->
+<!-- @include sections/resume.html -->
+<!-- @include sections/contact.html -->
+</main>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

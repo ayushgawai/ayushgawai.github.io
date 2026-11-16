@@ -1,0 +1,123 @@
+/* ============================================================
+   #data — pipeline sketch with three switchable real pipelines
+   All selectors prefixed with #data.
+   ============================================================ */
+#data .data-sketch { position: relative; }
+
+/* --- pipeline tabs --- */
+#data .data-tabs {
+  display: flex; gap: calc(var(--u) / 2); flex-wrap: wrap;
+  margin: 0 0 calc(var(--u) / 2);
+}
+#data .data-tabs .tab {
+  font-family: var(--f-print); cursor: pointer;
+  display: inline-flex; flex-direction: column; align-items: flex-start; gap: 2px;
+  padding: 10px 16px 9px;
+  background: var(--paper-card);
+  color: var(--ink-2);
+  border: 1.5px solid var(--ink-3);
+  border-radius: 12px 4px 14px 5px;
+  transform: rotate(-.4deg);
+  transition: transform .15s var(--ease-out), box-shadow .15s var(--ease-out),
+    border-color .15s, color .15s;
+}
+#data .data-tabs .tab:nth-child(2) { transform: rotate(.5deg); }
+#data .data-tabs .tab:nth-child(3) { transform: rotate(-.6deg); }
+#data .data-tabs .tab b {
+  font-family: var(--f-hand); font-weight: 600; font-size: var(--t-sm);
+  color: var(--ink); line-height: 1.1;
+}
+#data .data-tabs .tab span { font-size: 11px; font-weight: 500; letter-spacing: .02em; }
+#data .data-tabs .tab[aria-pressed="true"] {
+  border-color: var(--blue); color: var(--blue);
+  box-shadow: 2px 3px 0 var(--blue);
+}
+#data .data-tabs .tab[aria-pressed="true"] b { color: var(--blue); }
+#data .data-tabs .tab:hover { transform: translate(-1px, -2px); box-shadow: 2px 3px 0 var(--ink-3); }
+#data .data-tabs .tab[aria-pressed="true"]:hover { box-shadow: 2px 3px 0 var(--blue); }
+#data .data-tabs .tab:active { transform: none; }
+
+/* --- drawing frame + station chips (HTML so text stays legible at any width) --- */
+#data .data-drawing { position: relative; }
+#data .data-drawing svg { width: 100%; height: auto; }
+
+/* packets: only the active pipeline's set is shown */
+#data .pkts { display: none; }
+#data[data-mode="transit"] .pkts.stream,
+#data[data-mode="zscaler"] .pkts.incr,
+#data[data-mode="latentview"] .pkts.batch { display: block; }
+#data .pkt, #data .pkt-fail { opacity: 0; }
+
+#data .stage {
+  position: absolute;
+  left: var(--x);
+  top: var(--row);
+  transform: translateX(-50%);
+  width: 0; height: 0;
+}
+#data .stage.top { --row: 32%; }
+#data .stage.low { --row: 71%; }
+#data .stage::before {
+  content: attr(data-name);
+  position: absolute; left: 0; top: -1.15em;
+  transform: translateX(-50%);
+  font-family: var(--f-hand); font-weight: 500; font-size: var(--t-sm);
+  color: var(--ink);
+  padding: 4px 10px;
+  background: var(--paper-card);
+  border: 1.25px solid rgba(31, 35, 41, .45);
+  border-radius: 10px 3px 11px 4px;
+  box-shadow: 1px 2px 0 rgba(31, 35, 41, .1);
+  cursor: help;
+  white-space: nowrap;
+  transition: border-color .15s, box-shadow .15s;
+}
+#data .stage.low::before { top: 1.15em; }
+#data .stage:focus-visible { z-index: 3; }
+#data .stage:hover::before, #data .stage:focus-visible::before {
+  border-color: var(--blue);
+  box-shadow: 1px 2px 0 rgba(35, 70, 176, .35);
+  z-index: 3;
+}
+
+/* result card, bottom-left of the drawing */
+#data .data-result {
+  position: absolute; left: 48px; bottom: 14px;
+  font-family: var(--f-hand); font-weight: 500; font-size: 15px;
+  color: var(--ink-2); line-height: 1.45;
+  background: var(--paper-card);
+  padding: 7px 14px;
+  border: 1.25px dashed var(--ink-3);
+  border-radius: 5px 14px 6px 12px;
+  max-width: 250px;
+}
+#data .data-result em { color: var(--red); font-style: normal; font-weight: 600; }
+
+/* caption + per-station note line */
+#data .data-sketch figcaption { margin-top: calc(var(--u) / 3); min-height: 1.6em; }
+#data #data-line-note { font-size: var(--t-sm); display: inline-block; transform: rotate(-.5deg); }
+#data .data-note {
+  margin-top: calc(var(--u) / 4); min-height: 2.4em;
+  font-size: 14px; line-height: 1.45;
+}
+#data .data-note .note-label { font-family: var(--f-hand); font-weight: 600; color: var(--blue); }
+#data .data-note .note-body { color: var(--ink-2); }
+
+/* --- mobile: chips become numbered pencil dots; the note line carries the name --- */
+@media (max-width: 640px) {
+  #data .stage::before {
+    content: attr(data-idx);
+    width: 26px; height: 26px; padding: 0;
+    border-radius: 50% 45% 55% 48%;
+    text-align: center; line-height: 26px;
+    font-size: 13px; color: var(--blue);
+    border-color: var(--blue);
+    background: var(--paper-card);
+    transform: translate(-50%, -50%);
+    top: 0;
+  }
+  #data .stage.top { --row: 30%; }
+  #data .stage.low { --row: 73%; }
+  #data .data-result { max-width: 190px; font-size: 13px; left: 40px; bottom: 10px; }
+  #data .data-note { min-height: 3.4em; }
+}

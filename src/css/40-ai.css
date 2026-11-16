@@ -1,0 +1,75 @@
+/* ============================================================
+   #ai — the LLM proposes, the machine verifies
+   ============================================================ */
+#ai .ai-spread { align-items: center; }
+#ai .ai-fig { max-width: 640px; }
+#ai .ai-fig figcaption { font-size: var(--t-md); max-width: 54ch; }
+#ai .ai-lbl { font-weight: 600; }
+#ai .ai-sub { fill: var(--ink-3); }
+#ai .ai-code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: var(--ink); white-space: pre; font-weight: 500; }
+#ai .ai-result { font-weight: 600; }
+#ai .ai-result.is-bad { fill: var(--red); }
+#ai .ai-result.is-good { fill: var(--green); }
+#ai .ai-result.is-filed { fill: var(--blue); }
+#ai #ai-pass { transition: fill .3s; }
+
+/* states toggled by 40-ai.js */
+#ai .ai-retry { stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; }
+#ai .ai-retry-lbl { fill: var(--red); opacity: 0; transition: opacity .4s; }
+#ai #ai-loop.is-retry .ai-retry { opacity: .9; stroke-dashoffset: 0; transition: stroke-dashoffset 1.9s cubic-bezier(.45, 0, .55, 1); }
+#ai #ai-loop.is-retry .ai-retry-lbl { opacity: 1; }
+
+#ai .ai-mark-x, #ai .ai-mark-ok, #ai .ai-filed, #ai .ai-trail, #ai .ai-outnote, #ai .ai-ghost { opacity: 0; transition: opacity .35s var(--ease-out); }
+#ai #ai-loop.is-x .ai-mark-x,
+#ai #ai-loop.is-ok .ai-mark-ok,
+#ai #ai-loop.is-filed .ai-filed,
+#ai #ai-loop.is-out .ai-trail,
+#ai #ai-loop.is-out .ai-outnote,
+#ai #ai-loop.is-out .ai-ghost { opacity: 1; }
+#ai .ai-mark-x, #ai .ai-mark-ok { transform-box: fill-box; transform-origin: center; }
+#ai #ai-loop.is-x .ai-mark-x, #ai #ai-loop.is-ok .ai-mark-ok { animation: ai-pop .45s var(--ease-out); }
+@keyframes ai-pop { from { transform: scale(.4) rotate(-12deg); } to { transform: none; } }
+
+#ai .ai-counts { stroke: var(--ink-3); transition: stroke .3s; }
+#ai #ai-loop.at-exe .ai-counts { stroke: var(--blue); }
+#ai #ai-loop.at-exe .ai-counts path { animation: ai-tally .5s steps(2) infinite alternate; }
+@keyframes ai-tally { to { transform: translateY(2px); } }
+
+#ai #ai-llm { transition: opacity .4s; }
+#ai #ai-loop.is-out #ai-llm .ink { stroke: var(--ink-2); }
+#ai #ai-slip.is-gone { opacity: 0; transition: opacity .25s; }
+
+/* ---------- case index cards ---------- */
+#ai .ai-cases-wrap { margin-top: calc(var(--u) * 3); }
+#ai .ai-cases-title { font-size: var(--t-xl); margin: 0 0 calc(var(--u) * 1.5); transform: rotate(-1deg); display: inline-block; font-weight: 600; }
+#ai .ai-cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(var(--u) * 2) calc(var(--u) * 1.5); }
+#ai .ai-case { display: flex; flex-direction: column; padding: calc(var(--u) * 1.25) calc(var(--u) * 1.25) var(--u); }
+#ai .ai-case:nth-child(2) { margin-top: var(--u); }
+#ai .ai-case:nth-child(3) { margin-top: calc(var(--u) * -1 + 0px); }
+#ai .ai-case-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; margin-bottom: calc(var(--u) / 2); }
+#ai .ai-case h4 { font-size: var(--t-lg); letter-spacing: -.01em; }
+#ai .ai-meta { margin: 0; font-size: var(--t-sm); }
+#ai .ai-case-diag { width: 100%; max-width: 460px; margin: calc(var(--u) / 2) 0 var(--u); overflow: visible; }
+#ai .ai-nums { list-style: none; display: flex; flex-wrap: wrap; gap: calc(var(--u) / 2) calc(var(--u) * 1.5); margin: 0 0 calc(var(--u) / 2); padding: calc(var(--u) / 2) 0 0; border-top: 1.5px dashed var(--grid-major); }
+#ai .ai-nums li { display: flex; flex-direction: column; }
+#ai .ai-nums b { font: 700 1.75rem/1.1 var(--f-hand); font-variation-settings: "INFM" 50, "BNCE" 10; color: var(--ink); letter-spacing: -.01em; }
+#ai .ai-nums span { font-size: var(--t-xs); color: var(--ink-3); }
+#ai .ai-case p { font-size: var(--t-sm); color: var(--ink-2); margin: 0 0 calc(var(--u) / 2); }
+#ai .ai-case .ai-links { margin-top: auto; padding-top: calc(var(--u) / 2); display: flex; flex-wrap: wrap; gap: 4px 18px; font-weight: 600; }
+#ai .ai-links span { color: var(--ink-3); font-weight: 500; }
+
+@media (max-width: 900px) {
+  #ai .ai-fig { max-width: none; }
+}
+@media (max-width: 760px) {
+  #ai .ai-cases { grid-template-columns: 1fr; gap: calc(var(--u) * 1.5); }
+  #ai .ai-case:nth-child(n) { margin-top: 0; }
+  #ai .ai-case { padding: var(--u) calc(var(--u) * .75); }
+}
+
+/* reduced motion: finished drawing */
+@media (prefers-reduced-motion: reduce) {
+  #ai #ai-slip { display: none; }
+}
+#ai .ai-track, #ai .ai-chev { transition: opacity .6s; }
+#ai #ai-loop.is-out .ai-track, #ai #ai-loop.is-out .ai-chev { opacity: .35; }

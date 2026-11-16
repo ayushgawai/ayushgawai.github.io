@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180">
+  <rect x="4" y="4" width="232" height="172" rx="6" fill="#F6F5F0" stroke="#1F2329" stroke-width="2" stroke-dasharray="7 6" opacity=".9"/>
+  <g stroke="#4A5059" stroke-width="2" stroke-linecap="round" fill="none" opacity=".8">
+    <path d="M36 148 L150 44 M150 44 L186 74 M186 74 L208 60"/>
+    <path d="M36 148 L96 148 M96 148 L96 128 L132 128"/>
+  </g>
+  <circle cx="172" cy="52" r="14" fill="none" stroke="#7C828C" stroke-width="2" stroke-dasharray="4 4"/>
+  <text x="120" y="96" text-anchor="middle" font-family="Hanken Grotesk, sans-serif" font-size="11" font-weight="600" fill="#7C828C">no photo yet</text>
+</svg>

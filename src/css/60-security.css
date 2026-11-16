@@ -1,0 +1,118 @@
+/* 60 — security chapter: "fencing the model" sketch + index cards */
+#security .sec-spread { align-items: center; }
+#security .sec-svg { overflow: visible; }
+#security .sec-svg .ink { stroke-width: 2.4; }
+#security .sec-lab { font-family: var(--f-hand); font-size: 16px; fill: var(--blue); font-weight: 600; font-variation-settings: "INFM" 60; }
+#security .sec-lab.red { fill: var(--red); }
+#security .sec-lab.sec-ink { fill: var(--ink-2); }
+#security .sec-sub { font-size: 14px; font-weight: 500; }
+#security .sec-on { font-family: var(--f-hand); font-size: 15px; font-weight: 600; fill: var(--ink); }
+#security .sec-q { font: 800 28px var(--f-print); fill: var(--ink); }
+#security .sec-big { font-family: var(--f-print); font-size: 28px; font-weight: 800; fill: var(--ink); letter-spacing: -.01em; }
+#security .slip { fill: var(--paper-card); stroke: var(--ink); stroke-width: 1.8; }
+#security .slip-red { stroke: var(--red); stroke-width: 2.2; }
+#security .scrib { fill: none; stroke: var(--ink-3); stroke-width: 1.6; stroke-linecap: round; }
+#security .sec-ghost { stroke: var(--ink-3); stroke-dasharray: 2 4; }
+#security .sec-delim { stroke-width: 2.2; }
+#security .ink-green { fill: none; stroke: var(--green); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+#security .sec-xp { fill: none; stroke: var(--red); stroke-width: 3.4; stroke-linecap: round; }
+#security .sec-bounce { stroke-dasharray: 5 5; }
+
+/* motion (CSS only). The un-animated state IS the finished drawing:
+   slips inside the fence, injection bounced, cross and answer showing. */
+#security .sec-slip, #security .sec-inject, #security .sec-x, #security .sec-answer, #security .sec-feed { transform-box: fill-box; }
+#security .sec-slip-q { animation: sec-in-q 8s var(--ease-out) infinite; }
+#security .sec-slip-r { animation: sec-in-r 8s var(--ease-out) infinite; }
+#security .sec-inject { transform-origin: 50% 50%; animation: sec-inj 8s ease-in-out infinite; }
+#security .sec-x { transform-origin: 50% 50%; animation: sec-x 8s ease-out infinite; }
+#security .sec-bounce { animation: sec-bounce 8s linear infinite; }
+#security .sec-wall { animation: sec-wall 8s linear infinite; }
+#security .sec-answer { transform-origin: 50% 50%; animation: sec-ans 8s var(--ease-out) infinite; }
+#security .sec-feed { animation: sec-feed 8s linear infinite; }
+@keyframes sec-in-q {
+  0%, 4% { transform: translate(-150px, -24px) rotate(-6deg); opacity: 0; }
+  8% { opacity: 1; }
+  22%, 100% { transform: none; opacity: 1; }
+}
+@keyframes sec-in-r {
+  0%, 9% { transform: translate(-212px, 30px) rotate(-5deg); opacity: 0; }
+  13% { opacity: 1; }
+  28%, 100% { transform: none; opacity: 1; }
+}
+@keyframes sec-inj {
+  0%, 34% { transform: none; }
+  44% { transform: translate(26px, -14px) rotate(3deg); }
+  52% { transform: translate(-8px, 6px) rotate(-1deg); }
+  58%, 100% { transform: none; }
+}
+@keyframes sec-x {
+  0%, 36% { transform: none; opacity: 1; }
+  40%, 43% { transform: scale(.6); opacity: .25; }
+  46% { transform: scale(1.35); opacity: 1; }
+  52%, 100% { transform: none; opacity: 1; }
+}
+@keyframes sec-bounce { 0%, 36% { opacity: 1; } 40%, 45% { opacity: 0; } 52%, 100% { opacity: 1; } }
+@keyframes sec-wall { 0%, 43% { stroke: var(--ink); } 45% { stroke: var(--red); } 56%, 100% { stroke: var(--ink); } }
+@keyframes sec-feed { 0%, 56% { transform: none; } 60% { transform: translateX(6px); } 64%, 100% { transform: none; } }
+@keyframes sec-ans {
+  0%, 60% { transform: none; }
+  65% { transform: translateY(-6px) scale(1.06); }
+  72%, 100% { transform: none; }
+}
+
+/* guardrail hover/focus: dim the rest of the sketch */
+#security .sec-p, #security .sec-inj-all { transition: opacity .3s var(--ease-out); }
+#security .sec-svg.is-focus .sec-p, #security .sec-svg.is-focus .sec-inj-all { opacity: .22; }
+#security .sec-svg.is-focus .sec-p.is-on { opacity: 1; }
+#security .sec-svg.is-focus[data-part="fence"] .sec-inj-all { opacity: 1; }
+
+#security .sec-list { list-style: none; padding: 0; margin: 0; }
+#security .sec-li {
+  position: relative; padding: 10px 12px 10px 40px; margin: 0 0 4px;
+  border: 1.5px dashed transparent; border-radius: 6px; cursor: default;
+  transition: background .2s var(--ease-out), border-color .2s;
+}
+#security .sec-li::before {
+  content: ""; position: absolute; left: 12px; top: 15px; width: 16px; height: 12px;
+  border: 0; border-radius: 0; transform: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 12'%3E%3Cpath d='M1.5 6.5l4 4L14.5 1.5' fill='none' stroke='%232E7D5B' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+#security .sec-li:hover, #security .sec-li.is-on { background: rgba(35,70,176,.05); border-color: rgba(35,70,176,.4); }
+#security .sec-li b { color: var(--ink); font-weight: 700; }
+
+/* ---- index cards ---- */
+#security .sec-cards { margin-top: calc(var(--u) * 3); }
+#security .sec-cards > h3 { font-size: var(--t-xl); margin-bottom: calc(var(--u) / 2); letter-spacing: -.015em; }
+#security .sec-cards > p { color: var(--ink-2); max-width: 56ch; }
+#security .sec-grid {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: calc(var(--u) * 1.25) var(--u); margin-top: calc(var(--u) * 1.5);
+}
+#security .sec-card-wide { grid-column: span 2; }
+@media (max-width: 980px) { #security .sec-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { #security .sec-grid { grid-template-columns: 1fr; } #security .sec-card-wide { grid-column: auto; } }
+
+#security .sec-card { padding: var(--u); transition: transform .25s var(--ease-out), box-shadow .25s var(--ease-out); }
+#security .sec-card:hover { transform: translateY(-3px); box-shadow: 0 2px 2px rgba(31,35,41,.06), 0 12px 28px -8px rgba(31,35,41,.22); }
+#security .sec-card-in { display: flex; gap: calc(var(--u) * .75); align-items: flex-start; }
+#security .sec-doodle { flex: 0 0 56px; width: 56px; height: 56px; }
+#security .sec-doodle .ink-thin { stroke-width: 1.8; }
+#security .sec-doodle .ink-red, #security .sec-doodle .ink-green { stroke-width: 2.4; fill: none; }
+#security .sec-doodle .ink-green { stroke: var(--green); stroke-linecap: round; stroke-linejoin: round; }
+#security .sec-card-tx { min-width: 0; }
+#security .sec-card-tx h4 { font-size: var(--t-md); margin: 4px 0 calc(var(--u) / 3); letter-spacing: -.01em; }
+#security .sec-badge { display: inline-block; margin-left: 6px; font: 600 var(--t-sm)/1.2 var(--f-hand); color: var(--red); transform: rotate(-1.5deg); }
+#security .sec-card-tx p { font-size: var(--t-sm); color: var(--ink-2); line-height: 1.55; margin-bottom: calc(var(--u) / 2); }
+#security .sec-link { font-size: var(--t-sm); font-weight: 600; overflow-wrap: anywhere; }
+#security .sec-link::after { content: " ↗"; }
+@media (max-width: 980px) { #security .sec-card { transform: none !important; } }
+
+@media (max-width: 700px) {
+  #security .sec-sketch { margin-left: calc(var(--gutter) * -1); margin-right: calc(var(--gutter) * -1); }
+  #security .sec-sketch svg { padding: 0 6px; }
+  #security .sec-sketch figcaption { padding: 0 var(--gutter); }
+  #security .sec-lab { font-size: 19px; }
+  #security .sec-sub { font-size: 17px; }
+  #security .sec-on { font-size: 18px; }
+  #security .sec-doodle { flex-basis: 44px; width: 44px; height: 44px; }
+}

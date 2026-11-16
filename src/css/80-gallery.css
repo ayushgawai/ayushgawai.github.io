@@ -1,0 +1,130 @@
+/* ---------- gallery: taped photo scrapbook ---------- */
+#gallery .board {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: calc(var(--u) * 2) calc(var(--u) * 1.5);
+  grid-auto-flow: row dense;
+  align-items: start;
+  padding: var(--u) 0 calc(var(--u) * 2);
+}
+#gallery .c3 { grid-column: span 3; }
+#gallery .c6 { grid-column: span 6; }
+#gallery .tall { grid-row: span 2; }
+#gallery .start3 { grid-column: 3 / span 3; }
+#gallery .start8 { grid-column: 8 / span 3; }
+#gallery .snap.note-room { margin-bottom: 40px; }
+
+/* one snapshot = polaroid-ish print + tape + handwritten caption */
+#gallery .snap {
+  --r: 0deg; --y: 0px;
+  position: relative;
+  margin: 0;
+  padding: 10px 10px 12px;
+  background: var(--paper-card);
+  box-shadow: var(--shadow-card);
+  transform: translateY(var(--y)) rotate(var(--r));
+  transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
+}
+#gallery .snap:hover, #gallery .snap:focus-within {
+  transform: translateY(calc(var(--y) - 4px)) rotate(calc(var(--r) * .4));
+  box-shadow: 0 2px 2px rgba(31, 35, 41, .06), 0 16px 30px -12px rgba(31, 35, 41, .3);
+  z-index: 2;
+}
+#gallery .snap .tape { z-index: 3; }
+#gallery .snap .tape-l { left: -18px; top: 2px; width: 82px; transform: rotate(-38deg); }
+#gallery .snap .tape-r { left: auto; right: -18px; top: 2px; width: 82px; transform: rotate(36deg); }
+
+#gallery .snap-open {
+  display: block; width: 100%; padding: 0; margin: 0; border: 0; background: var(--ink); cursor: zoom-in;
+  border-radius: 1px; overflow: hidden;
+}
+#gallery .snap-open img { width: 100%; height: auto; transition: filter .3s var(--ease-out); filter: saturate(.92) contrast(1.02); }
+#gallery .snap-open:hover img { filter: none; }
+#gallery .snap-open:focus-visible { outline-offset: 4px; }
+
+#gallery .snap figcaption {
+  margin-top: 10px; font-size: 1.0625rem; line-height: 1.25; padding: 0 2px;
+  transform: rotate(-.6deg); transition: font-variation-settings .4s var(--ease-out);
+}
+#gallery .snap:hover figcaption { font-variation-settings: "INFM" 100, "BNCE" 60; }
+#gallery .snap .who { color: var(--ink-2); font-size: .9em; white-space: nowrap; }
+
+/* svg text helpers */
+#gallery .svg-hand { font-size: 19px; }
+#gallery .svg-hand.red { fill: var(--red); }
+
+/* doodles that spill off the prints */
+#gallery .doodle { position: absolute; pointer-events: none; overflow: visible; }
+#gallery .d-star { width: 150px; right: 6px; bottom: -78px; transform: rotate(-4deg); }
+#gallery .d-me { left: 10px; top: 10px; width: calc(100% - 20px); }
+#gallery .d-me .svg-hand { font-size: 26px; }
+#gallery .d-note { width: 230px; left: 12px; bottom: -48px; }
+#gallery .d-end { width: 190px; left: -218px; top: 28%; transform: rotate(-5deg); }
+
+/* placeholders: dashed pencil frame, sketched camera, a note */
+#gallery .ph { background: rgba(252, 251, 247, .55); box-shadow: none; }
+#gallery .ph-frame {
+  display: grid; place-items: center; align-content: center; gap: 8px;
+  border: 2px dashed var(--ink-3); border-radius: 6px 3px 7px 4px / 4px 7px 3px 6px;
+  background: repeating-linear-gradient(-45deg, transparent 0 11px, rgba(124, 130, 140, .09) 11px 12px);
+  padding: var(--u) 12px; min-height: 140px;
+}
+#gallery .ph-cam {
+  width: 44%; max-width: 110px; aspect-ratio: 4 / 3; height: auto;
+  fill: none; stroke: var(--ink-2); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+  filter: url(#rough); transform: rotate(-6deg);
+}
+#gallery .ph-frame .hand { font-size: 1.0625rem; transform: rotate(-3deg); text-align: center; }
+#gallery .ph figcaption { color: var(--ink-2); }
+
+/* ---------- lightbox ---------- */
+#gallery .lightbox {
+  width: fit-content; min-width: min(600px, calc(100vw - 32px)); max-width: min(1100px, calc(100vw - 32px)); max-height: calc(100dvh - 32px);
+  padding: 14px 14px 10px; border: 0; background: var(--paper-card); color: var(--ink);
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, .55); overflow: auto;
+}
+#gallery .lightbox::backdrop { background: rgba(31, 35, 41, .72); backdrop-filter: blur(2px); }
+#gallery .lightbox[open] { animation: gallery-pop .28s var(--ease-out); }
+@keyframes gallery-pop { from { opacity: 0; transform: translateY(10px) rotate(-.8deg); } }
+#gallery .lightbox figure { margin: 0; }
+#gallery .lightbox img {
+  width: auto; height: auto; max-width: 100%; max-height: calc(100dvh - 190px); margin: 0 auto; background: var(--paper);
+}
+#gallery .lightbox figcaption { margin: 12px auto 0; font-size: var(--t-md); max-width: 70ch; text-align: center; }
+#gallery .lb-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 10px; }
+#gallery .lb-count { font-size: var(--t-sm); }
+#gallery .lb-close {
+  position: absolute; top: 6px; right: 6px; width: 44px; height: 44px; border: 0; border-radius: 50%;
+  background: var(--paper-card); color: var(--ink); font: 400 30px/1 var(--f-hand); cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
+}
+#gallery .lb-close:hover { color: var(--red); }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1000px) {
+  #gallery .board { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  #gallery .c3 { grid-column: span 3; }
+  #gallery .c6 { grid-column: span 6; }
+  #gallery .tall { grid-row: auto; }
+  #gallery .start3, #gallery .start8 { grid-column: span 3; }
+  #gallery .d-end { display: none; }
+}
+@media (max-width: 600px) {
+  #gallery .board { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(var(--u) * 1.5) 14px; }
+  #gallery .c3 { grid-column: span 1; }
+  #gallery .c6 { grid-column: span 2; }
+  #gallery .start3, #gallery .start8 { grid-column: span 1; }
+  #gallery .snap.room { margin-bottom: 44px; }
+  #gallery .snap { padding: 6px 6px 8px; --y: 0px !important; }
+  #gallery .snap .tape-l { left: -8px; width: 60px; }
+  #gallery .snap .tape-r { right: -4px; width: 60px; }
+  #gallery .snap figcaption { font-size: .9375rem; margin-top: 7px; }
+  #gallery .snap .who { white-space: normal; }
+  #gallery .ph-frame { min-height: 0; padding: 12px 6px; }
+  #gallery .ph-frame .hand { font-size: .875rem; }
+  #gallery .d-me { left: 6px; top: 6px; width: calc(100% - 12px); }
+  #gallery .d-star { width: 124px; bottom: -64px; }
+  #gallery .d-note { width: 200px; }
+  #gallery .lightbox { padding: 10px 10px 8px; }
+  #gallery .lightbox figcaption { font-size: var(--t-sm); }
+}

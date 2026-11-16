@@ -1,0 +1,191 @@
+<section class="chapter" id="automation" data-tab="Automation" aria-labelledby="automation-title">
+  <header class="chapter-head page">
+    <p class="chapter-kicker hand">Zoox perception fleet · Sneakstore.in · release pipelines</p>
+    <h2 id="automation-title" class="chapter-title">Make the system tell people, so they don’t have to check</h2>
+    <p class="chapter-lede">The perception data-mining fleet runs ~400 miners producing on the order of
+      <span class="marker">90M events a week</span>. The boring question is “is it still working?” Two mechanisms answer it: a scheduled one and an event-driven one — and the sketch runs both.</p>
+  </header>
+
+  <div class="spread page">
+    <figure class="sketch auto-sketch" data-anim data-mode="sched">
+      <div class="auto-dual">
+        <!-- (a) SCHEDULED: compute once, publish once, serve many -->
+        <div class="auto-mech sched" tabindex="0" data-mech="sched" aria-label="Scheduled weekly report: gear turns once a week, aggregates fleet metrics, writes an immutable snapshot to S3, which a dashboard and Slack digest read">
+          <span class="mech-tag">scheduled</span>
+          <svg class="mach draw" viewBox="0 0 470 430" role="img" aria-labelledby="am-sched-t">
+            <title id="am-sched-t">A clock gear turns once a week, aggregates fleet metrics, drops an immutable report page into an S3 bucket; a static dashboard and a Slack digest read it.</title>
+            <g class="boil">
+              <!-- clock gear -->
+              <g id="auto-gear" class="gear">
+                <circle cx="80" cy="84" r="34" class="ink"/>
+                <g class="gear-teeth">
+                  <rect x="74" y="42" width="12" height="12" rx="2" class="ink-thin"/>
+                  <rect x="74" y="114" width="12" height="12" rx="2" class="ink-thin"/>
+                  <rect x="38" y="78" width="12" height="12" rx="2" class="ink-thin"/>
+                  <rect x="110" y="78" width="12" height="12" rx="2" class="ink-thin"/>
+                  <rect x="49" y="53" width="11" height="11" rx="2" class="ink-thin" transform="rotate(45 54.5 58.5)"/>
+                  <rect x="100" y="53" width="11" height="11" rx="2" class="ink-thin" transform="rotate(-45 105.5 58.5)"/>
+                  <rect x="49" y="104" width="11" height="11" rx="2" class="ink-thin" transform="rotate(-45 54.5 109.5)"/>
+                  <rect x="100" y="104" width="11" height="11" rx="2" class="ink-thin" transform="rotate(45 105.5 109.5)"/>
+                </g>
+                <path d="M80 62 v22 h16" class="ink-thin"/>
+                <circle cx="80" cy="84" r="3.5" class="ink-thin" fill="var(--ink)"/>
+              </g>
+              <text x="80" y="140" text-anchor="middle" class="svg-hand" font-size="16">once / week</text>
+              <!-- pipe from gear to aggregator -->
+              <path d="M118 96 C 150 96, 160 96, 186 96" class="ink"/>
+              <!-- aggregator: little funnel + metrics -->
+              <g class="rough">
+                <path d="M186 60 h56 l-14 28 h-28 z" class="ink"/>
+                <path d="M204 88 h20 v10 h-20 z" class="ink-thin"/>
+                <path d="M196 128 q8 -14 16 0 M218 132 q8 -14 16 0 M186 146 q8 -14 16 0" class="ink-thin" stroke-dasharray="2 3"/>
+              </g>
+              <text x="214" y="168" text-anchor="middle" class="svg-hand" font-size="15">aggregates runs, <tspan x="214" dy="18">failures, volume</tspan></text>
+              <!-- pipe down to snapshot page -->
+              <path d="M214 186 C 214 210, 214 214, 214 228" class="ink"/>
+              <!-- the paper snapshot -->
+              <g class="snap" id="auto-snap">
+                <rect x="178" y="228" width="72" height="88" rx="3" class="ink"/>
+                <text x="214" y="252" text-anchor="middle" class="svg-print" font-size="12" font-weight="700">week 23</text>
+                <path d="M190 264 h48 M190 274 h48 M190 284 h34 M190 294 h48 M190 304 h24" class="ink-thin"/>
+                <path d="M238 306 l6 6 12 -14" class="ink-thin" stroke="var(--green)"/>
+              </g>
+              <!-- S3 bucket doodle -->
+              <g class="rough">
+                <path d="M268 258 q46 -18 92 0 v40 q-46 18 -92 0 z" class="ink"/>
+                <ellipse cx="314" cy="258" rx="46" ry="14" class="ink"/>
+                <text x="314" y="290" text-anchor="middle" class="svg-hand" font-size="15">S3</text>
+                <path class="s3-check" d="M292 316 l8 9 14 -17" class="ink" stroke="var(--green)" stroke-width="2.4"/>
+              </g>
+              <!-- two consumers: dashboard + slack -->
+              <g class="consumer rough">
+                <rect x="330" y="330" width="92" height="62" rx="8" class="ink"/>
+                <path d="M342 372 l14 -16 12 10 16 -20 8 8" class="ink-thin" stroke="var(--blue)"/>
+                <text x="376" y="352" text-anchor="middle" class="svg-print" font-size="12" font-weight="600">dashboard</text>
+              </g>
+              <g class="consumer rough">
+                <path d="M430 344 h30 q8 0 8 8 v18 q0 8 -8 8 h-30 q-4 0 -4 -4 v-26 q0 -4 4 -4 z" class="ink-blue"/>
+                <path d="M432 356 q10 -4 20 0 q-10 4 -20 0 M432 366 q10 -4 14 0" class="ink-blue" stroke-width="1.4"/>
+              </g>
+              <text x="386" y="414" text-anchor="middle" class="svg-hand" font-size="15">digest <tspan x="452" dy="-2">+ owner DMs</tspan></text>
+            </g>
+          </svg>
+        </div>
+
+        <!-- (b) EVENT-DRIVEN: the tripwire -->
+        <div class="auto-mech event" tabindex="0" data-mech="event" aria-label="Event-driven: when a miner run flips to failed, a tripwire rings a bell and an alert with a deep link is sent within minutes">
+          <svg class="mach draw" viewBox="0 0 470 430" role="img" aria-labelledby="am-event-t">
+            <title id="am-event-t">A run state flips to FAILED and trips a wire: a bell rings and an alert with a deep link goes out within minutes; noisy miners stay opt-in, default off.</title>
+            <g class="boil">
+              <!-- run-state machine -->
+              <g class="rough">
+                <rect x="40" y="56" width="112" height="40" rx="20" class="ink-thin"/>
+                <text x="96" y="81" text-anchor="middle" class="svg-print" font-size="14" font-weight="600">RUN</text>
+                <circle class="state-dot" cx="150" cy="76" r="6" fill="var(--green)"/>
+              </g>
+              <path d="M152 88 a12 12 0 0 1 -4 -20" class="ink-thin" stroke-dasharray="3 3"/>
+              <!-- tripwire -->
+              <path d="M180 76 h120" class="ink" />
+              <path d="M180 76 h120" class="ink-red auto-wire-trip" stroke-dasharray="6 4" opacity="0"/>
+              <g class="rough">
+                <path d="M300 56 v40" class="ink-thin"/>
+                <path d="M292 96 l8 10 8 -10" class="ink"/>
+              </g>
+              <text x="240" y="52" text-anchor="middle" class="svg-hand" font-size="14">state change trips the wire</text>
+              <!-- bell -->
+              <g id="auto-bell" class="rough">
+                <path d="M322 130 q0 -26 22 -26 q22 0 22 26 v10 q10 4 8 10 h-68 q-2 -6 8 -10 z" class="ink"/>
+                <path d="M336 156 a8 8 0 0 0 16 0" class="ink-thin"/>
+                <circle cx="344" cy="98" r="4" class="ink-thin"/>
+                <path class="bell-rings" d="M372 108 q14 6 14 22 M380 100 q20 12 20 34" class="ink-red" stroke-width="1.6"/>
+                <path class="bell-rings" d="M316 108 q-14 6 -14 22" class="ink-red" stroke-width="1.6"/>
+              </g>
+              <text x="344" y="196" text-anchor="middle" class="svg-hand" font-size="14">within minutes</text>
+              <!-- alert card -->
+              <g id="auto-alert" class="rough auto-alert-card">
+                <rect x="250" y="220" width="180" height="86" rx="6" class="ink"/>
+                <path d="M266 238 h148" class="ink-thin"/>
+                <path d="M266 244 v14 q0 10 10 10 h40 q10 0 10 -10 v-14 z" class="ink-thin" transform="scale(.55) translate(212 214)"/>
+                <text x="268" y="248" class="svg-print" font-size="12" font-weight="700" fill="var(--red)">FAILED</text>
+                <text x="268" y="272" class="svg-hand" font-size="14">miner · run · time</text>
+                <text x="268" y="292" class="svg-hand" font-size="14">deep link ↗</text>
+              </g>
+              <!-- run states: ok vs failed -->
+              <g class="rough">
+                <rect x="60" y="252" width="92" height="34" rx="17" class="ink-thin"/>
+                <text x="106" y="273" text-anchor="middle" class="svg-print" font-size="13">RUNNING… ok</text>
+                <rect x="60" y="300" width="92" height="34" rx="17" class="ink-red"/>
+                <text x="106" y="321" text-anchor="middle" class="svg-print" font-size="13" fill="var(--red)">FAILED</text>
+              </g>
+              <path d="M152 268 h40 v18 h-40" class="ink-thin" marker-end="url(#arrowhead)"/>
+              <text x="236" y="272" class="svg-hand" font-size="13">the flip rings the bell</text>
+              <!-- opt-in note -->
+              <g class="rough">
+                <rect x="60" y="356" width="180" height="48" rx="6" class="ink-thin"/>
+                <text x="72" y="376" class="svg-hand" font-size="13.5">opt-in per miner — noisy</text>
+                <text x="72" y="394" class="svg-hand" font-size="13.5">backfills default to off</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <figcaption class="auto-modes">
+        <span class="hand" id="auto-mode-note">Left runs on the clock. Right runs on the event. Pick a mechanism — the sketch shows which one.</span>
+      </figcaption>
+    </figure>
+
+    <div class="notes">
+      <h3>Two mechanisms, one philosophy</h3>
+      <p><b>Scheduled</b> — the weekly fleet report. A gear turns once a week, aggregates runs, failures and mined volume, and writes one immutable JSON snapshot to S3. The static dashboard, the Slack digest and each owner’s DM all read <i>the same</i> published artifact: <span class="marker">compute once, publish once, serve many.</span></p>
+      <p><b>Event-driven</b> — near-real-time failure alerts. The tripwire sits exactly where a run’s state changes: when a run flips to FAILED, the bell rings and an alert with a deep link is out <i>within minutes</i>. Opt-in per miner, default off, so noisy backfills don’t page the team.</p>
+      <p>Failure discovery moved from days (a periodic team review) to minutes.</p>
+
+      <h3>Sneakstore.in, the shop-floor version</h3>
+      <p>Before the data jobs: as founder of Sneakstore.in (2020–22), a bootstrapped sneaker resale turned e-commerce, the same idea showed up at the register. Every order, payment and shipment below is a small automation that made the shop run itself.</p>
+      <p class="meta">Ran paid Instagram, Facebook and Google Ads daily for two years, A/B testing creatives and audiences while tracking ROAS.</p>
+    </div>
+  </div>
+
+  <!-- Rube-Goldberg strip: the commerce pipeline -->
+  <div class="page auto-strip">
+    <p class="hand strip-kicker">order → paid → shipped → tracked — no one touches it</p>
+    <ol class="strip" data-anim>
+      <li class="card tilt-l">
+        <span class="tape"></span>
+        <b class="hand">order</b>
+        <p>Customer buys on the store; WooCommerce emits the order event.</p>
+      </li>
+      <li class="card">
+        <b class="hand">payment</b>
+        <p>Instamojo webhook confirms it, and the payment is reconciled against the ledger before anything ships.</p>
+      </li>
+      <li class="card tilt-r">
+        <b class="hand">shipment</b>
+        <p>A Shiprocket shipment is created automatically; the tracking ID is generated with no manual courier step.</p>
+      </li>
+      <li class="card">
+        <b class="hand">tracking</b>
+        <p>Shipping status syncs back to the customer. Funnel and cohort dashboards plus A/B tests decide what to change next.</p>
+      </li>
+    </ol>
+    <p class="meta strip-fine">Feb 2020 – Aug 2022 · bootstrapped · first-hand measurement of channels, funnels, ROAS.</p>
+  </div>
+
+  <!-- CI/CD habits -->
+  <div class="page auto-cicd">
+    <h3 class="hand">Release pipelines stay boring on purpose</h3>
+    <div class="cicd-grid">
+      <div class="card tilt-l">
+        <span class="tape"></span>
+        <b>Coditas</b>
+        <p>Dockerized Spring Boot services with GitLab CI pipelines: automated build and deploy kept staging and production in parity, cutting the release cycle by <span class="marker">~17%</span>.</p>
+      </div>
+      <div class="card tilt-r">
+        <span class="tape"></span>
+        <b>Zscaler</b>
+        <p>Git-based workflows with automated schema checks and SQL tests in GitHub Actions; Docker standardized the environment so “works on my machine” stopped being an excuse.</p>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,290 @@
+<section class="chapter" id="ai" data-tab="AI · LLM" aria-labelledby="ai-title">
+  <header class="chapter-head page">
+    <p class="chapter-kicker hand">Zoox · Zscaler · two hackathon builds</p>
+    <h2 id="ai-title" class="chapter-title">The LLM proposes, the machine verifies</h2>
+    <p class="chapter-lede">Every LLM system here follows one rule. The model drafts, deterministic code checks the draft
+      against real data, and the accepted result is stored so anyone can rerun it and get the
+      <span class="marker">same number</span>. The model is a constrained author, never the source of truth.</p>
+  </header>
+
+  <div class="spread page ai-spread" data-anim>
+    <figure class="sketch ai-fig">
+      <svg id="ai-loop" class="draw" viewBox="0 0 560 530" role="img" aria-labelledby="ai-loop-t">
+        <title id="ai-loop-t">Hand-drawn loop machine. An LLM at the top drafts a SQL predicate on a paper slip. The slip travels
+          to a database cylinder where it runs against live label counts, then to a verify sheet. On the first pass the count is
+          wrong, a red cross appears and the slip goes back round the loop with the evidence. On the second pass a green check
+          appears and the slip is filed in a drawer as canonical SQL. Then the LLM steps out of the loop: scoring reruns the stored
+          SQL without it.</title>
+        <path id="ai-track" d="M280 104 H416 Q460 104 460 148 V340 Q460 384 416 384 H144 Q100 384 100 340 V148 Q100 104 144 104 Z" fill="none"/>
+        <path id="ai-exit" d="M226 384 C 206 392, 176 404, 150 414 S 96 430, 70 440" fill="none"/>
+
+        <!-- the loop track -->
+        <path class="ink-blue ai-track" d="M281 104 H417 Q461 103 460 149 V339 Q461 385 415 384 H145 Q99 385 100 341 V149 Q99 103 145 104 Z"
+          stroke-dasharray="8 8" stroke-width="2"/>
+        <!-- direction chevrons -->
+        <g class="ink-blue ai-chev" stroke-width="2.2">
+          <path d="M366 97 l9 7 l-9 7"/><path d="M453 296 l7 9 l7 -9"/><path d="M196 377 l-9 7 l9 7"/><path d="M93 190 l7 -9 l7 9"/>
+        </g>
+        <!-- retry: left half turns red on a failed pass -->
+        <path class="ai-retry" pathLength="1" d="M276 384 H145 Q99 385 100 341 V149 Q99 103 145 104 H262"
+          fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round"/>
+        <text class="svg-hand ai-retry-lbl" transform="translate(84 246) rotate(-90)" font-size="18" text-anchor="middle">retry with the evidence</text>
+
+        <!-- GENERATE: the LLM -->
+        <g class="ai-ghost">
+          <path d="M240 26 H320 Q324 26 324 30 V70 Q324 74 320 74 H240 Q236 74 236 70 V30 Q236 26 240 26 Z" fill="none" stroke="var(--ink-3)" stroke-width="1.6" stroke-dasharray="5 6"/>
+        </g>
+        <g id="ai-llm" class="ai-llm">
+          <g class="boil">
+            <path class="ink" fill="var(--paper-card)" pathLength="1" d="M241 25 C 262 23, 300 24, 320 26 Q325 27 324 32 C 325 46, 324 58, 323 70 Q322 75 317 74 C 296 75, 262 76, 241 74 Q236 73 236 68 C 235 54, 236 42, 237 31 Q237 26 241 25 Z"/>
+            <path class="ink-thin" d="M262 25 L256 13 M298 25 L305 12"/>
+            <circle class="ink-thin" cx="255" cy="10" r="3.2"/><circle class="ink-thin" cx="306" cy="9" r="3.2"/>
+            <path class="ink" d="M236 44 L228 46 L229 56 L236 56 M324 44 L332 46 L331 56 L324 56"/>
+          </g>
+          <circle cx="263" cy="44" r="3.6" fill="var(--ink)"/><circle cx="297" cy="44" r="3.6" fill="var(--ink)"/>
+          <text x="280" y="67" class="svg-print" font-size="13" font-weight="800" text-anchor="middle" letter-spacing=".06em">LLM</text>
+        </g>
+        <text class="svg-hand ai-lbl" x="222" y="50" font-size="22" text-anchor="end">generate</text>
+        <text class="svg-print ai-sub" x="222" y="69" font-size="13" text-anchor="end">grounded draft</text>
+        <path id="ai-trail" class="ai-trail" d="M326 40 C 360 6, 404 4, 438 26" fill="none" stroke="var(--red)" stroke-width="1.8" stroke-dasharray="5 6" stroke-linecap="round" marker-end="url(#arrowhead)"/>
+        <text class="svg-hand ai-outnote" x="488" y="90" font-size="16" text-anchor="middle" fill="var(--red)">steps out</text>
+
+        <!-- EXECUTE: database -->
+        <g class="ai-st ai-st-exe">
+          <g class="boil">
+            <path class="ink" fill="var(--paper-card)" pathLength="1" d="M424 214 C 424 200, 496 200, 496 214 C 497 234, 496 256, 496 274 C 496 289, 424 289, 424 274 C 423 256, 424 234, 424 214 Z"/>
+            <path class="ink-thin" d="M424 214 C 425 228, 495 228, 496 214"/>
+            <path class="ink-thin" d="M424 244 C 426 257, 494 257, 496 244"/>
+          </g>
+          <g class="ai-counts">
+            <path d="M440 236 v-8 M447 236 v-12 M454 236 v-6 M461 236 v-14 M468 236 v-9 M475 236 v-11" stroke-width="2.4" stroke-linecap="round"/>
+          </g>
+        </g>
+        <text class="svg-hand ai-lbl" x="444" y="330" font-size="22" text-anchor="end">execute</text>
+        <text class="svg-print ai-sub" x="444" y="348" font-size="13" text-anchor="end">live label counts</text>
+
+        <!-- VERIFY: tally sheet + magnifier -->
+        <g class="ai-st ai-st-ver">
+          <g class="boil">
+            <path class="ink" fill="var(--paper-card)" pathLength="1" d="M248 359 C 268 358, 296 358, 314 360 C 315 376, 315 394, 313 410 C 294 411, 268 411, 249 409 C 247 392, 247 375, 248 359 Z"/>
+            <path class="ink-thin" d="M258 372 h46 M258 384 h38 M258 396 h44"/>
+            <circle class="ink" cx="304" cy="400" r="11" fill="rgba(252,251,247,.85)"/>
+            <path class="ink" d="M312 408 L322 418"/>
+          </g>
+        </g>
+        <g class="ai-mark-x">
+          <path d="M342 368 C 350 377, 360 388, 370 398 M370 368 C 361 378, 351 389, 341 399" fill="none" stroke="var(--red)" stroke-width="4" stroke-linecap="round"/>
+        </g>
+        <g class="ai-mark-ok">
+          <path d="M340 386 L351 398 L374 368" fill="none" stroke="var(--green)" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M330 384 C 330 360, 384 358, 388 380 C 391 402, 344 410, 333 394" fill="none" stroke="var(--red)" stroke-width="1.8" stroke-linecap="round" opacity=".85"/>
+        </g>
+        <text class="svg-hand ai-lbl" x="280" y="440" font-size="22" text-anchor="middle">verify</text>
+        <text class="svg-print ai-sub" x="280" y="458" font-size="13" text-anchor="middle">counts vs. vocabulary</text>
+
+        <!-- STORE: filing drawer -->
+        <path class="ink-blue ai-exitline" d="M226 384 C 206 392, 176 404, 150 414 S 96 430, 76 436" stroke-dasharray="4 6" stroke-width="1.8" marker-end="url(#arrowhead)"/>
+        <g class="boil">
+          <path class="ink" fill="var(--paper-card)" pathLength="1" d="M24 446 C 50 444, 92 445, 116 447 C 117 468, 116 492, 115 514 C 90 515, 50 515, 25 513 C 23 492, 23 468, 24 446 Z"/>
+          <path class="ink-thin" d="M24 480 C 54 479, 90 481, 116 480"/>
+          <path class="ink-thin" d="M60 462 h22 M60 497 h22"/>
+          <rect x="24" y="446" width="92" height="68" class="hatch" opacity=".35"/>
+        </g>
+        <g class="ai-filed">
+          <path d="M52 432 l38 -3 l2 20 l-38 3 Z" fill="#fff" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M59 438 h24 M60 444 h16" stroke="var(--ink-3)" stroke-width="1.4" stroke-linecap="round"/>
+        </g>
+        <text class="svg-hand ai-lbl" x="128" y="492" font-size="22">store</text>
+        <text class="svg-print ai-sub" x="128" y="510" font-size="13">canonical SQL</text>
+
+        <!-- the slip, zoomed: what is written on it -->
+        <g class="ai-card">
+          <path d="M140 150 C 220 147, 330 148, 410 151 C 412 200, 411 252, 409 300 C 330 302, 220 302, 141 299 C 139 250, 139 200, 140 150 Z" fill="var(--paper-card)" stroke="var(--ink)" stroke-width="1.6"/>
+          <path d="M140 186 C 230 185, 330 186, 410 185" stroke="var(--red)" stroke-width="1" opacity=".45" fill="none"/>
+          <text id="ai-pass" class="svg-hand" x="158" y="176" font-size="17">pass 1 · first draft</text>
+          <text class="ai-code" x="158" y="218" font-size="16">WHERE label_bucket</text>
+          <text id="ai-pred" class="ai-code" x="158" y="242" font-size="16">  = 'REVERSE'</text>
+          <text id="ai-result" class="svg-hand ai-result" x="158" y="282" font-size="16"> </text>
+        </g>
+
+        <!-- the travelling slip -->
+        <g id="ai-slip" transform="translate(280 104)">
+          <path d="M-19 -13 L19 -14 L20 12 L-18 13 Z" fill="#fff" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M-12 -5 h22 M-12 2 h15 M-12 8 h19" stroke="var(--ink-2)" stroke-width="1.5" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <figcaption class="hand pencil">Zoox's predicate loop, simplified. The first draft guesses a label that isn't in the
+        data, so the counts come back empty and the evidence goes into the next draft. The accepted predicate is filed;
+        after that, scoring is plain SQL.</figcaption>
+    </figure>
+
+    <div class="notes">
+      <h3>Why a loop, and not just a prompt</h3>
+      <p>At Zoox, a few hundred data miners each needed a rule for what counts as a true positive. Generation was
+        <span class="marker">grounded</span>: the model saw the miner's description and config, the annotation task and
+        ontology, the valid <em>label_key</em> values and the label vocabulary actually observed in the warehouse.</p>
+      <ul>
+        <li><strong>Executed, then verified.</strong> Each candidate ran against live label counts. Invalid SQL, unknown
+          fields, empty matches or vocabulary conflicts went back with the observed evidence for another draft.</li>
+        <li><strong>Routing never touches the LLM.</strong> Miner to task to labeling view is a deterministic mapping. A
+          hallucinated predicate fails visibly; a hallucinated view would give a valid-looking but wrong precision.</li>
+        <li><strong>The model steps out.</strong> Once a predicate is filed, scoring is stored SQL, about 1.3 s median per
+          miner, and anyone can rerun it for the same number.</li>
+      </ul>
+      <ul class="tags" aria-label="Tools">
+        <li>Claude</li><li>Qwen3-VL</li><li>VLMs</li><li>PyTorch</li><li>OpenCV</li><li>YOLO</li>
+        <li>FastAPI</li><li>Databricks SQL</li><li>dbt</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="page ai-cases-wrap">
+    <h3 class="ai-cases-title hand">Four builds, same rule</h3>
+    <div class="ai-cases">
+
+      <article class="card ai-case tilt-l">
+        <span class="tape"></span>
+        <header class="ai-case-head">
+          <h4>Zoox Perception</h4>
+          <p class="ai-meta hand">grounded predicates, deterministic routing</p>
+        </header>
+        <svg class="ai-case-diag" viewBox="0 0 400 132" role="img" aria-label="Two lanes. Top: annotation task maps to labeling view through a lookup table, no LLM. Bottom: miner intent and observed vocabulary go to the LLM, which drafts a predicate that is checked against counts.">
+          <g class="rough">
+            <path class="ink-thin" d="M10 14 h112 v32 h-112 Z M270 14 h120 v32 h-120 Z"/>
+            <path class="ink-blue" d="M124 30 H266" marker-end="url(#arrowhead)"/>
+            <path class="ink-thin" d="M10 84 h112 v34 h-112 Z M270 84 h120 v34 h-120 Z"/>
+            <path class="ink" d="M196 82 L226 101 L196 120 L166 101 Z" fill="var(--paper-card)"/>
+            <path class="ink-blue" d="M124 101 H162 M230 101 H266" marker-end="url(#arrowhead)"/>
+          </g>
+          <text x="66" y="35" class="svg-print" font-size="14" text-anchor="middle">task</text>
+          <text x="330" y="35" class="svg-print" font-size="14" text-anchor="middle">labeling view</text>
+          <text x="195" y="22" class="svg-hand" font-size="13.5" text-anchor="middle">lookup table</text>
+          <text x="195" y="60" class="svg-hand" font-size="13.5" text-anchor="middle" fill="var(--red)">routing never touches the LLM</text>
+          <text x="66" y="106" class="svg-print" font-size="14" text-anchor="middle">intent + vocab</text>
+          <text x="196" y="106" class="svg-print" font-size="11" font-weight="800" text-anchor="middle">LLM</text>
+          <text x="322" y="106" class="svg-print" font-size="14" text-anchor="middle">predicate</text>
+          <path d="M370 96 l5 6 l10 -12" stroke="var(--green)" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <ul class="ai-nums">
+          <li><b>321/321</b><span>GT-capable miners validated</span></li>
+          <li><b>~409</b><span>active miners covered</span></li>
+        </ul>
+        <p>Predicate authoring with execute-and-verify, plus deterministic task-to-view routing, so each precision number
+          comes from stored SQL rather than from the model.</p>
+        <p class="ai-links"><span>Internal work.</span> <a href="#av">More in the Autonomy chapter</a></p>
+      </article>
+
+      <article class="card ai-case tilt-r">
+        <span class="tape"></span>
+        <header class="ai-case-head">
+          <h4>Zscaler</h4>
+          <p class="ai-meta hand">CRM formulas to verified dbt SQL</p>
+        </header>
+        <svg class="ai-case-diag" viewBox="0 0 400 132" role="img" aria-label="Salesforce formula fields are walked depth-first into a dependency tree, serialized as JSON context, translated by the LLM into dbt SQL, then sampled and reconciled against the live CRM before deploy.">
+          <g class="rough">
+            <path class="ink-thin" d="M8 14 h84 v30 h-84 Z"/>
+            <circle class="ink-thin" cx="138" cy="14" r="5"/>
+            <circle class="ink-thin" cx="122" cy="36" r="5"/><circle class="ink-thin" cx="154" cy="36" r="5"/>
+            <circle class="ink-thin" cx="112" cy="58" r="5"/><circle class="ink-thin" cx="132" cy="58" r="5"/>
+            <path class="ink-thin" d="M135 18 L125 31 M141 18 L151 31 M120 41 L114 53 M124 41 L130 53"/>
+            <path class="ink-thin" d="M196 14 h74 v30 h-74 Z"/>
+            <path class="ink" d="M318 6 L346 29 L318 52 L290 29 Z" fill="var(--paper-card)"/>
+            <path class="ink-blue" d="M94 29 H106 M166 29 H192 M272 29 H286" marker-end="url(#arrowhead)"/>
+            <path class="ink-blue" d="M318 54 V82" marker-end="url(#arrowhead)"/>
+            <path class="ink-thin" d="M270 86 h100 v30 h-100 Z"/>
+            <path class="ink-thin" d="M8 86 h92 v30 h-92 Z"/>
+            <path class="ink-blue" d="M266 101 H104" marker-end="url(#arrowhead)" stroke-dasharray="5 5"/>
+          </g>
+          <text x="50" y="34" class="svg-print" font-size="13.5" text-anchor="middle">formulas</text>
+          <text x="133" y="78" class="svg-hand" font-size="12" text-anchor="middle" fill="var(--red)">depth-first</text>
+          <text x="233" y="34" class="svg-print" font-size="13.5" text-anchor="middle">JSON</text>
+          <text x="318" y="33" class="svg-print" font-size="11" font-weight="800" text-anchor="middle">LLM</text>
+          <text x="320" y="106" class="svg-print" font-size="13.5" text-anchor="middle">dbt SQL</text>
+          <text x="54" y="106" class="svg-print" font-size="13.5" text-anchor="middle">live CRM</text>
+          <text x="185" y="94" class="svg-hand" font-size="13.5" text-anchor="middle">sample + compare</text>
+          <text x="185" y="128" class="svg-hand" font-size="13.5" text-anchor="middle" fill="var(--green)">reconciled before deploy ✓</text>
+        </svg>
+        <ul class="ai-nums">
+          <li><b>~80%</b><span>lower reporting latency</span></li>
+          <li><b>~35%</b><span>faster queries</span></li>
+        </ul>
+        <p>Formula logic became version-controlled dbt models. Because the SQL was LLM-written, automated sampling
+          compared warehouse output with the live CRM and flagged discrepancies before anything shipped.</p>
+        <p class="ai-links"><span>Internal work.</span> <a href="#data">More in the Data chapter</a></p>
+      </article>
+
+      <article class="card ai-case tilt-r">
+        <span class="tape"></span>
+        <header class="ai-case-head">
+          <h4>Sentinel AI</h4>
+          <p class="ai-meta hand">HP × SJSU Edge AI Hackathon winner</p>
+        </header>
+        <svg class="ai-case-diag" viewBox="0 0 400 132" role="img" aria-label="A cost funnel inside a dashed site boundary: YOLO pose and tracking run on every frame, only credible events pass, a 16-frame bundle goes to a local Qwen3-VL, and deterministic rules set severity and the incident state.">
+          <g class="rough">
+            <path class="ink-thin" d="M4 4 H396 V128 H4 Z" stroke-dasharray="6 6" stroke="var(--ink-3)"/>
+            <path class="ink" d="M20 34 C 80 32, 150 33, 196 34 L 128 76 L 126 100 L 92 100 L 90 76 Z" fill="url(#hatch-blue)"/>
+            <path class="ink-blue" d="M132 92 C 170 90, 200 84, 230 82" marker-end="url(#arrowhead)"/>
+            <path class="ink-thin" d="M236 62 h68 v38 h-68 Z"/>
+            <path class="ink-blue" d="M306 81 H322" marker-end="url(#arrowhead)"/>
+            <path class="ink" d="M354 60 L380 81 L354 102 L328 81 Z" fill="var(--paper-card)"/>
+          </g>
+          <text x="108" y="24" class="svg-print" font-size="13" text-anchor="middle">YOLO pose + tracking</text>
+          <rect x="70" y="42" width="76" height="17" rx="3" fill="var(--paper-card)" opacity=".9"/>
+          <text x="108" y="55" class="svg-hand" font-size="13" text-anchor="middle">every frame</text>
+          <text x="184" y="76" class="svg-hand" font-size="13" text-anchor="middle">credible only</text>
+          <text x="270" y="78" class="svg-print" font-size="12" text-anchor="middle">16 frames</text>
+          <text x="270" y="93" class="svg-print" font-size="12" text-anchor="middle">Qwen3-VL</text>
+          <text x="354" y="85" class="svg-print" font-size="10.5" font-weight="800" text-anchor="middle">rules</text>
+          <text x="354" y="50" class="svg-hand" font-size="12.5" text-anchor="middle">severity</text>
+          <text x="270" y="120" class="svg-hand" font-size="13.5" text-anchor="middle" fill="var(--red)">video never leaves the site</text>
+        </svg>
+        <ul class="ai-nums">
+          <li><b>1st</b><span>place, team of five</span></li>
+          <li><b>16</b><span>frame evidence bundle</span></li>
+        </ul>
+        <p>Cheap perception screens every feed; only credible events reach a locally served VLM on an HP ZGX Nano, and a
+          deterministic incident state machine decides what happens next. Ayush owned the frame-streaming backend, async
+          event routing, alerts and incident logging.</p>
+        <p class="ai-links">
+          <a href="https://github.com/ayushgawai/campus_sentinel" rel="noopener">GitHub</a>
+          <a href="https://youtu.be/MFF1DICU6Ow" rel="noopener">Demo video</a>
+          <a href="https://github.com/ayushgawai/sentinel-ai" rel="noopener">SAM 3.1 + Muse variant</a>
+        </p>
+      </article>
+
+      <article class="card ai-case tilt-l">
+        <span class="tape"></span>
+        <header class="ai-case-head">
+          <h4>LEO satellite coverage risk</h4>
+          <p class="ai-meta hand">Claude orchestrates, Python computes</p>
+        </header>
+        <svg class="ai-case-diag" viewBox="0 0 400 132" role="img" aria-label="Claude in the middle chooses between five deterministic tools: ingest, sample, score, validate and report. Artifacts pass between them as file paths, so millions of rows never enter the prompt.">
+          <g class="rough">
+            <path class="ink" d="M200 44 L240 66 L200 88 L160 66 Z" fill="var(--paper-card)"/>
+            <path class="ink-thin" d="M8 10 h76 v26 h-76 Z M162 6 h76 v26 h-76 Z M316 10 h76 v26 h-76 Z M8 98 h76 v26 h-76 Z M316 98 h76 v26 h-76 Z"/>
+            <path class="ink-blue" stroke-width="1.6" d="M166 60 L88 30 M200 42 V36 M234 60 L312 30 M166 72 L88 104 M234 72 L312 104" marker-end="url(#arrowhead)"/>
+          </g>
+          <text x="200" y="71" class="svg-print" font-size="12" font-weight="800" text-anchor="middle">Claude</text>
+          <text x="46" y="28" class="svg-print" font-size="13" text-anchor="middle">ingest</text>
+          <text x="200" y="24" class="svg-print" font-size="13" text-anchor="middle">sample</text>
+          <text x="354" y="28" class="svg-print" font-size="13" text-anchor="middle">score</text>
+          <text x="46" y="116" class="svg-print" font-size="13" text-anchor="middle">validate</text>
+          <text x="354" y="116" class="svg-print" font-size="13" text-anchor="middle">report</text>
+          <text x="200" y="112" class="svg-hand" font-size="13.5" text-anchor="middle">file paths, not rows</text>
+          <text x="200" y="127" class="svg-hand" font-size="12" text-anchor="middle" fill="var(--ink-3)">/runs/scores.parquet</text>
+        </svg>
+        <ul class="ai-nums">
+          <li><b>4,674,905</b><span>NC locations scored</span></li>
+          <li><b>100/100</b><span>counties, 250 tests</span></li>
+        </ul>
+        <p>Tree and terrain obstruction risk for LEO satellite service. The tool-use agent picks the next step; ingest,
+          sample, score, validate and report are plain Python, and a pipeline-only mode runs them with no LLM at all.</p>
+        <p class="ai-links">
+          <a href="https://github.com/ayushgawai/Ready_Builders_Challenge" rel="noopener">GitHub</a>
+          <a href="https://www.loom.com/share/70303e4b0399499c865463a79cd17a84" rel="noopener">Demo video</a>
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>

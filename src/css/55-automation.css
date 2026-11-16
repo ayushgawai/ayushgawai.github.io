@@ -1,0 +1,151 @@
+/* ============================================================
+   #automation — two mechanisms: scheduled (weekly gear) vs
+   event-driven (tripwire + bell), plus the commerce strip & CI/CD.
+   All selectors prefixed with #automation.
+   ============================================================ */
+#automation .auto-dual {
+  display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * 1.5);
+  align-items: start;
+}
+@media (max-width: 900px) { #automation .auto-dual { grid-template-columns: 1fr; } }
+
+#automation .auto-mech {
+  position: relative;
+  padding: calc(var(--u) / 2) 10px calc(var(--u) / 3);
+  border: 1.5px dashed rgba(124, 130, 140, .55);
+  border-radius: 16px 5px 18px 7px;
+  background: rgba(252, 251, 247, .55);
+}
+#automation .auto-mech:nth-child(2) { border-radius: 7px 18px 5px 16px; }
+#automation .auto-mech .mech-tag {
+  position: absolute; top: -13px; left: 16px;
+  font-family: var(--f-hand); font-weight: 600; font-size: 14px;
+  color: var(--ink); background: var(--tape);
+  padding: 3px 12px;
+  border-radius: 4px 10px 5px 9px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.08);
+  transform: rotate(-1deg);
+}
+#automation .auto-mech.event .mech-tag { left: auto; right: 16px; transform: rotate(1deg); }
+#automation .auto-mech:focus-visible { outline-offset: 4px; }
+
+#automation .auto-mech .mach { width: 100%; height: auto; }
+
+/* caption / mechanism note */
+#automation .auto-modes { margin-top: calc(var(--u) / 2); min-height: 1.6em; }
+#automation .auto-modes .hand { display: inline-block; transform: rotate(-.4deg); font-size: var(--t-sm); }
+
+/* ---------------- motion: the scheduled cycle (10 s week) ---------------- */
+#automation .sched .gear {
+  animation: auto-gear-spin 4s linear infinite;
+  transform-box: fill-box; transform-origin: center;
+}
+@keyframes auto-gear-spin { to { transform: rotate(360deg); } }
+
+#automation .sched .snap {
+  animation: auto-snap-cycle 10s linear infinite;
+  transform-box: fill-box;
+}
+@keyframes auto-snap-cycle {
+  0%, 44%   { transform: translateY(0);    opacity: 1; }
+  50%       { transform: translateY(-4px);  opacity: 0; }
+  56%       { transform: translateY(-14px); opacity: 1; }
+  74%       { transform: translateY(40px);  opacity: 1; }
+  92%       { transform: translateY(40px);  opacity: 0; }
+  96%,100%  { transform: translateY(0);     opacity: 0; }
+}
+/* the S3 check that appears once the snapshot lands */
+#automation .sched .s3-check { opacity: 0; animation: auto-s3-check 10s linear infinite; }
+@keyframes auto-s3-check {
+  0%, 72% { opacity: 0; } 76%, 90% { opacity: 1; } 96%, 100% { opacity: 0; }
+}
+/* dashboard + slack consumers gently pulse while serving */
+#automation .sched .consumer { animation: auto-serve-pulse 10s ease-in-out infinite; }
+@keyframes auto-serve-pulse {
+  0%, 60% { opacity: 1; } 72%, 88% { opacity: 1; transform: translateX(0); }
+  80%, 84% { opacity: .55; }
+}
+
+/* ---------------- motion: the event tripwire (11 s) ---------------- */
+#automation .event .auto-wire-trip { animation: auto-trip 11s linear infinite; opacity: 0; }
+@keyframes auto-trip { 0%, 40% { opacity: 0; } 44%, 58% { opacity: 1; } 68%, 100% { opacity: 0; } }
+
+#automation .event .bell-rings { opacity: 0; animation: auto-ring 11s linear infinite; }
+@keyframes auto-ring {
+  0%, 44% { opacity: 0; transform: scale(.9); }
+  50%, 60% { opacity: 1; transform: scale(1); }
+  72%, 100% { opacity: 0; transform: scale(1.04); }
+}
+#automation .event .bell-rings { transform-box: fill-box; transform-origin: center; }
+
+#automation .event .auto-alert-card { animation: auto-alert-pop 11s ease-out infinite; opacity: .3; }
+@keyframes auto-alert-pop {
+  0%, 42%  { opacity: .3; }
+  48%, 66% { opacity: 1; }
+  76%, 100%{ opacity: .3; }
+}
+
+#automation .event .state-dot { animation: auto-state-flip 11s linear infinite; }
+@keyframes auto-state-flip {
+  0%, 38%   { fill: var(--green); r: 6; }
+  44%, 70%  { fill: var(--red); r: 9; }
+  78%, 100% { fill: var(--green); r: 6; }
+}
+
+/* reduced motion: show a finished static picture of each mechanism */
+@media (prefers-reduced-motion: reduce) {
+  #automation .sched .snap { opacity: 1 !important; transform: translateY(40px) !important; animation: none !important; }
+  #automation .sched .s3-check { opacity: 1 !important; animation: none !important; }
+  #automation .event .auto-wire-trip { opacity: 1 !important; animation: none !important; }
+  #automation .event .bell-rings { opacity: 1 !important; animation: none !important; }
+  #automation .event .auto-alert-card { opacity: 1 !important; animation: none !important; }
+  #automation .event .state-dot { fill: var(--red) !important; animation: none !important; }
+  #automation .gear { animation: none !important; }
+}
+
+/* ---------------- Rube-Goldberg strip ---------------- */
+#automation .auto-strip { margin-top: calc(var(--u) * 2); }
+#automation .strip-kicker { font-size: var(--t-lg); transform: rotate(-.6deg); display: inline-block; margin-bottom: calc(var(--u) / 2); }
+#automation .strip {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(var(--u) * 1.2);
+  list-style: none; counter-reset: strip; margin: 0;
+}
+#automation .strip .card { position: relative; counter-increment: strip; padding: calc(var(--u) * .8); }
+#automation .strip .card b { display: block; font-size: var(--t-lg); margin-bottom: calc(var(--u) / 4); }
+#automation .strip .card p { font-size: var(--t-sm); color: var(--ink-2); margin: 0; }
+#automation .strip .card::before {
+  content: counter(strip, decimal-leading-zero);
+  position: absolute; top: 8px; right: 12px;
+  font: 600 12px/1 var(--f-print); color: var(--ink-3);
+}
+#automation .strip .card:not(:last-child)::after {
+  content: "→";
+  position: absolute; right: calc(-1 * var(--u) * 0.9); top: 45%;
+  font-family: var(--f-hand); font-size: 22px; color: var(--blue);
+  transform: rotate(-8deg);
+}
+#automation .strip-fine { margin-top: calc(var(--u) / 2); }
+@media (max-width: 700px) {
+  #automation .strip { grid-template-columns: 1fr 1fr; }
+  #automation .strip .card:nth-child(2)::after { display: none; }
+  #automation .strip .card:nth-child(3)::after {
+    content: "↓"; right: 45%; top: -34px; transform: none;
+  }
+}
+@media (max-width: 480px) {
+  #automation .strip { grid-template-columns: 1fr; }
+  #automation .strip .card::after { display: none !important; }
+  #automation .strip .card:not(:last-child) { margin-bottom: calc(var(--u) / 2); }
+}
+
+/* ---------------- CI/CD ---------------- */
+#automation .auto-cicd { margin-top: calc(var(--u) * 2); }
+#automation .auto-cicd h3 { font-size: var(--t-lg); margin-bottom: calc(var(--u) / 2); transform: rotate(-.4deg); display: inline-block; }
+#automation .cicd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * 1.5); }
+@media (max-width: 700px) { #automation .cicd-grid { grid-template-columns: 1fr; } }
+#automation .cicd-grid .card { padding: calc(var(--u) * .9); }
+#automation .cicd-grid .card b {
+  display: block; font-family: var(--f-hand); font-weight: 600; font-size: var(--t-lg);
+  color: var(--blue); margin-bottom: calc(var(--u) / 4);
+}
+#automation .cicd-grid .card p { font-size: var(--t-sm); color: var(--ink-2); margin: 0; }
