@@ -76,7 +76,6 @@ PROJECT_BLOCK = {
     "sentinel": lambda: part("ai", ["#p-sentinel"]),
     "leo": lambda: part("ai", ["#p-leo"]),
     "blast": lambda: part("agents", ["#p-blast"]),
-    "so101": lambda: part("robots", ["#p-so101"]),
     "obstacle": lambda: part("robots", ["#p-obstacle"]),
     "warehouse": lambda: part("robots", ["#p-warehouse"]),
     "transit": lambda: data_pipe("transit"),
@@ -99,20 +98,21 @@ REDIRECTS = {
     "project/slackbot.html": "work/zoox.html", "project/zoox.html": "work/zoox.html",
     "project/formulas.html": "work/zscaler.html", "project/latentview.html": "work/latentview.html",
     "project/cicd.html": "work/coditas.html", "project/eyetracking.html": "research.html", "project/wheelchair.html": "research.html",
+    "project/so101.html": "research.html",
 }
-MOVED = {"predicates", "fleet-reporting", "slackbot", "zoox", "formulas", "latentview", "cicd", "eyetracking", "wheelchair"}
+MOVED = {"predicates", "fleet-reporting", "slackbot", "zoox", "formulas", "latentview", "cicd", "eyetracking", "wheelchair", "so101"}
 
 PAGES = [  # file, [parts], title, description, nav key
-    ("index.html", ["hero", "home-about", "path", "home-featured", "home-photos", "contact"],
+    ("index.html", ["hero", "home-about", "home-featured", "path", "skills", "home-photos", "contact"],
      "Ayush Gawai — field notebook",
      "I build data, AI and robotics systems people can trust: AV data infrastructure at Zoox, robot-learning and human-centered research at SJSU, data platforms at Zscaler and LatentView.", "home"),
     ("experience.html", ["@xp"],
      "Experience — Ayush Gawai", "Where I have worked: Zoox, Zscaler, LatentView, Coditas and my own store. Each has one page with the whole story.", "experience"),
-    ("projects.html", ["hackathons", "projlib", "@more"],
+    ("projects.html", ["projlib", "@more"],
      "Hackathons and projects — Ayush Gawai", "Every hackathon build and project, each with one page: demo, moving sketch, numbers, code.", "projects"),
     ("research.html", ["research"],
      "Research and publications — Ayush Gawai", "Published human-centered AI research at SJSU: visual attention and assistive mobility.", "research"),
-    ("media.html", ["films", "gallery", "recognition"],
+    ("media.html", ["gallery", "recognition"],
      "Media and recognition — Ayush Gawai", "Project films, photos, awards and press.", "media"),
     ("contact.html", ["resume", "contact"],
      "Résumé and contact — Ayush Gawai", "My résumé and how to reach me.", "contact"),
@@ -249,7 +249,11 @@ def xp_gallery(items):
     for it in items:
         href = f'work/{it["slug"]}.html' if it["slug"] in WORK_PARTS else "research.html"
         nums = "".join(f'<li><b>{_esc(n["k"])}</b> {_esc(n.get("v",""))}</li>' for n in it.get("numbers", [])[:3])
+        logo = {"zoox": "zoox", "zscaler": "zscaler", "coditas": "coditas", "research": "sjsu"}.get(it["slug"])
+        mark = (f'<img class="xpg-logo" src="assets/logos/co/{logo}.png" alt="" width="44" height="44">' if logo
+                else f'<span class="xpg-logo xpg-logo--txt" aria-hidden="true">{_esc(it["org"][0])}</span>')
         cards.append(f"""      <a class="xpg-card" href="{href}">
+        {mark}
         <p class="xpg-date hand">{_esc(it["dates"])}</p>
         <h2 class="xpg-org">{_esc(it["org"])}</h2>
         <p class="xpg-role">{_esc(it["role"])}</p>
@@ -268,35 +272,64 @@ def xp_gallery(items):
   </div></div>
 </section>"""
 
+SHOWCASE = ["sentinel", "leo", "carbonshift", "blast", "transit"]   # owner's order; the rest follow, films first
+THUMB = {"sentinel": "assets/img/demos/sentinel.webp", "blast": "assets/img/demos/blast-radius.webp", "carbonshift": "assets/img/demos/carbonshift-demo.webp"}
+
+def card_media(it):
+    f, t = it.get("film"), _esc(it["title"])
+    if isinstance(f, dict) and f.get("type") in ("yt", "loom"):
+        attr = "data-yt" if f["type"] == "yt" else "data-loom"
+        thumb = THUMB.get(it["slug"], "assets/img/demos/leo.webp")
+        return (f'<button class="video" type="button" {attr}="{f["id"]}" data-title="{t} demo" aria-label="Play the {t} demo">'
+                f'<img src="{thumb}" alt="" loading="lazy" width="1280" height="720"><span class="video-label">Watch the demo</span></button>')
+    if isinstance(f, str):
+        base = "assets/video/" + f.split(":", 1)[1][:-4] if f.startswith("silent:") else f"assets/video/narrated/{f}"
+        return (f'<video class="pg-video" controls preload="none" playsinline poster="{base}-poster.webp" width="1920" height="1080" aria-label="{t} film">'
+                f'<source src="{base}.mp4" type="video/mp4"></video>')
+    return ""
+
 def projlib(items):
-    label = {"ai": "AI and agents", "data": "data platforms", "software": "software and systems", "robotics": "robotics",
-             "autonomy": "autonomy", "marketing": "marketing ML", "research": "research"}
-    blocks = []
-    for a in ["ai", "data", "software", "robotics", "autonomy", "marketing", "research"]:
-        its = [it for it in items if it.get("area") == a]
-        if not its: continue
-        cards = "\n".join(f"""      <a class="lib-card" href="project/{it["slug"]}.html">
-        <h3 class="lib-t">{_esc(it["title"])}</h3>
-        <p class="lib-sum">{_esc(it.get("summary",""))} <span class="lib-open hand">open →</span></p>
-      </a>""" for it in its)
-        blocks.append(f'    <h3 class="lib-group hand">{label[a]}</h3>\n    <div class="lib-grid">\n{cards}\n    </div>')
+    rank = {s: i for i, s in enumerate(SHOWCASE)}
+    withfilm = sorted([it for it in items if it.get("film")], key=lambda it: rank.get(it["slug"], 99))
+    rest = [it for it in items if not it.get("film")]
+    def card(it, big):
+        href = f'project/{it["slug"]}.html'
+        facts = "".join(f'<li><b>{_esc(x["k"])}</b> {_esc(x.get("v",""))}</li>' for x in it.get("facts", [])[:3])
+        repo = f'<a class="btn" href="{it["repo"]}" target="_blank" rel="noopener">Code on GitHub</a>' if it.get("repo") else ""
+        return f"""      <article class="pg-card{' pg-card--big' if big else ''}">
+        {card_media(it) if big else ''}
+        <p class="pg-where hand">{_esc(it.get("where",""))}</p>
+        <h3 class="pg-title"><a href="{href}">{_esc(it["title"])}</a></h3>
+        <p class="pg-sum">{_esc(it.get("summary",""))}</p>
+        {f'<ul class="pg-facts">{facts}</ul>' if facts and big else ''}
+        <div class="btn-row"><a class="btn blue" href="{href}">Read more</a>{repo}</div>
+      </article>"""
+    big = "\n".join(card(it, True) for it in withfilm)
+    small = "\n".join(card(it, False) for it in rest)
     return f"""<section class="chapter" id="projlib" aria-labelledby="projlib-title">
   <header class="chapter-head page">
-    <p class="chapter-kicker hand">the full library</p>
-    <h2 id="projlib-title" class="chapter-title">Every project, one page each</h2>
-    <p class="chapter-lede">{len(items)} builds. Open a card for its demo, moving sketch, numbers and code.</p>
+    <p class="chapter-kicker hand">hackathon wins, side projects, coursework</p>
+    <h1 id="projlib-title" class="chapter-title">Hackathons and projects</h1>
+    <p class="chapter-lede">Press play on any demo right here, or open a project for its full write-up, moving sketch and code.</p>
   </header>
   <div class="page">
-{chr(10).join(blocks)}
+    <div class="pg-grid pg-grid--big">
+{big}
+    </div>
+    <h2 class="pg-more-t hand">more builds</h2>
+    <div class="pg-grid pg-grid--small">
+{small}
+    </div>
   </div>
 </section>"""
 
 def more_builds():
-    return (part("agents", [".ag-more"]) + "\n" + part("security", [".sec-cards"]) + "\n" + part("systems", [".sys-log-wrap", ".sys-cloud"]).replace(take(frag("systems"), "#p-carbonshift"), ""))
+    return (part("agents", [".ag-more"]) + "\n" + part("systems", [".sys-log-wrap", ".sys-cloud"]).replace(take(frag("systems"), "#p-carbonshift"), ""))
 
 def build_pages(projects, works):
     special = {"@xp": lambda: xp_gallery(works), "@more": more_builds, "projlib": lambda: projlib(projects),
-               "research": lambda: frag("research")}
+               "research": lambda: frag("research") + "\n" + part("robots", ["#p-so101"]),
+               "skills": lambda: frag("skills") if (src / "sections" / "skills.html").exists() else ""}
     for file, parts, title, desc, key in PAGES:
         body = "\n".join(special[p]() if p in special else frag(p) for p in parts)
         OUT[file] = shell(body, title, desc, f"{ROOT}/{'' if file == 'index.html' else file}", key)

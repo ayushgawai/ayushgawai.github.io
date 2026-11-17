@@ -1,76 +1,238 @@
 <section class="chapter" id="recognition" data-tab="Recognition" aria-labelledby="rec-title">
   <header class="chapter-head page">
-    <p class="chapter-kicker hand">awards, features &amp; papers</p>
+    <p class="chapter-kicker hand">awards, press, papers &amp; leadership</p>
     <h2 id="rec-title" class="chapter-title">Recognition, on the record</h2>
-    <p class="chapter-lede">Institutional and peer-recognized work, with links to the primary sources. Papers open at the publisher where a stable link exists; the few that don't yet are listed in the project's TODO and marked below.</p>
+    <p class="chapter-lede">Where my work was judged, published or written about by someone other than me. Every outside link below goes to the primary source: the university, the conference programme or the publisher.</p>
   </header>
 
   <div class="page">
-    <div class="rec-grid">
-      <article class="rec-card">
-        <span class="rec-ribbon rec-win" aria-hidden="true"></span>
-        <h3 class="rec-h">Winner, SJSU RSCA research competition</h3>
-        <p class="rec-p">University-wide Research, Scholarship and Creative Activity competition; selected as the SJSU delegate to the 40th CSU Student Research Competition.</p>
-        <a class="rec-link hand" href="research.html#p-eyetracking">the research behind it →</a>
+
+    <!-- ============ AWARDS & SCHOLARSHIPS ============ -->
+    <h3 class="rc-head hand" id="rec-awards">Awards &amp; scholarships</h3>
+    <div class="rc-grid">
+
+      <article class="rc-card rc-yellow rc-win">
+        <span class="tape" aria-hidden="true"></span>
+        <p class="rc-tag">Winner · 2026 · San José State University</p>
+        <h4 class="rc-h">Winner, SJSU RSCA research competition</h4>
+        <p class="rc-p">The university-wide Research, Scholarship and Creative Activity competition, judged by a faculty panel on method, results, value and how clearly the work is presented and defended.</p>
+        <p class="rc-p">I competed with <em>Body Brain Connect</em>, a three-person interdisciplinary project on measuring visual attention from eye and brain activity. I built the data and AI side: the pipeline that turns raw eye-tracking recordings into gaze heatmaps, attention trajectories and the statistical comparisons the judges questioned us on.</p>
+        <div class="rc-links">
+          <a class="btn blue" href="https://www.sjsu.edu/research/students/student-rsca-competition/2026.php" target="_blank" rel="noopener">SJSU Office of Research listing</a>
+          <a class="rc-more hand" href="research.html#p-eyetracking">the research behind it →</a>
+        </div>
       </article>
 
-      <article class="rec-card">
-        <span class="rec-ribbon rec-win" aria-hidden="true"></span>
-        <h3 class="rec-h">Winner, HP × SJSU Edge AI Hackathon</h3>
-        <p class="rec-p">Sentinel AI: fully local, privacy-first multi-camera safety system on the HP ZGX Nano — YOLO pose, on-device Qwen3-VL reasoning and guarded emergency dispatch.</p>
-        <a class="rec-link hand" href="hackathons.html#p-sentinel">the build →</a>
+      <article class="rc-card rc-green rc-win">
+        <span class="tape" aria-hidden="true"></span>
+        <p class="rc-tag">Winner · HP × SJSU</p>
+        <h4 class="rc-h">Winner, HP × SJSU Edge AI Hackathon</h4>
+        <p class="rc-p">I won with <em>Sentinel AI</em>, a multi-camera safety system that runs entirely on an HP ZGX Nano sitting in the room. No video ever leaves the building.</p>
+        <p class="rc-p">I combined YOLO-based perception with a locally hosted Qwen vision-language model that reasons about what the cameras see, then raises real-time alerts. The point I proved to the judges: privacy-first AI can still be fast enough for live safety monitoring.</p>
+        <div class="rc-links">
+          <a class="btn blue" href="https://github.com/ayushgawai/campus_sentinel" target="_blank" rel="noopener">Code on GitHub</a>
+          <a class="rc-more hand" href="hackathons.html#p-sentinel">the build →</a>
+        </div>
       </article>
 
-      <article class="rec-card">
-        <span class="rec-ribbon" aria-hidden="true"></span>
-        <h3 class="rec-h">Global Spartan Scholarship, SJSU</h3>
-        <p class="rec-p">Awarded for academic excellence and contribution to the university community.</p>
+      <article class="rc-card rc-blue">
+        <span class="tape" aria-hidden="true"></span>
+        <p class="rc-tag">April 2026 · California State University</p>
+        <h4 class="rc-h">SJSU delegate, 40th CSU Student Research Competition</h4>
+        <p class="rc-p">After the campus competition, SJSU selected our team to represent the university at the 40th Annual California State University Student Research Competition, the system-wide event that brings together student researchers from across the CSU campuses.</p>
+        <p class="rc-p">I presented the analysis and visuals and answered the judges' questions on the data. SJSU NewsCenter ran a research spotlight on our project for the occasion.</p>
+        <div class="rc-links">
+          <a class="btn blue" href="https://blogs.sjsu.edu/newsroom/2026/research-spotlight-the-body-brain-connection-at-the-csu-research-competition/" target="_blank" rel="noopener">Read the SJSU spotlight</a>
+        </div>
       </article>
 
-      <article class="rec-card">
-        <span class="rec-ribbon" aria-hidden="true"></span>
-        <h3 class="rec-h">RSCA Fellowship</h3>
-        <p class="rec-p">Fellowship supporting graduate research; presented at the SJSU AI Center for Civic and Social Good grand opening.</p>
+      <article class="rc-card rc-rose">
+        <span class="tape" aria-hidden="true"></span>
+        <p class="rc-tag">Fellowship · San José State University</p>
+        <h4 class="rc-h">RSCA Fellowship</h4>
+        <p class="rc-p">A fellowship awarded in support of my graduate research at SJSU.</p>
+        <p class="rc-p">It backs the work I do as a Graduate Research Assistant: building the AI-assisted analysis pipeline for the visual-attention studies, validating the findings statistically, and explaining them to audiences in Applied Data Science, Human Factors and Audiology.</p>
+        <div class="rc-links">
+          <a class="rc-more hand" href="research.html#p-eyetracking">what the fellowship supports →</a>
+        </div>
       </article>
 
-      <article class="rec-card">
-        <span class="rec-ribbon" aria-hidden="true"></span>
-        <h3 class="rec-h">Featured, SJSU College of IDS profile</h3>
-        <p class="rec-p">"Harnessing the power of community" — a community profile of the research and outreach work.</p>
-        <a class="rec-link" href="https://blogs.sjsu.edu/idsprofiles/2025/11/23/harnessing-the-power-of-community-with-ayush-sunil-gawai/" target="_blank" rel="noopener">Read the profile</a>
+      <article class="rc-card rc-green">
+        <span class="tape" aria-hidden="true"></span>
+        <p class="rc-tag">Scholarship · San José State University</p>
+        <h4 class="rc-h">Global Spartan Scholarship</h4>
+        <p class="rc-p">Awarded by SJSU for academic excellence and contribution to the university community.</p>
+        <p class="rc-p">I earned it as an incoming graduate student on the strength of my academic record and industry work, and I have kept earning it since: strong graduate coursework, published research and active service to my college.</p>
+        <div class="rc-links">
+          <a class="btn blue" href="https://blogs.sjsu.edu/isss/2025/09/26/scholarship-recipient-spotlights-and-reception-recap/" target="_blank" rel="noopener">See the recipient list</a>
+        </div>
       </article>
 
-      <article class="rec-card">
-        <span class="rec-ribbon" aria-hidden="true"></span>
-        <h3 class="rec-h">Merit scholarship, MCA (with distinction)</h3>
-        <p class="rec-p">Merit scholarship during the MCA program; graduated with academic distinction (GPA 3.8).</p>
+      <article class="rc-card rc-yellow">
+        <span class="tape" aria-hidden="true"></span>
+        <p class="rc-tag">March 2026 · Dr. Martin Luther King Jr. Library</p>
+        <h4 class="rc-h">Presenter, SJSU AI Center for Civic and Social Good grand opening</h4>
+        <p class="rc-p">The City of San José and SJSU opened a public AI center in downtown San José, and student research was part of the launch.</p>
+        <p class="rc-p">I presented my research alongside my faculty advisor, explaining an applied AI system to a mixed audience of city leaders, faculty, students and members of the public.</p>
+        <div class="rc-links">
+          <a class="btn blue" href="https://events.sjsu.edu/event/ai-center-grand-opening" target="_blank" rel="noopener">About the event</a>
+        </div>
       </article>
+
+      <article class="rc-card rc-blue">
+        <span class="tape" aria-hidden="true"></span>
+        <p class="rc-tag">Master of Computer Applications · RCOEM</p>
+        <h4 class="rc-h">Merit scholarship and graduation with distinction</h4>
+        <p class="rc-p">I earned a merit scholarship during my MCA and graduated with academic distinction (GPA 3.8).</p>
+        <p class="rc-p">That came from sustained performance across systems, software engineering and computing coursework, while I also served as an elected class representative.</p>
+      </article>
+
     </div>
 
-    <h3 class="rec-pub-title hand">Publications &amp; proceedings</h3>
-    <ol class="rec-papers">
-      <li class="rec-paper">
-        <p class="rec-paper-t">Measuring Visual Attention Across Concurrent and Sequential Visual Perception Tasks</p>
-        <p class="rec-paper-m hand">Proceedings of the HFES Annual Meeting (SAGE), 2026</p>
-        <p class="rec-paper-links"><a href="https://journals.sagepub.com/eprint/T2T3XWNAEZ9PE2YBN9VY/full" target="_blank" rel="noopener">SAGE ePrint</a><a href="https://hfesam2026.conference-program.com/presentation/?id=POST409&amp;sess=sess246" target="_blank" rel="noopener">HFES 2026 poster</a></p>
+    <!-- ============ PRESS & FEATURES ============ -->
+    <h3 class="rc-head hand" id="rec-press">Press &amp; features</h3>
+    <div class="rc-press">
+
+      <article class="rc-clip rc-yellow">
+        <span class="tape" aria-hidden="true"></span>
+        <p class="rc-tag">SJSU NewsCenter · April 23, 2026</p>
+        <h4 class="rc-h">Research Spotlight: The "Body Brain Connection" at the CSU Research Competition</h4>
+        <p class="rc-p">The university newsroom profiles our team and the project we took to the 40th CSU Student Research Competition: pairing eye tracking with brain imaging to measure attention without an MRI. It covers my role as the team's data analyst and quotes me on why we keep improving the system.</p>
+        <div class="rc-links">
+          <a class="btn blue" href="https://blogs.sjsu.edu/newsroom/2026/research-spotlight-the-body-brain-connection-at-the-csu-research-competition/" target="_blank" rel="noopener">Read the story</a>
+        </div>
+      </article>
+
+      <article class="rc-clip rc-rose">
+        <span class="tape" aria-hidden="true"></span>
+        <p class="rc-tag">SJSU College of Information, Data and Society · November 23, 2025</p>
+        <h4 class="rc-h">Harnessing the Power of Community with Ayush Sunil Gawai</h4>
+        <p class="rc-p">A full community profile of me by my college. It traces my path from data engineering and founding an online marketplace in India to research at SJSU, and how showing up and building relationships led to my research and student assistant roles.</p>
+        <div class="rc-links">
+          <a class="btn blue" href="https://blogs.sjsu.edu/idsprofiles/2025/11/23/harnessing-the-power-of-community-with-ayush-sunil-gawai/" target="_blank" rel="noopener">Read the profile</a>
+          <a class="rc-more" href="https://www.sjsu.edu/information-data-society/about/community-profiles.php" target="_blank" rel="noopener">College profiles page</a>
+        </div>
+      </article>
+
+      <article class="rc-clip rc-blue">
+        <span class="tape" aria-hidden="true"></span>
+        <p class="rc-tag">SJSU Office of Research · 2026</p>
+        <h4 class="rc-h">Student RSCA Competition Finalists 2026</h4>
+        <p class="rc-p">The Office of Research's official list of the projects SJSU selected to advance to the 40th CSU Student Research Competition. Our team is listed under the Interdisciplinary category with our faculty mentor.</p>
+        <div class="rc-links">
+          <a class="btn blue" href="https://www.sjsu.edu/research/students/student-rsca-competition/2026.php" target="_blank" rel="noopener">See the listing</a>
+        </div>
+      </article>
+
+      <article class="rc-clip rc-green">
+        <span class="tape" aria-hidden="true"></span>
+        <p class="rc-tag">SJSU International Student and Scholar Services · September 26, 2025</p>
+        <h4 class="rc-h">Scholarship Recipient Spotlights and Reception Recap</h4>
+        <p class="rc-p">The university's recap of its international scholarship awards and reception. I am named among the Global Spartan Scholarship recipients.</p>
+        <div class="rc-links">
+          <a class="btn blue" href="https://blogs.sjsu.edu/isss/2025/09/26/scholarship-recipient-spotlights-and-reception-recap/" target="_blank" rel="noopener">Read the recap</a>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- ============ PUBLICATIONS ============ -->
+    <h3 class="rc-head hand" id="rec-papers">Publications</h3>
+    <p class="rc-intro">Three peer-reviewed research papers, all published in 2026.</p>
+    <ol class="rc-papers">
+
+      <li class="rc-paper">
+        <span class="rc-num hand" aria-hidden="true">1</span>
+        <div class="rc-paper-body">
+          <h4 class="rc-h">Measuring Visual Attention Across Concurrent and Sequential Visual Perception Tasks</h4>
+          <p class="rc-p"><strong>What we found:</strong> how often the eyes stop to fixate is the most sensitive eye-tracking signal for telling one kind of attention task from another.</p>
+          <p class="rc-meta">Research paper · Proceedings of the Human Factors and Ergonomics Society Annual Meeting, 2026 · with J. Chiu, A. Tran, S.-Y. Huang, G. Liu, Y. Yuan, Y. Luo</p>
+          <div class="rc-links">
+            <a class="btn blue" href="https://doi.org/10.1177/10711813261493593" target="_blank" rel="noopener">Read the paper</a>
+            <a class="rc-more" href="https://hfesam2026.conference-program.com/presentation/?id=POST409&amp;sess=sess246" target="_blank" rel="noopener">Conference poster</a>
+          </div>
+        </div>
       </li>
-      <li class="rec-paper">
-        <p class="rec-paper-t">AI-Enhanced Human-Machine Interface for Power Wheelchair Navigation: Effects of Communication Strategy and Vibrotactile Feedback Location</p>
-        <p class="rec-paper-m hand">Proceedings of the HFES Annual Meeting (SAGE), 2026</p>
-        <p class="rec-paper-links"><a href="https://journals.sagepub.com/doi/full/10.1177/10711813261493634" target="_blank" rel="noopener">SAGE full text</a><a href="https://hfesam2026.conference-program.com/presentation/?id=POST130&amp;sess=sess257" target="_blank" rel="noopener">HFES 2026 poster</a></p>
+
+      <li class="rc-paper">
+        <span class="rc-num hand" aria-hidden="true">2</span>
+        <div class="rc-paper-body">
+          <h4 class="rc-h">AI-Enhanced Human-Machine Interface for Power Wheelchair Navigation: Effects of Communication Strategy and Vibrotactile Feedback Location</h4>
+          <p class="rc-p"><strong>What we found:</strong> when an AI wheelchair warns its driver about an obstacle, people are more satisfied feeling the vibration in the seatback than on the wrist.</p>
+          <p class="rc-meta">Research paper · Proceedings of the Human Factors and Ergonomics Society Annual Meeting, 2026 · with S. Tang, A. Shah, S.-Y. Huang, G. Liu, J. Xie, G. Huang</p>
+          <div class="rc-links">
+            <a class="btn blue" href="https://journals.sagepub.com/doi/full/10.1177/10711813261493634" target="_blank" rel="noopener">Read the paper</a>
+            <a class="rc-more" href="https://hfesam2026.conference-program.com/presentation/?id=POST130&amp;sess=sess257" target="_blank" rel="noopener">Conference poster</a>
+          </div>
+        </div>
       </li>
-      <li class="rec-paper">
-        <p class="rec-paper-t">Evaluating an AI-enhanced power wheelchair obstacle alert system: Effects of multimodal warning design on warning-response behavior</p>
-        <p class="rec-paper-m hand">Transportation Research Part F, Vol. 123, Article 103801, 2026 (Elsevier)</p>
-        <p class="rec-paper-links"><a href="https://www.sciencedirect.com/science/article/pii/S1369847826002962" target="_blank" rel="noopener">ScienceDirect</a></p>
+
+      <li class="rc-paper">
+        <span class="rc-num hand" aria-hidden="true">3</span>
+        <div class="rc-paper-body">
+          <h4 class="rc-h">Evaluating an AI-enhanced power wheelchair obstacle alert system: Effects of multimodal warning design on warning-response behavior</h4>
+          <p class="rc-p"><strong>What we found:</strong> warnings that tell the driver what to do, paired with seatback vibration, get faster reactions than warnings that only say where the hazard is.</p>
+          <p class="rc-meta">Research paper · Transportation Research Part F: Traffic Psychology and Behaviour, Vol. 123, Article 103801, 2026 · with S. Tang, A. Shah, S.-Y. Huang, G. Liu, J. Xie, G. Huang</p>
+          <div class="rc-links">
+            <a class="btn blue" href="https://www.sciencedirect.com/science/article/pii/S1369847826002962" target="_blank" rel="noopener">Read the paper</a>
+            <a class="rc-more hand" href="research.html#p-wheelchair">how the system works →</a>
+          </div>
+        </div>
       </li>
+
     </ol>
 
-    <h3 class="rec-pub-title hand">Service</h3>
-    <ul class="rec-service">
-      <li>Student Assistant, Social Media &amp; Outreach, SJSU College of Information, Data and Society</li>
-      <li>Student member of faculty hiring discussions, SJSU</li>
-      <li>Class representative for six semesters and Student Representative Council, RCOEM</li>
-    </ul>
+    <!-- GOOGLE SCHOLAR: PLACEHOLDER, NOT VERIFIED.
+         Google Scholar redirects automated requests to a sign-in page, so no profile URL could be confirmed.
+         When the owner supplies the real profile URL, uncomment the block below and replace USER_ID.
+         Do not guess the id.
+    <div class="rc-links rc-scholar">
+      <a class="btn" href="https://scholar.google.com/citations?user=USER_ID" target="_blank" rel="noopener">All papers on Google Scholar</a>
+    </div>
+    Verified alternatives if wanted (see .qa/recognition-links.md):
+      ORCID   https://orcid.org/0009-0004-0807-7413  (name + SJSU Graduate Research Assistant; no works listed yet)
+      OpenAlex https://openalex.org/A5151285720      (lists exactly these three papers)
+    -->
+
+    <!-- ============ LEADERSHIP ============ -->
+    <h3 class="rc-head hand" id="rec-lead">Leadership &amp; responsibilities</h3>
+    <div class="rc-lead">
+
+      <article class="rc-note rc-yellow">
+        <p class="rc-tag">SJSU College of Information, Data and Society</p>
+        <h4 class="rc-h">Student Assistant, Social Media &amp; Outreach</h4>
+        <p class="rc-p">I help a new college tell people what it does. I read faculty research, find the core insight and turn it into stories that students and the wider community can follow without losing the substance.</p>
+        <p class="rc-p">I work with faculty, administrative leadership, research groups and event teams on research spotlights, event promotion and student-opportunity campaigns, keeping one consistent voice across platforms.</p>
+      </article>
+
+      <article class="rc-note rc-blue">
+        <p class="rc-tag">San José State University</p>
+        <h4 class="rc-h">Student member, faculty hiring discussions</h4>
+        <p class="rc-p">I sit on the student-level hiring committee in my department. I review faculty candidates' presentations and give structured feedback on teaching effectiveness and how well they fit the curriculum.</p>
+        <p class="rc-p">My job in the room is the student perspective: what the classroom experience would be like, and what future students will need from the person we hire.</p>
+      </article>
+
+      <article class="rc-note rc-green">
+        <p class="rc-tag">SJSU College of Information, Data and Society</p>
+        <h4 class="rc-h">Student voice at the CIDS retreat</h4>
+        <p class="rc-p">I was invited to represent students at the college retreat, working alongside faculty and staff.</p>
+        <p class="rc-p">I contributed to the discussions that shaped the college's mission, vision and values, and to its forward-looking planning on curriculum and direction.</p>
+      </article>
+
+      <article class="rc-note rc-rose">
+        <p class="rc-tag">VMV College (BCA) and RCOEM (MCA)</p>
+        <h4 class="rc-h">Class Representative for six semesters, Student Representative Council</h4>
+        <p class="rc-p">My classmates elected me six semesters running. I was the link between students and faculty: raising academic concerns, sorting out scheduling conflicts and keeping a large class informed.</p>
+        <p class="rc-p">On the Student Representative Council I took student concerns to faculty and administration, joined institutional planning discussions and helped organise technical and cultural events.</p>
+      </article>
+
+      <article class="rc-note rc-yellow">
+        <p class="rc-tag">College festivals</p>
+        <h4 class="rc-h">Technical Head</h4>
+        <p class="rc-p">I led the technical side of large campus events: stage systems, graphics, web operations and logistics, coordinating volunteers across teams.</p>
+        <p class="rc-p">When something failed live, fixing it was my call, in real time and on a deadline. It is where I learned to debug calmly with an audience watching.</p>
+      </article>
+
+    </div>
   </div>
 </section>

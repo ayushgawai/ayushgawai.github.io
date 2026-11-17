@@ -1,0 +1,91 @@
+/* Media & Recognition: sticky-note cards on the notebook page.
+   Every selector is scoped to #recognition. Markup: src/sections/recognition.html */
+
+#recognition .rc-yellow { --note: #FFF6C9; }
+#recognition .rc-green  { --note: #E3F0E6; }
+#recognition .rc-blue   { --note: #E6EDF9; }
+#recognition .rc-rose   { --note: #F6E3E0; }
+
+#recognition .rc-head {
+  font-size: var(--t-xl); line-height: 1.1; color: var(--blue);
+  margin: calc(var(--u) * 3.5) 0 calc(var(--u) * 1.75);
+  transform: rotate(-.8deg); transform-origin: left;
+}
+#recognition .rc-head:first-child { margin-top: 0; }
+#recognition .rc-intro { font-size: var(--t-md); color: var(--ink-2); margin: calc(var(--u) * -1) 0 calc(var(--u) * 1.25); }
+
+/* ---------- shared card pieces ---------- */
+#recognition .rc-grid,
+#recognition .rc-press,
+#recognition .rc-lead { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(var(--u) * 1.75) calc(var(--u) * 1.5); }
+
+#recognition .rc-card,
+#recognition .rc-clip,
+#recognition .rc-note {
+  position: relative; min-width: 0; display: flex; flex-direction: column; gap: 10px;
+  background: var(--note, var(--paper-card)); border: 1.5px solid rgba(31, 35, 41, .55); border-radius: 3px;
+  padding: 26px 22px 20px; box-shadow: var(--shadow-card);
+}
+#recognition .rc-grid > :nth-child(odd),
+#recognition .rc-press > :nth-child(even) { transform: rotate(-.4deg); }
+#recognition .rc-grid > :nth-child(even),
+#recognition .rc-press > :nth-child(odd) { transform: rotate(.35deg); }
+#recognition .rc-grid > :nth-child(3n) .tape { left: 26%; transform: translateX(-50%) rotate(2deg); }
+#recognition .rc-press .tape { left: 78%; transform: translateX(-50%) rotate(4deg); }
+
+#recognition .rc-tag {
+  margin: 0; font: 700 .8125rem/1.3 var(--f-print); letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2);
+}
+#recognition .rc-h { font: 800 1.25rem/1.2 var(--f-print); letter-spacing: -.012em; color: var(--ink); overflow-wrap: anywhere; }
+#recognition .rc-p { margin: 0; font-size: var(--t-md); line-height: 1.55; color: var(--ink); }
+#recognition .rc-links { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin-top: auto; padding-top: 8px; }
+#recognition .rc-more { font-size: 1rem; color: var(--blue); }
+
+/* winners: green ink border + a hand-drawn check */
+#recognition .rc-win { border: 2px solid var(--green); }
+#recognition .rc-win::after {
+  content: "✓"; position: absolute; top: 10px; right: 14px; font: 800 1.5rem/1 var(--f-hand); color: var(--green); transform: rotate(-8deg);
+}
+#recognition .rc-win .rc-tag { color: var(--green); padding-right: 28px; }
+
+/* press clippings read wider */
+#recognition .rc-clip .rc-h { font-size: 1.1875rem; }
+
+/* ---------- publications ---------- */
+#recognition .rc-papers { list-style: none; display: grid; gap: calc(var(--u) * 1.25); }
+#recognition .rc-paper {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 18px; align-items: start;
+  background: var(--paper-card); border: 1.5px solid rgba(31, 35, 41, .55); border-left: 6px solid var(--blue); border-radius: 3px;
+  padding: 22px; box-shadow: var(--shadow-card);
+}
+#recognition .rc-paper:nth-child(2) { border-left-color: var(--green); }
+#recognition .rc-paper:nth-child(3) { border-left-color: var(--red); }
+#recognition .rc-num { font-size: 2.25rem; line-height: 1; width: 1.2em; text-align: center; }
+#recognition .rc-paper-body { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+#recognition .rc-paper .rc-p strong { background: linear-gradient(transparent 55%, var(--marker) 55%); font-weight: 700; }
+#recognition .rc-meta { margin: 0; font-size: var(--t-sm); line-height: 1.45; color: var(--ink-2); }
+#recognition .rc-scholar { margin-top: var(--u); }
+
+/* ---------- leadership: flatter notes, no tape ---------- */
+#recognition .rc-lead { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+#recognition .rc-note { border-style: dashed; padding-top: 20px; }
+#recognition .rc-note .rc-h { font-size: 1.125rem; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1000px) {
+  #recognition .rc-lead { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 720px) {
+  #recognition .rc-grid,
+  #recognition .rc-press,
+  #recognition .rc-lead { grid-template-columns: minmax(0, 1fr); }
+  #recognition .rc-grid > *,
+  #recognition .rc-press > * { transform: none; }
+  #recognition .rc-card, #recognition .rc-clip, #recognition .rc-note { padding: 24px 16px 18px; }
+  #recognition .rc-paper { grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 18px 16px; }
+  #recognition .rc-num { text-align: left; font-size: 1.75rem; }
+  #recognition .rc-links .btn { white-space: normal; line-height: 1.25; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #recognition .btn { transition: none; }
+}

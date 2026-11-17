@@ -85,7 +85,7 @@
       <p class="hero-facts"><span>Zoox Perception intern ’26</span> <i aria-hidden="true">·</i> <span>M.S. Applied Data Science, SJSU ’27</span> <i aria-hidden="true">·</i> <span>4 years of data engineering</span></p>
       <p class="hero-status hand">Open to 2027 full-time roles: data and AI infrastructure, ML systems, edge AI, robotics</p>
       <div class="hero-actions">
-        <a class="btn" href="media.html#films">Watch the demos</a>
+        <a class="btn" href="media.html">Watch the demos</a>
         <a class="btn blue" href="contact.html#resume">Get the résumé</a>
         <span class="hero-social"><a href="https://github.com/ayushgawai" rel="noopener" target="_blank">GitHub</a> <span aria-hidden="true">·</span> <a href="https://www.linkedin.com/in/ayushgawai" rel="noopener" target="_blank">LinkedIn</a></span>
       </div>
@@ -161,7 +161,7 @@
     <div class="about-text">
       <p class="chapter-kicker hand">hello, I'm Ayush</p>
       <h2 id="about-title" class="chapter-title">I build systems that make messy real-world data reliable enough to act on</h2>
-      <p class="about-p">I spent four years as a data engineer at Zscaler and LatentView, then came to San José State for an M.S. in Applied Data Science. Last summer I was on the Perception team at Zoox, where I built the system that grades ~409 data miners against human labels. At SJSU I do published research on assistive mobility and visual attention, and I teach a real robot arm to pick and place.</p>
+      <p class="about-p">I spent four years as a data engineer at Zscaler and LatentView, then came to San José State for an M.S. in Applied Data Science. Last summer I was on the Perception team at Zoox, where I built the system that grades ~409 data miners against human labels. At SJSU I am a Graduate Research Assistant: I publish research on assistive AI and visual attention, and I train real robot arms with imitation learning.</p>
       <p class="about-p">I graduate in May 2027 and I'm looking for a full-time role in data and AI infrastructure, ML systems, edge AI or robotics.</p>
       <div class="btn-row">
         <a class="btn" href="experience.html">See my experience</a>
@@ -174,7 +174,7 @@
       <h3 id="high-t" class="hand about-high-t">highlights</h3>
       <ul class="about-list">
         <li><b>321 of 321</b> eligible Zoox data miners validated against ground truth, failures found in minutes instead of days <a href="work/zoox.html">Zoox</a></li>
-        <li><b>3 papers in 2026</b>: two at HFES (SAGE) and one in Transportation Research Part F (Elsevier) <a href="research.html">Research</a></li>
+        <li><b>3 peer-reviewed research papers</b> published in 2026 on assistive AI and visual attention <a href="research.html">Research</a></li>
         <li><b>Won</b> the HP × SJSU Edge AI Hackathon with Sentinel AI <a href="project/sentinel.html">Sentinel AI</a></li>
         <li><b>Won</b> SJSU's RSCA research competition and represented SJSU at the 40th CSU competition <a href="media.html#recognition">Recognition</a></li>
         <li><b>~80%</b> lower reporting latency at Zscaler with an LLM formula-to-SQL compiler <a href="work/zscaler.html">Zscaler</a></li>
@@ -184,24 +184,65 @@
   </div>
 </section>
 
-<section class="chapter" id="path" data-tab="Path" aria-labelledby="path-title">
+<!-- Home: featured projects. Each card opens that project's one full page. -->
+<section class="chapter" id="home-feat" aria-labelledby="home-feat-t">
   <header class="chapter-head page">
-    <p class="chapter-kicker hand">Nagpur → San José · 2015 to now</p>
-    <h2 id="path-title" class="chapter-title">The route so far</h2>
-    <p class="chapter-lede">Two degrees in Nagpur, a store of my own, four years building data platforms, then research and robotics in San José. Open any stop for the details.</p>
+    <p class="chapter-kicker hand">featured</p>
+    <h2 id="home-feat-t" class="chapter-title">Projects I'm proud of</h2>
   </header>
 
   <div class="page">
-    <div class="page xp-cards-wrap">
-      <ol class="xp-cards" aria-label="Main stops, each with its own page">
-        <li class="xp-mini"><span class="xp-mini-org">Zoox</span><span class="xp-mini-hand hand">Perception · 2026</span><a class="xp-mini-go hand" href="work/zoox.html">open →</a></li>
-        <li class="xp-mini"><span class="xp-mini-org">SJSU research</span><span class="xp-mini-hand hand">2025 → now</span><a class="xp-mini-go hand" href="research.html">open →</a></li>
-        <li class="xp-mini"><span class="xp-mini-org">Zscaler</span><span class="xp-mini-hand hand">Data Engineer · 24–25</span><a class="xp-mini-go hand" href="work/zscaler.html">open →</a></li>
-        <li class="xp-mini"><span class="xp-mini-org">LatentView</span><span class="xp-mini-hand hand">Data Engineer · 21–23</span><a class="xp-mini-go hand" href="work/latentview.html">open →</a></li>
-        <li class="xp-mini"><span class="xp-mini-org">Coditas</span><span class="xp-mini-hand hand">SE Intern · 2021</span><a class="xp-mini-go hand" href="work/coditas.html">open →</a></li>
-      </ol>
-      <p class="xp-cards-note hand pencil">each stop has its own page — that is the only place its full story lives.</p>
+    <div class="feat-grid">
+      <a class="feat-card" href="project/sentinel.html">
+        <span class="feat-tab" style="--tab:#F0D6D6">Hackathon winner · edge AI</span>
+        <h3 class="feat-title">Sentinel AI</h3>
+        <p class="feat-sum">A multi-camera safety system that runs fully on a local GPU. YOLO watches every frame and a vision-language model reasons only when something looks serious. Video never leaves the building.</p>
+        <span class="feat-cta hand">open the project →</span>
+      </a>
+      <a class="feat-card" href="project/leo.html">
+        <span class="feat-tab" style="--tab:#D8ECDF">Geospatial AI agent</span>
+        <h3 class="feat-title">SatCheck</h3>
+        <p class="feat-sum">Will satellite internet actually work at this address? A Claude agent scores 4.67 million locations for tree and terrain obstruction.</p>
+        <span class="feat-cta hand">open the project →</span>
+      </a>
+      <a class="feat-card" href="project/carbonshift.html">
+        <span class="feat-tab" style="--tab:#F4EDB8">TreeHacks · green AI</span>
+        <h3 class="feat-title">CarbonShift</h3>
+        <p class="feat-sum">GPU training that follows the power grid. A 60-second control loop throttles or pauses training when electricity is dirty or expensive.</p>
+        <span class="feat-cta hand">open the project →</span>
+      </a>
+      <a class="feat-card" href="work/zoox.html#p-fleet-reporting">
+        <span class="feat-tab" style="--tab:#DDE9E6">Zoox · observability</span>
+        <h3 class="feat-title">TripWire</h3>
+        <p class="feat-sum">Failure alerts for a fleet of ~409 data miners at Zoox. The moment a run fails, its owner gets a message with a deep link. Discovery went from days to minutes.</p>
+        <span class="feat-cta hand">open the project →</span>
+      </a>
+      <a class="feat-card" href="project/blast.html">
+        <span class="feat-tab" style="--tab:#DDE6F6">Multi-agent system</span>
+        <h3 class="feat-title">Blast Radius</h3>
+        <p class="feat-sum">Rename one field upstream and see everything that breaks downstream before you merge. Three coding agents test it, open fix PRs and wait for the real owners to approve.</p>
+        <span class="feat-cta hand">open the project →</span>
+      </a>
+      <a class="feat-card" href="project/transit.html">
+        <span class="feat-tab" style="--tab:#F2E3C4">Data platform</span>
+        <h3 class="feat-title">Transit Analytics</h3>
+        <p class="feat-sum">Live BART and VTA feeds through Kafka, Airflow, Snowflake and dbt into a forecasting layer and an operator dashboard.</p>
+        <span class="feat-cta hand">open the project →</span>
+      </a>
     </div>
+    <p class="home-more"><a class="btn" href="projects.html">See all hackathons and projects</a></p>
+  </div>
+</section>
+
+<section class="chapter" id="path" data-tab="Path" aria-labelledby="path-title">
+  <header class="chapter-head page">
+    <p class="chapter-kicker hand">2020 to now</p>
+    <h2 id="path-title" class="chapter-title">My route so far</h2>
+    <p class="chapter-lede">A store of my own, four years building data platforms, then research, robotics and autonomous vehicles in San José. Click any stop to open its full page.</p>
+  </header>
+
+  <div class="page">
+    
 
     <div class="pt-map">
       <p class="pt-legend" aria-hidden="true">
@@ -216,35 +257,12 @@
         <p class="pt-move hand" aria-hidden="true"><svg viewBox="0 0 40 24"><path class="ink-blue" d="M3 15 L37 4 L24 21 L20 13 Z M37 4 L20 13"/></svg>Nagpur → San José, 2025</p>
 
         <ol class="pt-stops">
-          <li class="pt-stop pt-school">
-            <span class="pt-dot" aria-hidden="true"></span>
-            <p class="pt-date hand">2015 – 2018</p>
-            <h3 class="pt-role">Bachelor of Computer Applications</h3>
-            <p class="pt-place">VMV College, Nagpur</p>
-            <button class="pt-toggle" type="button" aria-expanded="false" aria-controls="pt-n1">notes</button>
-            <ul class="pt-notes" id="pt-n1" hidden>
-              <li>BCA, VMV College, Nagpur.</li>
-              <li>Graduated with a 3.8 / 4.0 GPA.</li>
-            </ul>
-          </li>
-          <li class="pt-stop pt-school">
-            <span class="pt-dot" aria-hidden="true"></span>
-            <p class="pt-date hand">2018 – 2021</p>
-            <h3 class="pt-role">Master of Computer Applications</h3>
-            <p class="pt-place">RCOEM, Nagpur</p>
-            <button class="pt-toggle" type="button" aria-expanded="false" aria-controls="pt-n2">notes</button>
-            <ul class="pt-notes" id="pt-n2" hidden>
-              <li>GPA 3.8 / 4.0, graduated with distinction.</li>
-              <li>Merit scholarship during the program.</li>
-              <li>Class representative for six semesters; Student Representative Council member.</li>
-            </ul>
-          </li>
-          <li class="pt-stop">
+                              <li class="pt-stop">
             <span class="pt-dot" aria-hidden="true"></span>
             <p class="pt-date hand">Feb 2020 – Aug 2022</p>
-            <h3 class="pt-role">Founder</h3>
+            <h3 class="pt-role"><a href="work/sneakstore.html">Founder</a></h3>
             <p class="pt-place">Sneakstore.in</p>
-            <button class="pt-toggle" type="button" aria-expanded="false" aria-controls="pt-n3">notes</button>
+            <button class="pt-toggle" type="button" aria-expanded="false" aria-controls="pt-n3">notes</button> <a class="pt-more hand" href="work/sneakstore.html">full page →</a>
             <ul class="pt-notes" id="pt-n3" hidden>
               <li>Turned an offline sneaker resale effort into a WooCommerce store with Instamojo payments and Shiprocket shipping triggered by order webhooks.</li>
               <li>Tracked funnels, cohorts and repeat purchases with Google Analytics, SQL and Python.</li>
@@ -254,7 +272,7 @@
           <li class="pt-stop">
             <span class="pt-dot" aria-hidden="true"></span>
             <p class="pt-date hand">Feb – Aug 2021</p>
-            <h3 class="pt-role">Software Engineer Intern</h3>
+            <h3 class="pt-role"><a href="work/coditas.html">Software Engineer Intern</a></h3>
             <p class="pt-place">Coditas · healthcare client</p>
             <button class="pt-toggle" type="button" aria-expanded="false" aria-controls="pt-n4">notes</button> <a class="pt-more hand" href="work/coditas.html">full page →</a>
             <ul class="pt-notes" id="pt-n4" hidden>
@@ -266,7 +284,7 @@
           <li class="pt-stop">
             <span class="pt-dot" aria-hidden="true"></span>
             <p class="pt-date hand">Aug 2021 – Dec 2023</p>
-            <h3 class="pt-role">Data Engineer</h3>
+            <h3 class="pt-role"><a href="work/latentview.html">Data Engineer</a></h3>
             <p class="pt-place">LatentView Analytics</p>
             <button class="pt-toggle" type="button" aria-expanded="false" aria-controls="pt-n5">notes</button> <a class="pt-more hand" href="work/latentview.html">full page →</a>
             <ul class="pt-notes" id="pt-n5" hidden>
@@ -278,7 +296,7 @@
           <li class="pt-stop">
             <span class="pt-dot" aria-hidden="true"></span>
             <p class="pt-date hand">Jan 2024 – Jul 2025</p>
-            <h3 class="pt-role">Data Engineer</h3>
+            <h3 class="pt-role"><a href="work/zscaler.html">Data Engineer</a></h3>
             <p class="pt-place">Zscaler</p>
             <button class="pt-toggle" type="button" aria-expanded="false" aria-controls="pt-n6">notes</button> <a class="pt-more hand" href="work/zscaler.html">full page →</a>
             <ul class="pt-notes" id="pt-n6" hidden>
@@ -289,8 +307,8 @@
           </li>
           <li class="pt-stop pt-school" data-move>
             <span class="pt-dot" aria-hidden="true"></span>
-            <p class="pt-date hand">Aug 2025 – May 2027</p>
-            <h3 class="pt-role">M.S. Applied Data Science + Graduate Research Assistant</h3>
+            <p class="pt-date hand">Aug 2025 → now</p>
+            <h3 class="pt-role"><a href="research.html">Graduate Research Assistant + M.S. Applied Data Science</a></h3>
             <p class="pt-place">San José State University</p>
             <button class="pt-toggle" type="button" aria-expanded="false" aria-controls="pt-n7">notes</button> <a class="pt-more hand" href="research.html">full page →</a>
             <ul class="pt-notes" id="pt-n7" hidden>
@@ -302,7 +320,7 @@
           <li class="pt-stop">
             <span class="pt-dot" aria-hidden="true"></span>
             <p class="pt-date hand">May – Aug 2026</p>
-            <h3 class="pt-role">Software Engineer Intern, Perception</h3>
+            <h3 class="pt-role"><a href="work/zoox.html">Software Engineer Intern, Perception</a></h3>
             <p class="pt-place">Zoox</p>
             <button class="pt-toggle" type="button" aria-expanded="false" aria-controls="pt-n8">notes</button> <a class="pt-more hand" href="work/zoox.html">full page →</a>
             <ul class="pt-notes" id="pt-n8" hidden>
@@ -333,73 +351,1056 @@
         <li class="pt-stamp"><span class="pt-ribbon" aria-hidden="true"></span>Presented at the SJSU AI Center for Civic and Social Good grand opening</li>
         <li class="pt-stamp"><span class="pt-ribbon" aria-hidden="true"></span><a href="https://blogs.sjsu.edu/idsprofiles/2025/11/23/harnessing-the-power-of-community-with-ayush-sunil-gawai/" target="_blank" rel="noopener">Featured in SJSU College of IDS community profiles</a></li>
       </ul>
-      <h3 class="pt-recog-title pt-service-title">Service</h3>
-      <ul class="pt-service">
-        <li>Student Assistant, Social Media &amp; Outreach, SJSU College of Information, Data and Society</li>
-        <li>Student member of faculty hiring discussions at SJSU</li>
-        <li>Class representative for six semesters and Student Representative Council, RCOEM</li>
-      </ul>
+      
     </div>
   </div>
 </section>
 
-<!-- Home: six featured projects. Each opens the full page (category anchor for now;
-     becomes a dedicated project/<slug>.html in the detail-page pass). -->
-<section class="chapter" id="home-feat" aria-labelledby="home-feat-t">
+<section class="chapter" id="skills" aria-labelledby="skills-title">
   <header class="chapter-head page">
-    <p class="chapter-kicker hand">featured</p>
-    <h2 id="home-feat-t" class="chapter-title">Six that carry the story</h2>
-    <p class="chapter-lede">A hand-picked six across the areas — click any one to open the full work: the film, the architecture and the numbers.</p>
+    <p class="chapter-kicker hand">what I work with</p>
+    <h2 id="skills-title" class="chapter-title">Skills, with proof</h2>
+    <p class="chapter-lede">Tap any skill and I will show you exactly where I used it, with a link to the work.</p>
   </header>
 
   <div class="page">
-    <div class="feat-grid">
-      <a class="feat-card" href="project/sentinel.html#p-sentinel">
-        <span class="feat-tab" style="--tab:#F0D6D6">AI · edge</span>
-        <h3 class="feat-title">Sentinel AI</h3>
-        <p class="feat-sum">Local GPU video-safety: cheap on every frame, the VLM only on escalation. Edge AI hackathon winner.</p>
-        <span class="feat-cta hand">open the work →</span>
-      </a>
-      <a class="feat-card" href="work/zoox.html#p-predicates">
-        <span class="feat-tab" style="--tab:#D8ECDF">Zoox · data</span>
-        <h3 class="feat-title">Grounded SQL predicates</h3>
-        <p class="feat-sum">An LLM drafts a verification predicate that is executed and checked before it's trusted, for every perception miner.</p>
-        <span class="feat-cta hand">open the work →</span>
-      </a>
-      <a class="feat-card" href="project/so101.html#p-so101">
-        <span class="feat-tab" style="--tab:#F3D9CF">robotics</span>
-        <h3 class="feat-title">SO-101 imitation learning</h3>
-        <p class="feat-sum">ACT vs SmolVLA on 50 teleoperated demos; the EEPROM motor-ID fix that unblocked the whole pipeline.</p>
-        <span class="feat-cta hand">open the work →</span>
-      </a>
-      <a class="feat-card" href="research.html#p-wheelchair">
-        <span class="feat-tab" style="--tab:#E3DDF0">research</span>
-        <h3 class="feat-title">AssistAI wheelchair</h3>
-        <p class="feat-sum">Depth-triggered, multimodal obstacle warnings; a published study on which cue actually speeds the human response.</p>
-        <span class="feat-cta hand">open the work →</span>
-      </a>
-      <a class="feat-card" href="project/transit.html#p-transit">
-        <span class="feat-tab" style="--tab:#F2E3C4">data platform</span>
-        <h3 class="feat-title">Transit Analytics</h3>
-        <p class="feat-sum">GTFS + live departures to a forecasting operator dashboard: Airflow, Kafka, dbt and Snowflake.</p>
-        <span class="feat-cta hand">open the work →</span>
-      </a>
-      <a class="feat-card" href="project/lsmstore.html#p-under-app">
-        <span class="feat-tab" style="--tab:#DDE6F6">systems</span>
-        <h3 class="feat-title">LSM-tree key-value store</h3>
-        <p class="feat-sum">WAL recovery, Bloom-filtered SSTables, tombstones and crash-aware compaction — storage internals in Java.</p>
-        <span class="feat-cta hand">open the work →</span>
-      </a>
+    <div class="sk-board">
+      <section class="sk-note sk-y" aria-labelledby="sk-lang">
+        <span class="tape" aria-hidden="true"></span>
+        <h3 class="sk-h" id="sk-lang">Languages <span class="sk-n hand">7</span></h3>
+        <div class="sk-chips">
+          <details class="sk" name="sk-lang">
+            <summary>Python</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Python</p>
+              <ul>
+                <li><a href="work/zoox.html">Zoox</a>: the miner validation service, the weekly fleet snapshots and the read-only Slack Q&amp;A.</li>
+                <li><a href="work/zscaler.html">Zscaler</a>: the Salesforce formula compiler: dependency traversal, LLM context building and sampled validation.</li>
+                <li><a href="work/latentview.html">LatentView</a>: pytest-style dataset checks that gated an 800 TB migration.</li>
+                <li><a href="project/leo.html">LEO coverage-risk agent</a>: geospatial scoring of 4.67M candidate install sites.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-lang">
+            <summary>SQL</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used SQL</p>
+              <ul>
+                <li><a href="work/zoox.html">Zoox</a>: true-positive predicates per miner, with scoring done in plain SQL over the full labeled population.</li>
+                <li><a href="work/zscaler.html">Zscaler</a>: dynamic formula fields compiled into validated, version-controlled dbt SQL.</li>
+                <li><a href="work/latentview.html">LatentView</a>: layered CTE rewrites and partitioning that took a reporting pipeline from about 18 minutes to 6.</li>
+                <li><a href="work/coditas.html">Coditas</a>: join and index redesign for a 2.5x query improvement.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-lang">
+            <summary>Java</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Java</p>
+              <ul>
+                <li><a href="work/coditas.html">Coditas</a>: production Spring Boot microservices for a healthcare client.</li>
+                <li><a href="project/lsmstore.html">LSMStore</a>: an LSM-tree key-value store in Java 17, built from first principles.</li>
+                <li><a href="project/apm-explorer.html">APM trace explorer</a>: a Spring Boot trace ingestion and metrics service.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-lang">
+            <summary>C++</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used C++</p>
+              <ul>
+                <li><a href="project/query-engine.html">Columnar query engine</a>: a C++20 analytical engine with an optimizer and a vectorized executor.</li>
+                <li><a href="project/orderbook.html">Order-book matching engine</a>: a C++20 limit order book with O(1) cancels and sub-microsecond tail latency.</li>
+                <li><a href="project/siliconbench.html">SiliconBench</a>: SIMD and cache-blocked kernels; SGEMM went from 1.27 to 36.11 GFLOP/s.</li>
+                <li><a href="project/obstacle.html">Obstacle alert policy</a>: a multithreaded C++17 camera and LiDAR fusion prototype.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-lang">
+            <summary>Go</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Go</p>
+              <ul>
+                <li><a href="project/gpu-orchestrator.html">GPU job orchestrator</a>: the scheduler API for 512 GPUs across AWS, GCP and on-prem pools.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-lang">
+            <summary>TypeScript</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used TypeScript</p>
+              <ul>
+                <li><a href="work/zoox.html">Zoox</a>: a zero-backend Vite, TypeScript and Chart.js dashboard over the weekly fleet snapshots.</li>
+                <li><a href="project/transit.html">Transit Analytics</a>: the React and TypeScript operator dashboard.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-lang">
+            <summary>Bash</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Bash</p>
+              <ul>
+                <li><a href="work/latentview.html">LatentView</a>: scripts that tracked and validated every copied batch of the HDFS to S3 migration.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+      <section class="sk-note sk-g" aria-labelledby="sk-de">
+        <span class="tape" aria-hidden="true"></span>
+        <h3 class="sk-h" id="sk-de">Data engineering <span class="sk-n hand">16</span></h3>
+        <div class="sk-chips">
+          <details class="sk" name="sk-de">
+            <summary>Snowflake</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Snowflake</p>
+              <ul>
+                <li><a href="work/zscaler.html">Zscaler</a>: partitioning and clustering tuned on location-based attributes: about 35% faster queries at lower warehouse cost.</li>
+                <li><a href="project/transit.html">Transit Analytics</a>: one warehouse for GTFS schedules and live departures, from a landing schema to analytics marts.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-de">
+            <summary>dbt</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used dbt</p>
+              <ul>
+                <li><a href="work/zscaler.html">Zscaler</a>: compiled formula SQL lands in version-controlled dbt models.</li>
+                <li><a href="project/transit.html">Transit Analytics</a>: staging models and per-agency marts with route-level KPIs.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-de">
+            <summary>Databricks and Delta Lake</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Databricks and Delta Lake</p>
+              <ul>
+                <li><a href="work/zoox.html">Zoox</a>: Databricks SQL labeling views that every miner predicate runs against.</li>
+                <li><a href="work/latentview.html">LatentView</a>: a Delta Lake validation framework that diffed source against destination.</li>
+                <li><a href="project/transit.html">Transit Analytics</a>: an Azure Databricks build with PySpark and Delta for reliability KPIs.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-de">
+            <summary>Spark and PySpark</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Spark and PySpark</p>
+              <ul>
+                <li><a href="project/wikirisk.html">WikiRisk</a>: ingested 29+ GB of Wikipedia revisions and trained on 11.16M rows.</li>
+                <li><a href="project/mmm.html">MarketMIX</a>: a survival attribution model over 16M journey events.</li>
+                <li><a href="project/transit.html">Transit Analytics</a>: PySpark KPI modeling in the Azure Databricks extension.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-de">
+            <summary>Structured Streaming</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Structured Streaming</p>
+              <ul>
+                <li><a href="project/wikirisk.html">WikiRisk</a>: a live Spark job that scores every Wikimedia edit event as it arrives and archives it to Parquet.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-de">
+            <summary>Kafka</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Kafka</p>
+              <ul>
+                <li><a href="project/transit.html">Transit Analytics</a>: a producer polls live departures every 5 minutes and a consumer group writes them to the landing zone.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-de">
+            <summary>Airflow</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Airflow</p>
+              <ul>
+                <li><a href="work/latentview.html">LatentView</a>: SLA alerting orchestrated in Airflow, and legacy pipelines moved to modular DAGs on managed Airflow.</li>
+                <li><a href="project/transit.html">Transit Analytics</a>: three DAGs: batch, streaming and ML forecasting.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-de">
+            <summary>Matillion</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Matillion</p>
+              <ul>
+                <li><a href="work/zscaler.html">Zscaler</a>: Salesforce ingestion with incremental strategies.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-de">
+            <summary>PostgreSQL</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used PostgreSQL</p>
+              <ul>
+                <li><a href="work/zoox.html">Zoox</a>: weekly aggregation of the whole miner fleet into versioned snapshots.</li>
+                <li><a href="work/coditas.html">Coditas</a>: schema and index work behind Liquibase migrations.</li>
+                <li><a href="project/apm-explorer.html">APM trace explorer</a>: an optional trace store backend.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-de">
+            <summary>Incremental ingestion and CDC</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Incremental ingestion and CDC</p>
+              <ul>
+                <li><a href="work/zscaler.html">Zscaler</a>: incremental upserts and change detection cut reporting latency by about 80%.</li>
+                <li><a href="project/capflow.html">CapFlow</a>: a CDC pipeline that mirrors inserts, updates and deletes and can replay from a saved LSN.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-de">
+            <summary>Data validation gates</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Data validation gates</p>
+              <ul>
+                <li><a href="work/latentview.html">LatentView</a>: 99.6% validation accuracy on about 800 TB before go-live.</li>
+                <li><a href="work/zscaler.html">Zscaler</a>: automated sampling that compared warehouse output against the live CRM source.</li>
+                <li><a href="work/zoox.html">Zoox</a>: 321 of 321 ground-truth-capable miners validated against human labels.</li>
+                <li><a href="project/capflow.html">CapFlow</a>: row-by-row reconciliation of source and target.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-de">
+            <summary>Large data migration</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Large data migration</p>
+              <ul>
+                <li><a href="work/latentview.html">LatentView</a>: about 800 TB moved from HDFS to AWS S3 with AWS DataSync, behind a test gate.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-de">
+            <summary>Query and warehouse tuning</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Query and warehouse tuning</p>
+              <ul>
+                <li><a href="work/zscaler.html">Zscaler</a>: about 35% faster queries at lower warehouse cost.</li>
+                <li><a href="work/latentview.html">LatentView</a>: a major reporting pipeline from about 18 minutes to 6.</li>
+                <li><a href="work/coditas.html">Coditas</a>: 2.5x query performance after schema and index work.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-de">
+            <summary>API ingestion</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used API ingestion</p>
+              <ul>
+                <li><a href="work/zscaler.html">Zscaler</a>: Salesforce metadata plus LinkedIn Campaign, Asana and Jira APIs, normalized into the analytics pipeline.</li>
+                <li><a href="project/transit.html">Transit Analytics</a>: GTFS feeds every 6 hours and a live departures API.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-de">
+            <summary>Schema-change impact analysis</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Schema-change impact analysis</p>
+              <ul>
+                <li><a href="project/blast.html">Blast Radius</a>: agents run an upstream rename against downstream analytics, ML-feature and dashboard repos before the merge.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-de">
+            <summary>MLflow</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used MLflow</p>
+              <ul>
+                <li><a href="project/wikirisk.html">WikiRisk</a>: tracked cross-validated SparkML runs.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+      <section class="sk-note sk-b" aria-labelledby="sk-ai">
+        <span class="tape" aria-hidden="true"></span>
+        <h3 class="sk-h" id="sk-ai">AI, ML and LLMs <span class="sk-n hand">13</span></h3>
+        <div class="sk-chips">
+          <details class="sk" name="sk-ai">
+            <summary>LLM-generated SQL</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used LLM-generated SQL</p>
+              <ul>
+                <li><a href="work/zoox.html">Zoox</a>: the LLM drafts one scoped SQL predicate per miner, grounded in the ontology and the label vocabulary observed in the warehouse.</li>
+                <li><a href="work/zscaler.html">Zscaler</a>: an LLM turns formula text plus its dependency graph into optimized SQL.</li>
+                <li><a href="project/transit.html">Transit Analytics</a>: a text-to-SQL chat on the operator dashboard.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ai">
+            <summary>LLM verification loops</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used LLM verification loops</p>
+              <ul>
+                <li><a href="work/zoox.html">Zoox</a>: generate, execute, verify, retry. Invalid SQL, zero matches or vocabulary conflicts loop back; scoring never calls the model.</li>
+                <li><a href="work/zscaler.html">Zscaler</a>: every generated formula checked against the live CRM source before deploy.</li>
+                <li><a href="project/accessimed.html">AccessiMed</a>: LLM fixes ship only as a reviewed git diff, with a deterministic patch where one exists.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ai">
+            <summary>Prompt-injection defense</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Prompt-injection defense</p>
+              <ul>
+                <li><a href="work/zoox.html">Zoox</a>: a read-only Slack Q&amp;A that answers only from published snapshots, holds no tools and fences report and question as untrusted data.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ai">
+            <summary>Agents and tool use</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Agents and tool use</p>
+              <ul>
+                <li><a href="project/leo.html">LEO coverage-risk agent</a>: a Claude tool-use orchestrator over five deterministic tools, with file-based state instead of rows in the prompt.</li>
+                <li><a href="project/blast.html">Blast Radius</a>: Claude Code, Codex and OpenCode agents working in their own checkouts behind a human merge gate.</li>
+                <li><a href="project/agent-fleet.html">Agent fleet</a>: each coding-agent task gets its own branch, worktree and review gate.</li>
+                <li><a href="project/apm-explorer.html">APM trace explorer</a>: MCP-style incident tools such as find_slow_endpoints and get_trace.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ai">
+            <summary>Vision-language models</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Vision-language models</p>
+              <ul>
+                <li><a href="project/sentinel.html">Sentinel AI</a>: a 16-frame evidence bundle goes to a locally served Qwen3-VL-30B for event classification.</li>
+                <li><a href="research.html#p-so101">SO-101 robot learning</a>: fine-tuned SmolVLA and ran it on the physical arm.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ai">
+            <summary>PyTorch</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used PyTorch</p>
+              <ul>
+                <li><a href="research.html#p-so101">SO-101 robot learning</a>: trained ACT from scratch on a ResNet-18 backbone.</li>
+                <li><a href="project/carbonshift.html">CarbonShift</a>: a training engine that pauses and resumes from checkpoints as the grid changes.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ai">
+            <summary>scikit-learn and XGBoost</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used scikit-learn and XGBoost</p>
+              <ul>
+                <li><a href="project/transitrisk.html">TransitRisk</a>: seven classifiers, from naive Bayes to XGBoost, over 38 engineered features.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ai">
+            <summary>Calibration and conformal prediction</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Calibration and conformal prediction</p>
+              <ul>
+                <li><a href="project/transitrisk.html">TransitRisk</a>: calibrated probabilities and conformal prediction, with tests for coverage and leakage.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ai">
+            <summary>SparkML</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used SparkML</p>
+              <ul>
+                <li><a href="project/wikirisk.html">WikiRisk</a>: harmful-edit models with 5-fold cross-validation: 0.762 ROC AUC, 89.61% recall.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ai">
+            <summary>Time-series forecasting</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Time-series forecasting</p>
+              <ul>
+                <li><a href="project/transit.html">Transit Analytics</a>: trains on 90 days and forecasts demand 7 days ahead.</li>
+                <li><a href="project/mmm.html">MarketMIX</a>: Prophet for seasonality and promotions.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ai">
+            <summary>Embedding search and re-ranking</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Embedding search and re-ranking</p>
+              <ul>
+                <li><a href="project/scene-miner.html">Scene Miner</a>: embedding search over an IVF index with Rocchio feedback and a hybrid re-ranker.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ai">
+            <summary>Explainability (SHAP)</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Explainability (SHAP)</p>
+              <ul>
+                <li><a href="project/transitrisk.html">TransitRisk</a>: per-route SHAP explanations and what-if controls.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ai">
+            <summary>Edge and local inference</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Edge and local inference</p>
+              <ul>
+                <li><a href="project/sentinel.html">Sentinel AI</a>: everything runs on an HP ZGX Nano; video never leaves the machine.</li>
+                <li><a href="research.html#p-wheelchair">Wheelchair alert study</a>: an onboard GPU laptop runs detection on 30 fps RGB and depth streams.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+      <section class="sk-note sk-r" aria-labelledby="sk-rob">
+        <span class="tape" aria-hidden="true"></span>
+        <h3 class="sk-h" id="sk-rob">Robotics and perception <span class="sk-n hand">11</span></h3>
+        <div class="sk-chips">
+          <details class="sk" name="sk-rob">
+            <summary>YOLO detection</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used YOLO detection</p>
+              <ul>
+                <li><a href="project/sentinel.html">Sentinel AI</a>: YOLO pose detection with temporal tracking on a six-feed camera wall.</li>
+                <li><a href="research.html#p-wheelchair">Wheelchair alert study</a>: pretrained YOLOv10n pedestrian detection with a 0.90 confidence gate.</li>
+                <li><a href="project/warehouse.html">Warehouse case perception</a>: case detection in RGB-D warehouse frames.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-rob">
+            <summary>OpenCV</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used OpenCV</p>
+              <ul>
+                <li><a href="project/warehouse.html">Warehouse case perception</a>: detection, plus checkerboard and extrinsic calibration.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-rob">
+            <summary>Depth cameras (ZED 2i, RGB-D)</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Depth cameras (ZED 2i, RGB-D)</p>
+              <ul>
+                <li><a href="research.html#p-wheelchair">Wheelchair alert study</a>: box-center depth from a ZED 2i triggers the warning at roughly 1 m.</li>
+                <li><a href="project/warehouse.html">Warehouse case perception</a>: depth lookup and pinhole back-projection to XYZ.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-rob">
+            <summary>Camera and LiDAR fusion</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Camera and LiDAR fusion</p>
+              <ul>
+                <li><a href="project/obstacle.html">Obstacle alert policy</a>: camera boxes mapped onto LiDAR bearings, feeding a STOP and CAUTION policy with hysteresis.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-rob">
+            <summary>Tracking (Kalman, Hungarian)</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Tracking (Kalman, Hungarian)</p>
+              <ul>
+                <li><a href="project/warehouse.html">Warehouse case perception</a>: Kalman prediction and two-stage Hungarian assignment keep tracks alive through occlusion.</li>
+                <li><a href="project/trajectory.html">AV trajectory prediction</a>: Kalman and CTRV baselines for motion forecasting.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-rob">
+            <summary>Imitation learning (ACT, SmolVLA)</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Imitation learning (ACT, SmolVLA)</p>
+              <ul>
+                <li><a href="research.html#p-so101">SO-101 robot learning</a>: 50 teleoperated demonstrations, then physical pick-and-place rollouts: 46 of 50 at a fixed cube position.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-rob">
+            <summary>LeRobot and SO-101 hardware</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used LeRobot and SO-101 hardware</p>
+              <ul>
+                <li><a href="research.html#p-so101">SO-101 robot learning</a>: leader and follower arms on Feetech servos; I patched the motor-bus setup to write Lock=1 so motor IDs survived power cycles.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-rob">
+            <summary>Trajectory prediction</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Trajectory prediction</p>
+              <ul>
+                <li><a href="project/trajectory.html">AV trajectory prediction</a>: five forecasters predicting 3 s of motion from 2 s of noisy 10 Hz positions.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-rob">
+            <summary>AV data mining</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used AV data mining</p>
+              <ul>
+                <li><a href="work/zoox.html">Zoox</a>: quality validation for about 409 perception data miners on a fleet mining 90M+ events a week.</li>
+                <li><a href="project/scene-miner.html">Scene Miner</a>: rare-event retrieval compared at a fixed 300-result review budget.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-rob">
+            <summary>Haptic warning interfaces</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Haptic warning interfaces</p>
+              <ul>
+                <li><a href="research.html#p-wheelchair">Wheelchair alert study</a>: twelve tactors on seatback and wrist plus speech or tone cues, measured by reaction time.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-rob">
+            <summary>Real-time alert policies</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Real-time alert policies</p>
+              <ul>
+                <li><a href="project/obstacle.html">Obstacle alert policy</a>: two confirming frames to escalate, five to de-escalate, about 66.8 ms p95 capture-to-decision in the simulator.</li>
+                <li><a href="project/sentinel.html">Sentinel AI</a>: score-based escalation and an incident state machine with a kill switch.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+      <section class="sk-note sk-p" aria-labelledby="sk-be">
+        <span class="tape" aria-hidden="true"></span>
+        <h3 class="sk-h" id="sk-be">Backend and APIs <span class="sk-n hand">11</span></h3>
+        <div class="sk-chips">
+          <details class="sk" name="sk-be">
+            <summary>FastAPI</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used FastAPI</p>
+              <ul>
+                <li><a href="work/zoox.html">Zoox</a>: the validation service behind the miner quality scores and the Slack Q&amp;A.</li>
+                <li><a href="project/sentinel.html">Sentinel AI</a>: REST, WebSocket and MJPEG endpoints for the camera wall.</li>
+                <li><a href="project/transit.html">Transit Analytics</a>: KPIs, forecasts and text-to-SQL chat.</li>
+                <li><a href="project/carbonshift.html">CarbonShift</a>: control and status endpoints for the GPU controller.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-be">
+            <summary>Spring Boot</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Spring Boot</p>
+              <ul>
+                <li><a href="work/coditas.html">Coditas</a>: microservices for a healthcare client.</li>
+                <li><a href="project/apm-explorer.html">APM trace explorer</a>: OTLP/HTTP trace ingestion and RED metrics.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-be">
+            <summary>Microservice tuning</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Microservice tuning</p>
+              <ul>
+                <li><a href="work/coditas.html">Coditas</a>: thread handling, connection pooling and caching cut request failures by about 33%.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-be">
+            <summary>WebSockets</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used WebSockets</p>
+              <ul>
+                <li><a href="project/carbonshift.html">CarbonShift</a>: pushes state and running savings to the dashboard every 2 s.</li>
+                <li><a href="project/sentinel.html">Sentinel AI</a>: live incidents and operator actions on the camera wall.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-be">
+            <summary>Payment and shipping webhooks</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Payment and shipping webhooks</p>
+              <ul>
+                <li><a href="work/sneakstore.html">Sneakstore.in</a>: Instamojo webhooks confirm each order; a confirmed order creates the Shiprocket shipment and tracking ID.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-be">
+            <summary>Third-party integrations</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Third-party integrations</p>
+              <ul>
+                <li><a href="work/zscaler.html">Zscaler</a>: Salesforce, LinkedIn Campaign, Asana and Jira.</li>
+                <li><a href="work/sneakstore.html">Sneakstore.in</a>: Instamojo payments and Shiprocket logistics.</li>
+                <li><a href="project/blast.html">Blast Radius</a>: Jira tickets, fix PRs and Slack owner approvals.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-be">
+            <summary>Slack bots and alerts</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Slack bots and alerts</p>
+              <ul>
+                <li><a href="work/zoox.html">Zoox</a>: failure alerts as per-owner DMs with a deep link to the run, a weekly digest and a read-only Q&amp;A.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-be">
+            <summary>React</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used React</p>
+              <ul>
+                <li><a href="project/transit.html">Transit Analytics</a>: the operator dashboard.</li>
+                <li><a href="project/carbonshift.html">CarbonShift</a>: the live grid and savings dashboard.</li>
+                <li><a href="project/leo.html">LEO coverage-risk agent</a>: an interactive web app with a map and search.</li>
+                <li><a href="project/accessimed.html">AccessiMed</a>: an optional React and Vite dashboard.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-be">
+            <summary>Dashboards (Chart.js, D3, Streamlit)</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Dashboards (Chart.js, D3, Streamlit)</p>
+              <ul>
+                <li><a href="work/zoox.html">Zoox</a>: Chart.js over static weekly snapshots, no backend.</li>
+                <li><a href="project/apm-explorer.html">APM trace explorer</a>: a D3 service map, latency heatmap and waterfall.</li>
+                <li><a href="project/transitrisk.html">TransitRisk</a>: a Streamlit dashboard with per-route gauges.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-be">
+            <summary>SQLite</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used SQLite</p>
+              <ul>
+                <li><a href="project/sentinel.html">Sentinel AI</a>: event and incident history.</li>
+                <li><a href="project/accessimed.html">AccessiMed</a>: scan and remediation history.</li>
+                <li><a href="project/wikirisk.html">WikiRisk</a>: the serving store behind the search endpoints.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-be">
+            <summary>Storefront engineering</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Storefront engineering</p>
+              <ul>
+                <li><a href="work/sneakstore.html">Sneakstore.in</a>: built the WooCommerce store, inventory logic, hosting, deployment and SSL myself.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+      <section class="sk-note sk-y" aria-labelledby="sk-ops">
+        <span class="tape" aria-hidden="true"></span>
+        <h3 class="sk-h" id="sk-ops">Cloud and DevOps <span class="sk-n hand">12</span></h3>
+        <div class="sk-chips">
+          <details class="sk" name="sk-ops">
+            <summary>AWS S3</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used AWS S3</p>
+              <ul>
+                <li><a href="work/latentview.html">LatentView</a>: destination for the 800 TB migration.</li>
+                <li><a href="work/zoox.html">Zoox</a>: immutable versioned snapshot artifacts plus a manifest.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ops">
+            <summary>AWS Lambda, CloudWatch and SNS</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used AWS Lambda, CloudWatch and SNS</p>
+              <ul>
+                <li><a href="work/latentview.html">LatentView</a>: metrics, alerting and reactive Lambda triggers for SLA enforcement; about 45% fewer client escalations.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ops">
+            <summary>Managed Airflow (MWAA)</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Managed Airflow (MWAA)</p>
+              <ul>
+                <li><a href="work/latentview.html">LatentView</a>: moved legacy Airflow pipelines to managed environments with containerized operators.</li>
+                <li><a href="project/transit.html">Transit Analytics</a>: deployed on S3 and MWAA.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ops">
+            <summary>Azure (Databricks, Data Factory, Power BI)</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Azure (Databricks, Data Factory, Power BI)</p>
+              <ul>
+                <li><a href="project/transit.html">Transit Analytics</a>: a second deployment with ADF orchestration, Delta tables and Power BI reporting.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ops">
+            <summary>Docker</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Docker</p>
+              <ul>
+                <li><a href="work/coditas.html">Coditas</a>: Dockerized services that removed the works-on-my-machine failures.</li>
+                <li><a href="work/zscaler.html">Zscaler</a>: standardized CI environments for schema checks and SQL tests.</li>
+                <li><a href="project/agent-fleet.html">Agent fleet</a>: a sandbox per coding-agent task.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ops">
+            <summary>GitHub Actions</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used GitHub Actions</p>
+              <ul>
+                <li><a href="work/zscaler.html">Zscaler</a>: automated schema checks and SQL tests on every change.</li>
+                <li><a href="project/accessimed.html">AccessiMed</a>: accessibility as a merge gate.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ops">
+            <summary>GitLab CI</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used GitLab CI</p>
+              <ul>
+                <li><a href="work/coditas.html">Coditas</a>: pipelines that cut the release cycle by about 17%.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ops">
+            <summary>Merge and release gates</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Merge and release gates</p>
+              <ul>
+                <li><a href="work/zscaler.html">Zscaler</a>: CI blocks schema drift before deploy.</li>
+                <li><a href="project/blast.html">Blast Radius</a>: the upstream required check stays pending until every downstream owner approves.</li>
+                <li><a href="project/agent-fleet.html">Agent fleet</a>: a diff gate for deleted tests, weak assertions, secrets and network calls.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ops">
+            <summary>Secrets management</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Secrets management</p>
+              <ul>
+                <li><a href="work/zoox.html">Zoox</a>: Vault-managed credentials for the Slack Q&amp;A.</li>
+                <li><a href="project/transit.html">Transit Analytics</a>: Snowflake and LLM keys in AWS Secrets Manager.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ops">
+            <summary>Database migrations (Liquibase)</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Database migrations (Liquibase)</p>
+              <ul>
+                <li><a href="work/coditas.html">Coditas</a>: version-controlled schema migrations.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ops">
+            <summary>Monitoring and alerting</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Monitoring and alerting</p>
+              <ul>
+                <li><a href="work/zoox.html">Zoox</a>: event-driven alerts on the FAILED run-state transition: failure discovery went from days to minutes.</li>
+                <li><a href="work/latentview.html">LatentView</a>: root-cause traces that cut time to detect pipeline failures.</li>
+                <li><a href="project/gpu-orchestrator.html">GPU job orchestrator</a>: health, job and pool APIs with Prometheus metrics.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-ops">
+            <summary>Distributed tracing (OTLP)</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Distributed tracing (OTLP)</p>
+              <ul>
+                <li><a href="project/apm-explorer.html">APM trace explorer</a>: span trees, histogram percentiles and rolling-baseline anomaly flags.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+      <section class="sk-note sk-g" aria-labelledby="sk-sys">
+        <span class="tape" aria-hidden="true"></span>
+        <h3 class="sk-h" id="sk-sys">Systems and performance <span class="sk-n hand">11</span></h3>
+        <div class="sk-chips">
+          <details class="sk" name="sk-sys">
+            <summary>Storage engines</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Storage engines</p>
+              <ul>
+                <li><a href="project/lsmstore.html">LSMStore</a>: fsynced WAL, sorted memtables, immutable SSTables with Bloom filters and tombstones.</li>
+                <li><a href="project/dedup-store.html">Dedup store</a>: FastCDC-style chunking with SHA-256 fingerprints.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-sys">
+            <summary>Query execution</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Query execution</p>
+              <ul>
+                <li><a href="project/query-engine.html">Columnar query engine</a>: explicit plans, optimizer passes and a vectorized executor with min/max skipping, checked on 4M rows.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-sys">
+            <summary>Low-latency design</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Low-latency design</p>
+              <ul>
+                <li><a href="project/orderbook.html">Order-book matching engine</a>: price-time priority matching with sub-microsecond tail latency on a multi-million-message replay.</li>
+                <li><a href="project/gpu-orchestrator.html">GPU job orchestrator</a>: 12k requests per second with single-digit millisecond tail latency.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-sys">
+            <summary>SIMD and cache optimization</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used SIMD and cache optimization</p>
+              <ul>
+                <li><a href="project/siliconbench.html">SiliconBench</a>: ARM NEON and x86 SIMD, loop reordering and cache blocking against a CPU roofline.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-sys">
+            <summary>OpenMP and perf profiling</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used OpenMP and perf profiling</p>
+              <ul>
+                <li><a href="project/siliconbench.html">SiliconBench</a>: threaded kernels profiled with perf on AWS Graviton.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-sys">
+            <summary>Crash recovery</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Crash recovery</p>
+              <ul>
+                <li><a href="project/lsmstore.html">LSMStore</a>: crash-aware recovery from the write-ahead log.</li>
+                <li><a href="project/dedup-store.html">Dedup store</a>: crash-resumable mark-and-sweep garbage collection.</li>
+                <li><a href="project/capflow.html">CapFlow</a>: backfill and replay from any saved LSN.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-sys">
+            <summary>Scheduling</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Scheduling</p>
+              <ul>
+                <li><a href="project/gpu-orchestrator.html">GPU job orchestrator</a>: gang scheduling, tenant quotas and spot-preemption rollback to the last checkpoint.</li>
+                <li><a href="project/agent-fleet.html">Agent fleet</a>: test shards scheduled across workers by historical duration.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-sys">
+            <summary>Multithreading</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Multithreading</p>
+              <ul>
+                <li><a href="project/obstacle.html">Obstacle alert policy</a>: detector and fusion threads with latest-value slots that drop stale work.</li>
+                <li><a href="work/coditas.html">Coditas</a>: refactored services for concurrency.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-sys">
+            <summary>GPU power control (NVML)</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used GPU power control (NVML)</p>
+              <ul>
+                <li><a href="project/carbonshift.html">CarbonShift</a>: caps an A100 from 250 W down to a checkpointed pause as grid price and carbon change.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-sys">
+            <summary>Inference throughput</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Inference throughput</p>
+              <ul>
+                <li><a href="project/sentinel.html">Sentinel AI</a>: 3 to 13+ fps on a six-feed wall by keeping the expensive model off the per-frame path.</li>
+                <li><a href="research.html#p-so101">SO-101 robot learning</a>: measured 18 ms ACT against 251 ms SmolVLA local inference.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-sys">
+            <summary>Replication</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Replication</p>
+              <ul>
+                <li><a href="project/dedup-store.html">Dedup store</a>: sends only the chunks the far end is missing.</li>
+                <li><a href="project/capflow.html">CapFlow</a>: commit-ordered LSN cursors with per-table lag.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+      <section class="sk-note sk-b" aria-labelledby="sk-an">
+        <span class="tape" aria-hidden="true"></span>
+        <h3 class="sk-h" id="sk-an">Analytics and experimentation <span class="sk-n hand">9</span></h3>
+        <div class="sk-chips">
+          <details class="sk" name="sk-an">
+            <summary>Marketing mix modeling</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Marketing mix modeling</p>
+              <ul>
+                <li><a href="project/mmm.html">MarketMIX</a>: Bayesian MMM in PyMC Marketing with geometric adstock and Hill saturation.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-an">
+            <summary>Multi-touch attribution</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Multi-touch attribution</p>
+              <ul>
+                <li><a href="project/mmm.html">MarketMIX</a>: discrete-time survival attribution plus Shapley channel values: 7% channel ROI error against 31% for last-touch.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-an">
+            <summary>Budget optimization</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Budget optimization</p>
+              <ul>
+                <li><a href="project/mmm.html">MarketMIX</a>: constrained SciPy SLSQP that returns a spendable plan with channel minimums.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-an">
+            <summary>A/B testing</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used A/B testing</p>
+              <ul>
+                <li><a href="work/sneakstore.html">Sneakstore.in</a>: tested ad creatives and audiences daily for two years, tracked on ROAS.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-an">
+            <summary>Funnel and cohort analysis</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Funnel and cohort analysis</p>
+              <ul>
+                <li><a href="work/sneakstore.html">Sneakstore.in</a>: funnels, cohorts and ROAS in Google Analytics, SQL and Python.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-an">
+            <summary>Salesforce product analytics</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Salesforce product analytics</p>
+              <ul>
+                <li><a href="work/zscaler.html">Zscaler</a>: reporting on live CRM data, with reconciliation dashboards against the source.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-an">
+            <summary>KPI modeling</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used KPI modeling</p>
+              <ul>
+                <li><a href="project/transit.html">Transit Analytics</a>: route-level performance, on-time and reliability KPIs.</li>
+                <li><a href="work/zoox.html">Zoox</a>: precision, true positives and the labeling funnel per miner.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-an">
+            <summary>Cost-sensitive decisions</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Cost-sensitive decisions</p>
+              <ul>
+                <li><a href="project/transitrisk.html">TransitRisk</a>: an alert threshold of 0.163 chosen for cost, where a miss costs five times a false alarm.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-an">
+            <summary>Geospatial analysis</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Geospatial analysis</p>
+              <ul>
+                <li><a href="project/leo.html">LEO coverage-risk agent</a>: canopy, elevation and land-cover rasters sampled at every site and scored into risk tiers.</li>
+                <li><a href="work/zscaler.html">Zscaler</a>: incremental ingestion and clustering on location-based attributes.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+      <section class="sk-note sk-r" aria-labelledby="sk-res">
+        <span class="tape" aria-hidden="true"></span>
+        <h3 class="sk-h" id="sk-res">Research methods <span class="sk-n hand">9</span></h3>
+        <div class="sk-chips">
+          <details class="sk" name="sk-res">
+            <summary>Eye tracking (Pupil Labs)</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Eye tracking (Pupil Labs)</p>
+              <ul>
+                <li><a href="research.html#p-eyetracking">Visual attention study</a>: gaze, fixation, blink and pupil streams across global, selective and sustained attention tasks.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-res">
+            <summary>Signal processing</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Signal processing</p>
+              <ul>
+                <li><a href="research.html#p-eyetracking">Visual attention study</a>: invalid-sample handling, temporal alignment, smoothing and feature extraction per trial.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-res">
+            <summary>Statistical comparison</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Statistical comparison</p>
+              <ul>
+                <li><a href="research.html#p-eyetracking">Visual attention study</a>: found fixation count to be the strongest discriminator between task types.</li>
+                <li><a href="research.html#p-wheelchair">Wheelchair alert study</a>: compared reaction time and usefulness across 12 warning designs.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-res">
+            <summary>Human-subject experiments</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Human-subject experiments</p>
+              <ul>
+                <li><a href="research.html#p-wheelchair">Wheelchair alert study</a>: 24 participants, 24 controlled trials each.</li>
+                <li><a href="research.html#p-eyetracking">Visual attention study</a>: seven participants, ages 19 to 36.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-res">
+            <summary>Human-machine interface design</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Human-machine interface design</p>
+              <ul>
+                <li><a href="research.html#p-wheelchair">Wheelchair alert study</a>: action-oriented warnings beat location-only ones; seatback vibration beat audio-only.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-res">
+            <summary>Latency compensation</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Latency compensation</p>
+              <ul>
+                <li><a href="research.html#p-wheelchair">Wheelchair alert study</a>: measured about 1.65 s of haptic actuation lag in a pilot and compensated by speed times delay.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-res">
+            <summary>Robot policy evaluation</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Robot policy evaluation</p>
+              <ul>
+                <li><a href="research.html#p-so101">SO-101 robot learning</a>: video-measured placement error (2.49 cm mean), a failure taxonomy and checkpoint selection across two policy families.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-res">
+            <summary>Research visualization</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Research visualization</p>
+              <ul>
+                <li><a href="research.html#p-eyetracking">Visual attention study</a>: gaze heatmaps and attention trajectories for human-factors and audiology audiences.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="sk" name="sk-res">
+            <summary>Publishing and presenting</summary>
+            <div class="sk-proof">
+              <p class="sk-ph hand">where I used Publishing and presenting</p>
+              <ul>
+                <li><a href="research.html">Research and publications</a>: two HFES 2026 posters and one Transportation Research Part F article.</li>
+                <li><a href="research.html#p-eyetracking">Visual attention study</a>: won the SJSU RSCA competition and went to the CSU Student Research Competition as delegate.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
     </div>
-    <p class="home-more"><a class="btn" href="projects.html">See the full library</a> · every project has its own page</p>
   </div>
 </section>
 
-<!-- Home: six photos; the full scrapbook lives on the Media page. -->
+<!-- Home: a few photos; the full scrapbook lives on the Media page. -->
 <section class="chapter" id="photos" aria-labelledby="photos-title">
   <header class="chapter-head page">
     <p class="chapter-kicker hand">from the scrapbook</p>
-    <h2 id="photos-title" class="chapter-title">Six snapshots</h2>
+    <h2 id="photos-title" class="chapter-title">Snapshots</h2>
   </header>
   <div class="page">
     <div class="hp-grid">
@@ -410,7 +1411,7 @@
       <a class="hp-ph" href="media.html#gallery"><img src="assets/img/gallery/cids-retreat-600.webp" alt="Speaking at the CIDS strategy retreat" loading="lazy" width="349" height="600"><span class="hand">CIDS strategy retreat</span></a>
       <a class="hp-ph" href="media.html#gallery"><img src="assets/img/gallery/treehacks-carbonshift-600.webp" alt="CarbonShift dashboard at TreeHacks 2026" loading="lazy" width="338" height="600"><span class="hand">CarbonShift at TreeHacks</span></a>
     </div>
-    <p class="home-more"><a class="btn" href="media.html">Films, photos and recognition</a></p>
+    <p class="home-more"><a class="btn" href="media.html">More photos and recognition</a></p>
   </div>
 </section>
 
@@ -456,7 +1457,6 @@
 
   <footer class="page ct-foot">
     <p class="hand pencil">Drawn and built by hand in San José&nbsp;·&nbsp;2026</p>
-    <p><a href="https://github.com/ayushgawai/ayushgawai.github.io" target="_blank" rel="noopener">Source on GitHub</a></p>
   </footer>
 </section>
 

@@ -152,7 +152,7 @@
           <p class="project-where hand">Zoox · Perception data-mining fleet · 2026</p>
           <h3 class="project-title">Weekly snapshots for the fleet, a tripwire for failures</h3>
           <p class="project-sum">A scheduled job aggregates the last complete Monday-to-Monday window into an immutable, versioned JSON snapshot on S3; a zero-backend TypeScript + Chart.js dashboard, a Slack digest and per-owner DMs all read that one artifact. Failure alerts hook the miner run-state transition instead of polling, so a FAILED run reaches its owner with the run ID and a deep link within minutes.</p>
-          <div class="btn-row"><a class="btn blue" href="agents.html#p-slackbot">The ops bot reads the same snapshot</a></div>
+          <div class="btn-row"></div>
         </div>
         <ul class="facts">
           <li><b>days → minutes</b> failure discovery</li>
@@ -325,13 +325,13 @@
         </svg>
       </div>
       <div class="project-body">
-        <p class="project-where hand">Coditas 2021 · Zscaler 2024–2025</p>
+        <p class="project-where hand">Coditas · Software Engineer Intern · 2021</p>
         <h3 class="project-title">Release pipelines that refuse bad changes</h3>
-        <p class="project-sum">At Coditas, Spring Boot services were Dockerized and shipped through GitLab CI with automated build and deploy, keeping staging and production at parity. At Zscaler, Git workflows ran automated schema checks and SQL tests in GitHub Actions, with Docker pinning the environment.</p>
+        <p class="project-sum">I Dockerized production Spring Boot microservices for a healthcare client and shipped them through GitLab CI with automated build and deploy, keeping staging and production at parity. The pipeline blocks a release on schema drift or a failing test.</p>
         <ul class="facts">
           <li><b>~17%</b> shorter release cycle</li>
           <li><b>GitLab CI</b> Docker images</li>
-          <li><b>GitHub Actions</b> schema + SQL tests</li>
+          <li><b>~33%</b> fewer request failures</li>
         </ul>
         <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
           <h4>Coditas · Software Engineer Intern · Feb–Aug 2021</h4>
@@ -339,11 +339,7 @@
             <li>Healthcare client, production Java/Spring Boot microservices. Dockerized the services, configured GitLab CI pipelines and automated build and deploy steps for staging/production parity: release cycle ~17% shorter, fewer human deployment errors.</li>
             <li>Same engagement: thread handling, connection pooling, caching and fewer redundant DB calls cut request failures ~33%; PostgreSQL indexing and join cleanup with Liquibase-versioned migrations gave ~2.5× query performance.</li>
           </ul>
-          <h4>Zscaler · Data Engineer · 2024–2025</h4>
-          <ul>
-            <li>Git-based workflows with automated schema checks and SQL tests in GitHub Actions around the dbt/Snowflake models.</li>
-            <li>Docker standardized environments; debugged dependency conflicts, upstream API schema changes, compiler/runtime mismatches and environment misconfigurations.</li>
-          </ul>
+          
         </div></details>
       </div>
     </article>

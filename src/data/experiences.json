@@ -1,5 +1,5 @@
 {
- "_readme": "Single source of truth for the five main experience stops. Each renders to work/<slug>.html — the ONLY place that company's full story lives. Cards elsewhere link here.",
+ "_readme": "Single source of truth for the five main experience stops. Each renders to work/<slug>.html, the ONLY place that company's full story lives. Cards elsewhere link here.",
  "items": [
   {
    "slug": "zoox",
@@ -7,13 +7,13 @@
    "role": "Software Engineer Intern, Perception",
    "dates": "May – Aug 2026",
    "kind": "work",
-   "one": "Perception data infrastructure: a system that grades ~409 data miners against the human labels they exist to produce — grounded SQL, deterministic verification, zero extra labeling cost.",
+   "one": "Perception data infrastructure: a system that grades ~409 data miners against the human labels they exist to produce, grounded SQL, deterministic verification, zero extra labeling cost.",
    "deep": [
     "Automated quality validation for ~409 active miners on a fleet that mines 90M+ events a week from drive logs.",
     "The LLM drafts one scoped SQL true-positive predicate per miner, grounded in the annotation ontology and the label vocabulary actually observed in the warehouse. The generate → execute → verify → retry loop keeps it honest; scoring itself is plain SQL and never calls the model.",
     "321 of 321 ground-truth-capable miners validated at a ~1.3 s median; write-on-change history cut redundant writes ~93%; stored SQL reproduces every number.",
     "Failure discovery went from periodic reviews to minutes: alerts fire on the miner run-state transition to FAILED, with per-owner DMs and a deep link to the run.",
-    "Weekly Postgres aggregation into immutable versioned JSON snapshots plus an S3 manifest, read by a zero-backend Vite/TypeScript/Chart.js dashboard and a read-only Slack Q&A that answers only from published snapshots — no tools, fenced untrusted context, Vault-managed credentials."
+    "Weekly Postgres aggregation into immutable versioned JSON snapshots plus an S3 manifest, read by a zero-backend Vite/TypeScript/Chart.js dashboard and a read-only Slack Q&A that answers only from published snapshots, no tools, fenced untrusted context, Vault-managed credentials."
    ],
    "numbers": [
     {
@@ -56,33 +56,29 @@
   },
   {
    "slug": "research",
-   "org": "SJSU — Graduate Research",
-   "role": "M.S. Applied Data Science + Graduate Research Assistant",
-   "dates": "Aug 2025 – May 2027",
+   "org": "SJSU Graduate Research",
+   "role": "Graduate Research Assistant · M.S. Applied Data Science",
+   "dates": "Aug 2025 → now",
    "kind": "school",
-   "one": "Human-centered, attention-aware AI with real deployments: visual-attention measurement, an AI wheelchair obstacle-alert interface, and SO-101 robot learning. RSCA winner; two 2026 posters, one Elsevier article.",
+   "one": "I design and publish human-centered AI research: an AI obstacle-alert system for power wheelchairs, eye-tracking measurement of visual attention, and imitation learning on real robot arms. Three peer-reviewed papers in 2026 and first place in the university research competition.",
    "deep": [
     "Visual attention: a reproducible pipeline over Pupil Labs gaze, fixation, blink and pupil streams across global, selective and sustained tasks; fixation count emerged as the strongest task discriminator. RSCA research-competition winner and SJSU delegate to the 40th CSU Student Research Competition.",
-    "Assistive mobility: an AI power-wheelchair obstacle-alert system where the contribution is the human-machine interface — depth-triggered multimodal warnings (twelve tactors plus speech or tone) measured by how fast a real person responds, across 24 participants and 24 trials each.",
-    "Robot learning: SO-101 leader/follower arms with Feetech servos — 50 teleoperated demonstrations, ACT trained from scratch and SmolVLA fine-tuning, physical pick-and-place rollouts with video-measured placement error, and the EEPROM Lock=1 fix that unblocked calibration.",
+    "Assistive mobility: an AI power-wheelchair obstacle-alert system where the contribution is the human-machine interface, depth-triggered multimodal warnings (twelve tactors plus speech or tone) measured by how fast a real person responds, across 24 participants and 24 trials each.",
+    "Robot learning: SO-101 leader/follower arms with Feetech servos, 50 teleoperated demonstrations, ACT trained from scratch and SmolVLA fine-tuning, physical pick-and-place rollouts with video-measured placement error, and the EEPROM Lock=1 fix that unblocked calibration.",
     "Presented at the SJSU AI Center for Civic and Social Good grand opening alongside a faculty advisor."
    ],
    "numbers": [
     {
-     "k": "RSCA",
-     "v": "university competition winner + CSU delegate"
+     "k": "3",
+     "v": "peer-reviewed research papers published in 2026"
     },
     {
-     "k": "2",
-     "v": "HFES 2026 posters (visual attention; wheelchair HMI)"
+     "k": "1st",
+     "v": "place, SJSU research competition (RSCA)"
     },
     {
-     "k": "1",
-     "v": "Transportation Research Part F article (Elsevier, 2026)"
-    },
-    {
-     "k": "3.8 / 4.0",
-     "v": "graduate GPA"
+     "k": "46/50",
+     "v": "real robot pick-and-place rollouts with a policy I trained"
     }
    ],
    "stack": [
@@ -110,9 +106,9 @@
    "kind": "work",
    "one": "Salesforce-driven product analytics for a cloud-security company: a metadata-driven LLM compiler that turns dynamic formula fields into validated, versioned warehouse SQL, plus incremental geospatial ingestion that cut reporting latency ~80%.",
    "deep": [
-    "The core problem: Salesforce formula fields recompute in real time but don't bump LastModifiedTimestamp, so incremental ingestion kept falling back to full refreshes — slower reports, more compute cost, less trust in the dashboards.",
+    "The core problem: Salesforce formula fields recompute in real time but don't bump LastModifiedTimestamp, so incremental ingestion kept falling back to full refreshes, slower reports, more compute cost, less trust in the dashboards.",
     "The fix was a compiler, not a prompt: pulled formula definitions via the ObjectDetails API, extracted complete formula logic, ran a depth-first traversal over nested field dependencies, and emitted structured JSON context (dependency graph + formula text) into an LLM that produced optimized SQL, inserted into version-controlled dbt models.",
-    "Because LLM-assisted generation adds risk, I engineered the verification: automated sampling that compared transformed warehouse output against the live CRM source, flagged discrepancies programmatically, and drove reconciliation dashboards — 100% validation confidence before deployment.",
+    "Because LLM-assisted generation adds risk, I engineered the verification: automated sampling that compared transformed warehouse output against the live CRM source, flagged discrepancies programmatically, and drove reconciliation dashboards, 100% validation confidence before deployment.",
     "Redesigned ingestion around incremental upserts and change detection, with partitioning and clustering tuned for Snowflake on location-based attributes; heavy transforms stayed in the warehouse, off the request path.",
     "Integrated LinkedIn Campaign, Asana and Jira APIs into the analytics pipeline with normalized schemas and dashboards; Git-based CI with automated schema checks and SQL tests via GitHub Actions and Docker."
    ],
@@ -158,7 +154,7 @@
    "one": "Enterprise analytics consulting at petabyte scale: controlled migration of ~800 TB from HDFS to S3 behind a Delta Lake validation gate, with CloudWatch/SNS/Lambda SLA enforcement that cut client escalations ~45%.",
    "deep": [
     "The migration: ~800 TB of enterprise data moved from HDFS to AWS S3, with AWS Data Sync handling the transfer and bash scripts tracking and validating every copied batch.",
-    "Controlled, not fire-and-forget: a Delta Lake–style validation framework with Python and pytest-style dataset checks diffed source and destination for row mismatches, null anomalies and type drift — 99.6% validation accuracy before go-live, which is what kept it from becoming a client escalation.",
+    "Controlled, not fire-and-forget: a Delta Lake–style validation framework with Python and pytest-style dataset checks diffed source and destination for row mismatches, null anomalies and type drift, 99.6% validation accuracy before go-live, which is what kept it from becoming a client escalation.",
     "SLAs: CloudWatch metrics, SNS alerting and reactive Lambda triggers orchestrated in Airflow; root-cause traces cut time-to-detection of pipeline failures, reducing client escalations by ~45%.",
     "Performance: layered CTE rewrites, partitioning and execution optimization took a major reporting pipeline from ~18 minutes to 6; containerized operators and modular DAGs moved legacy Airflow pipelines to managed (MWAA-style) environments."
    ],
@@ -200,10 +196,10 @@
    "role": "Software Engineer Intern (healthcare client)",
    "dates": "Feb – Aug 2021",
    "kind": "work",
-   "one": "Production Spring Boot backend for a healthcare client: microservice tuning, PostgreSQL schema and index work behind Liquibase, and Docker/GitLab CI — the foundation for everything after.",
+   "one": "Production Spring Boot backend for a healthcare client: microservice tuning, PostgreSQL schema and index work behind Liquibase, and Docker/GitLab CI, the foundation for everything after.",
    "deep": [
     "Backend microservices refactored for concurrency: thread handling, connection pooling and caching cut request failures by ~33% and steadied peak responses.",
-    "Database work: inefficient joins reduced, indexing strategy redesigned, Liquibase migrations version-controlled — a 2.5× query performance improvement and more predictable load.",
+    "Database work: inefficient joins reduced, indexing strategy redesigned, Liquibase migrations version-controlled, a 2.5× query performance improvement and more predictable load.",
     "Release hygiene: Dockerized services and GitLab CI pipelines cut the release cycle by ~17% and removed the 'works on my machine' class of failures."
    ],
    "numbers": [

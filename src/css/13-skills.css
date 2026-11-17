@@ -1,0 +1,48 @@
+/* Skills: sticky-note groups, each chip is a native <details name="group"> (one open per group, no JS). */
+#skills .sk-board { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(var(--u) * 2) var(--u); align-items: start; }
+#skills .sk-note { position: relative; min-width: 0; padding: calc(var(--u) * 1.25) var(--u) var(--u); background: var(--sk-bg, #FFF6C9); box-shadow: var(--shadow-card); transform: rotate(-.5deg); }
+#skills .sk-note:nth-child(even) { transform: rotate(.45deg); }
+#skills .sk-note:nth-child(3n) { transform: rotate(-.2deg); }
+#skills .sk-note:last-child:nth-child(odd) { grid-column: 1 / -1; }
+#skills .sk-y { --sk-bg: #FFF6C9; }
+#skills .sk-g { --sk-bg: #E3F0E6; }
+#skills .sk-b { --sk-bg: #E6EDF9; }
+#skills .sk-r { --sk-bg: #F6E3E0; }
+#skills .sk-p { --sk-bg: #EDE6F5; }
+#skills .sk-h { font-size: var(--t-lg); letter-spacing: -.01em; margin-bottom: calc(var(--u) * .75); }
+#skills .sk-n { font-size: var(--t-md); margin-left: .35em; }
+
+#skills .sk-chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; }
+#skills .sk { max-width: 100%; }
+#skills .sk[open] { flex: 0 0 100%; }
+#skills .sk summary {
+  list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: .5em; min-height: 40px; max-width: 100%;
+  padding: 7px 14px; font: 600 var(--t-sm)/1.25 var(--f-print); color: var(--ink); background: rgba(252, 251, 247, .85);
+  border: 1.5px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  transition: transform .15s var(--ease-out), box-shadow .15s var(--ease-out);
+}
+#skills .sk summary::-webkit-details-marker { display: none; }
+#skills .sk summary::after { content: "+"; font: 700 1.05rem/1 var(--f-hand); color: var(--blue); }
+#skills .sk summary:hover { transform: translate(-1px, -1px); box-shadow: 2px 3px 0 var(--ink); }
+#skills .sk[open] summary { background: var(--paper-card); border-color: var(--blue); color: var(--blue); box-shadow: 2px 3px 0 var(--blue); }
+#skills .sk[open] summary::after { content: "\00d7"; }
+
+#skills .sk-proof { margin: 10px 0 6px; padding: 12px 14px 10px; background: var(--paper-card); border: 1.5px dashed var(--blue); border-radius: 4px 10px 6px 9px; animation: sk-in .2s var(--ease-out); }
+#skills .sk-ph { font-size: var(--t-md); margin: 0 0 6px; }
+#skills .sk-proof ul { list-style: none; }
+#skills .sk-proof li { position: relative; padding-left: 1.2em; margin-bottom: .4em; font: 400 var(--t-sm)/1.5 var(--f-print); color: var(--ink); overflow-wrap: anywhere; }
+#skills .sk-proof li:last-child { margin-bottom: 0; }
+#skills .sk-proof li::before { content: "\2713"; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+#skills .sk-proof a { font-weight: 700; }
+@keyframes sk-in { from { opacity: 0; transform: translateY(-4px); } }
+
+@media (max-width: 820px) {
+  #skills .sk-board { grid-template-columns: 1fr; gap: calc(var(--u) * 1.5); }
+  #skills .sk-note { padding: var(--u) 16px 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #skills .sk-note, #skills .sk-note:nth-child(even), #skills .sk-note:nth-child(3n) { transform: none; }
+  #skills .sk summary { transition: none; }
+  #skills .sk summary:hover { transform: none; }
+  #skills .sk-proof { animation: none; }
+}

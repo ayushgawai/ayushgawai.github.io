@@ -75,12 +75,12 @@
     <p class="proj-back"><a class="hand" href="../experience.html">← all experience</a></p>
     <p class="chapter-kicker hand">May – Aug 2026 · Software Engineer Intern, Perception</p>
     <h1 id="work-title" class="chapter-title">Zoox</h1>
-    <p class="chapter-lede">Perception data infrastructure: a system that grades ~409 data miners against the human labels they exist to produce — grounded SQL, deterministic verification, zero extra labeling cost.</p>
+    <p class="chapter-lede">Perception data infrastructure: a system that grades ~409 data miners against the human labels they exist to produce, grounded SQL, deterministic verification, zero extra labeling cost.</p>
   </header>
   <div class="page">
     <div class="work-two">
       <div class="work-numbers"><h3 class="proj-sub hand">on the record</h3><div class="facts"><p class="fact"><b>~409</b>active miners, 90M+ events / week</p><p class="fact"><b>321 / 321</b>GT-capable miners validated</p><p class="fact"><b>~93%</b>fewer writes via write-on-change</p><p class="fact"><b>~14 PRs</b>merged in small deployable slices</p></div></div>
-      <div class="work-story"><h3 class="proj-sub hand">what I did</h3><ul class="deep-list"><li>Automated quality validation for ~409 active miners on a fleet that mines 90M+ events a week from drive logs.</li><li>The LLM drafts one scoped SQL true-positive predicate per miner, grounded in the annotation ontology and the label vocabulary actually observed in the warehouse. The generate → execute → verify → retry loop keeps it honest; scoring itself is plain SQL and never calls the model.</li><li>321 of 321 ground-truth-capable miners validated at a ~1.3 s median; write-on-change history cut redundant writes ~93%; stored SQL reproduces every number.</li><li>Failure discovery went from periodic reviews to minutes: alerts fire on the miner run-state transition to FAILED, with per-owner DMs and a deep link to the run.</li><li>Weekly Postgres aggregation into immutable versioned JSON snapshots plus an S3 manifest, read by a zero-backend Vite/TypeScript/Chart.js dashboard and a read-only Slack Q&amp;A that answers only from published snapshots — no tools, fenced untrusted context, Vault-managed credentials.</li></ul></div>
+      <div class="work-story"><h3 class="proj-sub hand">what I did</h3><ul class="deep-list"><li>Automated quality validation for ~409 active miners on a fleet that mines 90M+ events a week from drive logs.</li><li>The LLM drafts one scoped SQL true-positive predicate per miner, grounded in the annotation ontology and the label vocabulary actually observed in the warehouse. The generate → execute → verify → retry loop keeps it honest; scoring itself is plain SQL and never calls the model.</li><li>321 of 321 ground-truth-capable miners validated at a ~1.3 s median; write-on-change history cut redundant writes ~93%; stored SQL reproduces every number.</li><li>Failure discovery went from periodic reviews to minutes: alerts fire on the miner run-state transition to FAILED, with per-owner DMs and a deep link to the run.</li><li>Weekly Postgres aggregation into immutable versioned JSON snapshots plus an S3 manifest, read by a zero-backend Vite/TypeScript/Chart.js dashboard and a read-only Slack Q&amp;A that answers only from published snapshots, no tools, fenced untrusted context, Vault-managed credentials.</li></ul></div>
     </div>
     <div class="proj-rows"><div><h3 class="proj-sub hand">the stack</h3><ul class="tags"><li>Python</li><li>FastAPI</li><li>SQLAlchemy</li><li>PostgreSQL</li><li>Databricks SQL</li><li>S3</li><li>Airflow</li><li>Vue 3</li><li>TypeScript</li><li>Bazel</li><li>Vault</li><li>Kubernetes</li></ul></div></div>
     <p class="work-next hand">drawn out below: every system I built here, each with its own sketch and deep dive ↓</p>
@@ -304,7 +304,6 @@
           <li><b>~1.3 s</b> median scoring</li>
           <li><b>days → min</b> failure discovery</li>
         </ul>
-        <div class="btn-row"><a class="btn blue" href="../work/zoox.html">More in the Autonomy chapter</a></div>
         <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
           <h4>The loop</h4>
           <ul>
@@ -474,7 +473,7 @@
           <p class="project-where hand">Zoox · Perception data-mining fleet · 2026</p>
           <h3 class="project-title">Weekly snapshots for the fleet, a tripwire for failures</h3>
           <p class="project-sum">A scheduled job aggregates the last complete Monday-to-Monday window into an immutable, versioned JSON snapshot on S3; a zero-backend TypeScript + Chart.js dashboard, a Slack digest and per-owner DMs all read that one artifact. Failure alerts hook the miner run-state transition instead of polling, so a FAILED run reaches its owner with the run ID and a deep link within minutes.</p>
-          <div class="btn-row"><a class="btn blue" href="#p-slackbot">The ops bot reads the same snapshot</a></div>
+          <div class="btn-row"></div>
         </div>
         <ul class="facts">
           <li><b>days → minutes</b> failure discovery</li>
@@ -549,7 +548,6 @@
           <li><b>1</b> source: the published report</li>
           <li><b>3</b> bounded inputs and outputs</li>
         </ul>
-        <div class="btn-row"><a class="btn blue" href="../projects.html">Grounded predicates in the AI chapter</a></div>
         <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
           <h4>Architecture</h4>
           <ul>
@@ -699,7 +697,6 @@
           <li class="sec-fact" data-part="readonly" tabindex="0"><b>read-only</b>pinned to the report week</li>
           <li class="sec-fact" data-part="vault" tabindex="0"><b>Vault</b>least-privilege policies</li>
         </ul>
-        <div class="btn-row"><a class="btn blue" href="#p-slackbot">See the bot in the Agents chapter</a></div>
         <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
           <h4>Threat model</h4>
           <p>Anyone in Slack can type a question, and report fields carry free text written by many owners. Either can contain instructions. The design assumes both are hostile and removes the capability an attacker would want, instead of trying to filter every phrasing.</p>

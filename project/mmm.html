@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MarketMIX — MMM + MTA budget optimizer — Ayush Gawai</title>
-<meta name="description" content="MarketMIX — MMM + MTA budget optimizer: A unified marketing-measurement system: a Bayesian mix model and a survival multi-touch model over 16M journey even">
+<title>MarketMIX, MMM + MTA budget optimizer — Ayush Gawai</title>
+<meta name="description" content="MarketMIX, MMM + MTA budget optimizer: A unified marketing-measurement system: a Bayesian mix model and a survival multi-touch model over 16M journey event">
 <meta name="author" content="Ayush Gawai">
 <meta name="theme-color" content="#F6F5F0">
 <link rel="canonical" href="https://ayushgawai.github.io/project/mmm.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="MarketMIX — MMM + MTA budget optimizer — Ayush Gawai">
-<meta property="og:description" content="MarketMIX — MMM + MTA budget optimizer: A unified marketing-measurement system: a Bayesian mix model and a survival multi-touch model over 16M journey even">
+<meta property="og:title" content="MarketMIX, MMM + MTA budget optimizer — Ayush Gawai">
+<meta property="og:description" content="MarketMIX, MMM + MTA budget optimizer: A unified marketing-measurement system: a Bayesian mix model and a survival multi-touch model over 16M journey event">
 <meta property="og:url" content="https://ayushgawai.github.io/project/mmm.html">
 <meta property="og:image" content="https://ayushgawai.github.io/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -74,13 +74,13 @@
   <header class="chapter-head page">
     <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
     <p class="chapter-kicker hand">Marketing measurement &amp; budget optimization · 2026</p>
-    <h1 id="proj-title" class="chapter-title">MarketMIX — MMM + MTA budget optimizer</h1>
+    <h1 id="proj-title" class="chapter-title">MarketMIX, MMM + MTA budget optimizer</h1>
     <p class="chapter-lede">A unified marketing-measurement system: a Bayesian mix model and a survival multi-touch model over 16M journey events, joined by Shapley attribution and a constrained SLSQP optimizer that hands back a spendable budget plan.</p>
   </header>
   <div class="page"><figure class="proj-film"><video controls preload="metadata" playsinline poster="../assets/video/narrated/mmm-poster.webp" width="1920" height="1080"><source src="../assets/video/narrated/mmm.mp4" type="video/mp4"></video></figure><div class="proj-two"><div class="proj-facts"><h3 class="proj-sub hand">the numbers</h3><p class="fact"><b>7%</b>channel ROI error, vs 31% for last-touch</p><p class="fact"><b>+14%</b>incremental conversions at flat spend</p><p class="fact"><b>16M</b>Criteo journey events in the survival model</p><p class="fact"><b>Shapley</b>attribution across channels, not one model&#x27;s view</p></div><div class="proj-deep"><h3 class="proj-sub hand">how it works</h3><ul class="deep-list"><li>Mix model: Bayesian MMM in PyMC Marketing with geometric adstock and Hill saturation; geo-lift experiment priors and transfer learning seed the coefficients.</li><li>Attribution: a discrete-time survival MTA over 16M Criteo journey events in PySpark, plus Shapley-value channel attribution.</li><li>Fusion: Shapley merges the mix model&#x27;s incrementality with the survival model&#x27;s path evidence into one set of channel contributions.</li><li>Optimization: constrained SciPy SLSQP budget optimization respects channel minimums and total spend, so the output is a plan, not coefficients. Prophet handles seasonality and promotions.</li></ul></div></div></div>
 </section>
 
-<section class="chapter proj proj-tail" aria-label="More about MarketMIX — MMM + MTA budget optimizer">
+<section class="chapter proj proj-tail" aria-label="More about MarketMIX, MMM + MTA budget optimizer">
   <div class="page">
     <div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid"><div class="dec"><h4>Two engines, one answer</h4><p>Attribution never hinges on a single model&#x27;s view of the world.</p></div><div class="dec"><h4>Constraints are first-class</h4><p>The optimizer returns a spendable plan that respects minimums and total budget.</p></div></div></div>
     <div class="proj-rows">

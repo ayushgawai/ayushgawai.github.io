@@ -75,12 +75,12 @@
     <p class="proj-back"><a class="hand" href="../experience.html">← all experience</a></p>
     <p class="chapter-kicker hand">Feb – Aug 2021 · Software Engineer Intern (healthcare client)</p>
     <h1 id="work-title" class="chapter-title">Coditas</h1>
-    <p class="chapter-lede">Production Spring Boot backend for a healthcare client: microservice tuning, PostgreSQL schema and index work behind Liquibase, and Docker/GitLab CI — the foundation for everything after.</p>
+    <p class="chapter-lede">Production Spring Boot backend for a healthcare client: microservice tuning, PostgreSQL schema and index work behind Liquibase, and Docker/GitLab CI, the foundation for everything after.</p>
   </header>
   <div class="page">
     <div class="work-two">
       <div class="work-numbers"><h3 class="proj-sub hand">on the record</h3><div class="facts"><p class="fact"><b>~33%</b>fewer request failures under load</p><p class="fact"><b>2.5×</b>query performance after schema/index work</p><p class="fact"><b>~17%</b>faster release cycles via CI</p></div></div>
-      <div class="work-story"><h3 class="proj-sub hand">what I did</h3><ul class="deep-list"><li>Backend microservices refactored for concurrency: thread handling, connection pooling and caching cut request failures by ~33% and steadied peak responses.</li><li>Database work: inefficient joins reduced, indexing strategy redesigned, Liquibase migrations version-controlled — a 2.5× query performance improvement and more predictable load.</li><li>Release hygiene: Dockerized services and GitLab CI pipelines cut the release cycle by ~17% and removed the &#x27;works on my machine&#x27; class of failures.</li></ul></div>
+      <div class="work-story"><h3 class="proj-sub hand">what I did</h3><ul class="deep-list"><li>Backend microservices refactored for concurrency: thread handling, connection pooling and caching cut request failures by ~33% and steadied peak responses.</li><li>Database work: inefficient joins reduced, indexing strategy redesigned, Liquibase migrations version-controlled, a 2.5× query performance improvement and more predictable load.</li><li>Release hygiene: Dockerized services and GitLab CI pipelines cut the release cycle by ~17% and removed the &#x27;works on my machine&#x27; class of failures.</li></ul></div>
     </div>
     <div class="proj-rows"><div><h3 class="proj-sub hand">the stack</h3><ul class="tags"><li>Java</li><li>Spring Boot</li><li>PostgreSQL</li><li>Liquibase</li><li>Docker</li><li>GitLab CI</li></ul></div></div>
     <p class="work-next hand">drawn out below: every system I built here, each with its own sketch and deep dive ↓</p>
@@ -127,13 +127,13 @@
         </svg>
       </div>
       <div class="project-body">
-        <p class="project-where hand">Coditas 2021 · Zscaler 2024–2025</p>
+        <p class="project-where hand">Coditas · Software Engineer Intern · 2021</p>
         <h3 class="project-title">Release pipelines that refuse bad changes</h3>
-        <p class="project-sum">At Coditas, Spring Boot services were Dockerized and shipped through GitLab CI with automated build and deploy, keeping staging and production at parity. At Zscaler, Git workflows ran automated schema checks and SQL tests in GitHub Actions, with Docker pinning the environment.</p>
+        <p class="project-sum">I Dockerized production Spring Boot microservices for a healthcare client and shipped them through GitLab CI with automated build and deploy, keeping staging and production at parity. The pipeline blocks a release on schema drift or a failing test.</p>
         <ul class="facts">
           <li><b>~17%</b> shorter release cycle</li>
           <li><b>GitLab CI</b> Docker images</li>
-          <li><b>GitHub Actions</b> schema + SQL tests</li>
+          <li><b>~33%</b> fewer request failures</li>
         </ul>
         <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
           <h4>Coditas · Software Engineer Intern · Feb–Aug 2021</h4>
@@ -141,11 +141,7 @@
             <li>Healthcare client, production Java/Spring Boot microservices. Dockerized the services, configured GitLab CI pipelines and automated build and deploy steps for staging/production parity: release cycle ~17% shorter, fewer human deployment errors.</li>
             <li>Same engagement: thread handling, connection pooling, caching and fewer redundant DB calls cut request failures ~33%; PostgreSQL indexing and join cleanup with Liquibase-versioned migrations gave ~2.5× query performance.</li>
           </ul>
-          <h4>Zscaler · Data Engineer · 2024–2025</h4>
-          <ul>
-            <li>Git-based workflows with automated schema checks and SQL tests in GitHub Actions around the dbt/Snowflake models.</li>
-            <li>Docker standardized environments; debugged dependency conflicts, upstream API schema changes, compiler/runtime mismatches and environment misconfigurations.</li>
-          </ul>
+          
         </div></details>
       </div>
     </article>

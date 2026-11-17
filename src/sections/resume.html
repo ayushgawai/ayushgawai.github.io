@@ -1,13 +1,12 @@
 <section class="chapter" id="resume" data-tab="Resume" aria-labelledby="resume-title">
   <header class="chapter-head page">
-    <p class="chapter-kicker hand">on the clipboard</p>
-    <h2 id="resume-title" class="chapter-title">Résumé, ready to read or download</h2>
-    <p class="chapter-lede">A full two-page résumé plus one-page versions for four kinds of roles. Preview any of them here.</p>
+    <p class="chapter-kicker hand">taped flat on the page</p>
+    <h2 id="resume-title" class="chapter-title">My résumé, ready to read or download</h2>
+    <p class="chapter-lede">I keep a full two-page résumé plus one-page versions for four kinds of roles. Pick the one closest to the role, read it here, or download it.</p>
   </header>
 
   <div class="page rs-wrap">
-    <div class="rs-side">
-      <p class="rs-note hand">Pick the one closest to the role. <span class="rs-note-sub">Track versions are one page each.</span></p>
+    <div class="rs-bar">
       <div class="rs-tabs" role="group" aria-label="Résumé version">
         <button type="button" class="rs-tab" aria-pressed="true" data-pdf="assets/resume/Ayush_Gawai_Resume.pdf" data-label="Full résumé (2 pages)">Full · 2 pages</button>
         <button type="button" class="rs-tab" aria-pressed="false" data-pdf="assets/resume/Ayush_Gawai_Resume_Software.pdf" data-label="Software engineering">Software</button>
@@ -15,23 +14,28 @@
         <button type="button" class="rs-tab" aria-pressed="false" data-pdf="assets/resume/Ayush_Gawai_Resume_Data-Engineering.pdf" data-label="Data engineering">Data engineering</button>
         <button type="button" class="rs-tab" aria-pressed="false" data-pdf="assets/resume/Ayush_Gawai_Resume_Data-Science.pdf" data-label="Data science">Data science</button>
       </div>
-      <div class="btn-row rs-actions">
-        <a class="btn blue rs-download" href="assets/resume/Ayush_Gawai_Resume.pdf" download>Download PDF</a>
-        <a class="btn rs-open" href="assets/resume/Ayush_Gawai_Resume.pdf" target="_blank" rel="noopener">Open in a new tab</a>
-      </div>
-      <p class="rs-current" aria-live="polite">Showing: <b>Full résumé (2 pages)</b></p>
-    </div>
-
-    <div class="rs-board">
-      <div class="rs-clip" aria-hidden="true"></div>
-      <div class="rs-paper">
-        <img class="rs-preview" src="assets/resume/Ayush_Gawai_Resume.webp" alt="" width="640" height="905" loading="lazy" decoding="async">
-        <iframe class="rs-frame" title="Résumé preview: Full résumé (2 pages)" data-src="assets/resume/Ayush_Gawai_Resume.pdf" loading="lazy"></iframe>
-        <a class="rs-mobile" href="assets/resume/Ayush_Gawai_Resume.pdf" target="_blank" rel="noopener">
-          <span class="rs-mobile-title">Open PDF</span>
-          <span class="rs-mobile-sub">Full résumé (2 pages)</span>
+      <div class="rs-actions">
+        <a class="btn rs-download" href="assets/resume/Ayush_Gawai_Resume.pdf" download>
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg>
+          Download PDF
+        </a>
+        <a class="btn rs-full" href="assets/resume/Ayush_Gawai_Resume.pdf" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+          View full screen
         </a>
       </div>
+    </div>
+    <p class="rs-current"><span aria-live="polite">Showing: <b>Full résumé (2 pages)</b>.</span> <a class="rs-newtab" href="assets/resume/Ayush_Gawai_Resume.pdf" target="_blank" rel="noopener">Open in a new tab</a></p>
+
+    <div class="rs-viewer">
+      <span class="tape rs-tape-l" aria-hidden="true"></span>
+      <span class="tape rs-tape-r" aria-hidden="true"></span>
+      <button type="button" class="btn rs-exit">Exit full screen</button>
+      <a class="rs-page" href="assets/resume/Ayush_Gawai_Resume.pdf" target="_blank" rel="noopener">
+        <img class="rs-preview" src="assets/resume/Ayush_Gawai_Resume.webp" alt="First page of my résumé: Full résumé (2 pages)" width="640" height="905" loading="lazy" decoding="async">
+        <span class="rs-tap">Tap to open the PDF</span>
+      </a>
+      <iframe class="rs-frame" title="Résumé PDF: Full résumé (2 pages)" data-src="assets/resume/Ayush_Gawai_Resume.pdf"></iframe>
     </div>
   </div>
 </section>

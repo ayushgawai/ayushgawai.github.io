@@ -70,173 +70,217 @@
 
 
 <main id="main">
-<section class="chapter" id="hackathons" data-tab="Hackathons" aria-labelledby="hack-title">
-  <header class="chapter-head page">
-    <p class="chapter-kicker hand">ships that survived a weekend</p>
-    <h2 id="hack-title" class="chapter-title">Hackathons, and what shipped</h2>
-    <p class="chapter-lede">Time-boxed builds where the point is a working system, not a slide. Each card links to where that work actually lives — the full detail is on its own page, not repeated here.</p>
-  </header>
-
-  <div class="page">
-    <div class="hack-grid">
-      <a class="hack-card" href="project/sentinel.html#p-sentinel">
-        <span class="hack-tab" style="--tab:#F0D6D6">HP × SJSU Edge AI · won</span>
-        <h3 class="hack-t">Sentinel AI</h3>
-        <p class="hack-sum">Local GPU camera-safety wall: YOLO pose on every frame, Qwen3-VL only on escalation, guarded emergency dispatch.</p>
-        <span class="hack-cta hand">open the build →</span>
-      </a>
-      <a class="hack-card" href="project/blast.html#p-blast">
-        <span class="hack-tab" style="--tab:#DDE6F6">WeMakeDevs</span>
-        <h3 class="hack-t">Blast Radius</h3>
-        <p class="hack-sum">One upstream schema rename, caught across analytics, ML features and dashboards before merge — by a fleet of agents.</p>
-        <span class="hack-cta hand">open the build →</span>
-      </a>
-      <a class="hack-card" href="project/carbonshift.html#p-carbonshift">
-        <span class="hack-tab" style="--tab:#F4EDB8">Devpost</span>
-        <h3 class="hack-t">CarbonShift</h3>
-        <p class="hack-sum">GPU training that follows the grid: a 60-second loop maps price and carbon to a live power cap.</p>
-        <span class="hack-cta hand">open the build →</span>
-      </a>
-      <a class="hack-card" href="project/leo.html#p-leo">
-        <span class="hack-tab" style="--tab:#D8ECDF">Ready Builders</span>
-        <h3 class="hack-t">LEO coverage-risk agent</h3>
-        <p class="hack-sum">A tool-use agent that scores 4.7M satellite install sites against real canopy and terrain rasters.</p>
-        <span class="hack-cta hand">open the build →</span>
-      </a>
-      <a class="hack-card" href="project/transit.html#p-transit">
-        <span class="hack-tab" style="--tab:#F2E3C4">MSDA capstone</span>
-        <h3 class="hack-t">Transit Analytics</h3>
-        <p class="hack-sum">BART and VTA feeds into a forecasting operator dashboard: Airflow, Kafka, dbt and Snowflake.</p>
-        <span class="hack-cta hand">open the build →</span>
-      </a>
-      <a class="hack-card" href="project/sentinel.html#p-sentinel">
-        <span class="hack-tab" style="--tab:#F6E2C9">TreeHacks</span>
-        <h3 class="hack-t">TreeHacks builds</h3>
-        <p class="hack-sum">Rapid AI-orchestration prototypes — the CarbonShift demo and the surrounding infra work ran here.</p>
-        <span class="hack-cta hand">see the demos →</span>
-      </a>
-    </div>
-
-    <p class="home-more"><a class="btn" href="projects.html">Browse the full project library</a></p>
-  </div>
-</section>
-
 <section class="chapter" id="projlib" aria-labelledby="projlib-title">
   <header class="chapter-head page">
-    <p class="chapter-kicker hand">the full library</p>
-    <h2 id="projlib-title" class="chapter-title">Every project, one page each</h2>
-    <p class="chapter-lede">23 builds. Open a card for its demo, moving sketch, numbers and code.</p>
+    <p class="chapter-kicker hand">hackathon wins, side projects, coursework</p>
+    <h1 id="projlib-title" class="chapter-title">Hackathons and projects</h1>
+    <p class="chapter-lede">Press play on any demo right here, or open a project for its full write-up, moving sketch and code.</p>
   </header>
   <div class="page">
-    <h3 class="lib-group hand">AI and agents</h3>
-    <div class="lib-grid">
-      <a class="lib-card" href="project/sentinel.html">
-        <h3 class="lib-t">Sentinel AI</h3>
-        <p class="lib-sum">A fully local, privacy-first multi-camera safety system on the HP ZGX Nano: cheap on every frame, and expensive reasoning only when an escalation is credible. Video never leaves the machine. <span class="lib-open hand">open →</span></p>
-      </a>
-      <a class="lib-card" href="project/blast.html">
-        <h3 class="lib-t">Blast Radius</h3>
-        <p class="lib-sum">Answers the data-engineer&#x27;s scariest question — &#x27;if I rename this upstream field, what breaks before I merge?&#x27; — with a fleet of coding agents and a human-controlled merge gate. <span class="lib-open hand">open →</span></p>
-      </a>
-      <a class="lib-card" href="project/carbonshift.html">
-        <h3 class="lib-t">CarbonShift</h3>
-        <p class="lib-sum">GPU training that follows the grid: a 60-second control loop polls CAISO price and carbon, maps them to four Eco-Pulse states, and drives the A100&#x27;s power cap through NVML — from full 250 W down to a checkpointed pause. <span class="lib-open hand">open →</span></p>
-      </a>
-      <a class="lib-card" href="project/leo.html">
-        <h3 class="lib-t">LEO satellite coverage-risk agent</h3>
-        <p class="lib-sum">Scores 4.67M candidate broadband-install sites for LEO-satellite obstruction risk — tree canopy and terrain, the gap between &#x27;covered on the map&#x27; and &#x27;works in practice&#x27; — with a Claude tool-use orchestrator over five deterministic tools. <span class="lib-open hand">open →</span></p>
-      </a>
+    <div class="pg-grid pg-grid--big">
+      <article class="pg-card pg-card--big">
+        <button class="video" type="button" data-yt="MFF1DICU6Ow" data-title="Sentinel AI demo" aria-label="Play the Sentinel AI demo"><img src="assets/img/demos/sentinel.webp" alt="" loading="lazy" width="1280" height="720"><span class="video-label">Watch the demo</span></button>
+        <p class="pg-where hand">HP × SJSU Edge AI Hackathon · winner · 2026</p>
+        <h3 class="pg-title"><a href="project/sentinel.html">Sentinel AI</a></h3>
+        <p class="pg-sum">A fully local, privacy-first multi-camera safety system on the HP ZGX Nano: cheap on every frame, and expensive reasoning only when an escalation is credible. Video never leaves the machine.</p>
+        <ul class="pg-facts"><li><b>3 → 13+</b> fps on a six-feed camera wall</li><li><b>640 / 649</b> frames agreed with the demo clip&#x27;s labels</li><li><b>~157 ms</b> first synthesized audio on a warm voice connection</li></ul>
+        <div class="btn-row"><a class="btn blue" href="project/sentinel.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/campus_sentinel" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card pg-card--big">
+        <video class="pg-video" controls preload="none" playsinline poster="assets/video/narrated/leo-poster.webp" width="1920" height="1080" aria-label="SatCheck: will satellite internet work here? film"><source src="assets/video/narrated/leo.mp4" type="video/mp4"></video>
+        <p class="pg-where hand">Ready Builders Challenge · geospatial AI agent · 2026</p>
+        <h3 class="pg-title"><a href="project/leo.html">SatCheck: will satellite internet work here?</a></h3>
+        <p class="pg-sum">Will satellite internet actually work at this address? A Claude tool-use agent scores 4.67 million locations for tree-canopy and terrain obstruction, closing the gap between &#x27;covered on the map&#x27; and &#x27;works in practice&#x27;.</p>
+        <ul class="pg-facts"><li><b>4.67M</b> locations scored, all 100 counties</li><li><b>0.0%</b> environmental NaNs after validation</li><li><b>49.3%</b> of sites scored LOW obstruction risk</li></ul>
+        <div class="btn-row"><a class="btn blue" href="project/leo.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/Ready_Builders_Challenge" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card pg-card--big">
+        <button class="video" type="button" data-yt="OkEENwR6-Gk" data-title="CarbonShift demo" aria-label="Play the CarbonShift demo"><img src="assets/img/demos/carbonshift-demo.webp" alt="" loading="lazy" width="1280" height="720"><span class="video-label">Watch the demo</span></button>
+        <p class="pg-where hand">Devpost / TreeHacks · carbon-aware training</p>
+        <h3 class="pg-title"><a href="project/carbonshift.html">CarbonShift</a></h3>
+        <p class="pg-sum">GPU training that follows the grid: a 60-second control loop polls CAISO price and carbon, maps them to four Eco-Pulse states, and drives the A100&#x27;s power cap through NVML, from full 250 W down to a checkpointed pause.</p>
+        <ul class="pg-facts"><li><b>43%</b> lower carbon intensity in a realistic profile</li><li><b>37%</b> lower energy cost, same throughput</li><li><b>4 states</b> GREEN / NORMAL / AMBER / RED → 250→100 W</li></ul>
+        <div class="btn-row"><a class="btn blue" href="project/carbonshift.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/carbonshift" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card pg-card--big">
+        <button class="video" type="button" data-yt="9MtxDeI03c0" data-title="Blast Radius demo" aria-label="Play the Blast Radius demo"><img src="assets/img/demos/blast-radius.webp" alt="" loading="lazy" width="1280" height="720"><span class="video-label">Watch the demo</span></button>
+        <p class="pg-where hand">WeMakeDevs hackathon · multi-agent system · Nov 2026</p>
+        <h3 class="pg-title"><a href="project/blast.html">Blast Radius</a></h3>
+        <p class="pg-sum">Answers the data-engineer&#x27;s scariest question, &#x27;if I rename this upstream field, what breaks before I merge?&#x27;, with a fleet of coding agents and a human-controlled merge gate.</p>
+        <ul class="pg-facts"><li><b>6</b> downstream checks broken by one user_id → account_id rename</li><li><b>3 providers</b> Claude Code, Codex and OpenCode working in own checkouts</li><li><b>3</b> coordinated fix PRs + tickets, all owner-approved</li></ul>
+        <div class="btn-row"><a class="btn blue" href="project/blast.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/blast-radius" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card pg-card--big">
+        <video class="pg-video" controls preload="none" playsinline poster="assets/video/narrated/transit-poster.webp" width="1920" height="1080" aria-label="Transit Analytics film"><source src="assets/video/narrated/transit.mp4" type="video/mp4"></video>
+        <p class="pg-where hand">SJSU MSDA capstone · BART + VTA</p>
+        <h3 class="pg-title"><a href="project/transit.html">Transit Analytics</a></h3>
+        <p class="pg-sum">A complete transit data platform: GTFS schedules and live departures meet in one Snowflake warehouse, and a forecasting layer sits on top, served through FastAPI and a React/TypeScript operator dashboard with text-to-SQL chat.</p>
+        <ul class="pg-facts"><li><b>3</b> Airflow DAGs: batch, streaming, ML</li><li><b>2</b> transit operators, BART and VTA</li><li><b>7-day</b> demand forecast horizon</li></ul>
+        <div class="btn-row"><a class="btn blue" href="project/transit.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/transit-system" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card pg-card--big">
+        <video class="pg-video" controls preload="none" playsinline poster="assets/video/narrated/mmm-poster.webp" width="1920" height="1080" aria-label="MarketMIX, MMM + MTA budget optimizer film"><source src="assets/video/narrated/mmm.mp4" type="video/mp4"></video>
+        <p class="pg-where hand">Marketing measurement &amp; budget optimization · 2026</p>
+        <h3 class="pg-title"><a href="project/mmm.html">MarketMIX, MMM + MTA budget optimizer</a></h3>
+        <p class="pg-sum">A unified marketing-measurement system: a Bayesian mix model and a survival multi-touch model over 16M journey events, joined by Shapley attribution and a constrained SLSQP optimizer that hands back a spendable budget plan.</p>
+        <ul class="pg-facts"><li><b>7%</b> channel ROI error, vs 31% for last-touch</li><li><b>+14%</b> incremental conversions at flat spend</li><li><b>16M</b> Criteo journey events in the survival model</li></ul>
+        <div class="btn-row"><a class="btn blue" href="project/mmm.html">Read more</a></div>
+      </article>
+      <article class="pg-card pg-card--big">
+        <video class="pg-video" controls preload="none" playsinline poster="assets/video/narrated/wikirisk-poster.webp" width="1920" height="1080" aria-label="WikiRisk film"><source src="assets/video/narrated/wikirisk.mp4" type="video/mp4"></video>
+        <p class="pg-where hand">Spark streaming · Wikimedia EventStreams</p>
+        <h3 class="pg-title"><a href="project/wikirisk.html">WikiRisk</a></h3>
+        <p class="pg-sum">Predicts a harmful Wikipedia edit before it lands: historical Spark ingestion over 29+ GB of revisions trains a cross-validated model, then a live Structured Streaming job scores every event as it arrives.</p>
+        <ul class="pg-facts"><li><b>89.61%</b> recall on held-out edits</li><li><b>0.762</b> ROC AUC, 5-fold cross-validation</li><li><b>11.16M</b> training rows</li></ul>
+        <div class="btn-row"><a class="btn blue" href="project/wikirisk.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/WikiRisk" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card pg-card--big">
+        <video class="pg-video" controls preload="none" playsinline poster="assets/video/narrated/accessiMed-poster.webp" width="1920" height="1080" aria-label="AccessiMed film"><source src="assets/video/narrated/accessiMed.mp4" type="video/mp4"></video>
+        <p class="pg-where hand">Accessibility engineering tooling</p>
+        <h3 class="pg-title"><a href="project/accessimed.html">AccessiMed</a></h3>
+        <p class="pg-sum">A CLI-first accessibility scanner with reviewable fixes: Playwright + axe-core audits against WCAG 2.1 A/AA, deterministic or LLM remediation, and every change ships as a reviewed git diff into a CI gate.</p>
+        <ul class="pg-facts"><li><b>WCAG 2.1</b> A/AA levels via axe-core in a real browser</li><li><b>2</b> fix strategies: deterministic no-key fallback + LLM</li><li><b>SQLite</b> scan and remediation history, plus PDF reports</li></ul>
+        <div class="btn-row"><a class="btn blue" href="project/accessimed.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/accessiMed" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card pg-card--big">
+        <video class="pg-video" controls preload="none" playsinline poster="assets/video/query-engine-poster.webp" width="1920" height="1080" aria-label="Columnar query engine film"><source src="assets/video/query-engine.mp4" type="video/mp4"></video>
+        <p class="pg-where hand">C++20 · analytical engine from scratch</p>
+        <h3 class="pg-title"><a href="project/query-engine.html">Columnar query engine</a></h3>
+        <p class="pg-sum">A mini analytical engine with an explicit plan, optimizer passes and a vectorized executor over column files with min/max skipping, checked against a row-at-a-time reference on 4M rows.</p>
+        <ul class="pg-facts"><li><b>1,500</b> randomized queries checked against a reference interpreter</li><li><b>2,048</b> row vectorized batches with selection vectors</li><li><b>63 / 80</b> row groups skipped by min/max on a one-year filter</li></ul>
+        <div class="btn-row"><a class="btn blue" href="project/query-engine.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/query-engine" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
     </div>
-    <h3 class="lib-group hand">data platforms</h3>
-    <div class="lib-grid">
-      <a class="lib-card" href="project/transit.html">
-        <h3 class="lib-t">Transit Analytics</h3>
-        <p class="lib-sum">A complete transit data platform: GTFS schedules and live departures meet in one Snowflake warehouse, and a forecasting layer sits on top — served through FastAPI and a React/TypeScript operator dashboard with text-to-SQL chat. <span class="lib-open hand">open →</span></p>
-      </a>
-      <a class="lib-card" href="project/wikirisk.html">
-        <h3 class="lib-t">WikiRisk</h3>
-        <p class="lib-sum">Predicts a harmful Wikipedia edit before it lands: historical Spark ingestion over 29+ GB of revisions trains a cross-validated model, then a live Structured Streaming job scores every event as it arrives. <span class="lib-open hand">open →</span></p>
-      </a>
-      <a class="lib-card" href="project/transitrisk.html">
-        <h3 class="lib-t">TransitRisk — delay forecasting</h3>
-        <p class="lib-sum">Predicts whether a station-route pair will see elevated delay in the next hour: seven classifiers, probability calibration, conformal prediction and a cost-optimal alert threshold when a miss costs 5× a false alarm. <span class="lib-open hand">open →</span></p>
-      </a>
-    </div>
-    <h3 class="lib-group hand">software and systems</h3>
-    <div class="lib-grid">
-      <a class="lib-card" href="project/lsmstore.html">
-        <h3 class="lib-t">LSMStore — LSM-tree key-value store</h3>
-        <p class="lib-sum">A Log-Structured Merge tree engine built from first principles: fsynced WAL, sorted memtables, immutable SSTables with Bloom filters, tombstones and crash-aware recovery. <span class="lib-open hand">open →</span></p>
-      </a>
-      <a class="lib-card" href="project/accessimed.html">
-        <h3 class="lib-t">AccessiMed</h3>
-        <p class="lib-sum">A CLI-first accessibility scanner with reviewable fixes: Playwright + axe-core audits against WCAG 2.1 A/AA, deterministic or LLM remediation, and every change ships as a reviewed git diff into a CI gate. <span class="lib-open hand">open →</span></p>
-      </a>
-      <a class="lib-card" href="project/query-engine.html">
-        <h3 class="lib-t">Columnar query engine</h3>
-        <p class="lib-sum">A mini analytical engine with an explicit plan, optimizer passes and a vectorized executor over column files with min/max skipping — checked against a row-at-a-time reference on 4M rows. <span class="lib-open hand">open →</span></p>
-      </a>
-      <a class="lib-card" href="project/orderbook.html">
-        <h3 class="lib-t">Order-book matching engine</h3>
-        <p class="lib-sum">A single-instrument limit order book with O(1) cancels, correct reprice semantics and sub-microsecond tail latency on a multi-million-message replay. <span class="lib-open hand">open →</span></p>
-      </a>
-      <a class="lib-card" href="project/dedup-store.html">
-        <h3 class="lib-t">Dedup store</h3>
-        <p class="lib-sum">FastCDC-style chunking with SHA-256 fingerprints and crash-resumable mark-and-sweep GC, plus replication that only sends what the far end is missing. <span class="lib-open hand">open →</span></p>
-      </a>
-      <a class="lib-card" href="project/capflow.html">
-        <h3 class="lib-t">CapFlow — CDC replication</h3>
-        <p class="lib-sum">A CDC pipeline that mirrors inserts, updates and deletes from a change log into warehouse tables, reconciles row by row, and can backfill or replay from a saved LSN. <span class="lib-open hand">open →</span></p>
-      </a>
-      <a class="lib-card" href="project/apm-explorer.html">
-        <h3 class="lib-t">APM trace explorer</h3>
-        <p class="lib-sum">Ingests OTLP/HTTP traces, assembles span trees and computes per-service and per-endpoint RED metrics with histogram percentiles — with a D3 service map, latency heatmap and rolling-baseline anomaly flags. <span class="lib-open hand">open →</span></p>
-      </a>
-      <a class="lib-card" href="project/gpu-orchestrator.html">
-        <h3 class="lib-t">GPU job orchestrator</h3>
-        <p class="lib-sum">A scheduler API and Python SDK over 512 GPUs across AWS, GCP and on-prem pools: gang scheduling, tenant quotas, spot-preemption rollback and pool placement by cost and type. <span class="lib-open hand">open →</span></p>
-      </a>
-      <a class="lib-card" href="project/agent-fleet.html">
-        <h3 class="lib-t">Agent fleet</h3>
-        <p class="lib-sum">A CLI and dashboard that gives each coding-agent task its own Git branch and worktree, shards tests across workers, and gates every diff through a review gate before a human approves. <span class="lib-open hand">open →</span></p>
-      </a>
-      <a class="lib-card" href="project/siliconbench.html">
-        <h3 class="lib-t">SiliconBench</h3>
-        <p class="lib-sum">A CPU roofline and kernel harness: dot product, STREAM triad and SGEMM in scalar, SIMD, reordered and cache-blocked variants. SGEMM climbs 1.27 → 36.11 GFLOP/s. <span class="lib-open hand">open →</span></p>
-      </a>
-    </div>
-    <h3 class="lib-group hand">robotics</h3>
-    <div class="lib-grid">
-      <a class="lib-card" href="project/so101.html">
-        <h3 class="lib-t">SO-101 imitation learning</h3>
-        <p class="lib-sum">Six-joint leader/follower arms with Feetech STS3215 servos: 50 teleoperated demonstrations, ACT trained from scratch on a ResNet-18 backbone and SmolVLA fine-tuning, then physical pick-and-place rollouts with video-measured error. <span class="lib-open hand">open →</span></p>
-      </a>
-      <a class="lib-card" href="project/warehouse.html">
-        <h3 class="lib-t">Warehouse case perception</h3>
-        <p class="lib-sum">Detects cases in RGB-D warehouse frames and tracks them in 3D: YOLO/OpenCV detection, Kalman prediction, two-stage Hungarian assignment through occlusion, and depth back-projection to XYZ. <span class="lib-open hand">open →</span></p>
-      </a>
-      <a class="lib-card" href="project/obstacle.html">
-        <h3 class="lib-t">Real-time obstacle alert policy</h3>
-        <p class="lib-sum">A hardware-independent wheelchair obstacle-alert prototype: multithreaded camera/LiDAR fusion mapping boxes to bearings, and a distance-triggered STOP/CAUTION policy with hysteresis and confirming frames. <span class="lib-open hand">open →</span></p>
-      </a>
-    </div>
-    <h3 class="lib-group hand">autonomy</h3>
-    <div class="lib-grid">
-      <a class="lib-card" href="project/scene-miner.html">
-        <h3 class="lib-t">Scene Miner</h3>
-        <p class="lib-sum">Rare-event retrieval for AV data: rule filters, embedding search, Rocchio feedback and a hybrid re-ranker compared at a fixed 300-result review budget over an IVF index. <span class="lib-open hand">open →</span></p>
-      </a>
-      <a class="lib-card" href="project/trajectory.html">
-        <h3 class="lib-t">AV trajectory prediction</h3>
-        <p class="lib-sum">Five forecasters, from constant velocity and Kalman to learned multimodal anchors, predict 3 s of motion from 2 s of noisy 10 Hz positions. <span class="lib-open hand">open →</span></p>
-      </a>
-    </div>
-    <h3 class="lib-group hand">marketing ML</h3>
-    <div class="lib-grid">
-      <a class="lib-card" href="project/mmm.html">
-        <h3 class="lib-t">MarketMIX — MMM + MTA budget optimizer</h3>
-        <p class="lib-sum">A unified marketing-measurement system: a Bayesian mix model and a survival multi-touch model over 16M journey events, joined by Shapley attribution and a constrained SLSQP optimizer that hands back a spendable budget plan. <span class="lib-open hand">open →</span></p>
-      </a>
+    <h2 class="pg-more-t hand">more builds</h2>
+    <div class="pg-grid pg-grid--small">
+      <article class="pg-card">
+        
+        <p class="pg-where hand">Systems project · Java 17</p>
+        <h3 class="pg-title"><a href="project/lsmstore.html">LSMStore, LSM-tree key-value store</a></h3>
+        <p class="pg-sum">A Log-Structured Merge tree engine built from first principles: fsynced WAL, sorted memtables, immutable SSTables with Bloom filters, tombstones and crash-aware recovery.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/lsmstore.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/LSMStore" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">C++20 · price-time priority matching</p>
+        <h3 class="pg-title"><a href="project/orderbook.html">Order-book matching engine</a></h3>
+        <p class="pg-sum">A single-instrument limit order book with O(1) cancels, correct reprice semantics and sub-microsecond tail latency on a multi-million-message replay.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/orderbook.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/orderbook-engine" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">C++20 · content-defined storage</p>
+        <h3 class="pg-title"><a href="project/dedup-store.html">Dedup store</a></h3>
+        <p class="pg-sum">FastCDC-style chunking with SHA-256 fingerprints and crash-resumable mark-and-sweep GC, plus replication that only sends what the far end is missing.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/dedup-store.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/dedup-store" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">SQL Server-style change data capture · Python</p>
+        <h3 class="pg-title"><a href="project/capflow.html">CapFlow, CDC replication</a></h3>
+        <p class="pg-sum">A CDC pipeline that mirrors inserts, updates and deletes from a change log into warehouse tables, reconciles row by row, and can backfill or replay from a saved LSN.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/capflow.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/capflow" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">Spring Boot · observability tooling</p>
+        <h3 class="pg-title"><a href="project/apm-explorer.html">APM trace explorer</a></h3>
+        <p class="pg-sum">Ingests OTLP/HTTP traces, assembles span trees and computes per-service and per-endpoint RED metrics with histogram percentiles, with a D3 service map, latency heatmap and rolling-baseline anomaly flags.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/apm-explorer.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/apm-trace-explorer" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">Multicloud control plane · Go</p>
+        <h3 class="pg-title"><a href="project/gpu-orchestrator.html">GPU job orchestrator</a></h3>
+        <p class="pg-sum">A scheduler API and Python SDK over 512 GPUs across AWS, GCP and on-prem pools: gang scheduling, tenant quotas, spot-preemption rollback and pool placement by cost and type.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/gpu-orchestrator.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/gpu-job-orchestrator" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">Parallel coding agents · Python + FastAPI</p>
+        <h3 class="pg-title"><a href="project/agent-fleet.html">Agent fleet</a></h3>
+        <p class="pg-sum">A CLI and dashboard that gives each coding-agent task its own Git branch and worktree, shards tests across workers, and gates every diff through a review gate before a human approves.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/agent-fleet.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/agent-fleet" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">DATA 245 · cost-sensitive forecasting</p>
+        <h3 class="pg-title"><a href="project/transitrisk.html">TransitRisk, delay forecasting</a></h3>
+        <p class="pg-sum">Predicts whether a station-route pair will see elevated delay in the next hour: seven classifiers, probability calibration, conformal prediction and a cost-optimal alert threshold when a miss costs 5× a false alarm.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/transitrisk.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/transitrisk" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">RGB-D warehouse perception</p>
+        <h3 class="pg-title"><a href="project/warehouse.html">Warehouse case perception</a></h3>
+        <p class="pg-sum">Detects cases in RGB-D warehouse frames and tracks them in 3D: YOLO/OpenCV detection, Kalman prediction, two-stage Hungarian assignment through occlusion, and depth back-projection to XYZ.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/warehouse.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/warehouse-case-perception" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">C++17 · camera + LiDAR fusion prototype</p>
+        <h3 class="pg-title"><a href="project/obstacle.html">Real-time obstacle alert policy</a></h3>
+        <p class="pg-sum">A hardware-independent wheelchair obstacle-alert prototype: multithreaded camera/LiDAR fusion mapping boxes to bearings, and a distance-triggered STOP/CAUTION policy with hysteresis and confirming frames.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/obstacle.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/realtime-obstacle-alert" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">Side project · synthetic AV scenario corpus</p>
+        <h3 class="pg-title"><a href="project/scene-miner.html">Scene Miner</a></h3>
+        <p class="pg-sum">Rare-event retrieval for AV data: rule filters, embedding search, Rocchio feedback and a hybrid re-ranker compared at a fixed 300-result review budget over an IVF index.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/scene-miner.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/scene-miner" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">Side project · motion forecasting</p>
+        <h3 class="pg-title"><a href="project/trajectory.html">AV trajectory prediction</a></h3>
+        <p class="pg-sum">Five forecasters, from constant velocity and Kalman to learned multimodal anchors, predict 3 s of motion from 2 s of noisy 10 Hz positions.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/trajectory.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/av-trajectory-prediction" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">C++ · ARM NEON / x86 SIMD</p>
+        <h3 class="pg-title"><a href="project/siliconbench.html">SiliconBench</a></h3>
+        <p class="pg-sum">A CPU roofline and kernel harness: dot product, STREAM triad and SGEMM in scalar, SIMD, reordered and cache-blocked variants. SGEMM climbs 1.27 → 36.11 GFLOP/s.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/siliconbench.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/SiliconBench" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">Merge gate with an audit trail</p>
+        <h3 class="pg-title"><a href="project/codegate.html">AI CodeGate</a></h3>
+        <p class="pg-sum">A merge gate that combines deterministic diff, lint and unit-test checks with a severity-rated LLM reviewer. A change lands only if every hard check passes, and every decision is appended to a hash-chained audit log.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/codegate.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/ai-codegate" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">Support automation with enforced permissions</p>
+        <h3 class="pg-title"><a href="project/case-agent.html">Case Automation Agent</a></h3>
+        <p class="pg-sum">Triage, planning and execution as separate layers. One executor enforces approval and permission checks before any tool call, for both the deterministic planner and the Claude planner, with an append-only audit.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/case-agent.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/case-automation-agent" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">TypeScript · telehealth order workflow</p>
+        <h3 class="pg-title"><a href="project/rx-api.html">Rx Fulfillment API</a></h3>
+        <p class="pg-sum">Telehealth orders that survive retries: idempotent payment and pharmacy webhooks, a transactional outbox, an audit log and field-level encryption on a tRPC and Drizzle order state machine.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/rx-api.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/rx-fulfillment-api" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
     </div>
   </div>
 </section>
@@ -277,121 +321,6 @@
           Thompson-sampling contextual bandit choosing message variant and send hour from conversion feedback.</p>
       </li>
     </ul>
-  </div>
-</div>
-</section>
-<section class="chapter chapter--part" id="security" >
-<div class="page part-page">
-<div data-part class="page sec-cards">
-    <h3>The same rules in public code</h3>
-    <div class="sec-grid">
-
-      <article class="card tilt-l sec-card" id="p-sec-sentinel">
-        <span class="tape" aria-hidden="true"></span>
-        <svg class="sec-doodle" viewBox="0 0 72 72" aria-hidden="true"><g class="rough">
-          <path class="ink-thin" d="M8 20 h34 l4 6 v20 h-38 z"/>
-          <circle class="ink-thin" cx="26" cy="35" r="7"/>
-          <path class="ink-thin" d="M46 30 l12 -6 v24 l-12 -6"/>
-          <path class="ink-thin" d="M14 56 c6 -4 12 -4 18 0"/>
-          <path class="d-red" d="M52 52 l12 12 M64 52 l-12 12"/>
-        </g></svg>
-        <h4>Sentinel AI <span class="sec-badge">hackathon winner</span></h4>
-        <p>Local Qwen3-VL on an HP ZGX Nano: video never leaves the site. The dispatch path needs human confirmation, has a kill switch, and fires once per incident.</p>
-        <div class="btn-row">
-          <a class="btn" href="https://github.com/ayushgawai/campus_sentinel" target="_blank" rel="noopener">Code on GitHub</a>
-          <a class="btn blue" href="project/sentinel.html#p-sentinel">Watch demo</a>
-        </div>
-        <details class="deep"><summary>How dispatch is fenced</summary><div class="deep-body">
-          <p>Team of five; owned the frame-streaming backend, asynchronous event routing, alert triggers and incident logging.</p>
-          <ul>
-            <li>YOLO26s-pose plus temporal rules screen every frame; only score-escalated events send a 16-frame evidence bundle to Qwen3-VL-30B-A3B FP8.</li>
-            <li>Incident state machine (NEW → ALERTED → DISPATCH_PENDING → DISPATCHED) with SQLite history; at most one dispatch per incident.</li>
-            <li>Addresses come from a fixed camera-to-address map. Demo calls never reached the real 911 service.</li>
-          </ul>
-        </div></details>
-      </article>
-
-      <article class="card tilt-r sec-card" id="p-sec-blast">
-        <svg class="sec-doodle" viewBox="0 0 72 72" aria-hidden="true"><g class="rough">
-          <path class="ink-thin" d="M10 60 V22 h22 v38 M40 60 V22 h22 v38"/>
-          <path class="ink-thin" d="M4 60 h64"/>
-          <circle class="ink-thin" cx="21" cy="12" r="5"/>
-          <path class="ink-thin" d="M21 17 v5"/>
-          <path class="d-green" d="M15 40 l5 6 9 -12"/>
-          <path class="d-red" d="M45 34 l12 12 M57 34 l-12 12"/>
-        </g></svg>
-        <h4>Blast Radius</h4>
-        <p>Three agents test an upstream schema change against downstream repos, each with least-privilege scope. The merge gate rejects approvals from non-owners.</p>
-        <div class="btn-row">
-          <a class="btn" href="https://github.com/ayushgawai/blast-radius" target="_blank" rel="noopener">Code on GitHub</a>
-          <a class="btn blue" href="project/blast.html#p-blast">Watch demo</a>
-        </div>
-        <details class="deep"><summary>The owner gate</summary><div class="deep-body">
-          <p>Team project; owned the impact coordinator and the owner-gated merge check. The coordinator holds the upstream required check pending until every downstream repo owner approves. In the demo, renaming <code>user_id</code> to <code>account_id</code> broke six checks, a non-owner's approval was rejected, and the check went green only after the real owners signed off.</p>
-        </div></details>
-      </article>
-
-      <article class="card tilt-l sec-card" id="p-sec-case">
-        <span class="tape" aria-hidden="true"></span>
-        <svg class="sec-doodle" viewBox="0 0 72 72" aria-hidden="true"><g class="rough">
-          <path class="ink-thin" d="M6 36 h18 M48 36 h18" marker-end="url(#arrowhead)"/>
-          <path class="ink-thin" d="M26 18 h20 v36 h-20 z"/>
-          <path class="ink-thin" d="M31 33 v-5 a5 5 0 0 1 10 0 v5"/>
-          <rect class="ink-thin" x="29" y="33" width="14" height="11" rx="2"/>
-          <path class="d-green" d="M50 18 l4 5 8 -10"/>
-        </g></svg>
-        <h4>Case Automation Agent</h4>
-        <p>Triage, planning and execution as separate layers. One executor checks approval and permission before any tool call, for both the deterministic and the Claude planner.</p>
-        <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/case-automation-agent" target="_blank" rel="noopener">Code on GitHub</a></div>
-        <details class="deep"><summary>The enforcement boundary</summary><div class="deep-body">
-          <p>Naive-Bayes triage with confidence and out-of-scope escalation; a planner grounded in knowledge articles and logs; an append-only audit across lockouts, MFA, access requests, report timeouts and rate-limit cases. Because both planners sit behind the same executor, no provider can bypass the gates.</p>
-        </div></details>
-      </article>
-
-      <article class="card tilt-r sec-card sec-card-wide" id="p-sec-codegate" data-anim>
-        <svg class="sec-chain" viewBox="0 0 420 96" aria-hidden="true">
-          <g class="rough">
-            <rect class="ink-thin" x="6" y="22" width="92" height="56" rx="4" fill="#FCFBF7"/>
-            <rect class="ink-thin" x="116" y="22" width="92" height="56" rx="4" fill="#FCFBF7"/>
-            <rect class="ink-thin" x="226" y="22" width="92" height="56" rx="4" fill="#FCFBF7"/>
-            <rect class="ink-thin sec-chain-new" x="336" y="22" width="78" height="56" rx="4" fill="#FCFBF7"/>
-            <path class="ink-thin" d="M98 50 h18 M208 50 h18 M318 50 h18"/>
-          </g>
-          <text class="sec-chl" x="52" y="46" text-anchor="middle">pass</text>
-          <text class="sec-chl" x="162" y="46" text-anchor="middle">reject</text>
-          <text class="sec-chl" x="272" y="46" text-anchor="middle">pass</text>
-          <text class="sec-chl sec-chain-new" x="375" y="46" text-anchor="middle">pass</text>
-          <text class="sec-chh" x="52" y="68" text-anchor="middle">h₀</text>
-          <text class="sec-chh" x="162" y="68" text-anchor="middle">h(h₀)</text>
-          <text class="sec-chh" x="272" y="68" text-anchor="middle">h(h₁)</text>
-          <text class="sec-chh sec-chain-new" x="375" y="68" text-anchor="middle">h(h₂)</text>
-        </svg>
-        <h4>AI CodeGate</h4>
-        <p>A merge gate: deterministic diff, lint and unit-test checks plus a severity-rated LLM reviewer. A change lands only if every hard check passes and no blocking finding remains; every decision is appended to a hash-chained audit log, so editing one breaks every hash after it.</p>
-        <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/ai-codegate" target="_blank" rel="noopener">Code on GitHub</a></div>
-        <details class="deep"><summary>The audit chain</summary><div class="deep-body">
-          <p>Each log entry stores the decision (pass or reject), the severity of every finding and the hash of the previous entry. A tampered or deleted entry breaks the chain from that link on. The tested prototype uses a deterministic mock LLM provider.</p>
-        </div></details>
-      </article>
-
-      <article class="card tilt-l sec-card" id="p-sec-rx">
-        <span class="tape" aria-hidden="true"></span>
-        <svg class="sec-doodle" viewBox="0 0 72 72" aria-hidden="true"><g class="rough">
-          <path class="ink-thin" d="M6 16 h36 v26 h-36 z M6 16 l18 14 18 -14"/>
-          <path class="ink-thin" d="M48 30 h16 M48 30 l6 -5 M48 30 l6 5"/>
-          <path class="ink-thin" d="M30 60 v-6 a6 6 0 0 1 12 0 v6"/>
-          <rect class="ink-thin" x="27" y="58" width="18" height="12" rx="2"/>
-          <path class="d-green" d="M50 56 l4 5 9 -11"/>
-        </g></svg>
-        <h4>Rx Fulfillment API</h4>
-        <p>Telehealth orders that survive retries: idempotent payment and pharmacy webhooks, a transactional outbox, an audit log and field-level encryption on a tRPC + Drizzle order state machine.</p>
-        <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/rx-fulfillment-api" target="_blank" rel="noopener">Code on GitHub</a></div>
-        <details class="deep"><summary>Exactly-once side effects</summary><div class="deep-body">
-          <p>The outbox row is written in the same transaction as the state change, so a retried webhook cannot emit a side effect twice, and the webhook handlers are idempotent. Designed for AWS Lambda, SST and RDS.</p>
-        </div></details>
-      </article>
-
-    </div>
   </div>
 </div>
 </section>
