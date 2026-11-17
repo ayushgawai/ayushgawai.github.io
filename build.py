@@ -191,6 +191,7 @@ def build_projects():
             f'<a class="rel-link" href="project/{r}.html">{_esc(next(x["title"] for x in items if x["slug"]==r))}</a>' for r in rel) + "</p>") if rel else ""
         film = it.get("film")
         film_html = "" if (block and 'class="video"' in block and isinstance(film, dict)) else _film_block(film, "")
+        if it.get("film2"): film_html += '<h3 class="proj-sub hand" id="film2">the explainer film</h3>' + _film_block(it["film2"], "")
         body = f"""<section class="chapter proj" id="proj" aria-labelledby="proj-title">
   <header class="chapter-head page">
     <p class="proj-back"><a class="hand" href="projects.html">← all hackathons and projects</a></p>
@@ -302,7 +303,7 @@ def projlib(items):
         <h3 class="pg-title"><a href="{href}">{_esc(it["title"])}</a></h3>
         <p class="pg-sum">{_esc(it.get("summary",""))}</p>
         {f'<ul class="pg-facts">{facts}</ul>' if facts and big else ''}
-        <div class="btn-row"><a class="btn blue" href="{href}">Read more</a>{repo}</div>
+        <div class="btn-row"><a class="btn blue" href="{href}">Read more</a>{f'<a class="btn" href="{href}#film2">Explainer film</a>' if it.get("film2") else ""}{repo}</div>
       </article>"""
     big = "\n".join(card(it, True) for it in withfilm)
     small = "\n".join(card(it, False) for it in rest)
@@ -367,7 +368,7 @@ def fix_links():
         OUT[path] = ATTR.sub(sub, h)
 
 SECTION_HOME = {"av": "work/zoox.html", "ai": "projects.html", "agents": "projects.html", "automation": "projects.html", "security": "projects.html",
-                "data": "projects.html", "systems": "projects.html", "robots": "projects.html", "demos": "media.html", "films": "media.html",
+                "data": "projects.html", "systems": "projects.html", "robots": "projects.html", "demos": "projects.html", "films": "projects.html",
                 "gallery": "media.html", "resume": "contact.html", "path": "index.html", "top": "index.html", "recognition": "media.html"}
 
 def write_all():

@@ -540,12 +540,17 @@
     "React"
    ],
    "repo": "https://github.com/ayushgawai/Ready_Builders_Challenge",
-   "film": "leo",
+   "film": {
+    "type": "loom",
+    "id": "70303e4b0399499c865463a79cd17a84",
+    "label": "SatCheck walkthrough"
+   },
    "papers": [],
    "related": [
     "carbonshift",
     "wikirisk"
-   ]
+   ],
+   "film2": "leo"
   },
   {
    "slug": "mmm",
@@ -1975,7 +1980,6 @@
     "BF16",
     "Profiling"
    ],
-   "repo": "https://github.com/ayushgawai/data266-9689/tree/main/hw2.5",
    "related": [
     "edge-llm-roofline",
     "siliconbench"
