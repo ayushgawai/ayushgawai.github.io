@@ -560,7 +560,7 @@ try {
 (() => {
   const root = document.getElementById("av");
   if (!root || !window.NB) return;
-  const svg = root.querySelector(".av-street");
+  const svg = root.querySelector(".av-street"); if (!svg) return; // side-project pages carry only a mini sketch
   const stage = root.querySelector(".av-stage");
   const far = svg.querySelector(".av-far"), near = svg.querySelector(".av-near");
   const stages = [...root.querySelectorAll(".av-st")];
