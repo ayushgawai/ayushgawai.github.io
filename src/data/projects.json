@@ -772,7 +772,7 @@
    "papers": [
     {
      "label": "SAGE / HFES 2026, Measuring visual attention across concurrent and sequential tasks",
-     "url": "https://journals.sagepub.com/eprint/T2T3XWNAEZ9PE2YBN9VY/full"
+     "url": "https://doi.org/10.1177/10711813261493593"
     }
    ],
    "related": [
@@ -1693,6 +1693,431 @@
    "repo": "https://github.com/ayushgawai/rx-fulfillment-api",
    "related": [
     "capflow"
+   ]
+  },
+  {
+   "slug": "multiplayer-agents",
+   "title": "Multiplayer Agent Sessions",
+   "area": "ai",
+   "where": "SJSU team project · humans and agents in one session",
+   "summary": "A shared workspace where people and AI agents edit the same session with handoff, concurrency, interruption and rollback. I own the session service, model serving, infrastructure and CI.",
+   "facts": [
+    {
+     "k": "4",
+     "v": "model tasks: catch-up, intent, merge, routing"
+    },
+    {
+     "k": "1",
+     "v": "versioned SessionEvent schema for every action"
+    },
+    {
+     "k": "/v1/models",
+     "v": "OpenAPI serving boundary for the TypeScript client"
+    }
+   ],
+   "deep": [
+    "Every human or agent action is a versioned SessionEvent in an append-only log, so interruption, handoff and rollback are just events.",
+    "Four model tasks: M1 catch-up summarization when someone joins, M2 intent attribution, M3 merge and arbitration between conflicting edits, M4 decomposition and routing of work, compared against a MAST baseline.",
+    "I own the session service, model serving on /v1/models/{model_id}/predict behind an OpenAPI boundary, shared model code, the M1 catch-up model, Docker infrastructure, CI workflows, evaluation configs and the ADRs."
+   ],
+   "stack": [
+    "Python",
+    "FastAPI",
+    "OpenAPI",
+    "Docker",
+    "GitHub Actions",
+    "TypeScript client"
+   ],
+   "repo": "https://github.com/ayushgawai/multiplayer-agent-sessions",
+   "film": "silent:multiplayer-agents.mp4",
+   "related": [
+    "agent-fleet",
+    "blast"
+   ]
+  },
+  {
+   "slug": "iot-garden",
+   "title": "IoT Smart Garden",
+   "area": "robotics",
+   "where": "Edge to cloud · ESP32 and Azure",
+   "summary": "Soil moisture, temperature and humidity from ESP32 sensors stream over MQTT into Azure IoT Hub and Azure SQL. Python checks catch faulty sensors, Power Automate raises alerts and Power BI tracks device health, replacing a manual watering schedule.",
+   "facts": [
+    {
+     "k": "ESP32",
+     "v": "soil, temperature and humidity sensing"
+    },
+    {
+     "k": "MQTT",
+     "v": "into Azure IoT Hub and Azure SQL"
+    },
+    {
+     "k": "0",
+     "v": "manual watering schedules"
+    }
+   ],
+   "deep": [
+    "ESP32 boards publish soil moisture, temperature and humidity over MQTT to Azure IoT Hub, landing in Azure SQL.",
+    "Python validation flags sensor faults (stuck, out-of-range or missing readings) before they reach decisions.",
+    "Power Automate sends alerts and Power BI reports device and usage health, so watering follows the soil instead of a calendar."
+   ],
+   "stack": [
+    "ESP32",
+    "MQTT",
+    "Azure IoT Hub",
+    "Azure SQL",
+    "Python",
+    "Power Automate",
+    "Power BI"
+   ],
+   "film": "silent:iot-garden.mp4",
+   "related": [
+    "obstacle"
+   ]
+  },
+  {
+   "slug": "sdlc-graph",
+   "title": "SDLC Context Graph",
+   "area": "ai",
+   "where": "Agentic incident analysis",
+   "summary": "Pull requests, reviews, CI runs, deploys, tickets and incidents from 40 repositories in one property graph, plus a tool-using agent that answers root-cause questions with cited evidence.",
+   "facts": [
+    {
+     "k": "40",
+     "v": "repositories ingested with event-ID dedup"
+    },
+    {
+     "k": "148",
+     "v": "ground-truth questions in the eval set"
+    },
+    {
+     "k": "3",
+     "v": "agent tools: graph, metrics, vector search"
+    }
+   ],
+   "deep": [
+    "A SQLite property graph links teams, people, services, commits, PRs, CI outcomes, deploys and incidents.",
+    "DORA-style weekly metrics and a hashed TF-IDF vector index over PR and incident text.",
+    "The agent calls graph_query, metric_lookup and vector_search and must cite the evidence it used; it is scored on 148 ground-truth questions."
+   ],
+   "stack": [
+    "Python",
+    "SQLite",
+    "TF-IDF",
+    "LLM tool use"
+   ],
+   "repo": "https://github.com/ayushgawai/sdlc-context-graph",
+   "related": [
+    "agent-fleet",
+    "case-agent"
+   ]
+  },
+  {
+   "slug": "campaign-agent",
+   "title": "Campaign and Retention Agents",
+   "area": "ai",
+   "where": "Marketing automation with guardrails",
+   "summary": "From a marketing goal to audience, content and a scheduled send, with consent, unsubscribe and frequency checks enforced in one executor. A Thompson-sampling bandit picks the message variant and send hour from conversion feedback.",
+   "facts": [
+    {
+     "k": "Thompson",
+     "v": "sampling bandit for variant and send hour"
+    },
+    {
+     "k": "1",
+     "v": "executor enforcing consent and frequency"
+    },
+    {
+     "k": "idempotent",
+     "v": "async job queue with retries"
+    }
+   ],
+   "deep": [
+    "Audience selection, brand and product retrieval, and content generation feed a central executor that checks consent, unsubscribe status and send frequency.",
+    "An async job queue with retries and idempotency keys runs scheduled sends; every action lands in an audit ledger.",
+    "A Thompson-sampling contextual bandit learns which variant and send hour convert."
+   ],
+   "stack": [
+    "Python",
+    "LLM",
+    "Contextual bandits",
+    "Job queue"
+   ],
+   "repo": "https://github.com/ayushgawai/campaign-agent",
+   "related": [
+    "mmm",
+    "case-agent"
+   ]
+  },
+  {
+   "slug": "lakelog",
+   "title": "LakeLog",
+   "area": "software",
+   "where": "Java · lakehouse transaction protocol",
+   "summary": "The core of Delta Lake and Iceberg style tables, built from scratch: an ordered log of versioned commits, optimistic concurrent writers where exactly one wins each version, snapshots, time travel and data skipping.",
+   "facts": [
+    {
+     "k": "1 winner",
+     "v": "per version via atomic filesystem link"
+    },
+    {
+     "k": "every 10",
+     "v": "versions a checkpoint"
+    },
+    {
+     "k": "time travel",
+     "v": "snapshot reconstruction from add/remove actions"
+    }
+   ],
+   "deep": [
+    "Immutable partitioned data files and an ordered _log of versioned commits.",
+    "Optimistic writers publish with an atomic link so exactly one wins a version; non-conflicting appends retry automatically.",
+    "Checkpoints every ten versions, min/max file stats for data skipping, copy-on-write deletes, small-file compaction and retention-aware vacuum."
+   ],
+   "stack": [
+    "Java",
+    "Lakehouse",
+    "Concurrency"
+   ],
+   "repo": "https://github.com/ayushgawai/lakelog",
+   "related": [
+    "lsmstore",
+    "capflow"
+   ]
+  },
+  {
+   "slug": "pg-wal-lab",
+   "title": "pg-wal-lab",
+   "area": "software",
+   "where": "C · PostgreSQL internals",
+   "summary": "A PostgreSQL C extension for inspecting the write-ahead log and MVCC row versions, plus a crash-recovery harness, built with PGXS against PostgreSQL 14 to 16 in CI.",
+   "facts": [
+    {
+     "k": "PG 14–16",
+     "v": "built and tested in GitHub Actions"
+    },
+    {
+     "k": "WAL + MVCC",
+     "v": "inspection from inside the server"
+    }
+   ],
+   "stack": [
+    "C",
+    "PostgreSQL",
+    "PGXS",
+    "GitHub Actions"
+   ],
+   "repo": "https://github.com/ayushgawai/pg-wal-lab",
+   "related": [
+    "lsmstore",
+    "lakelog"
+   ]
+  },
+  {
+   "slug": "edge-llm-roofline",
+   "title": "Edge LLM Roofline",
+   "area": "software",
+   "where": "ML systems · LLM inference on edge chips",
+   "summary": "An analytical model that predicts LLM prefill and decode speed, memory bandwidth and KV-cache size on edge NPUs. It matched real Jetson Orin and RTX 4090 measurements within 8.7% error.",
+   "facts": [
+    {
+     "k": "8.7%",
+     "v": "MAPE vs measured Jetson Orin and RTX 4090"
+    },
+    {
+     "k": "720",
+     "v": "design points swept"
+    },
+    {
+     "k": "1.8×",
+     "v": "more tokens/s from doubling bandwidth vs compute"
+    }
+   ],
+   "deep": [
+    "Computes layer FLOPs, weight and KV bytes, SRAM-limited re-reads and the roofline bound for Llama 3.2 1B/3B and Phi-3 Mini at FP16, INT8 and INT4.",
+    "Separates prefill (tiled GEMM and attention) from decode (weight streaming, GEMV, KV traffic).",
+    "Validated against Nsight Compute, PyTorch Profiler and llama.cpp measurements; the sweep shows decode is bandwidth-bound beyond 4 MB of SRAM."
+   ],
+   "stack": [
+    "Python",
+    "Roofline modeling",
+    "Nsight Compute",
+    "llama.cpp"
+   ],
+   "repo": "https://github.com/ayushgawai/edge-llm-roofline",
+   "related": [
+    "siliconbench",
+    "gpu-lab"
+   ]
+  },
+  {
+   "slug": "gpu-lab",
+   "title": "GPU Performance and Attention Lab",
+   "area": "software",
+   "where": "CUDA · RTX 5090",
+   "summary": "Benchmarks and fused attention on an RTX 5090: fused attention cut peak memory from 16,648 MiB to 264 MiB at 16k tokens and latency from 46.8 ms to 27.1 ms.",
+   "facts": [
+    {
+     "k": "63×",
+     "v": "less peak memory with fused attention"
+    },
+    {
+     "k": "210 TFLOP/s",
+     "v": "BF16 measured over 30 runs"
+    },
+    {
+     "k": "77%",
+     "v": "of spec memory bandwidth reached"
+    }
+   ],
+   "stack": [
+    "CUDA",
+    "PyTorch",
+    "BF16",
+    "Profiling"
+   ],
+   "repo": "https://github.com/ayushgawai/data266-9689/tree/main/hw2.5",
+   "related": [
+    "edge-llm-roofline",
+    "siliconbench"
+   ]
+  },
+  {
+   "slug": "spec-decode",
+   "title": "Speculative Decoding Lab",
+   "area": "ai",
+   "where": "LLM inference speedups",
+   "summary": "A small draft model proposes tokens and a larger target model verifies them in one batch, with acceptance and correction that preserve the target's distribution while cutting sequential passes.",
+   "facts": [
+    {
+     "k": "k-sweep",
+     "v": "draft lengths compared to a baseline"
+    },
+    {
+     "k": "INT8",
+     "v": "quantized draft model"
+    },
+    {
+     "k": "Medusa",
+     "v": "style multi-head path"
+    }
+   ],
+   "stack": [
+    "PyTorch",
+    "Transformers",
+    "Quantization"
+   ],
+   "repo": "https://github.com/ayushgawai/spec-decode-lab",
+   "related": [
+    "llm-shard-planner",
+    "edge-llm-roofline"
+   ]
+  },
+  {
+   "slug": "llm-shard-planner",
+   "title": "LLM Shard Planner",
+   "area": "software",
+   "where": "Distributed inference planning",
+   "summary": "Plans how to split dense and mixture-of-experts LLMs across devices: tensor, expert and pipeline parallel degrees ranked by prefill latency and decode throughput, with a torch.distributed correctness check.",
+   "facts": [
+    {
+     "k": "3",
+     "v": "parallelism types: tensor, expert, pipeline"
+    },
+    {
+     "k": "MoE",
+     "v": "and dense models"
+    }
+   ],
+   "stack": [
+    "Python",
+    "torch.distributed",
+    "Gloo"
+   ],
+   "repo": "https://github.com/ayushgawai/llm-shard-planner",
+   "related": [
+    "spec-decode",
+    "gpu-orchestrator"
+   ]
+  },
+  {
+   "slug": "dataflow-compiler",
+   "title": "Dataflow Fusion Compiler",
+   "area": "software",
+   "where": "ML compiler · fusion and SRAM placement",
+   "summary": "Lowers a GPT-2 block from torch.fx into a typed SSA dataflow IR, fuses operators, and places fused stages on a 2D processing-element grid with SRAM-fitting tiles to estimate cycles and memory traffic.",
+   "facts": [
+    {
+     "k": "SSA IR",
+     "v": "from torch.fx with FLOP accounting"
+    },
+    {
+     "k": "3",
+     "v": "fusion patterns incl. attention + softmax"
+    }
+   ],
+   "stack": [
+    "Python",
+    "torch.fx",
+    "Compiler IR"
+   ],
+   "repo": "https://github.com/ayushgawai/dataflow-fusion-compiler",
+   "related": [
+    "llm-shard-planner"
+   ]
+  },
+  {
+   "slug": "fleet-control-plane",
+   "title": "Fleet Control Plane",
+   "area": "software",
+   "where": "Go · device configuration at scale",
+   "summary": "A Go service for camera and sensor fleets: versioned desired versus reported config shadows, conditional writes that reject stale versions, heartbeat liveness and retried asynchronous config push.",
+   "facts": [
+    {
+     "k": "versioned",
+     "v": "desired vs reported shadows"
+    },
+    {
+     "k": "rate-limited",
+     "v": "per device, with dead-letter handling"
+    }
+   ],
+   "stack": [
+    "Go",
+    "DynamoDB",
+    "Redis",
+    "Kafka",
+    "Terraform"
+   ],
+   "repo": "https://github.com/ayushgawai/fleet-control-plane",
+   "related": [
+    "gpu-orchestrator"
+   ]
+  },
+  {
+   "slug": "sensor-hub",
+   "title": "Sensor Hub Firmware",
+   "area": "robotics",
+   "where": "C++17 · embedded",
+   "summary": "No-heap IMU hub firmware core: 1 kHz sensor reads, fixed-point complementary filter, a lock-free ISR ring buffer, CRC-framed messaging, watchdog fault handling and A/B firmware updates with rollback, on a fault-injectable hardware layer.",
+   "facts": [
+    {
+     "k": "1 kHz",
+     "v": "sensor loop"
+    },
+    {
+     "k": "A/B",
+     "v": "firmware update with rollback"
+    }
+   ],
+   "stack": [
+    "C++17",
+    "Embedded",
+    "Lock-free"
+   ],
+   "repo": "https://github.com/ayushgawai/sensor-hub-firmware",
+   "related": [
+    "obstacle",
+    "iot-garden"
    ]
   }
  ]

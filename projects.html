@@ -119,6 +119,30 @@
         <div class="btn-row"><a class="btn blue" href="project/transit.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/transit-system" target="_blank" rel="noopener">Code on GitHub</a></div>
       </article>
       <article class="pg-card pg-card--big">
+        <video class="pg-video" controls preload="none" playsinline poster="assets/video/multiplayer-agents-poster.webp" width="1920" height="1080" aria-label="Multiplayer Agent Sessions film"><source src="assets/video/multiplayer-agents.mp4" type="video/mp4"></video>
+        <p class="pg-where hand">SJSU team project · humans and agents in one session</p>
+        <h3 class="pg-title"><a href="project/multiplayer-agents.html">Multiplayer Agent Sessions</a></h3>
+        <p class="pg-sum">A shared workspace where people and AI agents edit the same session with handoff, concurrency, interruption and rollback. I own the session service, model serving, infrastructure and CI.</p>
+        <ul class="pg-facts"><li><b>4</b> model tasks: catch-up, intent, merge, routing</li><li><b>1</b> versioned SessionEvent schema for every action</li><li><b>/v1/models</b> OpenAPI serving boundary for the TypeScript client</li></ul>
+        <div class="btn-row"><a class="btn blue" href="project/multiplayer-agents.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/multiplayer-agent-sessions" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card pg-card--big">
+        <video class="pg-video" controls preload="none" playsinline poster="assets/video/query-engine-poster.webp" width="1920" height="1080" aria-label="Columnar query engine film"><source src="assets/video/query-engine.mp4" type="video/mp4"></video>
+        <p class="pg-where hand">C++20 · analytical engine from scratch</p>
+        <h3 class="pg-title"><a href="project/query-engine.html">Columnar query engine</a></h3>
+        <p class="pg-sum">A mini analytical engine with an explicit plan, optimizer passes and a vectorized executor over column files with min/max skipping, checked against a row-at-a-time reference on 4M rows.</p>
+        <ul class="pg-facts"><li><b>1,500</b> randomized queries checked against a reference interpreter</li><li><b>2,048</b> row vectorized batches with selection vectors</li><li><b>63 / 80</b> row groups skipped by min/max on a one-year filter</li></ul>
+        <div class="btn-row"><a class="btn blue" href="project/query-engine.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/query-engine" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card pg-card--big">
+        <video class="pg-video" controls preload="none" playsinline poster="assets/video/iot-garden-poster.webp" width="1920" height="1080" aria-label="IoT Smart Garden film"><source src="assets/video/iot-garden.mp4" type="video/mp4"></video>
+        <p class="pg-where hand">Edge to cloud · ESP32 and Azure</p>
+        <h3 class="pg-title"><a href="project/iot-garden.html">IoT Smart Garden</a></h3>
+        <p class="pg-sum">Soil moisture, temperature and humidity from ESP32 sensors stream over MQTT into Azure IoT Hub and Azure SQL. Python checks catch faulty sensors, Power Automate raises alerts and Power BI tracks device health, replacing a manual watering schedule.</p>
+        <ul class="pg-facts"><li><b>ESP32</b> soil, temperature and humidity sensing</li><li><b>MQTT</b> into Azure IoT Hub and Azure SQL</li><li><b>0</b> manual watering schedules</li></ul>
+        <div class="btn-row"><a class="btn blue" href="project/iot-garden.html">Read more</a></div>
+      </article>
+      <article class="pg-card pg-card--big">
         <video class="pg-video" controls preload="none" playsinline poster="assets/video/narrated/mmm-poster.webp" width="1920" height="1080" aria-label="MarketMIX, MMM + MTA budget optimizer film"><source src="assets/video/narrated/mmm.mp4" type="video/mp4"></video>
         <p class="pg-where hand">Marketing measurement &amp; budget optimization · 2026</p>
         <h3 class="pg-title"><a href="project/mmm.html">MarketMIX, MMM + MTA budget optimizer</a></h3>
@@ -141,14 +165,6 @@
         <p class="pg-sum">A CLI-first accessibility scanner with reviewable fixes: Playwright + axe-core audits against WCAG 2.1 A/AA, deterministic or LLM remediation, and every change ships as a reviewed git diff into a CI gate.</p>
         <ul class="pg-facts"><li><b>WCAG 2.1</b> A/AA levels via axe-core in a real browser</li><li><b>2</b> fix strategies: deterministic no-key fallback + LLM</li><li><b>SQLite</b> scan and remediation history, plus PDF reports</li></ul>
         <div class="btn-row"><a class="btn blue" href="project/accessimed.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/accessiMed" target="_blank" rel="noopener">Code on GitHub</a></div>
-      </article>
-      <article class="pg-card pg-card--big">
-        <video class="pg-video" controls preload="none" playsinline poster="assets/video/query-engine-poster.webp" width="1920" height="1080" aria-label="Columnar query engine film"><source src="assets/video/query-engine.mp4" type="video/mp4"></video>
-        <p class="pg-where hand">C++20 · analytical engine from scratch</p>
-        <h3 class="pg-title"><a href="project/query-engine.html">Columnar query engine</a></h3>
-        <p class="pg-sum">A mini analytical engine with an explicit plan, optimizer passes and a vectorized executor over column files with min/max skipping, checked against a row-at-a-time reference on 4M rows.</p>
-        <ul class="pg-facts"><li><b>1,500</b> randomized queries checked against a reference interpreter</li><li><b>2,048</b> row vectorized batches with selection vectors</li><li><b>63 / 80</b> row groups skipped by min/max on a one-year filter</li></ul>
-        <div class="btn-row"><a class="btn blue" href="project/query-engine.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/query-engine" target="_blank" rel="noopener">Code on GitHub</a></div>
       </article>
     </div>
     <h2 class="pg-more-t hand">more builds</h2>
@@ -281,129 +297,96 @@
         
         <div class="btn-row"><a class="btn blue" href="project/rx-api.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/rx-fulfillment-api" target="_blank" rel="noopener">Code on GitHub</a></div>
       </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">Agentic incident analysis</p>
+        <h3 class="pg-title"><a href="project/sdlc-graph.html">SDLC Context Graph</a></h3>
+        <p class="pg-sum">Pull requests, reviews, CI runs, deploys, tickets and incidents from 40 repositories in one property graph, plus a tool-using agent that answers root-cause questions with cited evidence.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/sdlc-graph.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/sdlc-context-graph" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">Marketing automation with guardrails</p>
+        <h3 class="pg-title"><a href="project/campaign-agent.html">Campaign and Retention Agents</a></h3>
+        <p class="pg-sum">From a marketing goal to audience, content and a scheduled send, with consent, unsubscribe and frequency checks enforced in one executor. A Thompson-sampling bandit picks the message variant and send hour from conversion feedback.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/campaign-agent.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/campaign-agent" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">Java · lakehouse transaction protocol</p>
+        <h3 class="pg-title"><a href="project/lakelog.html">LakeLog</a></h3>
+        <p class="pg-sum">The core of Delta Lake and Iceberg style tables, built from scratch: an ordered log of versioned commits, optimistic concurrent writers where exactly one wins each version, snapshots, time travel and data skipping.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/lakelog.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/lakelog" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">C · PostgreSQL internals</p>
+        <h3 class="pg-title"><a href="project/pg-wal-lab.html">pg-wal-lab</a></h3>
+        <p class="pg-sum">A PostgreSQL C extension for inspecting the write-ahead log and MVCC row versions, plus a crash-recovery harness, built with PGXS against PostgreSQL 14 to 16 in CI.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/pg-wal-lab.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/pg-wal-lab" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">ML systems · LLM inference on edge chips</p>
+        <h3 class="pg-title"><a href="project/edge-llm-roofline.html">Edge LLM Roofline</a></h3>
+        <p class="pg-sum">An analytical model that predicts LLM prefill and decode speed, memory bandwidth and KV-cache size on edge NPUs. It matched real Jetson Orin and RTX 4090 measurements within 8.7% error.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/edge-llm-roofline.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/edge-llm-roofline" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">CUDA · RTX 5090</p>
+        <h3 class="pg-title"><a href="project/gpu-lab.html">GPU Performance and Attention Lab</a></h3>
+        <p class="pg-sum">Benchmarks and fused attention on an RTX 5090: fused attention cut peak memory from 16,648 MiB to 264 MiB at 16k tokens and latency from 46.8 ms to 27.1 ms.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/gpu-lab.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/data266-9689/tree/main/hw2.5" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">LLM inference speedups</p>
+        <h3 class="pg-title"><a href="project/spec-decode.html">Speculative Decoding Lab</a></h3>
+        <p class="pg-sum">A small draft model proposes tokens and a larger target model verifies them in one batch, with acceptance and correction that preserve the target&#x27;s distribution while cutting sequential passes.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/spec-decode.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/spec-decode-lab" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">Distributed inference planning</p>
+        <h3 class="pg-title"><a href="project/llm-shard-planner.html">LLM Shard Planner</a></h3>
+        <p class="pg-sum">Plans how to split dense and mixture-of-experts LLMs across devices: tensor, expert and pipeline parallel degrees ranked by prefill latency and decode throughput, with a torch.distributed correctness check.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/llm-shard-planner.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/llm-shard-planner" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">ML compiler · fusion and SRAM placement</p>
+        <h3 class="pg-title"><a href="project/dataflow-compiler.html">Dataflow Fusion Compiler</a></h3>
+        <p class="pg-sum">Lowers a GPT-2 block from torch.fx into a typed SSA dataflow IR, fuses operators, and places fused stages on a 2D processing-element grid with SRAM-fitting tiles to estimate cycles and memory traffic.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/dataflow-compiler.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/dataflow-fusion-compiler" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">Go · device configuration at scale</p>
+        <h3 class="pg-title"><a href="project/fleet-control-plane.html">Fleet Control Plane</a></h3>
+        <p class="pg-sum">A Go service for camera and sensor fleets: versioned desired versus reported config shadows, conditional writes that reject stale versions, heartbeat liveness and retried asynchronous config push.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/fleet-control-plane.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/fleet-control-plane" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
+      <article class="pg-card">
+        
+        <p class="pg-where hand">C++17 · embedded</p>
+        <h3 class="pg-title"><a href="project/sensor-hub.html">Sensor Hub Firmware</a></h3>
+        <p class="pg-sum">No-heap IMU hub firmware core: 1 kHz sensor reads, fixed-point complementary filter, a lock-free ISR ring buffer, CRC-framed messaging, watchdog fault handling and A/B firmware updates with rollback, on a fault-injectable hardware layer.</p>
+        
+        <div class="btn-row"><a class="btn blue" href="project/sensor-hub.html">Read more</a><a class="btn" href="https://github.com/ayushgawai/sensor-hub-firmware" target="_blank" rel="noopener">Code on GitHub</a></div>
+      </article>
     </div>
   </div>
-</section>
-<section class="chapter chapter--part" id="agents" >
-<div class="page part-page">
-<div data-part class="page ag-more">
-    <h3 class="ag-more-title hand">More agent builds</h3>
-    <ul class="ag-list">
-      <li>
-        <a href="https://github.com/ayushgawai/case-automation-agent" target="_blank" rel="noopener">case-automation-agent</a>
-        <p>Naive-Bayes triage with out-of-scope escalation, a planner grounded in knowledge articles and logs, and a central
-          executor that enforces approval and permission checks before any tool call; append-only audit log.</p>
-      </li>
-      <li>
-        <a href="https://github.com/ayushgawai/agent-fleet" target="_blank" rel="noopener">agent-fleet</a>
-        <p>Each coding-agent task gets its own Git worktree and sandbox; tests are sharded with duration-based LPT
-          scheduling, then a diff-review gate flags deleted tests, weak assertions and secrets before human approval.</p>
-      </li>
-      <li>
-        <a href="https://github.com/ayushgawai/sdlc-context-graph" target="_blank" rel="noopener">sdlc-context-graph</a>
-        <p>SQLite property graph of PRs, CI runs, deploys and incidents across 40 repos; a tool-using agent
-          (graph query, metrics, vector search) answers root-cause questions with cited evidence, scored on 148 ground-truth questions.</p>
-      </li>
-      <li>
-        <a href="https://github.com/ayushgawai/accessimed" target="_blank" rel="noopener">accessimed</a>
-        <p>Playwright + axe-core WCAG 2.1 A/AA scanner that separates detection from remediation: deterministic exact-match
-          fixes or LLM suggestions, each applied as a reviewable Git diff and re-checked.</p>
-      </li>
-      <li>
-        <a href="https://github.com/ayushgawai/multiplayer-agent-sessions" target="_blank" rel="noopener">multiplayer-agent-sessions</a>
-        <p>Shared human + agent sessions with handoff, concurrency and rollback. I owned the session service, the versioned
-          SessionEvent schema, model serving on <code>/v1/models/{id}/predict</code>, infra and CI.</p>
-      </li>
-      <li>
-        <a href="https://github.com/ayushgawai/campaign-agent" target="_blank" rel="noopener">campaign-agent</a>
-        <a class="ag-alt" href="https://github.com/ayushgawai/retention-agent" target="_blank" rel="noopener">retention-agent</a>
-        <p>Consent, unsubscribe and frequency checks in a central executor, an idempotent async job queue, and a
-          Thompson-sampling contextual bandit choosing message variant and send hour from conversion feedback.</p>
-      </li>
-    </ul>
-  </div>
-</div>
-</section>
-<section class="chapter chapter--part" id="systems" >
-<div class="page part-page">
-<div data-part class="page sys-log-wrap">
-    <div class="sys-log-head">
-      <h3>Bench log</h3>
-      <p class="hand sys-log-kicker">more from the lab, each linked to its repo</p>
-    </div>
-    <ul class="sys-log">
-      <li class="sys-row">
-        <a class="sys-row-l" href="https://github.com/ayushgawai/lakelog" target="_blank" rel="noopener">lakelog</a>
-        <span class="sys-row-r">Delta/Iceberg-style transaction log in Java: optimistic writers commit through an atomic filesystem link so exactly one wins each version; snapshots, checkpoints every 10 versions, time travel.</span>
-      </li>
-      <li class="sys-row">
-        <a class="sys-row-l" href="https://github.com/ayushgawai/pg-wal-lab" target="_blank" rel="noopener">pg-wal-lab</a>
-        <span class="sys-row-r">PostgreSQL C extension for WAL and MVCC inspection plus a crash-recovery harness, built with PGXS against Postgres 14–16 in CI.</span>
-      </li>
-      <li class="sys-row">
-        <a class="sys-row-l" href="https://github.com/ayushgawai/orderbook-engine" target="_blank" rel="noopener">orderbook-engine</a>
-        <span class="sys-row-r">C++20 price-time matching with O(1) cancel via an order-ID index: <b>~4.68M msgs/s</b>, <b>p99 ~900 ns</b> on a 2M-message replay.</span>
-      </li>
-      <li class="sys-row">
-        <a class="sys-row-l" href="https://github.com/ayushgawai/edge-llm-roofline" target="_blank" rel="noopener">edge-llm-roofline</a>
-        <span class="sys-row-r">Analytical prefill/decode model for LLMs on edge NPUs, within <b>8.7% MAPE</b> of Jetson Orin and RTX 4090 measurements.</span>
-      </li>
-      <li class="sys-row">
-        <a class="sys-row-l" href="https://github.com/ayushgawai/data266-9689/tree/main/hw2.5" target="_blank" rel="noopener">gpu attention lab</a>
-        <span class="sys-row-r">RTX 5090: fused attention cut peak memory <b>16,648 → 264 MiB</b> at 16k tokens and latency 46.81 → 27.07 ms.</span>
-      </li>
-      <li class="sys-row">
-        <a class="sys-row-l" href="https://github.com/ayushgawai/spec-decode-lab" target="_blank" rel="noopener">spec-decode-lab</a>
-        <span class="sys-row-r">distilgpt2 drafts k tokens, gpt2-medium verifies them in one batch; accept/reject with probability correction preserves the target distribution.</span>
-      </li>
-      <li class="sys-row">
-        <a class="sys-row-l" href="https://github.com/ayushgawai/llm-shard-planner" target="_blank" rel="noopener">llm-shard-planner</a>
-        <span class="sys-row-r">Enumerates tensor, expert and pipeline parallel plans for dense and MoE models, drops those over HBM, ranks by prefill latency and decode throughput.</span>
-      </li>
-      <li class="sys-row">
-        <a class="sys-row-l" href="https://github.com/ayushgawai/dataflow-fusion-compiler" target="_blank" rel="noopener">dataflow-fusion-compiler</a>
-        <span class="sys-row-r">torch.fx → typed SSA IR, producer-consumer fusion and SRAM-fitting placement on a PE grid; cycles are modeled, not measured silicon.</span>
-      </li>
-      <li class="sys-row">
-        <a class="sys-row-l" href="https://github.com/ayushgawai/gpu-job-orchestrator" target="_blank" rel="noopener">gpu-job-orchestrator</a>
-        <span class="sys-row-r">Go scheduler over <b>512 GPUs</b> in AWS, GCP and on-prem pools: gang scheduling, tenant quotas, rollback to the last checkpoint on spot preemption.</span>
-      </li>
-      <li class="sys-row">
-        <a class="sys-row-l" href="https://github.com/ayushgawai/fleet-control-plane" target="_blank" rel="noopener">fleet-control-plane</a>
-        <span class="sys-row-r">Go device control plane: versioned desired vs reported config shadows, conditional writes that reject stale versions, TTL heartbeats.</span>
-      </li>
-      <li class="sys-row">
-        <a class="sys-row-l" href="https://github.com/ayushgawai/dedup-store" target="_blank" rel="noopener">dedup-store</a>
-        <span class="sys-row-r">C++20 FastCDC chunking with SHA-256 fingerprints and a journaled mark-and-sweep GC that resumes after a crash.</span>
-      </li>
-      <li class="sys-row">
-        <a class="sys-row-l" href="https://github.com/ayushgawai/sensor-hub-firmware" target="_blank" rel="noopener">sensor-hub-firmware</a>
-        <span class="sys-row-r">Host-simulated HAL with 1 kHz sensor reads into a lock-free ring buffer; no deployed MCU.</span>
-      </li>
-    </ul>
-  </div>
-<div data-part class="page sys-cloud">
-    <div class="sys-cloud-head">
-      <h3>Cloud</h3>
-    </div>
-    <div class="sys-cloud-grid">
-      <div class="sys-cloud-col">
-        <h4>AWS</h4>
-        <ul class="tags sys-tags"><li>S3</li><li>EC2</li><li>Lambda</li><li>ECS / EKS</li><li>Glue</li><li>Athena</li><li>Redshift</li><li>MWAA</li><li>IAM</li></ul>
-      </div>
-      <div class="sys-cloud-col">
-        <h4>Azure · GCP</h4>
-        <ul class="tags sys-tags"><li>Data Factory</li><li>Databricks</li><li>IoT Hub</li><li>GKE</li></ul>
-      </div>
-      <div class="sys-cloud-col">
-        <h4>Containers and IaC</h4>
-        <ul class="tags sys-tags"><li>Docker</li><li>Kubernetes</li><li>Helm</li><li>ArgoCD</li><li>Terraform</li></ul>
-      </div>
-    </div>
-
-    
-  </div>
-</div>
 </section>
 </main>
 

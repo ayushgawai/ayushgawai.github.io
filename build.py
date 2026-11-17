@@ -108,7 +108,7 @@ PAGES = [  # file, [parts], title, description, nav key
      "I build data, AI and robotics systems people can trust: AV data infrastructure at Zoox, robot-learning and human-centered research at SJSU, data platforms at Zscaler and LatentView.", "home"),
     ("experience.html", ["@xp"],
      "Experience — Ayush Gawai", "Where I have worked: Zoox, Zscaler, LatentView, Coditas and my own store. Each has one page with the whole story.", "experience"),
-    ("projects.html", ["projlib", "@more"],
+    ("projects.html", ["projlib"],
      "Hackathons and projects — Ayush Gawai", "Every hackathon build and project, each with one page: demo, moving sketch, numbers, code.", "projects"),
     ("research.html", ["research"],
      "Research and publications — Ayush Gawai", "Published human-centered AI research at SJSU: visual attention and assistive mobility.", "research"),
@@ -272,7 +272,7 @@ def xp_gallery(items):
   </div></div>
 </section>"""
 
-SHOWCASE = ["sentinel", "leo", "carbonshift", "blast", "transit"]   # owner's order; the rest follow, films first
+SHOWCASE = ["sentinel", "leo", "carbonshift", "blast", "transit", "multiplayer-agents", "query-engine", "iot-garden"]   # owner's order; the rest follow, films first
 THUMB = {"sentinel": "assets/img/demos/sentinel.webp", "blast": "assets/img/demos/blast-radius.webp", "carbonshift": "assets/img/demos/carbonshift-demo.webp"}
 
 def card_media(it):
