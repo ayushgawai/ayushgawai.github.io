@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Warehouse case perception — project · Ayush Gawai</title>
-<meta name="description" content="Warehouse case perception — Detects cases in RGB-D warehouse frames and tracks them in 3D: YOLO/OpenCV detection, Kalman prediction, two-stage Hungari">
+<title>Warehouse case perception — Ayush Gawai</title>
+<meta name="description" content="Warehouse case perception: Detects cases in RGB-D warehouse frames and tracks them in 3D: YOLO/OpenCV detection, Kalman prediction, two-stage Hungarian ass">
 <meta name="author" content="Ayush Gawai">
 <meta name="theme-color" content="#F6F5F0">
 <link rel="canonical" href="https://ayushgawai.github.io/project/warehouse.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Warehouse case perception — project · Ayush Gawai">
-<meta property="og:description" content="Warehouse case perception — Detects cases in RGB-D warehouse frames and tracks them in 3D: YOLO/OpenCV detection, Kalman prediction, two-stage Hungari">
+<meta property="og:title" content="Warehouse case perception — Ayush Gawai">
+<meta property="og:description" content="Warehouse case perception: Detects cases in RGB-D warehouse frames and tracks them in 3D: YOLO/OpenCV detection, Kalman prediction, two-stage Hungarian ass">
 <meta property="og:url" content="https://ayushgawai.github.io/project/warehouse.html">
 <meta property="og:image" content="https://ayushgawai.github.io/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -56,71 +56,69 @@
 <header class="topbar">
   <a class="topbar-wordmark hand" href="../index.html">Ayush Gawai<span>· field notebook</span></a>
   <nav class="topnav" data-page="projects" aria-label="Notebook">
-    <a class="topnav-tab" href="../index.html" style="--tab:#EFE6C8"><b>Home</b></a>
-    <a class="topnav-tab" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
-    <a class="topnav-tab" href="../projects.html" style="--tab:#F3D9CF"><b>Projects</b></a>
-    <span class="topnav-rule" aria-hidden="true"></span>
-    <a class="topnav-tab" href="../ai.html" style="--tab:#D8ECDF"><b>AI · LLM</b></a>
-    <a class="topnav-tab" href="../data.html" style="--tab:#F2E3C4"><b>Data</b></a>
-    <a class="topnav-tab" href="../software.html" style="--tab:#DDE6F6"><b>Software</b></a>
-    <a class="topnav-tab" href="../robotics.html" style="--tab:#F0D6D6"><b>Robotics</b></a>
-    <a class="topnav-tab" href="../autonomy.html" style="--tab:#DDE9E6"><b>Zoox</b></a>
-    <a class="topnav-tab" href="../research.html" style="--tab:#E3DDF0"><b>Research</b></a>
-    <a class="topnav-tab" href="../hackathons.html" style="--tab:#F4EDB8"><b>Hackathons</b></a>
-    <a class="topnav-tab" href="../media.html" style="--tab:#F6E2C9"><b>Media</b></a>
-    <a class="topnav-tab" href="../recognition.html" style="--tab:#E9DDEA"><b>Recognition</b></a>
-    <a class="topnav-tab topnav-tab--cta" href="../contact.html" style="--tab:#D9E9F0"><b>Contact</b></a>
+    <a class="topnav-tab topnav-home" data-key="home" href="../index.html" style="--tab:#EFE6C8"><b>Ayush Gawai</b></a>
+    <a class="topnav-tab" data-key="experience" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
+    <a class="topnav-tab" data-key="projects" href="../projects.html" style="--tab:#F3D9CF"><b>Hackathons &amp; Projects</b></a>
+    <a class="topnav-tab" data-key="research" href="../research.html" style="--tab:#E3DDF0"><b>Research &amp; Publications</b></a>
+    <a class="topnav-tab" data-key="media" href="../media.html" style="--tab:#F6E2C9"><b>Media &amp; Recognition</b></a>
+    <a class="topnav-tab" data-key="contact" href="../contact.html" style="--tab:#D9E9F0"><b>Résumé &amp; Contact</b></a>
   </nav>
   <div class="topbar-actions">
-    <a class="btn" href="../assets/resume/Ayush_Gawai_Resume.pdf" target="_blank" rel="noopener">Résumé</a>
     <span class="topbar-social"><a href="https://github.com/ayushgawai" target="_blank" rel="noopener">GitHub</a><i aria-hidden="true">·</i><a href="https://www.linkedin.com/in/ayushgawai" target="_blank" rel="noopener">LinkedIn</a></span>
   </div>
 </header>
 
 
 <main id="main">
-<!-- Project detail page. One source of truth: everything about this project
-     lives on this page — film, architecture, depth, results, links. -->
-<section class="chapter proj" id="proj" data-tab="projects" aria-labelledby="proj-title">
+<section class="chapter proj" id="proj" aria-labelledby="proj-title">
   <header class="chapter-head page">
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
     <p class="chapter-kicker hand">RGB-D warehouse perception</p>
-    <h2 id="proj-title" class="chapter-title">Warehouse case perception</h2>
+    <h1 id="proj-title" class="chapter-title">Warehouse case perception</h1>
     <p class="chapter-lede">Detects cases in RGB-D warehouse frames and tracks them in 3D: YOLO/OpenCV detection, Kalman prediction, two-stage Hungarian assignment through occlusion, and depth back-projection to XYZ.</p>
   </header>
-
+  <div class="page"></div>
+</section>
+<section class="chapter chapter--part" id="robots" >
+<div class="page part-page">
+<article data-part class="rb-mini" id="p-warehouse">
+        <svg class="rb-wh" viewBox="0 0 400 190" role="img" aria-labelledby="rb-wh-t">
+          <title id="rb-wh-t">A case slides along a conveyor and passes behind a pillar. Its solid detection box turns into a dashed Kalman-predicted box while it is hidden, keeping the same track ID, and becomes solid again when it reappears.</title>
+          <g class="boil">
+            <path class="ink" d="M10 150 L390 151"/>
+            <path class="ink-thin" d="M10 162 L390 162"/>
+            <circle class="ink-thin" cx="40" cy="156" r="5"/><circle class="ink-thin" cx="200" cy="156" r="5"/><circle class="ink-thin" cx="360" cy="156" r="5"/>
+          </g>
+          <g id="rb-case">
+            <rect class="ink rb-casefill" x="-30" y="-46" width="60" height="46"/>
+            <path class="ink-thin" d="M-30 -32 L30 -32 M0 -46 L0 -32"/>
+          </g>
+          <g class="boil">
+            <rect class="ink rb-fill" x="176" y="20" width="48" height="131"/>
+            <rect class="hatch" x="178" y="22" width="44" height="127"/>
+          </g>
+          <g id="rb-track">
+            <rect id="rb-trk-box" class="rb-trk" x="-37" y="-53" width="74" height="60" rx="2"/>
+            <text id="rb-trk-t" class="svg-print rb-trk-t" x="-37" y="-60">#7 · tracked</text>
+          </g>
+        </svg>
+        <p class="project-where hand">RGB-D · 3D tracking</p>
+        <h3><a href="https://github.com/ayushgawai/warehouse-case-perception" target="_blank" rel="noopener">warehouse-case-perception</a></h3>
+        <p>YOLO or OpenCV case detection, Kalman prediction with two-stage Hungarian assignment to hold IDs through occlusion, and depth lookup with pinhole back-projection to XYZ.</p>
+      </article>
+</div>
+</section>
+<section class="chapter proj proj-tail" aria-label="More about Warehouse case perception">
   <div class="page">
-    
-
-    <div class="proj-two">
-      <div class="proj-facts">
-        <h3 class="proj-sub hand">the numbers</h3>
-        <p class="fact"><b>3D</b>tracks from RGB + depth, via pinhole back-projection</p><p class="fact"><b>Kalman</b>prediction between detections</p><p class="fact"><b>2-stage Hungarian</b>assignment survives occlusion</p><p class="fact"><b>C++ NMS</b>non-maximum suppression component</p>
-      </div>
-      <div class="proj-deep">
-        <h3 class="proj-sub hand">how it works</h3>
-        <ul class='deep-list'><li>Detection: Ultralytics YOLO or OpenCV on RGB; depth lookup and pinhole back-projection give XYZ.</li><li>Tracking: Kalman prediction plus two-stage Hungarian assignment keeps tracks alive through occlusion; collision-zone checks flag risky states.</li><li>Robustness: illumination, blur and occlusion variants, plus checkerboard and extrinsic calibration; C++ NMS keeps detection fast.</li></ul>
-      </div>
-    </div>
-
     <div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid"><div class="dec"><h4>Two-stage assignment</h4><p>Cheap matching first, Hungarian only where it matters — robust to occlusion.</p></div></div></div>
-
     <div class="proj-rows">
-      <div class="proj-stack">
-        <h3 class="proj-sub hand">the stack</h3>
-        <ul class="tags"><li>YOLO</li><li>OpenCV</li><li>Kalman</li><li>Hungarian</li><li>C++</li></ul>
-      </div>
-      <div class="proj-links">
-        <h3 class="proj-sub hand">the links</h3>
-        <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/warehouse-case-perception" target="_blank" rel="noopener">Code on GitHub</a></div>
-      </div>
+      <div class="proj-stack"><h3 class="proj-sub hand">the stack</h3><ul class="tags"><li>YOLO</li><li>OpenCV</li><li>Kalman</li><li>Hungarian</li><li>C++</li></ul></div>
+      <div class="proj-links"><h3 class="proj-sub hand">the links</h3><div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/warehouse-case-perception" target="_blank" rel="noopener">Code on GitHub</a></div></div>
     </div>
-
-    <p class="proj-rel hand">same territory: <a class="rel-link" href="obstacle.html">obstacle</a><a class="rel-link" href="so101.html">so101</a></p>
-
-    <p class="proj-back"><a class="hand" href="../projects.html">← back to the library</a> <a class="hand" href="../media.html">or watch all the films</a></p>
+    <p class="proj-rel hand">same territory: <a class="rel-link" href="../project/obstacle.html">Real-time obstacle alert policy</a><a class="rel-link" href="../project/so101.html">SO-101 imitation learning</a></p>
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
   </div>
 </section>
-
 </main>
 
 <script src="../assets/site.js" defer></script>

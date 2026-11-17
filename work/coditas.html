@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Coditas — experience · Ayush Gawai</title>
-<meta name="description" content="Coditas — Software Engineer Intern (healthcare client) · Feb – Aug 2021">
+<meta name="description" content="Coditas: Software Engineer Intern (healthcare client), Feb – Aug 2021">
 <meta name="author" content="Ayush Gawai">
 <meta name="theme-color" content="#F6F5F0">
 <link rel="canonical" href="https://ayushgawai.github.io/work/coditas.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Coditas — experience · Ayush Gawai">
-<meta property="og:description" content="Coditas — Software Engineer Intern (healthcare client) · Feb – Aug 2021">
+<meta property="og:description" content="Coditas: Software Engineer Intern (healthcare client), Feb – Aug 2021">
 <meta property="og:url" content="https://ayushgawai.github.io/work/coditas.html">
 <meta property="og:image" content="https://ayushgawai.github.io/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -56,65 +56,102 @@
 <header class="topbar">
   <a class="topbar-wordmark hand" href="../index.html">Ayush Gawai<span>· field notebook</span></a>
   <nav class="topnav" data-page="experience" aria-label="Notebook">
-    <a class="topnav-tab" href="../index.html" style="--tab:#EFE6C8"><b>Home</b></a>
-    <a class="topnav-tab" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
-    <a class="topnav-tab" href="../projects.html" style="--tab:#F3D9CF"><b>Projects</b></a>
-    <span class="topnav-rule" aria-hidden="true"></span>
-    <a class="topnav-tab" href="../ai.html" style="--tab:#D8ECDF"><b>AI · LLM</b></a>
-    <a class="topnav-tab" href="../data.html" style="--tab:#F2E3C4"><b>Data</b></a>
-    <a class="topnav-tab" href="../software.html" style="--tab:#DDE6F6"><b>Software</b></a>
-    <a class="topnav-tab" href="../robotics.html" style="--tab:#F0D6D6"><b>Robotics</b></a>
-    <a class="topnav-tab" href="../autonomy.html" style="--tab:#DDE9E6"><b>Zoox</b></a>
-    <a class="topnav-tab" href="../research.html" style="--tab:#E3DDF0"><b>Research</b></a>
-    <a class="topnav-tab" href="../hackathons.html" style="--tab:#F4EDB8"><b>Hackathons</b></a>
-    <a class="topnav-tab" href="../media.html" style="--tab:#F6E2C9"><b>Media</b></a>
-    <a class="topnav-tab" href="../recognition.html" style="--tab:#E9DDEA"><b>Recognition</b></a>
-    <a class="topnav-tab topnav-tab--cta" href="../contact.html" style="--tab:#D9E9F0"><b>Contact</b></a>
+    <a class="topnav-tab topnav-home" data-key="home" href="../index.html" style="--tab:#EFE6C8"><b>Ayush Gawai</b></a>
+    <a class="topnav-tab" data-key="experience" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
+    <a class="topnav-tab" data-key="projects" href="../projects.html" style="--tab:#F3D9CF"><b>Hackathons &amp; Projects</b></a>
+    <a class="topnav-tab" data-key="research" href="../research.html" style="--tab:#E3DDF0"><b>Research &amp; Publications</b></a>
+    <a class="topnav-tab" data-key="media" href="../media.html" style="--tab:#F6E2C9"><b>Media &amp; Recognition</b></a>
+    <a class="topnav-tab" data-key="contact" href="../contact.html" style="--tab:#D9E9F0"><b>Résumé &amp; Contact</b></a>
   </nav>
   <div class="topbar-actions">
-    <a class="btn" href="../assets/resume/Ayush_Gawai_Resume.pdf" target="_blank" rel="noopener">Résumé</a>
     <span class="topbar-social"><a href="https://github.com/ayushgawai" target="_blank" rel="noopener">GitHub</a><i aria-hidden="true">·</i><a href="https://www.linkedin.com/in/ayushgawai" target="_blank" rel="noopener">LinkedIn</a></span>
   </div>
 </header>
 
 
 <main id="main">
-<!-- Experience detail page: the single home for one company's full story.
-     Nothing about this org is repeated anywhere else on the site. -->
-<section class="chapter work" id="work" data-tab="experience" aria-labelledby="work-title">
+<section class="chapter work" id="work" aria-labelledby="work-title">
   <header class="chapter-head page">
-    <p class="chapter-kicker hand">Feb – Aug 2021 · Coditas</p>
-    <h2 id="work-title" class="chapter-title">Coditas</h2>
-    <p class="chapter-lede">Software Engineer Intern (healthcare client). Production Spring Boot backend for a healthcare client: microservice tuning, PostgreSQL schema and index work behind Liquibase, and Docker/GitLab CI — the foundation for everything after.</p>
+    <p class="proj-back"><a class="hand" href="../experience.html">← all experience</a></p>
+    <p class="chapter-kicker hand">Feb – Aug 2021 · Software Engineer Intern (healthcare client)</p>
+    <h1 id="work-title" class="chapter-title">Coditas</h1>
+    <p class="chapter-lede">Production Spring Boot backend for a healthcare client: microservice tuning, PostgreSQL schema and index work behind Liquibase, and Docker/GitLab CI — the foundation for everything after.</p>
   </header>
-
   <div class="page">
     <div class="work-two">
-      <div class="work-numbers">
-        <h3 class="proj-sub hand">on the record</h3>
-        <div class="facts"><p class="fact"><b>~33%</b>fewer request failures under load</p><p class="fact"><b>2.5×</b>query performance after schema/index work</p><p class="fact"><b>~17%</b>faster release cycles via CI</p></div>
-      </div>
-      <div class="work-story">
-        <h3 class="proj-sub hand">what I actually did</h3>
-        <ul class="deep-list"><li>Backend microservices refactored for concurrency: thread handling, connection pooling and caching cut request failures by ~33% and steadied peak responses.</li><li>Database work: inefficient joins reduced, indexing strategy redesigned, Liquibase migrations version-controlled — a 2.5× query performance improvement and more predictable load.</li><li>Release hygiene: Dockerized services and GitLab CI pipelines cut the release cycle by ~17% and removed the &#x27;works on my machine&#x27; class of failures.</li></ul>
-      </div>
+      <div class="work-numbers"><h3 class="proj-sub hand">on the record</h3><div class="facts"><p class="fact"><b>~33%</b>fewer request failures under load</p><p class="fact"><b>2.5×</b>query performance after schema/index work</p><p class="fact"><b>~17%</b>faster release cycles via CI</p></div></div>
+      <div class="work-story"><h3 class="proj-sub hand">what I did</h3><ul class="deep-list"><li>Backend microservices refactored for concurrency: thread handling, connection pooling and caching cut request failures by ~33% and steadied peak responses.</li><li>Database work: inefficient joins reduced, indexing strategy redesigned, Liquibase migrations version-controlled — a 2.5× query performance improvement and more predictable load.</li><li>Release hygiene: Dockerized services and GitLab CI pipelines cut the release cycle by ~17% and removed the &#x27;works on my machine&#x27; class of failures.</li></ul></div>
     </div>
-
-    <div class="proj-rows">
-      <div>
-        <h3 class="proj-sub hand">the stack</h3>
-        <ul class="tags"><li>Java</li><li>Spring Boot</li><li>PostgreSQL</li><li>Liquibase</li><li>Docker</li><li>GitLab CI</li></ul>
-      </div>
-      <div>
-        <h3 class="proj-sub hand">the builds from here</h3>
-        <div class="btn-row work-projs"><a class="btn" href="../project/cicd.html">Cicd</a></div>
-      </div>
-    </div>
-
-    <p class="proj-back"><a class="hand" href="../experience.html">← back to the route</a> <a class="hand" href="../projects.html">all projects</a></p>
+    <div class="proj-rows"><div><h3 class="proj-sub hand">the stack</h3><ul class="tags"><li>Java</li><li>Spring Boot</li><li>PostgreSQL</li><li>Liquibase</li><li>Docker</li><li>GitLab CI</li></ul></div></div>
+    <p class="work-next hand">drawn out below: every system I built here, each with its own sketch and deep dive ↓</p>
   </div>
 </section>
-
+<section class="chapter chapter--part" id="automation" >
+<div class="page part-page">
+<article data-part class="project flip" id="p-cicd">
+      <div class="project-media" data-anim>
+        <svg class="au-svg au-ci" viewBox="0 0 520 260" role="img" aria-labelledby="au-ci-t">
+          <title id="au-ci-t">A CI pipeline of five stages: commit, build, schema, SQL tests, deploy. On the first run the schema check catches drift and blocks the change; on the next run every stage gets a green check and it deploys.</title>
+          <g class="boil">
+            <path class="ink" d="M60 132 C 160 129, 360 134, 460 131" stroke-width="3"/>
+          </g>
+          <g class="ci-st">
+            <circle class="ink body" cx="60" cy="132" r="30"/>
+            <circle class="ink body" cx="160" cy="132" r="30"/>
+            <circle class="ink body ci-schema" cx="260" cy="132" r="30"/>
+            <circle class="ink body" cx="360" cy="132" r="30"/>
+            <circle class="ink body ci-deploy" cx="460" cy="132" r="30"/>
+          </g>
+          <!-- stage glyphs -->
+          <path class="ink-thin" d="M60 116 V148 M60 126 C 72 126, 72 136, 72 140"/><circle class="ink-thin" cx="60" cy="132" r="5" fill="var(--paper-card)"/>
+          <path class="ink-thin" d="M146 122 H174 V146 H146 Z M146 130 H174 M155 122 V146 M165 122 V146"/>
+          <path class="ink-thin" d="M244 120 H276 V146 H244 Z M244 128 H276 M244 137 H276 M256 120 V146"/>
+          <path class="ink-thin" d="M346 122 l4 4 7 -8 M346 134 l4 4 7 -8 M346 146 l4 4 7 -8 M362 122 H376 M362 134 H376 M362 146 H376"/>
+          <path class="ink-thin" d="M446 120 H474 V130 H446 Z M446 134 H474 V144 H446 Z"/>
+          <!-- token -->
+          <g class="ci-tok"><rect x="-10" y="-10" width="20" height="20" rx="4"/></g>
+          <!-- result marks -->
+          <path class="ci-ok" style="--c:0" d="M44 84 l7 8 14 -17"/>
+          <path class="ci-ok" style="--c:1" d="M144 84 l7 8 14 -17"/>
+          <path class="ci-ok" style="--c:2" d="M244 84 l7 8 14 -17"/>
+          <path class="ci-ok" style="--c:3" d="M344 84 l7 8 14 -17"/>
+          <path class="ci-ok" style="--c:4" d="M444 84 l7 8 14 -17"/>
+          <path class="ci-x" d="M250 72 l20 20 M270 72 l-20 20"/>
+          <text class="svg-hand al red ci-note" x="260" y="44" text-anchor="middle">drift → blocked</text>
+          <text class="svg-hand al ci-ship" x="500" y="44" text-anchor="end">prod parity</text>
+          <text class="svg-hand al" x="60" y="196" text-anchor="middle">commit</text>
+          <text class="svg-hand al" x="160" y="226" text-anchor="middle">build</text>
+          <text class="svg-hand al" x="260" y="196" text-anchor="middle">schema</text>
+          <text class="svg-hand al" x="360" y="226" text-anchor="middle">SQL tests</text>
+          <text class="svg-hand al" x="460" y="196" text-anchor="middle">deploy</text>
+        </svg>
+      </div>
+      <div class="project-body">
+        <p class="project-where hand">Coditas 2021 · Zscaler 2024–2025</p>
+        <h3 class="project-title">Release pipelines that refuse bad changes</h3>
+        <p class="project-sum">At Coditas, Spring Boot services were Dockerized and shipped through GitLab CI with automated build and deploy, keeping staging and production at parity. At Zscaler, Git workflows ran automated schema checks and SQL tests in GitHub Actions, with Docker pinning the environment.</p>
+        <ul class="facts">
+          <li><b>~17%</b> shorter release cycle</li>
+          <li><b>GitLab CI</b> Docker images</li>
+          <li><b>GitHub Actions</b> schema + SQL tests</li>
+        </ul>
+        <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
+          <h4>Coditas · Software Engineer Intern · Feb–Aug 2021</h4>
+          <ul>
+            <li>Healthcare client, production Java/Spring Boot microservices. Dockerized the services, configured GitLab CI pipelines and automated build and deploy steps for staging/production parity: release cycle ~17% shorter, fewer human deployment errors.</li>
+            <li>Same engagement: thread handling, connection pooling, caching and fewer redundant DB calls cut request failures ~33%; PostgreSQL indexing and join cleanup with Liquibase-versioned migrations gave ~2.5× query performance.</li>
+          </ul>
+          <h4>Zscaler · Data Engineer · 2024–2025</h4>
+          <ul>
+            <li>Git-based workflows with automated schema checks and SQL tests in GitHub Actions around the dbt/Snowflake models.</li>
+            <li>Docker standardized environments; debugged dependency conflicts, upstream API schema changes, compiler/runtime mismatches and environment misconfigurations.</li>
+          </ul>
+        </div></details>
+      </div>
+    </article>
+</div>
+</section>
+<section class="chapter proj proj-tail"><div class="page"><p class="proj-back"><a class="hand" href="../experience.html">← all experience</a></p></div></section>
 </main>
 
 <script src="../assets/site.js" defer></script>

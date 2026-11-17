@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AV trajectory prediction — Ayush Gawai</title>
+<meta name="description" content="AV trajectory prediction: Five forecasters, from constant velocity and Kalman to learned multimodal anchors, predict 3 s of motion from 2 s of noisy 10 Hz ">
+<meta name="author" content="Ayush Gawai">
+<meta name="theme-color" content="#F6F5F0">
+<link rel="canonical" href="https://ayushgawai.github.io/project/trajectory.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AV trajectory prediction — Ayush Gawai">
+<meta property="og:description" content="AV trajectory prediction: Five forecasters, from constant velocity and Kalman to learned multimodal anchors, predict 3 s of motion from 2 s of noisy 10 Hz ">
+<meta property="og:url" content="https://ayushgawai.github.io/project/trajectory.html">
+<meta property="og:image" content="https://ayushgawai.github.io/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../assets/favicon.svg" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400..800;1,400&family=Shantell+Sans:wght,BNCE,INFM@300..800,-100..100,0..100&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Ayush Gawai","url":"https://ayushgawai.github.io/","jobTitle":"Data, AI and robotics systems engineer","alumniOf":"San José State University","sameAs":["https://github.com/ayushgawai","https://www.linkedin.com/in/ayushgawai"]}
+</script>
+
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- shared SVG defs: hand-drawn filters + hatch pattern. Use class="boil" (animated) or "rough" (static) on line art. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="boil" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="1" result="n">
+        <animate attributeName="seed" values="1;7;13" dur="0.42s" calcMode="discrete" repeatCount="indefinite"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="4" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(40)">
+      <line x1="0" y1="0" x2="6" y2="0" stroke="#1F2329" stroke-width="1" stroke-opacity=".45"/>
+    </pattern>
+    <pattern id="hatch-blue" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+      <line x1="0" y1="0" x2="6" y2="0" stroke="#2346B0" stroke-width="1" stroke-opacity=".5"/>
+    </pattern>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1.5 L8 5 L1.5 8.8" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round"/>
+    </marker>
+  </defs>
+</svg>
+
+
+<header class="topbar">
+  <a class="topbar-wordmark hand" href="../index.html">Ayush Gawai<span>· field notebook</span></a>
+  <nav class="topnav" data-page="projects" aria-label="Notebook">
+    <a class="topnav-tab topnav-home" data-key="home" href="../index.html" style="--tab:#EFE6C8"><b>Ayush Gawai</b></a>
+    <a class="topnav-tab" data-key="experience" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
+    <a class="topnav-tab" data-key="projects" href="../projects.html" style="--tab:#F3D9CF"><b>Hackathons &amp; Projects</b></a>
+    <a class="topnav-tab" data-key="research" href="../research.html" style="--tab:#E3DDF0"><b>Research &amp; Publications</b></a>
+    <a class="topnav-tab" data-key="media" href="../media.html" style="--tab:#F6E2C9"><b>Media &amp; Recognition</b></a>
+    <a class="topnav-tab" data-key="contact" href="../contact.html" style="--tab:#D9E9F0"><b>Résumé &amp; Contact</b></a>
+  </nav>
+  <div class="topbar-actions">
+    <span class="topbar-social"><a href="https://github.com/ayushgawai" target="_blank" rel="noopener">GitHub</a><i aria-hidden="true">·</i><a href="https://www.linkedin.com/in/ayushgawai" target="_blank" rel="noopener">LinkedIn</a></span>
+  </div>
+</header>
+
+
+<main id="main">
+<section class="chapter proj" id="proj" aria-labelledby="proj-title">
+  <header class="chapter-head page">
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
+    <p class="chapter-kicker hand">Side project · motion forecasting</p>
+    <h1 id="proj-title" class="chapter-title">AV trajectory prediction</h1>
+    <p class="chapter-lede">Five forecasters, from constant velocity and Kalman to learned multimodal anchors, predict 3 s of motion from 2 s of noisy 10 Hz positions.</p>
+  </header>
+  <div class="page"></div>
+</section>
+<section class="chapter chapter--part" id="av" >
+<div class="page part-page">
+<article data-part class="project page av-proj" id="p-trajectory">
+    <div class="project-media" data-anim>
+      <svg class="av-traj" viewBox="0 50 420 170" role="img" aria-labelledby="av-tp-t">
+        <title id="av-tp-t">Twenty noisy positions sampled over 2 seconds lead to a car; three dashed candidate paths fan out over the next 3 seconds: straight, lane change and turn.</title>
+        <path class="ink-thin av-faint" d="M6 152H414M6 82H414" stroke-dasharray="10 12"/>
+        <g class="av-dots">
+          <circle cx="12" cy="132" r="3.4" style="--i:0"/><circle cx="22" cy="130" r="3.4" style="--i:1"/><circle cx="31" cy="133" r="3.4" style="--i:2"/><circle cx="41" cy="129" r="3.4" style="--i:3"/><circle cx="51" cy="131" r="3.4" style="--i:4"/>
+          <circle cx="60" cy="128" r="3.4" style="--i:5"/><circle cx="70" cy="130" r="3.4" style="--i:6"/><circle cx="80" cy="126" r="3.4" style="--i:7"/><circle cx="89" cy="129" r="3.4" style="--i:8"/><circle cx="99" cy="125" r="3.4" style="--i:9"/>
+          <circle cx="108" cy="127" r="3.4" style="--i:10"/><circle cx="118" cy="124" r="3.4" style="--i:11"/><circle cx="128" cy="126" r="3.4" style="--i:12"/><circle cx="137" cy="122" r="3.4" style="--i:13"/><circle cx="147" cy="125" r="3.4" style="--i:14"/>
+          <circle cx="157" cy="121" r="3.4" style="--i:15"/><circle cx="166" cy="123" r="3.4" style="--i:16"/><circle cx="176" cy="120" r="3.4" style="--i:17"/><circle cx="185" cy="122" r="3.4" style="--i:18"/><circle cx="195" cy="119" r="3.4" style="--i:19"/>
+        </g>
+        <path class="ink av-fill" d="M204 108h30q8 0 8 8v8q0 8-8 8h-30q-8 0-8-8v-8q0-8 8-8z"/><path class="ink-thin" d="M212 108v24M228 108v24"/>
+        <path class="ink-blue av-fut" style="--i:0" pathLength="1" d="M246 120C300 119 350 119 408 118"/>
+        <path class="ink-blue av-fut" style="--i:1" pathLength="1" d="M246 117C290 112 318 76 352 72C372 70 390 70 408 70"/>
+        <path class="ink-blue av-fut" style="--i:2" pathLength="1" d="M246 124C282 130 312 160 326 212"/>
+        <text class="svg-hand av-bl" x="100" y="108" text-anchor="middle">2 s seen · 10 Hz</text>
+        <text class="svg-hand av-bl" x="372" y="104" text-anchor="middle">3 s ahead</text>
+      </svg>
+    </div>
+    <div class="project-body">
+      <p class="project-where hand">Side project · motion forecasting</p>
+      <h3 class="project-title">AV trajectory prediction</h3>
+      <p class="project-sum">Constant-velocity, Kalman filter, CTRV, ridge regression and learned multimodal-anchor forecasters predict 3 s of motion from 2 s of noisy 10 Hz positions through lane changes, braking and turns, scored with multi-hypothesis metrics.</p>
+      <ul class="facts">
+        <li><b>5</b>forecasters, physics to learned</li>
+        <li><b>2 s → 3 s</b>observed → predicted</li>
+        <li><b>10 Hz</b>noisy position input</li>
+      </ul>
+      <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/av-trajectory-prediction" target="_blank" rel="noopener">Code on GitHub</a></div>
+      <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
+        <ul>
+          <li>Input: 2 s of noisy 10 Hz positions per agent. Output: 3 s of future motion.</li>
+          <li>Physics baselines: constant velocity, a Kalman filter, and CTRV (constant turn rate and velocity) for curved paths.</li>
+          <li>Learned: ridge regression on the observed track, and a multimodal model over a set of anchor trajectories, so a lane change and a straight path can both stay alive.</li>
+          <li>Scenarios: lane changes, braking and turns, evaluated with multi-hypothesis metrics.</li>
+        </ul>
+      </div></details>
+    </div>
+  </article>
+</div>
+</section>
+<section class="chapter proj proj-tail" aria-label="More about AV trajectory prediction">
+  <div class="page">
+    
+    <div class="proj-rows">
+      <div class="proj-stack"><h3 class="proj-sub hand">the stack</h3><ul class="tags"><li>Python</li><li>Kalman filter</li><li>CTRV</li><li>Ridge regression</li><li>Multimodal anchors</li></ul></div>
+      <div class="proj-links"><h3 class="proj-sub hand">the links</h3><div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/av-trajectory-prediction" target="_blank" rel="noopener">Code on GitHub</a></div></div>
+    </div>
+    <p class="proj-rel hand">same territory: <a class="rel-link" href="../project/scene-miner.html">Scene Miner</a></p>
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
+  </div>
+</section>
+</main>
+
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

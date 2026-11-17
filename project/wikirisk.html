@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WikiRisk — project · Ayush Gawai</title>
-<meta name="description" content="WikiRisk — Predicts a harmful Wikipedia edit before it lands: historical Spark ingestion over 29+ GB of revisions trains a cross-validated model, then">
+<title>WikiRisk — Ayush Gawai</title>
+<meta name="description" content="WikiRisk: Predicts a harmful Wikipedia edit before it lands: historical Spark ingestion over 29+ GB of revisions trains a cross-validated model, then a liv">
 <meta name="author" content="Ayush Gawai">
 <meta name="theme-color" content="#F6F5F0">
 <link rel="canonical" href="https://ayushgawai.github.io/project/wikirisk.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="WikiRisk — project · Ayush Gawai">
-<meta property="og:description" content="WikiRisk — Predicts a harmful Wikipedia edit before it lands: historical Spark ingestion over 29+ GB of revisions trains a cross-validated model, then">
+<meta property="og:title" content="WikiRisk — Ayush Gawai">
+<meta property="og:description" content="WikiRisk: Predicts a harmful Wikipedia edit before it lands: historical Spark ingestion over 29+ GB of revisions trains a cross-validated model, then a liv">
 <meta property="og:url" content="https://ayushgawai.github.io/project/wikirisk.html">
 <meta property="og:image" content="https://ayushgawai.github.io/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -56,71 +56,77 @@
 <header class="topbar">
   <a class="topbar-wordmark hand" href="../index.html">Ayush Gawai<span>· field notebook</span></a>
   <nav class="topnav" data-page="projects" aria-label="Notebook">
-    <a class="topnav-tab" href="../index.html" style="--tab:#EFE6C8"><b>Home</b></a>
-    <a class="topnav-tab" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
-    <a class="topnav-tab" href="../projects.html" style="--tab:#F3D9CF"><b>Projects</b></a>
-    <span class="topnav-rule" aria-hidden="true"></span>
-    <a class="topnav-tab" href="../ai.html" style="--tab:#D8ECDF"><b>AI · LLM</b></a>
-    <a class="topnav-tab" href="../data.html" style="--tab:#F2E3C4"><b>Data</b></a>
-    <a class="topnav-tab" href="../software.html" style="--tab:#DDE6F6"><b>Software</b></a>
-    <a class="topnav-tab" href="../robotics.html" style="--tab:#F0D6D6"><b>Robotics</b></a>
-    <a class="topnav-tab" href="../autonomy.html" style="--tab:#DDE9E6"><b>Zoox</b></a>
-    <a class="topnav-tab" href="../research.html" style="--tab:#E3DDF0"><b>Research</b></a>
-    <a class="topnav-tab" href="../hackathons.html" style="--tab:#F4EDB8"><b>Hackathons</b></a>
-    <a class="topnav-tab" href="../media.html" style="--tab:#F6E2C9"><b>Media</b></a>
-    <a class="topnav-tab" href="../recognition.html" style="--tab:#E9DDEA"><b>Recognition</b></a>
-    <a class="topnav-tab topnav-tab--cta" href="../contact.html" style="--tab:#D9E9F0"><b>Contact</b></a>
+    <a class="topnav-tab topnav-home" data-key="home" href="../index.html" style="--tab:#EFE6C8"><b>Ayush Gawai</b></a>
+    <a class="topnav-tab" data-key="experience" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
+    <a class="topnav-tab" data-key="projects" href="../projects.html" style="--tab:#F3D9CF"><b>Hackathons &amp; Projects</b></a>
+    <a class="topnav-tab" data-key="research" href="../research.html" style="--tab:#E3DDF0"><b>Research &amp; Publications</b></a>
+    <a class="topnav-tab" data-key="media" href="../media.html" style="--tab:#F6E2C9"><b>Media &amp; Recognition</b></a>
+    <a class="topnav-tab" data-key="contact" href="../contact.html" style="--tab:#D9E9F0"><b>Résumé &amp; Contact</b></a>
   </nav>
   <div class="topbar-actions">
-    <a class="btn" href="../assets/resume/Ayush_Gawai_Resume.pdf" target="_blank" rel="noopener">Résumé</a>
     <span class="topbar-social"><a href="https://github.com/ayushgawai" target="_blank" rel="noopener">GitHub</a><i aria-hidden="true">·</i><a href="https://www.linkedin.com/in/ayushgawai" target="_blank" rel="noopener">LinkedIn</a></span>
   </div>
 </header>
 
 
 <main id="main">
-<!-- Project detail page. One source of truth: everything about this project
-     lives on this page — film, architecture, depth, results, links. -->
-<section class="chapter proj" id="proj" data-tab="projects" aria-labelledby="proj-title">
+<section class="chapter proj" id="proj" aria-labelledby="proj-title">
   <header class="chapter-head page">
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
     <p class="chapter-kicker hand">Spark streaming · Wikimedia EventStreams</p>
-    <h2 id="proj-title" class="chapter-title">WikiRisk</h2>
+    <h1 id="proj-title" class="chapter-title">WikiRisk</h1>
     <p class="chapter-lede">Predicts a harmful Wikipedia edit before it lands: historical Spark ingestion over 29+ GB of revisions trains a cross-validated model, then a live Structured Streaming job scores every event as it arrives.</p>
   </header>
-
-  <div class="page">
-    <figure class="proj-film"><video controls preload="metadata" playsinline poster="../assets/video/narrated/wikirisk-poster.webp" width="1920" height="1080"><source src="../assets/video/narrated/wikirisk.mp4" type="video/mp4"></video></figure>
-
-    <div class="proj-two">
-      <div class="proj-facts">
-        <h3 class="proj-sub hand">the numbers</h3>
-        <p class="fact"><b>89.61%</b>recall on held-out edits</p><p class="fact"><b>0.762</b>ROC AUC, 5-fold cross-validation</p><p class="fact"><b>11.16M</b>training rows</p><p class="fact"><b>29+ GB</b>decompressed revision history ingested</p>
-      </div>
-      <div class="proj-deep">
-        <h3 class="proj-sub hand">how it works</h3>
-        <ul class='deep-list'><li>Training: Spark ingests 29+ GB of Wikipedia revisions and engineers author, diff and page features; SparkML models are cross-validated and tracked in MLflow over 11.16M rows.</li><li>Live: a Structured Streaming job consumes Wikimedia EventStreams and scores each edit as it lands; every scored event goes to a Parquet archive.</li><li>Serving: a SQLite serving store plus FastAPI health and search endpoints with tests keep the model queryable in production, not just a notebook.</li><li>Replay: the Parquet archive means any decision can be rebuilt and audited later.</li></ul>
-      </div>
-    </div>
-
-    <div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid"><div class="dec"><h4>Train on history, score live</h4><p>The batch data teaches; the stream applies.</p></div><div class="dec"><h4>Archive every decision</h4><p>Scored events are durable — audit and replay for free.</p></div></div></div>
-
-    <div class="proj-rows">
-      <div class="proj-stack">
-        <h3 class="proj-sub hand">the stack</h3>
-        <ul class="tags"><li>PySpark</li><li>Spark Structured Streaming</li><li>MLflow</li><li>Parquet</li><li>FastAPI</li><li>SQLite</li></ul>
-      </div>
-      <div class="proj-links">
-        <h3 class="proj-sub hand">the links</h3>
+  <div class="page"><figure class="proj-film"><video controls preload="metadata" playsinline poster="../assets/video/narrated/wikirisk-poster.webp" width="1920" height="1080"><source src="../assets/video/narrated/wikirisk.mp4" type="video/mp4"></video></figure></div>
+</section>
+<section class="chapter chapter--part" id="data" >
+<div class="page part-page">
+<article data-part class="data-card" id="p-wikirisk">
+        <svg class="mini" viewBox="0 0 360 230" role="img" aria-label="Wikipedia edit events stream into a Spark Structured Streaming scorer; a risky edit comes out flagged red." data-anim>
+          <text class="svg-hand mini-l" x="14" y="30">live edits</text>
+          <g class="wr-evs">
+            <g class="wr-ev" style="--d:0"><rect class="wr-a" x="-8" y="-8" width="16" height="16" rx="2"/></g>
+            <g class="wr-ev" style="--d:1"><rect class="wr-a" x="-8" y="-8" width="16" height="16" rx="2"/></g>
+            <g class="wr-ev bad" style="--d:2"><rect class="wr-a" x="-8" y="-8" width="16" height="16" rx="2"/><rect class="wr-b" x="-8" y="-8" width="16" height="16" rx="2"/></g>
+            <g class="wr-ev" style="--d:3"><rect class="wr-a" x="-8" y="-8" width="16" height="16" rx="2"/></g>
+          </g>
+          <g class="boil">
+            <path class="ink-thin" d="M12 104 H128 M232 104 H348" pathLength="1"/>
+            <path class="ink wr-box" d="M128 52 h104 v104 h-104 z" pathLength="1"/>
+            <path class="ink-red" d="M232 128 C 262 132, 280 150, 300 176" marker-end="url(#arrowhead)" pathLength="1"/>
+          </g>
+          <text class="svg-hand mini-l" x="180" y="88" text-anchor="middle">Spark</text>
+          <text class="svg-print mini-s" x="180" y="112" text-anchor="middle">Structured</text>
+          <text class="svg-print mini-s" x="180" y="132" text-anchor="middle">Streaming</text>
+          <text class="svg-hand mini-l red" x="346" y="206" text-anchor="end">risky → flag</text>
+          <text class="svg-hand mini-l" x="346" y="80" text-anchor="end">scored</text>
+        </svg>
+        <p class="project-where hand">Spark · streaming ML</p>
+        <h4><a href="https://github.com/ayushgawai/WikiRisk" target="_blank" rel="noopener">WikiRisk</a></h4>
+        <p>Spark batch over 29+ GB of Wikipedia revisions trains a SparkML edit-risk model; Structured Streaming scores live Wikimedia EventStreams edits against it.</p>
+        <ul class="facts"><li><b>89.61%</b> recall</li><li><b>11.16M</b> training rows</li></ul>
         <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/WikiRisk" target="_blank" rel="noopener">Code on GitHub</a></div>
-      </div>
+        <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
+          <ul>
+            <li>Historical ingestion over 29+ GB of decompressed Wikipedia revisions into 11.16M training rows.</li>
+            <li>SparkML cross-validation tracked in MLflow: 89.61% recall and 0.762 ROC AUC on held-out test data.</li>
+            <li>Parquet event archive, SQLite serving store, FastAPI health and search endpoints with tests.</li>
+          </ul>
+        </div></details>
+      </article>
+</div>
+</section>
+<section class="chapter proj proj-tail" aria-label="More about WikiRisk">
+  <div class="page">
+    <div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid"><div class="dec"><h4>Train on history, score live</h4><p>The batch data teaches; the stream applies.</p></div><div class="dec"><h4>Archive every decision</h4><p>Scored events are durable — audit and replay for free.</p></div></div></div>
+    <div class="proj-rows">
+      <div class="proj-stack"><h3 class="proj-sub hand">the stack</h3><ul class="tags"><li>PySpark</li><li>Spark Structured Streaming</li><li>MLflow</li><li>Parquet</li><li>FastAPI</li><li>SQLite</li></ul></div>
+      <div class="proj-links"><h3 class="proj-sub hand">the links</h3><div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/WikiRisk" target="_blank" rel="noopener">Code on GitHub</a></div></div>
     </div>
-
-    <p class="proj-rel hand">same territory: <a class="rel-link" href="transit.html">transit</a><a class="rel-link" href="leo.html">leo</a></p>
-
-    <p class="proj-back"><a class="hand" href="../projects.html">← back to the library</a> <a class="hand" href="../media.html">or watch all the films</a></p>
+    <p class="proj-rel hand">same territory: <a class="rel-link" href="../project/transit.html">Transit Analytics</a><a class="rel-link" href="../project/leo.html">LEO satellite coverage-risk agent</a></p>
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
   </div>
 </section>
-
 </main>
 
 <script src="../assets/site.js" defer></script>

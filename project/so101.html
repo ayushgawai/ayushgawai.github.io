@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SO-101 imitation learning — project · Ayush Gawai</title>
-<meta name="description" content="SO-101 imitation learning — Six-joint leader/follower arms with Feetech STS3215 servos: 50 teleoperated demonstrations, ACT trained from scratch on a ">
+<title>SO-101 imitation learning — Ayush Gawai</title>
+<meta name="description" content="SO-101 imitation learning: Six-joint leader/follower arms with Feetech STS3215 servos: 50 teleoperated demonstrations, ACT trained from scratch on a ResNet">
 <meta name="author" content="Ayush Gawai">
 <meta name="theme-color" content="#F6F5F0">
 <link rel="canonical" href="https://ayushgawai.github.io/project/so101.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="SO-101 imitation learning — project · Ayush Gawai">
-<meta property="og:description" content="SO-101 imitation learning — Six-joint leader/follower arms with Feetech STS3215 servos: 50 teleoperated demonstrations, ACT trained from scratch on a ">
+<meta property="og:title" content="SO-101 imitation learning — Ayush Gawai">
+<meta property="og:description" content="SO-101 imitation learning: Six-joint leader/follower arms with Feetech STS3215 servos: 50 teleoperated demonstrations, ACT trained from scratch on a ResNet">
 <meta property="og:url" content="https://ayushgawai.github.io/project/so101.html">
 <meta property="og:image" content="https://ayushgawai.github.io/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -56,71 +56,294 @@
 <header class="topbar">
   <a class="topbar-wordmark hand" href="../index.html">Ayush Gawai<span>· field notebook</span></a>
   <nav class="topnav" data-page="projects" aria-label="Notebook">
-    <a class="topnav-tab" href="../index.html" style="--tab:#EFE6C8"><b>Home</b></a>
-    <a class="topnav-tab" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
-    <a class="topnav-tab" href="../projects.html" style="--tab:#F3D9CF"><b>Projects</b></a>
-    <span class="topnav-rule" aria-hidden="true"></span>
-    <a class="topnav-tab" href="../ai.html" style="--tab:#D8ECDF"><b>AI · LLM</b></a>
-    <a class="topnav-tab" href="../data.html" style="--tab:#F2E3C4"><b>Data</b></a>
-    <a class="topnav-tab" href="../software.html" style="--tab:#DDE6F6"><b>Software</b></a>
-    <a class="topnav-tab" href="../robotics.html" style="--tab:#F0D6D6"><b>Robotics</b></a>
-    <a class="topnav-tab" href="../autonomy.html" style="--tab:#DDE9E6"><b>Zoox</b></a>
-    <a class="topnav-tab" href="../research.html" style="--tab:#E3DDF0"><b>Research</b></a>
-    <a class="topnav-tab" href="../hackathons.html" style="--tab:#F4EDB8"><b>Hackathons</b></a>
-    <a class="topnav-tab" href="../media.html" style="--tab:#F6E2C9"><b>Media</b></a>
-    <a class="topnav-tab" href="../recognition.html" style="--tab:#E9DDEA"><b>Recognition</b></a>
-    <a class="topnav-tab topnav-tab--cta" href="../contact.html" style="--tab:#D9E9F0"><b>Contact</b></a>
+    <a class="topnav-tab topnav-home" data-key="home" href="../index.html" style="--tab:#EFE6C8"><b>Ayush Gawai</b></a>
+    <a class="topnav-tab" data-key="experience" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
+    <a class="topnav-tab" data-key="projects" href="../projects.html" style="--tab:#F3D9CF"><b>Hackathons &amp; Projects</b></a>
+    <a class="topnav-tab" data-key="research" href="../research.html" style="--tab:#E3DDF0"><b>Research &amp; Publications</b></a>
+    <a class="topnav-tab" data-key="media" href="../media.html" style="--tab:#F6E2C9"><b>Media &amp; Recognition</b></a>
+    <a class="topnav-tab" data-key="contact" href="../contact.html" style="--tab:#D9E9F0"><b>Résumé &amp; Contact</b></a>
   </nav>
   <div class="topbar-actions">
-    <a class="btn" href="../assets/resume/Ayush_Gawai_Resume.pdf" target="_blank" rel="noopener">Résumé</a>
     <span class="topbar-social"><a href="https://github.com/ayushgawai" target="_blank" rel="noopener">GitHub</a><i aria-hidden="true">·</i><a href="https://www.linkedin.com/in/ayushgawai" target="_blank" rel="noopener">LinkedIn</a></span>
   </div>
 </header>
 
 
 <main id="main">
-<!-- Project detail page. One source of truth: everything about this project
-     lives on this page — film, architecture, depth, results, links. -->
-<section class="chapter proj" id="proj" data-tab="projects" aria-labelledby="proj-title">
+<section class="chapter proj" id="proj" aria-labelledby="proj-title">
   <header class="chapter-head page">
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
     <p class="chapter-kicker hand">SJSU research · SO-101 + Hugging Face LeRobot</p>
-    <h2 id="proj-title" class="chapter-title">SO-101 imitation learning</h2>
+    <h1 id="proj-title" class="chapter-title">SO-101 imitation learning</h1>
     <p class="chapter-lede">Six-joint leader/follower arms with Feetech STS3215 servos: 50 teleoperated demonstrations, ACT trained from scratch on a ResNet-18 backbone and SmolVLA fine-tuning, then physical pick-and-place rollouts with video-measured error.</p>
   </header>
+  <div class="page"><figure class="proj-film"><video controls preload="metadata" playsinline poster="../assets/video/narrated/lerobot-poster.webp" width="1920" height="1080"><source src="../assets/video/narrated/lerobot.mp4" type="video/mp4"></video></figure></div>
+</section>
+<section class="chapter chapter--part" id="robots" >
+<div class="page part-page">
+<article data-part class="project rb-wide" id="p-so101">
+      <div class="project-media">
+        <figure class="sketch rb-fig" data-anim>
+          <svg class="rb-svg draw" viewBox="0 150 1060 430" role="img" aria-labelledby="rb-sketch-t">
+            <title id="rb-sketch-t">Two six-joint SO-101 robot arms clamped to a table. A hand steers the leader arm; the follower arm copies its joints, picks up a yellow cube from a fixed start spot and places it on a red target X, on loop. A camera stand watches the follower; film frames peel off and stack into a dataset pile of 50 demos, about 110,000 frames across two datasets.</title>
 
+            <g class="boil">
+              <!-- table slab + edge hatch -->
+              <path class="rb-hat" d="M20 470 L1040 470 L1040 484 L20 484 Z"/>
+              <path class="ink" pathLength="1" d="M18 470.5 L360 469.5 L720 470.8 L1042 469.6"/>
+              <path class="ink-thin" d="M20 484 L1040 484.6"/>
+
+              <!-- USB cable: leader bus → follower bus, with packets riding it -->
+              <path id="rb-cable" class="rb-cable" d="M200 486 C230 520 300 512 355 508 S470 518 512 486"/>
+              <circle class="rb-pkt" r="4.5"/><circle class="rb-pkt" r="4.5"/><circle class="rb-pkt" r="4.5"/>
+
+              <!-- fixed start spot + target X + placement check -->
+              <path class="rb-start" d="M652 471 L708 471"/>
+              <path class="ink-thin" d="M652 466 L652 476 M708 466 L708 476"/>
+              <path class="ink-red rb-x" d="M748 463 L794 478 M752 478 L790 462"/>
+              <path id="rb-check" class="rb-check" pathLength="1" d="M754 434 l11 11 l20 -24"/>
+
+              <!-- camera stand: two RGB cameras -->
+              <path class="ink" pathLength="1" d="M905 470 L904 230 Q903 214 888 212 L872 211 M884 484 L926 484 M890 470 L920 470"/>
+              <path class="ink-thin" d="M892 482 L897 471 M918 482 L913 471"/>
+              <g transform="translate(858 210) rotate(28)">
+                <rect class="ink rb-fill" x="-26" y="-15" width="44" height="30" rx="5"/>
+                <path class="rb-hat" d="M6 -14 L17 -14 L17 14 L6 14 Z"/>
+                <path class="ink" d="M-26 -8 L-36 -11 L-36 11 L-26 8"/>
+                <circle class="ink-thin" cx="-6" cy="0" r="7"/>
+              </g>
+              <g transform="translate(882 334) rotate(8)">
+                <rect class="ink rb-fill" x="-22" y="-13" width="40" height="26" rx="5"/>
+                <path class="ink" d="M-22 -7 L-32 -10 L-32 10 L-22 7 M18 0 L23 0"/>
+                <circle class="ink-thin" cx="-4" cy="0" r="6"/>
+              </g>
+              <circle class="rb-rec" cx="874" cy="191" r="4.5"/>
+              <!-- field of view -->
+              <path class="rb-fov" d="M826 226 L612 470 L812 470 Z"/>
+
+              <!-- dataset pile (static stack) -->
+              <g class="rb-pile">
+                <path d="M910 468 L1010 465 L1012 471 L912 472 Z"/>
+                <path d="M914 460 L1008 456 L1011 464 L915 466 Z"/>
+                <path d="M906 452 L1004 451 L1006 458 L908 460 Z"/>
+                <path d="M918 444 L1012 442 L1013 449 L919 451 Z"/>
+                <path d="M912 436 L1006 435 L1007 442 L913 444 Z"/>
+                <path d="M916 428 L1004 426 L1006 433 L917 435 Z"/>
+              </g>
+            </g>
+
+            <!-- flying film frames (JS) -->
+            <g class="rb-frames">
+              <g class="rb-frame" opacity="0"><rect x="-18" y="-13" width="36" height="26" rx="2"/><path d="M-12 -13 v26 M12 -13 v26 M-8 -6 h16 v12 h-16 z"/></g>
+              <g class="rb-frame" opacity="0"><rect x="-18" y="-13" width="36" height="26" rx="2"/><path d="M-12 -13 v26 M12 -13 v26 M-8 -6 h16 v12 h-16 z"/></g>
+              <g class="rb-frame" opacity="0"><rect x="-18" y="-13" width="36" height="26" rx="2"/><path d="M-12 -13 v26 M12 -13 v26 M-8 -6 h16 v12 h-16 z"/></g>
+            </g>
+
+            <!-- cube (JS-positioned, centre origin) -->
+            <g id="rb-cube" class="rb-cube" transform="translate(680 450)">
+              <path class="rb-cube-top" d="M-20 -20 L-11 -29 L29 -29 L20 -20 Z"/>
+              <path class="rb-cube-side" d="M20 -20 L29 -29 L29 11 L20 20 Z"/>
+              <rect class="rb-cube-face" x="-20" y="-20" width="40" height="40"/>
+              <path class="ink" d="M-20 -20 L20 -20 L20 20 L-20 20 Z M-20 -20 L-11 -29 L29 -29 L29 11 L20 20 M20 -20 L29 -29"/>
+            </g>
+
+            <!-- arms: nested FK chain base → shoulder → elbow → wrist (JS sets rotations) -->
+            <g id="rb-lead" class="rb-arm boil" transform="translate(170 470)">
+              <path class="ink-thin" d="M-26 14 L-26 26 L26 26 L26 14 M0 26 L0 34 M-9 34 L9 34"/>
+              <path class="rb-hat" d="M-50 -16 L50 -16 L58 0 L-58 0 Z"/>
+              <path class="ink" d="M-58 0 L-50 -16 L50 -16 L58 0"/>
+              <rect class="ink rb-fill" x="-32" y="-64" width="64" height="48" rx="9"/>
+              <path class="rb-hat" d="M12 -62 L30 -62 L30 -18 L12 -18 Z"/>
+              <circle class="ink-thin" cx="-20" cy="-26" r="2.4"/>
+              <g class="rb-l1" transform="translate(0 -70)">
+                <path class="ink rb-fill" d="M-15 4 L-12 -150 L12 -150 L15 4 Z"/>
+                <path class="rb-hat" d="M3 2 L4 -148 L12 -150 L15 4 Z"/>
+                <path class="ink-thin" d="M-5 -26 L-4 -124"/>
+                <circle class="ink rb-fill" r="20"/><circle class="ink-thin" r="7"/>
+                <path class="ink-thin" d="M-13 0 L-9 0 M9 0 L13 0 M0 -13 L0 -9 M0 9 L0 13"/>
+                <g class="rb-l2" transform="translate(0 -150)">
+                  <path class="ink rb-fill" d="M-12 4 L-9 -140 L9 -140 L12 4 Z"/>
+                  <path class="rb-hat" d="M2 2 L3 -138 L9 -140 L12 4 Z"/>
+                  <rect class="ink rb-fill" x="-19" y="-19" width="38" height="38" rx="8"/>
+                  <circle class="ink-thin" r="7"/>
+                  <g class="rb-wr" transform="translate(0 -140)">
+                    <rect class="ink rb-fill" x="-16" y="-30" width="32" height="34" rx="7"/>
+                    <circle class="ink-thin" cy="-13" r="5"/>
+                    <!-- leader handle instead of a gripper -->
+                    <rect class="ink rb-fill" x="-8" y="-88" width="16" height="60" rx="7"/>
+                    <!-- the teleoperating hand (drawn upright: the wrist always points down) -->
+                    <g transform="rotate(180)">
+                      <path class="ink rb-fill" d="M48 -18 L104 -62 L124 -36 L70 8 Z"/>
+                      <path class="rb-hat" d="M48 -18 L104 -62 L124 -36 L70 8 Z"/>
+                      <path class="ink" d="M56 -12 L76 2"/>
+                      <path class="ink rb-fill" d="M15 26 L54 -6 L70 6 L28 40 Z"/>
+                      <path class="ink rb-fill" d="M-18 38 C-18 26 -4 21 8 22 C22 23 29 33 27 47 C26 61 17 71 2 70 C-12 69 -20 60 -19 49 Z"/>
+                      <path class="ink-thin" d="M-18 38 Q-27 40 -25 48 Q-23 53 -17 51 M-19 51 Q-27 54 -24 61 Q-21 66 -14 62 M-14 62 Q-19 68 -14 72 Q-9 74 -4 69"/>
+                      <path class="ink-thin" d="M17 25 Q8 33 -4 31"/>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+
+            <g id="rb-fol" class="rb-arm boil" transform="translate(540 470)">
+              <path class="ink-thin" d="M-26 14 L-26 26 L26 26 L26 14 M0 26 L0 34 M-9 34 L9 34"/>
+              <path class="rb-hat" d="M-50 -16 L50 -16 L58 0 L-58 0 Z"/>
+              <path class="ink" d="M-58 0 L-50 -16 L50 -16 L58 0"/>
+              <rect class="ink rb-fill" x="-32" y="-64" width="64" height="48" rx="9"/>
+              <path class="rb-hat" d="M12 -62 L30 -62 L30 -18 L12 -18 Z"/>
+              <circle class="ink-thin" cx="-20" cy="-26" r="2.4"/>
+              <g class="rb-l1" transform="translate(0 -70)">
+                <path class="ink rb-fill" d="M-15 4 L-12 -150 L12 -150 L15 4 Z"/>
+                <path class="rb-hat" d="M3 2 L4 -148 L12 -150 L15 4 Z"/>
+                <path class="ink-thin" d="M-5 -26 L-4 -124"/>
+                <circle class="ink rb-fill" r="20"/><circle class="ink-thin" r="7"/>
+                <path class="ink-thin" d="M-13 0 L-9 0 M9 0 L13 0 M0 -13 L0 -9 M0 9 L0 13"/>
+                <g class="rb-l2" transform="translate(0 -150)">
+                  <path class="ink rb-fill" d="M-12 4 L-9 -140 L9 -140 L12 4 Z"/>
+                  <path class="rb-hat" d="M2 2 L3 -138 L9 -140 L12 4 Z"/>
+                  <rect class="ink rb-fill" x="-19" y="-19" width="38" height="38" rx="8"/>
+                  <circle class="ink-thin" r="7"/>
+                  <g class="rb-wr" transform="translate(0 -140)">
+                    <rect class="ink rb-fill" x="-17" y="-30" width="34" height="34" rx="7"/>
+                    <circle class="ink-thin" cy="-13" r="5"/>
+                    <path class="ink rb-fill" d="M-16 -30 L-18 -70 Q-17 -77 -9 -76 L-5 -30 Z"/>
+                    <g class="rb-jaw"><path class="ink rb-fill" d="M5 -30 L9 -76 Q17 -77 18 -70 L16 -30 Z"/></g>
+                  </g>
+                </g>
+              </g>
+            </g>
+
+            <!-- labels (hidden on small screens; the key below carries them) -->
+            <g class="rb-t">
+              <text class="svg-print rb-lbl" x="170" y="526" text-anchor="middle">leader arm</text>
+              <text class="svg-print rb-lbl" x="540" y="526" text-anchor="middle">follower arm</text>
+              <text class="svg-hand rb-note" x="355" y="562" text-anchor="middle">leader joint angles → follower servos</text>
+              <text class="svg-hand rb-note rb-pencil" x="672" y="552" text-anchor="middle">fixed start</text>
+              <text class="svg-hand rb-note rb-redt" x="772" y="526" text-anchor="middle">target ✕</text>
+              <text class="svg-hand rb-note" x="1056" y="552" text-anchor="end">50 demos · ~110k frames</text>
+              <text class="svg-hand rb-note rb-pencil" x="1056" y="576" text-anchor="end">two LeRobot datasets</text>
+              <text id="rb-count" class="svg-print rb-count" x="960" y="414" text-anchor="middle">demo 1 / 50</text>
+
+              <text class="svg-hand rb-note" x="40" y="206">a hand steers the leader</text>
+              <path class="ink-blue" d="M120 216 Q170 236 214 266" marker-end="url(#arrowhead)"/>
+              <text class="svg-hand rb-note" x="352" y="184">the follower copies every joint</text>
+              <path class="ink-blue" d="M500 196 Q536 214 548 246" marker-end="url(#arrowhead)"/>
+              <text class="svg-hand rb-note" x="666" y="190">paired RGB cameras</text>
+              <path class="ink-blue" d="M788 198 Q812 196 826 200" marker-end="url(#arrowhead)"/>
+            </g>
+          </svg>
+          <ol class="rb-key hand">
+            <li>a hand steers the leader arm</li>
+            <li>the follower copies every joint and moves the cube from a fixed start to the target ✕</li>
+            <li>two RGB cameras turn each demo into frames: 50 demos, ~110k frames</li>
+          </ol>
+          <figcaption class="rb-cap">
+            <span class="hand pencil">fig. 1 · the data loop: leader joint angles drive the follower over the motor bus while both cameras record. Frames + joint states become the training set.</span>
+            <button class="btn rb-pause" type="button" aria-pressed="false">pause the arms</button>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="project-body">
+        <div class="rb-main">
+          <p class="project-where hand">SJSU · SO-101 · Hugging Face LeRobot</p>
+          <h3 class="project-title">SO-101 imitation learning: ACT vs SmolVLA</h3>
+          <p class="project-sum">Leader–follower teleoperation on six-joint SO-101 arms (Feetech STS3215 servos on USB motor buses) logs calibrated joint commands with synchronized dual-RGB frames into LeRobot datasets. An ACT policy (ResNet-18 backbone, trained from scratch) and a fine-tuned SmolVLA were trained on the same 50 demos and scored in physical pick-and-place rollouts.</p>
+          <div class="btn-row">
+            <a class="btn" href="https://github.com/ayushgawai/so101-lerobot" target="_blank" rel="noopener">Code on GitHub</a>
+          </div>
+        </div>
+        <ul class="facts">
+          <li><b>46/50</b> ACT rollouts, fixed cube position</li>
+          <li><b>~18 ms</b> ACT local inference (SmolVLA ~251 ms)</li>
+          <li><b>~110k</b> frames from 50 demos</li>
+          <li><b>Lock=1</b> EEPROM patch unblocked calibration</li>
+        </ul>
+      </div>
+
+      <div class="rb-cards">
+        <figure class="card rb-lat tilt-l">
+          <span class="tape" aria-hidden="true"></span>
+          <p class="rb-card-h hand pencil">local inference latency</p>
+          <svg viewBox="0 0 300 140" role="img" aria-label="Latency bars: ACT about 18 milliseconds, SmolVLA about 251 milliseconds, roughly 14 times slower.">
+            <path class="ink rough" d="M8 4 L7 108 L294 107"/>
+            <path class="rough rb-bar rb-bar-a" d="M8 14 L28 14 L28 44 L8 44 Z"/>
+            <path class="rough rb-bar rb-bar-s" d="M8 64 L284 64 L284 94 L8 94 Z"/>
+            <text class="svg-print rb-bl" x="38" y="37">ACT ~18 ms</text>
+            <text class="svg-print rb-bl rb-onbar" x="18" y="87">SmolVLA ~251 ms</text>
+            <text class="svg-hand rb-14" x="294" y="134" text-anchor="end">≈ 14× faster</text>
+          </svg>
+          <figcaption><span class="rb-big">46/50</span> ACT pick-and-place successes; 2.49 cm mean placement error</figcaption>
+          <p class="hand red rb-caveat">fixed cube position only: start spots varied &lt; 1 cm, randomized positions not evaluated yet</p>
+        </figure>
+
+        <div class="card rb-debug tilt-r">
+          <span class="tape" aria-hidden="true"></span>
+          <p class="rb-card-h hand red">debug log · calibration blocked</p>
+          <ol class="rb-steps">
+            <li><span class="hand red">symptom</span> follower motor IDs reverted after every power cycle; wrist-roll and gripper collided on one ID</li>
+            <li><span class="hand red">cause</span> EEPROM write never re-locked after the ID change</li>
+            <li><span class="hand red">fix</span> patched LeRobot's motor-bus setup to write <code class="rb-stamp">Lock=1</code> after ID and baud writes</li>
+          </ol>
+          <p class="rb-ok hand"><span aria-hidden="true">✓</span> IDs persist across reboots · calibration unblocked</p>
+        </div>
+
+        <div class="rb-photos">
+          <figure class="rb-polaroid rb-topcam">
+            <span class="tape" aria-hidden="true"></span>
+            <img src="../assets/img/demos/so101-topcam.webp" alt="Top-camera dataset frame: the SO-101 follower arm at its start pose, a cube on a gridded start marker and a bowl labelled B as the target." width="640" height="480" loading="lazy" decoding="async">
+            <figcaption class="hand pencil">top camera, one dataset frame</figcaption>
+          </figure>
+          <figure class="rb-polaroid rb-ph">
+            <span class="tape" aria-hidden="true"></span>
+            <img src="../assets/img/robots/lab-placeholder.svg" alt="Placeholder for a photo of the SO-101 arms in the lab" data-placeholder="assets/img/robots/lab-placeholder" width="240" height="180" loading="lazy">
+            <figcaption class="hand pencil">lab photo coming soon</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
+        <h4>Rig</h4>
+        <ul>
+          <li>Two six-joint SO-101 arms on Feetech STS3215 serial-bus servos, each on its own USB motor bus: a leader with a handle for teleoperation and a follower with a parallel-jaw gripper.</li>
+          <li>Paired RGB cameras, including a top-down view, recorded alongside joint state; calibration and teleoperation run through Hugging Face LeRobot.</li>
+        </ul>
+        <h4>Data</h4>
+        <ul>
+          <li>50 teleoperated demonstrations in two LeRobot datasets (~49,633 and ~59,998 frames) of calibrated joint commands with synchronized camera frames.</li>
+          <li>Integrity validation before training and camera-dropout handling so a lost stream does not silently corrupt an episode.</li>
+        </ul>
+        <h4>Policies</h4>
+        <ul>
+          <li>ACT (Action Chunking Transformer) trained from scratch on a ResNet-18 vision backbone, 30,000- and 60,000-step runs.</li>
+          <li>SmolVLA vision-language-action model fine-tuned for 20,000 steps on the same demos.</li>
+          <li>Checkpoints selected from physical rollouts, not from training loss.</li>
+        </ul>
+        <h4>Evaluation</h4>
+        <ul>
+          <li>Resumable 50-trial rollout scripts; placement error measured from rollout video; a failure taxonomy over the missed trials.</li>
+          <li>ACT: 46/50 successes at a fixed cube position, 2.49 cm mean placement error among successes. Local inference ~18 ms (ACT) vs ~251 ms (SmolVLA).</li>
+          <li>Caveat: demo start positions varied under 1 cm, so this is not a generalization result; randomized-position evaluation is unfinished.</li>
+        </ul>
+        <h4>The Lock=1 bug</h4>
+        <p>Follower IDs reverted after power cycles, and wrist-roll and gripper ended up sharing one Feetech ID, which blocked calibration and with it the whole dataset pipeline. Reproduced it across a power cycle, followed the ID write path in the motor-bus setup, and found the EEPROM lock was never re-set after the write. Patched the setup to write <code>Lock=1</code> after ID or baud changes, verified IDs across reboots, then recalibrated.</p>
+        <p class="meta">Team project with a second SJSU research assistant. Owned arm bring-up and calibration, teleoperation data collection, the rollout and evaluation scripts, camera-dropout handling and the motor-bus patch. The 46/50 and latency figures are reported in the collaborator-maintained fork (<a href="https://github.com/aakashvardhan/so101-lerobot" target="_blank" rel="noopener">aakashvardhan/so101-lerobot</a>).</p>
+      </div></details>
+    </article>
+</div>
+</section>
+<section class="chapter proj proj-tail" aria-label="More about SO-101 imitation learning">
   <div class="page">
-    <figure class="proj-film"><video controls preload="metadata" playsinline poster="../assets/video/narrated/lerobot-poster.webp" width="1920" height="1080"><source src="../assets/video/narrated/lerobot.mp4" type="video/mp4"></video></figure>
-
-    <div class="proj-two">
-      <div class="proj-facts">
-        <h3 class="proj-sub hand">the numbers</h3>
-        <p class="fact"><b>50</b>teleoperated demonstrations (~50k + ~60k frames)</p><p class="fact"><b>46 / 50</b>physical pick-and-place trials at a fixed cube position</p><p class="fact"><b>2.49 cm</b>mean placement error among successes</p><p class="fact"><b>18 vs 251 ms</b>ACT vs SmolVLA local inference</p>
-      </div>
-      <div class="proj-deep">
-        <h3 class="proj-sub hand">how it works</h3>
-        <ul class='deep-list'><li>Data: calibrated joint commands and synchronized RGB frames from paired cameras, with integrity validation, camera-dropout handling and resumable 50-trial rollout scripts.</li><li>Policies: ACT from scratch (30k and 60k step runs) and a fine-tuned SmolVLA (20k steps), both rolling out on the physical arm.</li><li>The debugging story: follower motor IDs reverted after power cycles and wrist-roll/gripper collided on one Feetech ID. Traced to an EEPROM write that was never re-locked — patched LeRobot&#x27;s motor-bus setup to write Lock=1 after ID or baud changes, which persisted across restarts and unblocked calibration.</li><li>Evaluation: video-measured placement error, a failure taxonomy, and checkpoint-selection analysis across the two policy families.</li></ul>
-      </div>
-    </div>
-
     <div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid"><div class="dec"><h4>Measure from video, not assumption</h4><p>Placement error is read off the camera, so the number is real.</p></div><div class="dec"><h4>Two policy families, one dataset</h4><p>ACT and the VLA are directly comparable because they share the demos.</p></div></div></div>
-
     <div class="proj-rows">
-      <div class="proj-stack">
-        <h3 class="proj-sub hand">the stack</h3>
-        <ul class="tags"><li>LeRobot</li><li>ACT</li><li>SmolVLA</li><li>Feetech STS3215</li><li>SO-101</li><li>PyTorch</li><li>ResNet-18</li><li>Isaac Sim</li></ul>
-      </div>
-      <div class="proj-links">
-        <h3 class="proj-sub hand">the links</h3>
-        <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/so101-lerobot" target="_blank" rel="noopener">Code on GitHub</a></div>
-      </div>
+      <div class="proj-stack"><h3 class="proj-sub hand">the stack</h3><ul class="tags"><li>LeRobot</li><li>ACT</li><li>SmolVLA</li><li>Feetech STS3215</li><li>SO-101</li><li>PyTorch</li><li>ResNet-18</li><li>Isaac Sim</li></ul></div>
+      <div class="proj-links"><h3 class="proj-sub hand">the links</h3><div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/so101-lerobot" target="_blank" rel="noopener">Code on GitHub</a></div></div>
     </div>
-
-    <p class="proj-rel hand">same territory: <a class="rel-link" href="wheelchair.html">wheelchair</a><a class="rel-link" href="obstacle.html">obstacle</a></p>
-
-    <p class="proj-back"><a class="hand" href="../projects.html">← back to the library</a> <a class="hand" href="../media.html">or watch all the films</a></p>
+    <p class="proj-rel hand">same territory: <a class="rel-link" href="../project/obstacle.html">Real-time obstacle alert policy</a></p>
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
   </div>
 </section>
-
 </main>
 
 <script src="../assets/site.js" defer></script>

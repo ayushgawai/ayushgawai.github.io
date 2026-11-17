@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AccessiMed — project · Ayush Gawai</title>
-<meta name="description" content="AccessiMed — A CLI-first accessibility scanner with reviewable fixes: Playwright + axe-core audits against WCAG 2.1 A/AA, deterministic or LLM remedia">
+<title>AccessiMed — Ayush Gawai</title>
+<meta name="description" content="AccessiMed: A CLI-first accessibility scanner with reviewable fixes: Playwright + axe-core audits against WCAG 2.1 A/AA, deterministic or LLM remediation, ">
 <meta name="author" content="Ayush Gawai">
 <meta name="theme-color" content="#F6F5F0">
 <link rel="canonical" href="https://ayushgawai.github.io/project/accessimed.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="AccessiMed — project · Ayush Gawai">
-<meta property="og:description" content="AccessiMed — A CLI-first accessibility scanner with reviewable fixes: Playwright + axe-core audits against WCAG 2.1 A/AA, deterministic or LLM remedia">
+<meta property="og:title" content="AccessiMed — Ayush Gawai">
+<meta property="og:description" content="AccessiMed: A CLI-first accessibility scanner with reviewable fixes: Playwright + axe-core audits against WCAG 2.1 A/AA, deterministic or LLM remediation, ">
 <meta property="og:url" content="https://ayushgawai.github.io/project/accessimed.html">
 <meta property="og:image" content="https://ayushgawai.github.io/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -56,71 +56,41 @@
 <header class="topbar">
   <a class="topbar-wordmark hand" href="../index.html">Ayush Gawai<span>· field notebook</span></a>
   <nav class="topnav" data-page="projects" aria-label="Notebook">
-    <a class="topnav-tab" href="../index.html" style="--tab:#EFE6C8"><b>Home</b></a>
-    <a class="topnav-tab" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
-    <a class="topnav-tab" href="../projects.html" style="--tab:#F3D9CF"><b>Projects</b></a>
-    <span class="topnav-rule" aria-hidden="true"></span>
-    <a class="topnav-tab" href="../ai.html" style="--tab:#D8ECDF"><b>AI · LLM</b></a>
-    <a class="topnav-tab" href="../data.html" style="--tab:#F2E3C4"><b>Data</b></a>
-    <a class="topnav-tab" href="../software.html" style="--tab:#DDE6F6"><b>Software</b></a>
-    <a class="topnav-tab" href="../robotics.html" style="--tab:#F0D6D6"><b>Robotics</b></a>
-    <a class="topnav-tab" href="../autonomy.html" style="--tab:#DDE9E6"><b>Zoox</b></a>
-    <a class="topnav-tab" href="../research.html" style="--tab:#E3DDF0"><b>Research</b></a>
-    <a class="topnav-tab" href="../hackathons.html" style="--tab:#F4EDB8"><b>Hackathons</b></a>
-    <a class="topnav-tab" href="../media.html" style="--tab:#F6E2C9"><b>Media</b></a>
-    <a class="topnav-tab" href="../recognition.html" style="--tab:#E9DDEA"><b>Recognition</b></a>
-    <a class="topnav-tab topnav-tab--cta" href="../contact.html" style="--tab:#D9E9F0"><b>Contact</b></a>
+    <a class="topnav-tab topnav-home" data-key="home" href="../index.html" style="--tab:#EFE6C8"><b>Ayush Gawai</b></a>
+    <a class="topnav-tab" data-key="experience" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
+    <a class="topnav-tab" data-key="projects" href="../projects.html" style="--tab:#F3D9CF"><b>Hackathons &amp; Projects</b></a>
+    <a class="topnav-tab" data-key="research" href="../research.html" style="--tab:#E3DDF0"><b>Research &amp; Publications</b></a>
+    <a class="topnav-tab" data-key="media" href="../media.html" style="--tab:#F6E2C9"><b>Media &amp; Recognition</b></a>
+    <a class="topnav-tab" data-key="contact" href="../contact.html" style="--tab:#D9E9F0"><b>Résumé &amp; Contact</b></a>
   </nav>
   <div class="topbar-actions">
-    <a class="btn" href="../assets/resume/Ayush_Gawai_Resume.pdf" target="_blank" rel="noopener">Résumé</a>
     <span class="topbar-social"><a href="https://github.com/ayushgawai" target="_blank" rel="noopener">GitHub</a><i aria-hidden="true">·</i><a href="https://www.linkedin.com/in/ayushgawai" target="_blank" rel="noopener">LinkedIn</a></span>
   </div>
 </header>
 
 
 <main id="main">
-<!-- Project detail page. One source of truth: everything about this project
-     lives on this page — film, architecture, depth, results, links. -->
-<section class="chapter proj" id="proj" data-tab="projects" aria-labelledby="proj-title">
+<section class="chapter proj" id="proj" aria-labelledby="proj-title">
   <header class="chapter-head page">
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
     <p class="chapter-kicker hand">Accessibility engineering tooling</p>
-    <h2 id="proj-title" class="chapter-title">AccessiMed</h2>
+    <h1 id="proj-title" class="chapter-title">AccessiMed</h1>
     <p class="chapter-lede">A CLI-first accessibility scanner with reviewable fixes: Playwright + axe-core audits against WCAG 2.1 A/AA, deterministic or LLM remediation, and every change ships as a reviewed git diff into a CI gate.</p>
   </header>
-
-  <div class="page">
-    <figure class="proj-film"><video controls preload="metadata" playsinline poster="../assets/video/narrated/accessiMed-poster.webp" width="1920" height="1080"><source src="../assets/video/narrated/accessiMed.mp4" type="video/mp4"></video></figure>
-
-    <div class="proj-two">
-      <div class="proj-facts">
-        <h3 class="proj-sub hand">the numbers</h3>
-        <p class="fact"><b>WCAG 2.1</b>A/AA levels via axe-core in a real browser</p><p class="fact"><b>2</b>fix strategies: deterministic no-key fallback + LLM</p><p class="fact"><b>SQLite</b>scan and remediation history, plus PDF reports</p><p class="fact"><b>CI</b>GitHub Actions gates keep it green</p>
-      </div>
-      <div class="proj-deep">
-        <h3 class="proj-sub hand">how it works</h3>
-        <ul class='deep-list'><li>Scan: install the CLI, initialize .accessimed.toml, then audit local HTML or run a real browser with Playwright and axe-core against WCAG 2.1 A/AA; findings normalize to severity and rule IDs (alt text, labels, button/link names, page language).</li><li>Fix: pick a finding and get a deterministic exact-match patch where one exists, or an LLM suggestion where it doesn&#x27;t — detection is separated from remediation.</li><li>Review: apply the fix to source, review the git diff, re-run the checks; SQLite stores scans and remediation history and powers PDF reports and an optional FastAPI + React/Vite dashboard.</li><li>CI: GitHub Actions and automated test gates make accessibility a merge gate, not a one-time audit.</li></ul>
-      </div>
-    </div>
-
-    <div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid"><div class="dec"><h4>Deterministic first, LLM second</h4><p>No-key fallbacks are fully predictable; the LLM only covers what rules can&#x27;t.</p></div><div class="dec"><h4>Nothing applies silently</h4><p>Every change is a reviewed diff — a human is always in the loop.</p></div></div></div>
-
-    <div class="proj-rows">
-      <div class="proj-stack">
-        <h3 class="proj-sub hand">the stack</h3>
-        <ul class="tags"><li>Playwright</li><li>axe-core</li><li>WCAG 2.1</li><li>FastAPI</li><li>React + Vite</li><li>SQLite</li><li>GitHub Actions</li></ul>
-      </div>
-      <div class="proj-links">
-        <h3 class="proj-sub hand">the links</h3>
-        <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/accessiMed" target="_blank" rel="noopener">Code on GitHub</a></div>
-      </div>
-    </div>
-
-    <p class="proj-rel hand">same territory: <a class="rel-link" href="lsmstore.html">lsmstore</a><a class="rel-link" href="mmm.html">mmm</a></p>
-
-    <p class="proj-back"><a class="hand" href="../projects.html">← back to the library</a> <a class="hand" href="../media.html">or watch all the films</a></p>
-  </div>
+  <div class="page"><figure class="proj-film"><video controls preload="metadata" playsinline poster="../assets/video/narrated/accessiMed-poster.webp" width="1920" height="1080"><source src="../assets/video/narrated/accessiMed.mp4" type="video/mp4"></video></figure><div class="proj-two"><div class="proj-facts"><h3 class="proj-sub hand">the numbers</h3><p class="fact"><b>WCAG 2.1</b>A/AA levels via axe-core in a real browser</p><p class="fact"><b>2</b>fix strategies: deterministic no-key fallback + LLM</p><p class="fact"><b>SQLite</b>scan and remediation history, plus PDF reports</p><p class="fact"><b>CI</b>GitHub Actions gates keep it green</p></div><div class="proj-deep"><h3 class="proj-sub hand">how it works</h3><ul class="deep-list"><li>Scan: install the CLI, initialize .accessimed.toml, then audit local HTML or run a real browser with Playwright and axe-core against WCAG 2.1 A/AA; findings normalize to severity and rule IDs (alt text, labels, button/link names, page language).</li><li>Fix: pick a finding and get a deterministic exact-match patch where one exists, or an LLM suggestion where it doesn&#x27;t — detection is separated from remediation.</li><li>Review: apply the fix to source, review the git diff, re-run the checks; SQLite stores scans and remediation history and powers PDF reports and an optional FastAPI + React/Vite dashboard.</li><li>CI: GitHub Actions and automated test gates make accessibility a merge gate, not a one-time audit.</li></ul></div></div></div>
 </section>
 
+<section class="chapter proj proj-tail" aria-label="More about AccessiMed">
+  <div class="page">
+    <div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid"><div class="dec"><h4>Deterministic first, LLM second</h4><p>No-key fallbacks are fully predictable; the LLM only covers what rules can&#x27;t.</p></div><div class="dec"><h4>Nothing applies silently</h4><p>Every change is a reviewed diff — a human is always in the loop.</p></div></div></div>
+    <div class="proj-rows">
+      <div class="proj-stack"><h3 class="proj-sub hand">the stack</h3><ul class="tags"><li>Playwright</li><li>axe-core</li><li>WCAG 2.1</li><li>FastAPI</li><li>React + Vite</li><li>SQLite</li><li>GitHub Actions</li></ul></div>
+      <div class="proj-links"><h3 class="proj-sub hand">the links</h3><div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/accessiMed" target="_blank" rel="noopener">Code on GitHub</a></div></div>
+    </div>
+    <p class="proj-rel hand">same territory: <a class="rel-link" href="../project/lsmstore.html">LSMStore — LSM-tree key-value store</a><a class="rel-link" href="../project/mmm.html">MarketMIX — MMM + MTA budget optimizer</a></p>
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
+  </div>
+</section>
 </main>
 
 <script src="../assets/site.js" defer></script>

@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sentinel AI — project · Ayush Gawai</title>
-<meta name="description" content="Sentinel AI — A fully local, privacy-first multi-camera safety system on the HP ZGX Nano: cheap on every frame, and expensive reasoning only when an e">
+<title>Sentinel AI — Ayush Gawai</title>
+<meta name="description" content="Sentinel AI: A fully local, privacy-first multi-camera safety system on the HP ZGX Nano: cheap on every frame, and expensive reasoning only when an escalat">
 <meta name="author" content="Ayush Gawai">
 <meta name="theme-color" content="#F6F5F0">
 <link rel="canonical" href="https://ayushgawai.github.io/project/sentinel.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Sentinel AI — project · Ayush Gawai">
-<meta property="og:description" content="Sentinel AI — A fully local, privacy-first multi-camera safety system on the HP ZGX Nano: cheap on every frame, and expensive reasoning only when an e">
+<meta property="og:title" content="Sentinel AI — Ayush Gawai">
+<meta property="og:description" content="Sentinel AI: A fully local, privacy-first multi-camera safety system on the HP ZGX Nano: cheap on every frame, and expensive reasoning only when an escalat">
 <meta property="og:url" content="https://ayushgawai.github.io/project/sentinel.html">
 <meta property="og:image" content="https://ayushgawai.github.io/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -56,71 +56,151 @@
 <header class="topbar">
   <a class="topbar-wordmark hand" href="../index.html">Ayush Gawai<span>· field notebook</span></a>
   <nav class="topnav" data-page="projects" aria-label="Notebook">
-    <a class="topnav-tab" href="../index.html" style="--tab:#EFE6C8"><b>Home</b></a>
-    <a class="topnav-tab" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
-    <a class="topnav-tab" href="../projects.html" style="--tab:#F3D9CF"><b>Projects</b></a>
-    <span class="topnav-rule" aria-hidden="true"></span>
-    <a class="topnav-tab" href="../ai.html" style="--tab:#D8ECDF"><b>AI · LLM</b></a>
-    <a class="topnav-tab" href="../data.html" style="--tab:#F2E3C4"><b>Data</b></a>
-    <a class="topnav-tab" href="../software.html" style="--tab:#DDE6F6"><b>Software</b></a>
-    <a class="topnav-tab" href="../robotics.html" style="--tab:#F0D6D6"><b>Robotics</b></a>
-    <a class="topnav-tab" href="../autonomy.html" style="--tab:#DDE9E6"><b>Zoox</b></a>
-    <a class="topnav-tab" href="../research.html" style="--tab:#E3DDF0"><b>Research</b></a>
-    <a class="topnav-tab" href="../hackathons.html" style="--tab:#F4EDB8"><b>Hackathons</b></a>
-    <a class="topnav-tab" href="../media.html" style="--tab:#F6E2C9"><b>Media</b></a>
-    <a class="topnav-tab" href="../recognition.html" style="--tab:#E9DDEA"><b>Recognition</b></a>
-    <a class="topnav-tab topnav-tab--cta" href="../contact.html" style="--tab:#D9E9F0"><b>Contact</b></a>
+    <a class="topnav-tab topnav-home" data-key="home" href="../index.html" style="--tab:#EFE6C8"><b>Ayush Gawai</b></a>
+    <a class="topnav-tab" data-key="experience" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
+    <a class="topnav-tab" data-key="projects" href="../projects.html" style="--tab:#F3D9CF"><b>Hackathons &amp; Projects</b></a>
+    <a class="topnav-tab" data-key="research" href="../research.html" style="--tab:#E3DDF0"><b>Research &amp; Publications</b></a>
+    <a class="topnav-tab" data-key="media" href="../media.html" style="--tab:#F6E2C9"><b>Media &amp; Recognition</b></a>
+    <a class="topnav-tab" data-key="contact" href="../contact.html" style="--tab:#D9E9F0"><b>Résumé &amp; Contact</b></a>
   </nav>
   <div class="topbar-actions">
-    <a class="btn" href="../assets/resume/Ayush_Gawai_Resume.pdf" target="_blank" rel="noopener">Résumé</a>
     <span class="topbar-social"><a href="https://github.com/ayushgawai" target="_blank" rel="noopener">GitHub</a><i aria-hidden="true">·</i><a href="https://www.linkedin.com/in/ayushgawai" target="_blank" rel="noopener">LinkedIn</a></span>
   </div>
 </header>
 
 
 <main id="main">
-<!-- Project detail page. One source of truth: everything about this project
-     lives on this page — film, architecture, depth, results, links. -->
-<section class="chapter proj" id="proj" data-tab="projects" aria-labelledby="proj-title">
+<section class="chapter proj" id="proj" aria-labelledby="proj-title">
   <header class="chapter-head page">
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
     <p class="chapter-kicker hand">HP × SJSU Edge AI Hackathon · winner · 2026</p>
-    <h2 id="proj-title" class="chapter-title">Sentinel AI</h2>
+    <h1 id="proj-title" class="chapter-title">Sentinel AI</h1>
     <p class="chapter-lede">A fully local, privacy-first multi-camera safety system on the HP ZGX Nano: cheap on every frame, and expensive reasoning only when an escalation is credible. Video never leaves the machine.</p>
   </header>
+  <div class="page"></div>
+</section>
+<section class="chapter chapter--part" id="ai" >
+<div class="page part-page">
+<article data-part class="project flip" id="p-sentinel">
+      <div class="project-media ai-case-media" data-anim>
+        <svg class="ai-diag sf" viewBox="0 0 560 362" role="img" aria-label="Inside a dashed on-site boundary, camera frames stream into YOLO pose
+          and tracking. Benign frames drop into a bin. A credible event becomes a 16-frame bundle that slides into a local
+          Qwen3-VL model, then deterministic severity rules and an incident state machine raise an alert. Video never leaves the site.">
+          <path class="ink-thin" d="M12 16 C 180 13, 380 14, 548 17 C 549 110, 548 220, 547 318 C 380 320, 180 319, 13 317 C 11 220, 11 110, 12 16 Z" stroke-dasharray="8 7" opacity=".7"/>
+          <text class="svg-hand" x="28" y="306" font-size="22" style="fill:var(--ink-2)">on-site · HP ZGX Nano</text>
 
+          <!-- camera -->
+          <g class="boil">
+            <path class="ink" style="fill:var(--paper-card)" d="M26 86 L70 84 L71 116 L27 117 Z"/>
+            <path class="ink" d="M71 94 L86 86 L86 114 L71 107"/>
+            <circle class="ink-thin" cx="48" cy="100" r="8"/>
+            <path class="ink-thin" d="M46 117 L44 138 M36 138 H56"/>
+          </g>
+
+          <!-- frame chips (drawn under the boxes so they disappear inside) -->
+          <g class="sf-chip sf-g1"><rect x="88" y="92" width="30" height="21" rx="2" fill="#fff" stroke="var(--ink-2)" stroke-width="1.6"/><path d="M95 99 v8 M111 99 v8 M99 107 h8" stroke="var(--ink-3)" stroke-width="1.4"/></g>
+          <g class="sf-chip sf-g2"><rect x="88" y="92" width="30" height="21" rx="2" fill="#fff" stroke="var(--ink-2)" stroke-width="1.6"/><path d="M95 99 v8 M111 99 v8 M99 107 h8" stroke="var(--ink-3)" stroke-width="1.4"/></g>
+          <g class="sf-chip sf-g3"><rect x="88" y="92" width="30" height="21" rx="2" fill="#fff" stroke="var(--ink-2)" stroke-width="1.6"/><path d="M95 99 v8 M111 99 v8 M99 107 h8" stroke="var(--ink-3)" stroke-width="1.4"/></g>
+          <g class="sf-chip sf-red"><rect x="88" y="92" width="30" height="21" rx="2" fill="#fff" stroke="var(--red)" stroke-width="2.2"/><path d="M95 99 v8 M111 99 v8 M99 107 h8" stroke="var(--red)" stroke-width="1.6"/></g>
+          <g class="sf-stack">
+            <rect x="318" y="84" width="34" height="24" rx="2" fill="#fff" stroke="var(--red)" stroke-width="1.6"/>
+            <rect x="314" y="89" width="34" height="24" rx="2" fill="#fff" stroke="var(--red)" stroke-width="1.6"/>
+            <rect x="310" y="94" width="34" height="24" rx="2" fill="#fff" stroke="var(--red)" stroke-width="2"/>
+            <path d="M317 102 v8 M337 102 v8 M321 110 h12" stroke="var(--red)" stroke-width="1.5"/>
+          </g>
+
+          <!-- YOLO -->
+          <g class="rough">
+            <path class="ink" style="fill:var(--paper-card)" d="M124 70 C 180 68, 240 69, 292 71 C 293 98, 293 124, 291 150 C 240 151, 180 152, 125 150 C 123 124, 123 96, 124 70 Z"/>
+          </g>
+          <text x="208" y="104" class="svg-print" font-size="22" font-weight="700" text-anchor="middle">YOLO pose</text>
+          <text x="208" y="134" class="svg-hand" font-size="22" text-anchor="middle">every frame</text>
+          <text x="334" y="58" class="svg-hand" font-size="22" text-anchor="middle" style="fill:var(--red)">16-frame bundle</text>
+
+          <!-- bin for benign frames -->
+          <g class="rough">
+            <path class="ink" d="M168 196 L176 246 L242 246 L250 196"/>
+            <path class="ink-thin" d="M164 196 H254"/>
+          </g>
+          <text x="208" y="276" class="svg-hand" font-size="22" text-anchor="middle" style="fill:var(--ink-2)">benign · dropped</text>
+
+          <!-- VLM -->
+          <g class="rough">
+            <path class="ink sf-vlm" style="fill:var(--paper-card)" d="M380 70 C 430 68, 490 69, 540 71 C 541 98, 541 124, 539 150 C 490 151, 430 152, 381 150 C 379 124, 379 96, 380 70 Z"/>
+            <path class="ink-blue" d="M460 152 V194" marker-end="url(#arrowhead)"/>
+            <path class="ink sf-rules" style="fill:var(--paper-card)" d="M380 198 C 430 196, 490 197, 540 199 C 541 220, 541 242, 539 262 C 490 263, 430 264, 381 262 C 379 242, 379 220, 380 198 Z"/>
+            <path class="ink-blue" d="M378 230 H350" marker-end="url(#arrowhead)"/>
+          </g>
+          <text x="460" y="104" class="svg-print" font-size="22" font-weight="700" text-anchor="middle">Qwen3-VL</text>
+          <text x="460" y="134" class="svg-hand" font-size="22" text-anchor="middle">local VLM</text>
+          <text x="460" y="226" class="svg-print" font-size="22" font-weight="700" text-anchor="middle">severity rules</text>
+          <text x="460" y="252" class="svg-hand" font-size="22" text-anchor="middle">state machine</text>
+
+          <!-- alert bell -->
+          <g class="sf-bell">
+            <path class="ink" style="fill:var(--paper-card)" d="M318 248 C 318 232, 320 214, 332 212 C 344 214, 346 232, 346 248 L350 254 H314 Z"/>
+            <path class="ink-thin" d="M328 258 C 329 263, 335 263, 336 258 M332 212 V206"/>
+          </g>
+          <text x="332" y="286" class="svg-hand" font-size="22" text-anchor="middle">alert</text>
+
+          <text x="280" y="350" class="svg-hand" font-size="22" text-anchor="middle" style="fill:var(--red)">video never leaves the site</text>
+        </svg>
+        <button class="video" data-yt="MFF1DICU6Ow" data-title="Sentinel AI demo">
+          <img src="../assets/img/demos/sentinel.webp" alt="" loading="lazy" width="1280" height="720">
+          <span class="video-label">Demo · Sentinel AI</span>
+        </button>
+      </div>
+      <div class="project-body">
+        <p class="project-where hand">HP × SJSU Edge AI Hackathon · winner</p>
+        <h3 class="project-title">Sentinel AI: cheap on every frame, VLM only on escalation</h3>
+        <p class="project-sum">YOLO pose detection with per-track motion rules runs on every frame of a multi-camera wall;
+          only credible events escalate, as a 16-frame evidence bundle, to Qwen3-VL served locally on an HP ZGX Nano.
+          Deterministic severity thresholds and an incident state machine decide alerts. I owned the frame-streaming
+          backend, async event routing, alert triggers and incident logging.</p>
+        <ul class="facts">
+          <li><b>1st</b> place, hackathon</li>
+          <li><b>16</b> frame evidence bundle</li>
+          <li><b>0</b> frames leave the site</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn" href="https://github.com/ayushgawai/campus_sentinel" target="_blank" rel="noopener">Code on GitHub</a>
+          <a class="btn blue" href="https://github.com/ayushgawai/sentinel-ai" target="_blank" rel="noopener">SAM 3.1 + Muse variant</a>
+        </div>
+        <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
+          <h4>Ownership</h4>
+          <p>Team project, winner of the HP × SJSU Edge AI Hackathon. I owned the video and frame-streaming backend,
+            asynchronous event routing, alert triggers and incident logging.</p>
+          <h4>Architecture</h4>
+          <ul>
+            <li>YOLO26s-pose person detection with temporal tracking and per-track motion rules (weapon, fall, run, loitering, sudden change); optional OpenCLIP ViT-B/16 anomaly screening.</li>
+            <li>Score-based escalation instead of a VLM call per frame: a 16-frame event window goes to locally served Qwen3-VL-30B-A3B FP8 on the HP ZGX Nano (GB10) through HP Z Runtime, classifying WEAPON, FIGHT, THEFT, RUN, MEDICAL or BENIGN.</li>
+            <li>Python severity thresholds and an incident state machine: NEW → ALERTED → DISPATCH_PENDING → DISPATCHED → TRACKING → RESOLVED / DISMISSED. SQLite event history; REST, WebSocket and MJPEG console updates.</li>
+            <li>Guarded dispatch path: local ASR + TTS + telephony, human confirmation, kill switch, one dispatch per incident, fixed camera-to-address map.</li>
+          </ul>
+          <h4>Demo observations (not benchmarks)</h4>
+          <ul>
+            <li>The six-feed wall (three with full analysis) ran about 13–14 fps, up from ~3. Demo calls never reached the real 911 service.</li>
+          </ul>
+          <h4>Later variant</h4>
+          <p>Meta SAM 3.1 + Muse: 8-second per-camera ring buffers, ByteTrack IDs through weak detections, SAM prompt-based
+            segmentation on enlarged person crops, 8 evidence frames + crop to Muse Spark on Baseten, a text-only verifier,
+            and deterministic guardrails deciding automatic versus operator-approved dispatch.</p>
+        </div></details>
+      </div>
+    </article>
+</div>
+</section>
+<section class="chapter proj proj-tail" aria-label="More about Sentinel AI">
   <div class="page">
-    <figure class="proj-film proj-film-embed"><div class="embed-frame"><iframe src="https://www.youtube-nocookie.com/embed/MFF1DICU6Ow" title="Live demo video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div></figure>
-
-    <div class="proj-two">
-      <div class="proj-facts">
-        <h3 class="proj-sub hand">the numbers</h3>
-        <p class="fact"><b>3 → 13+</b>fps on a six-feed camera wall</p><p class="fact"><b>640 / 649</b>frames agreed with the demo clip&#x27;s labels</p><p class="fact"><b>~157 ms</b>first synthesized audio on a warm voice connection</p><p class="fact"><b>16-frame</b>evidence bundle to Qwen3-VL-30B (FP8, local)</p>
-      </div>
-      <div class="proj-deep">
-        <h3 class="proj-sub hand">how it works</h3>
-        <ul class='deep-list'><li>Perception: YOLO26s-pose person and pose detection with temporal tracking; per-track motion rules (weapon, fall, run, loitering, sudden change) and optional CLIP screening keep the cheap path cheap.</li><li>Reasoning: a 16-frame evidence bundle goes to locally served Qwen3-VL-30B-A3B FP8 for event classification — WEAPON, FIGHT, THEFT, RUN, MEDICAL or BENIGN — plus a person description. Score-based escalation instead of every-frame VLM calls.</li><li>Operations: an incident state machine (NEW → ALERTED → DISPATCH_PENDING → DISPATCHED → TRACKING → RESOLVED / DISMISSED), SQLite event history, and a guarded emergency-call workflow with local speech recognition, ElevenLabs TTS, SignalWire telephony, human confirmation, a kill switch and one dispatch per incident.</li><li>Surface: a live multi-camera wall, site map, incident history, timeline, call transcript and operator actions over REST, WebSocket and MJPEG.</li></ul>
-      </div>
-    </div>
-
     <div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid"><div class="dec"><h4>Cost-fidelity funnel</h4><p>Cheap per-frame perception handles volume; the VLM handles the few ambiguous, high-impact events.</p></div><div class="dec"><h4>No cloud, on purpose</h4><p>Video stays on the ZGX Nano — a privacy and latency choice, not a limitation.</p></div></div></div>
-
     <div class="proj-rows">
-      <div class="proj-stack">
-        <h3 class="proj-sub hand">the stack</h3>
-        <ul class="tags"><li>Python</li><li>CUDA</li><li>OpenCV</li><li>FastAPI</li><li>WebSockets</li><li>SQLite</li><li>Yolo v26</li><li>Qwen3-VL</li><li>Docker</li></ul>
-      </div>
-      <div class="proj-links">
-        <h3 class="proj-sub hand">the links</h3>
-        <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/campus_sentinel" target="_blank" rel="noopener">Code on GitHub</a></div>
-      </div>
+      <div class="proj-stack"><h3 class="proj-sub hand">the stack</h3><ul class="tags"><li>Python</li><li>CUDA</li><li>OpenCV</li><li>FastAPI</li><li>WebSockets</li><li>SQLite</li><li>Yolo v26</li><li>Qwen3-VL</li><li>Docker</li></ul></div>
+      <div class="proj-links"><h3 class="proj-sub hand">the links</h3><div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/campus_sentinel" target="_blank" rel="noopener">Code on GitHub</a></div></div>
     </div>
-
-    <p class="proj-rel hand">same territory: <a class="rel-link" href="blast.html">blast</a><a class="rel-link" href="carbonshift.html">carbonshift</a></p>
-
-    <p class="proj-back"><a class="hand" href="../projects.html">← back to the library</a> <a class="hand" href="../media.html">or watch all the films</a></p>
+    <p class="proj-rel hand">same territory: <a class="rel-link" href="../project/blast.html">Blast Radius</a><a class="rel-link" href="../project/carbonshift.html">CarbonShift</a></p>
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
   </div>
 </section>
-
 </main>
 
 <script src="../assets/site.js" defer></script>

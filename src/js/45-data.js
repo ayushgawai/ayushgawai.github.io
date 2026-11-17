@@ -251,6 +251,8 @@
 
   const check = () => { const v = board.clientWidth < 920; if (v !== vert || !S) { vert = v; render(); } };
   new ResizeObserver(check).observe(board);
+  const only = fig.closest('#data').dataset.only;
+  if (only && PIPES[only]) { mode = only; }
   check();
   if (!NB.reduced) NB.loop(fig, (dt, t) => S && frame(t));
 })();

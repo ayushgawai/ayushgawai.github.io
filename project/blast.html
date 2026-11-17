@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Blast Radius — project · Ayush Gawai</title>
-<meta name="description" content="Blast Radius — Answers the data-engineer's scariest question — 'if I rename this upstream field, what breaks before I merge?' — with a fleet of coding">
+<title>Blast Radius — Ayush Gawai</title>
+<meta name="description" content="Blast Radius: Answers the data-engineer&#x27;s scariest question — &#x27;if I rename this upstream field, what breaks before I merge?&#x27; — with a fleet of coding agent">
 <meta name="author" content="Ayush Gawai">
 <meta name="theme-color" content="#F6F5F0">
 <link rel="canonical" href="https://ayushgawai.github.io/project/blast.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Blast Radius — project · Ayush Gawai">
-<meta property="og:description" content="Blast Radius — Answers the data-engineer's scariest question — 'if I rename this upstream field, what breaks before I merge?' — with a fleet of coding">
+<meta property="og:title" content="Blast Radius — Ayush Gawai">
+<meta property="og:description" content="Blast Radius: Answers the data-engineer&#x27;s scariest question — &#x27;if I rename this upstream field, what breaks before I merge?&#x27; — with a fleet of coding agent">
 <meta property="og:url" content="https://ayushgawai.github.io/project/blast.html">
 <meta property="og:image" content="https://ayushgawai.github.io/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -56,71 +56,179 @@
 <header class="topbar">
   <a class="topbar-wordmark hand" href="../index.html">Ayush Gawai<span>· field notebook</span></a>
   <nav class="topnav" data-page="projects" aria-label="Notebook">
-    <a class="topnav-tab" href="../index.html" style="--tab:#EFE6C8"><b>Home</b></a>
-    <a class="topnav-tab" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
-    <a class="topnav-tab" href="../projects.html" style="--tab:#F3D9CF"><b>Projects</b></a>
-    <span class="topnav-rule" aria-hidden="true"></span>
-    <a class="topnav-tab" href="../ai.html" style="--tab:#D8ECDF"><b>AI · LLM</b></a>
-    <a class="topnav-tab" href="../data.html" style="--tab:#F2E3C4"><b>Data</b></a>
-    <a class="topnav-tab" href="../software.html" style="--tab:#DDE6F6"><b>Software</b></a>
-    <a class="topnav-tab" href="../robotics.html" style="--tab:#F0D6D6"><b>Robotics</b></a>
-    <a class="topnav-tab" href="../autonomy.html" style="--tab:#DDE9E6"><b>Zoox</b></a>
-    <a class="topnav-tab" href="../research.html" style="--tab:#E3DDF0"><b>Research</b></a>
-    <a class="topnav-tab" href="../hackathons.html" style="--tab:#F4EDB8"><b>Hackathons</b></a>
-    <a class="topnav-tab" href="../media.html" style="--tab:#F6E2C9"><b>Media</b></a>
-    <a class="topnav-tab" href="../recognition.html" style="--tab:#E9DDEA"><b>Recognition</b></a>
-    <a class="topnav-tab topnav-tab--cta" href="../contact.html" style="--tab:#D9E9F0"><b>Contact</b></a>
+    <a class="topnav-tab topnav-home" data-key="home" href="../index.html" style="--tab:#EFE6C8"><b>Ayush Gawai</b></a>
+    <a class="topnav-tab" data-key="experience" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
+    <a class="topnav-tab" data-key="projects" href="../projects.html" style="--tab:#F3D9CF"><b>Hackathons &amp; Projects</b></a>
+    <a class="topnav-tab" data-key="research" href="../research.html" style="--tab:#E3DDF0"><b>Research &amp; Publications</b></a>
+    <a class="topnav-tab" data-key="media" href="../media.html" style="--tab:#F6E2C9"><b>Media &amp; Recognition</b></a>
+    <a class="topnav-tab" data-key="contact" href="../contact.html" style="--tab:#D9E9F0"><b>Résumé &amp; Contact</b></a>
   </nav>
   <div class="topbar-actions">
-    <a class="btn" href="../assets/resume/Ayush_Gawai_Resume.pdf" target="_blank" rel="noopener">Résumé</a>
     <span class="topbar-social"><a href="https://github.com/ayushgawai" target="_blank" rel="noopener">GitHub</a><i aria-hidden="true">·</i><a href="https://www.linkedin.com/in/ayushgawai" target="_blank" rel="noopener">LinkedIn</a></span>
   </div>
 </header>
 
 
 <main id="main">
-<!-- Project detail page. One source of truth: everything about this project
-     lives on this page — film, architecture, depth, results, links. -->
-<section class="chapter proj" id="proj" data-tab="projects" aria-labelledby="proj-title">
+<section class="chapter proj" id="proj" aria-labelledby="proj-title">
   <header class="chapter-head page">
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
     <p class="chapter-kicker hand">WeMakeDevs submission · with Manav Patel · Nov 2026</p>
-    <h2 id="proj-title" class="chapter-title">Blast Radius</h2>
+    <h1 id="proj-title" class="chapter-title">Blast Radius</h1>
     <p class="chapter-lede">Answers the data-engineer&#x27;s scariest question — &#x27;if I rename this upstream field, what breaks before I merge?&#x27; — with a fleet of coding agents and a human-controlled merge gate.</p>
   </header>
+  <div class="page"></div>
+</section>
+<section class="chapter chapter--part" id="agents" >
+<div class="page part-page">
+<article data-part class="project flip" id="p-blast">
+      <div class="project-media" data-anim>
+        <svg class="br-svg" viewBox="0 0 560 640" role="img" data-step="1.9" aria-label="Animated multi-agent pipeline. An upstream pull request renames
+          user_id to account_id. An impact coordinator broadcasts to three repo rooms: analytics and dbt, ML features, and
+          dashboards, each with its own coding agent (Claude Code, Codex, OpenCode) testing in its own checkout. Six checks
+          fail. Agents open Jira tickets and three fix pull requests. The merge gate stays pending; a non-owner's approval is
+          rejected; after the three real owners approve, the gate turns green.">
+          <!-- 1 · upstream PR -->
+          <g class="rough">
+            <path class="ink" style="fill:var(--paper-card)" d="M120 16 C 210 14, 350 15, 440 17 C 441 38, 441 60, 439 80 C 350 81, 210 82, 121 80 C 119 60, 119 38, 120 16 Z"/>
+          </g>
+          <text x="280" y="42" class="svg-print" font-size="22" font-weight="700" text-anchor="middle">upstream PR</text>
+          <g class="svg-hand" font-size="23">
+            <text x="140" y="70" style="fill:var(--red)">user_id</text>
+            <text x="240" y="70" style="fill:var(--ink-2)">→</text>
+            <text x="270" y="70">account_id</text>
+          </g>
+          <path class="br-strike" d="M137 62 C 166 60, 196 61, 226 59" stroke="var(--red)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
 
-  <div class="page">
-    <figure class="proj-film proj-film-embed"><div class="embed-frame"><iframe src="https://www.youtube-nocookie.com/embed/9MtxDeI03c0" title="Multi-agent demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div></figure>
+          <!-- 2 · coordinator + broadcast -->
+          <path class="ink-blue br-hide" data-s="1" d="M280 82 V110" marker-end="url(#arrowhead)"/>
+          <g class="br-hide" data-s="1">
+            <g class="rough"><path class="ink" style="fill:var(--paper-card)" d="M156 114 C 230 112, 330 113, 404 115 C 405 132, 405 150, 403 168 C 330 169, 230 170, 157 168 C 155 150, 155 132, 156 114 Z"/></g>
+            <text x="280" y="149" class="svg-print" font-size="22" font-weight="700" text-anchor="middle">impact coordinator</text>
+          </g>
+          <g class="br-hide" data-s="2">
+            <path class="ink-blue" d="M280 170 C 230 186, 140 198, 92 216 M280 170 V214 M280 170 C 330 186, 420 198, 468 216" stroke-width="2.2" marker-end="url(#arrowhead)"/>
+            <text x="148" y="192" class="svg-hand" font-size="22" text-anchor="end">broadcast</text>
+          </g>
+          <g class="br-pulses br-hide" data-s="2" data-until="2">
+            <circle class="br-pulse" style="--dx:-188px;--dy:46px" cx="280" cy="170" r="6"/>
+            <circle class="br-pulse" style="--dx:0px;--dy:44px" cx="280" cy="170" r="6"/>
+            <circle class="br-pulse" style="--dx:188px;--dy:46px" cx="280" cy="170" r="6"/>
+          </g>
 
-    <div class="proj-two">
-      <div class="proj-facts">
-        <h3 class="proj-sub hand">the numbers</h3>
-        <p class="fact"><b>6</b>downstream checks broken by one user_id → account_id rename</p><p class="fact"><b>3 providers</b>Claude Code, Codex and OpenCode working in own checkouts</p><p class="fact"><b>3</b>coordinated fix PRs + tickets, all owner-approved</p><p class="fact"><b>1</b>harmless optional-column case correctly reported as no-impact</p>
+          <!-- 3 · three repo rooms, one agent each -->
+          <g class="br-hide" data-s="2">
+            <g class="rough">
+              <rect class="ink br-room" x="16" y="226" width="152" height="118" rx="8"/>
+              <rect class="ink br-room" x="204" y="226" width="152" height="118" rx="8"/>
+              <rect class="ink br-room" x="392" y="226" width="152" height="118" rx="8"/>
+            </g>
+            <g class="svg-print" font-size="22" font-weight="700" text-anchor="middle">
+              <text x="92" y="256">analytics/dbt</text><text x="280" y="256">ML features</text><text x="468" y="256">dashboards</text>
+            </g>
+            <g class="svg-hand" font-size="22" text-anchor="middle">
+              <text x="92" y="288">Claude Code</text><text x="280" y="288">Codex</text><text x="468" y="288">OpenCode</text>
+            </g>
+          </g>
+          <!-- per-room status line changes with the stage -->
+          <g class="svg-hand br-status" font-size="22" text-anchor="middle">
+            <g class="br-hide" data-s="3" data-until="3" style="fill:var(--ink-2)"><text x="92" y="326">testing…</text><text x="280" y="326">testing…</text><text x="468" y="326">testing…</text></g>
+            <g class="br-hide" data-s="4" data-until="4" style="fill:var(--red)"><text x="92" y="326">checks fail</text><text x="280" y="326">checks fail</text><text x="468" y="326">checks fail</text></g>
+            <g class="br-hide" data-s="5" data-until="6" style="fill:var(--blue)"><text x="92" y="326">fix PR open</text><text x="280" y="326">fix PR open</text><text x="468" y="326">fix PR open</text></g>
+            <g class="br-hide" data-s="7" style="fill:var(--green)"><text x="92" y="326">approved ✓</text><text x="280" y="326">approved ✓</text><text x="468" y="326">approved ✓</text></g>
+          </g>
+
+          <!-- 4 · six failing checks -->
+          <g class="br-hide" data-s="4">
+            <g class="br-checks">
+              <g class="br-x" style="--i:0"><rect x="16" y="364" width="80" height="40" rx="5"/><path d="M47 375 l18 18 M65 375 l-18 18"/></g>
+              <g class="br-x" style="--i:1"><rect x="106" y="364" width="80" height="40" rx="5"/><path d="M137 375 l18 18 M155 375 l-18 18"/></g>
+              <g class="br-x" style="--i:2"><rect x="195" y="364" width="80" height="40" rx="5"/><path d="M226 375 l18 18 M244 375 l-18 18"/></g>
+              <g class="br-x" style="--i:3"><rect x="285" y="364" width="80" height="40" rx="5"/><path d="M316 375 l18 18 M334 375 l-18 18"/></g>
+              <g class="br-x" style="--i:4"><rect x="374" y="364" width="80" height="40" rx="5"/><path d="M405 375 l18 18 M423 375 l-18 18"/></g>
+              <g class="br-x" style="--i:5"><rect x="464" y="364" width="80" height="40" rx="5"/><path d="M495 375 l18 18 M513 375 l-18 18"/></g>
+            </g>
+            <text x="280" y="434" class="svg-hand" font-size="22" text-anchor="middle" style="fill:var(--red)">6 checks fail · exact file and check reported</text>
+          </g>
+
+          <!-- 5 · tickets, fix PRs, merge gate -->
+          <g class="br-hide" data-s="5">
+            <g class="rough">
+              <rect class="ink" style="fill:var(--paper-card)" x="16" y="456" width="164" height="52" rx="7"/>
+              <rect class="ink" style="fill:var(--paper-card)" x="198" y="456" width="164" height="52" rx="7"/>
+              <rect class="ink br-gate" x="380" y="456" width="164" height="52" rx="7"/>
+            </g>
+            <g class="svg-print" font-size="22" font-weight="700" text-anchor="middle">
+              <text x="98" y="489">Jira tickets</text><text x="280" y="489">3 fix PRs</text><text x="448" y="489">merge gate</text>
+            </g>
+            <circle class="br-led" cx="522" cy="482" r="9"/>
+          </g>
+          <text class="svg-hand br-hide" data-s="5" data-until="6" x="462" y="534" font-size="22" text-anchor="middle" style="fill:#A4740F">pending…</text>
+          <text class="svg-hand br-hide" data-s="7" x="462" y="534" font-size="22" text-anchor="middle" style="fill:var(--green)">green ✓</text>
+
+          <!-- 6 · approvals: a non-owner is rejected, real owners pass the gate -->
+          <g class="br-hide" data-s="6">
+            <g class="br-head"><circle class="ink" style="fill:#fff" cx="60" cy="576" r="19"/><path class="ink-thin" d="M50 604 C 52 594, 68 594, 70 604"/></g>
+            <g class="br-head"><circle class="ink" style="fill:#fff" cx="140" cy="576" r="19"/><path class="ink-thin" d="M130 604 C 132 594, 148 594, 150 604"/></g>
+            <g class="br-head"><circle class="ink" style="fill:#fff" cx="220" cy="576" r="19"/><path class="ink-thin" d="M210 604 C 212 594, 228 594, 230 604"/></g>
+            <text x="140" y="632" class="svg-hand" font-size="22" text-anchor="middle">repo owners</text>
+            <g><circle class="ink-red" style="fill:#fff" cx="380" cy="576" r="19"/>
+              <path d="M371 567 L389 585 M389 567 L371 585" stroke="var(--red)" stroke-width="3" stroke-linecap="round"/></g>
+            <text x="380" y="626" class="svg-hand" font-size="22" text-anchor="middle" style="fill:var(--red)">non-owner · rejected</text>
+          </g>
+          <g class="br-hide br-oks" data-s="7">
+            <path d="M51 576 l7 8 l13 -16" /><path d="M131 576 l7 8 l13 -16"/><path d="M211 576 l7 8 l13 -16"/>
+          </g>
+        </svg>
+        <button class="video" data-yt="9MtxDeI03c0" data-title="Blast Radius demo">
+          <img src="../assets/img/demos/blast-radius.webp" alt="" loading="lazy" width="1280" height="720">
+          <span class="video-label">Demo · Blast Radius</span>
+        </button>
       </div>
-      <div class="proj-deep">
-        <h3 class="proj-sub hand">how it works</h3>
-        <ul class='deep-list'><li>Trigger: an upstream PR posts to a Switch schema-changes room; an impact coordinator on Claude Code broadcasts an impact-checker role to linked analytics, ML-feature and dashboard rooms.</li><li>Bounded ownership: three agents work in their own Git checkouts, run the upstream branch against local tests, and report the exact failing file and check.</li><li>Repair: agents open Jira tickets and fix PRs, then wait for owner authorization — a non-owner&#x27;s approval is rejected in the demo.</li><li>Gate: the coordinator writes a durable impact report and holds the upstream required check pending until every repo owner approves in Slack; the demo ends green only after legitimate owners sign off.</li></ul>
-      </div>
-    </div>
 
-    <div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid"><div class="dec"><h4>Parallel agents, bounded ownership</h4><p>Each provider works in its own checkout; ownership and test scope are explicit.</p></div><div class="dec"><h4>Human-controlled merge gate</h4><p>The impact report stays pending until the humans approve — least privilege by construction.</p></div></div></div>
-
-    <div class="proj-rows">
-      <div class="proj-stack">
-        <h3 class="proj-sub hand">the stack</h3>
-        <ul class="tags"><li>Claude Code</li><li>Codex</li><li>OpenCode</li><li>Switch</li><li>Git</li><li>Jira</li><li>Slack</li></ul>
-      </div>
-      <div class="proj-links">
-        <h3 class="proj-sub hand">the links</h3>
+      <div class="project-body">
+        <p class="project-where hand">WeMakeDevs · November 2026</p>
+        <h3 class="project-title">Blast Radius: one rename, three repos, six failures caught before merge</h3>
+        <p class="project-sum">An upstream schema PR triggers an impact coordinator that broadcasts an impact-checker role to
+          linked analytics, ML-feature and dashboard rooms. Three coding agents across providers run the upstream branch
+          against local tests in their own Git checkouts, report the exact failing file and check, and open Jira tickets and
+          fix PRs. A required check stays pending until every repo owner approves in Slack.</p>
+        <ul class="facts">
+          <li><b>6</b> downstream checks caught</li>
+          <li><b>3</b> fix PRs, 3 agents</li>
+          <li><b>1</b> owner-only merge gate</li>
+        </ul>
         <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/blast-radius" target="_blank" rel="noopener">Code on GitHub</a></div>
+        <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
+          <h4>Team</h4>
+          <p>Team project with Manav Patel, WeMakeDevs submission, November 2026.</p>
+          <h4>Flow</h4>
+          <ul>
+            <li>An upstream PR posts to a Switch schema-changes room; an impact coordinator on Claude Code broadcasts the impact-checker role to linked analytics, ML-feature and dashboard rooms.</li>
+            <li>Claude Code, Codex and OpenCode work in their own Git checkouts, run the upstream branch against local tests, and report the exact failing file and check.</li>
+            <li>Agents open Jira tickets and coordinated fix PRs; the coordinator writes a durable impact report and holds the upstream required check pending until every repo owner approves in Slack.</li>
+          </ul>
+          <h4>Properties</h4>
+          <ul>
+            <li>Parallel agents with bounded ownership, independent tests, a durable audit trail, least privilege, a failure impact graph and a human-controlled merge gate.</li>
+            <li>Demo: <code>user_id</code> → <code>account_id</code> broke six checks across analytics/dbt, ML features and dashboard SQL, producing three coordinated fix PRs and tickets. A non-owner's approval was rejected; the pipeline went green only after the legitimate owners approved. A harmless optional-column change reports no impact.</li>
+          </ul>
+        </div></details>
       </div>
+    </article>
+</div>
+</section>
+<section class="chapter proj proj-tail" aria-label="More about Blast Radius">
+  <div class="page">
+    <div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid"><div class="dec"><h4>Parallel agents, bounded ownership</h4><p>Each provider works in its own checkout; ownership and test scope are explicit.</p></div><div class="dec"><h4>Human-controlled merge gate</h4><p>The impact report stays pending until the humans approve — least privilege by construction.</p></div></div></div>
+    <div class="proj-rows">
+      <div class="proj-stack"><h3 class="proj-sub hand">the stack</h3><ul class="tags"><li>Claude Code</li><li>Codex</li><li>OpenCode</li><li>Switch</li><li>Git</li><li>Jira</li><li>Slack</li></ul></div>
+      <div class="proj-links"><h3 class="proj-sub hand">the links</h3><div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/blast-radius" target="_blank" rel="noopener">Code on GitHub</a></div></div>
     </div>
-
-    <p class="proj-rel hand">same territory: <a class="rel-link" href="sentinel.html">sentinel</a><a class="rel-link" href="agent-fleet.html">agent-fleet</a></p>
-
-    <p class="proj-back"><a class="hand" href="../projects.html">← back to the library</a> <a class="hand" href="../media.html">or watch all the films</a></p>
+    <p class="proj-rel hand">same territory: <a class="rel-link" href="../project/sentinel.html">Sentinel AI</a><a class="rel-link" href="../project/agent-fleet.html">Agent fleet</a></p>
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
   </div>
 </section>
-
 </main>
 
 <script src="../assets/site.js" defer></script>

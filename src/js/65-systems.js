@@ -23,6 +23,9 @@
     });
   });
 
+  const only = ["lsm", "qe", "roof"].indexOf(sec.dataset.only);
+  if (only >= 0) setTab(only);
+
   /* ---------- timeline helpers ---------- */
   const ease = (p) => (p < 0.5 ? 2 * p * p : 1 - (-2 * p + 2) ** 2 / 2);
   const clamp = (v) => Math.max(0, Math.min(1, v));

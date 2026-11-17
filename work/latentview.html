@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LatentView Analytics — experience · Ayush Gawai</title>
-<meta name="description" content="LatentView Analytics — Data Engineer · Aug 2021 – Dec 2023">
+<meta name="description" content="LatentView Analytics: Data Engineer, Aug 2021 – Dec 2023">
 <meta name="author" content="Ayush Gawai">
 <meta name="theme-color" content="#F6F5F0">
 <link rel="canonical" href="https://ayushgawai.github.io/work/latentview.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="LatentView Analytics — experience · Ayush Gawai">
-<meta property="og:description" content="LatentView Analytics — Data Engineer · Aug 2021 – Dec 2023">
+<meta property="og:description" content="LatentView Analytics: Data Engineer, Aug 2021 – Dec 2023">
 <meta property="og:url" content="https://ayushgawai.github.io/work/latentview.html">
 <meta property="og:image" content="https://ayushgawai.github.io/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -56,65 +56,80 @@
 <header class="topbar">
   <a class="topbar-wordmark hand" href="../index.html">Ayush Gawai<span>· field notebook</span></a>
   <nav class="topnav" data-page="experience" aria-label="Notebook">
-    <a class="topnav-tab" href="../index.html" style="--tab:#EFE6C8"><b>Home</b></a>
-    <a class="topnav-tab" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
-    <a class="topnav-tab" href="../projects.html" style="--tab:#F3D9CF"><b>Projects</b></a>
-    <span class="topnav-rule" aria-hidden="true"></span>
-    <a class="topnav-tab" href="../ai.html" style="--tab:#D8ECDF"><b>AI · LLM</b></a>
-    <a class="topnav-tab" href="../data.html" style="--tab:#F2E3C4"><b>Data</b></a>
-    <a class="topnav-tab" href="../software.html" style="--tab:#DDE6F6"><b>Software</b></a>
-    <a class="topnav-tab" href="../robotics.html" style="--tab:#F0D6D6"><b>Robotics</b></a>
-    <a class="topnav-tab" href="../autonomy.html" style="--tab:#DDE9E6"><b>Zoox</b></a>
-    <a class="topnav-tab" href="../research.html" style="--tab:#E3DDF0"><b>Research</b></a>
-    <a class="topnav-tab" href="../hackathons.html" style="--tab:#F4EDB8"><b>Hackathons</b></a>
-    <a class="topnav-tab" href="../media.html" style="--tab:#F6E2C9"><b>Media</b></a>
-    <a class="topnav-tab" href="../recognition.html" style="--tab:#E9DDEA"><b>Recognition</b></a>
-    <a class="topnav-tab topnav-tab--cta" href="../contact.html" style="--tab:#D9E9F0"><b>Contact</b></a>
+    <a class="topnav-tab topnav-home" data-key="home" href="../index.html" style="--tab:#EFE6C8"><b>Ayush Gawai</b></a>
+    <a class="topnav-tab" data-key="experience" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
+    <a class="topnav-tab" data-key="projects" href="../projects.html" style="--tab:#F3D9CF"><b>Hackathons &amp; Projects</b></a>
+    <a class="topnav-tab" data-key="research" href="../research.html" style="--tab:#E3DDF0"><b>Research &amp; Publications</b></a>
+    <a class="topnav-tab" data-key="media" href="../media.html" style="--tab:#F6E2C9"><b>Media &amp; Recognition</b></a>
+    <a class="topnav-tab" data-key="contact" href="../contact.html" style="--tab:#D9E9F0"><b>Résumé &amp; Contact</b></a>
   </nav>
   <div class="topbar-actions">
-    <a class="btn" href="../assets/resume/Ayush_Gawai_Resume.pdf" target="_blank" rel="noopener">Résumé</a>
     <span class="topbar-social"><a href="https://github.com/ayushgawai" target="_blank" rel="noopener">GitHub</a><i aria-hidden="true">·</i><a href="https://www.linkedin.com/in/ayushgawai" target="_blank" rel="noopener">LinkedIn</a></span>
   </div>
 </header>
 
 
 <main id="main">
-<!-- Experience detail page: the single home for one company's full story.
-     Nothing about this org is repeated anywhere else on the site. -->
-<section class="chapter work" id="work" data-tab="experience" aria-labelledby="work-title">
+<section class="chapter work" id="work" aria-labelledby="work-title">
   <header class="chapter-head page">
-    <p class="chapter-kicker hand">Aug 2021 – Dec 2023 · LatentView Analytics</p>
-    <h2 id="work-title" class="chapter-title">LatentView Analytics</h2>
-    <p class="chapter-lede">Data Engineer. Enterprise analytics consulting at petabyte scale: controlled migration of ~800 TB from HDFS to S3 behind a Delta Lake validation gate, with CloudWatch/SNS/Lambda SLA enforcement that cut client escalations ~45%.</p>
+    <p class="proj-back"><a class="hand" href="../experience.html">← all experience</a></p>
+    <p class="chapter-kicker hand">Aug 2021 – Dec 2023 · Data Engineer</p>
+    <h1 id="work-title" class="chapter-title">LatentView Analytics</h1>
+    <p class="chapter-lede">Enterprise analytics consulting at petabyte scale: controlled migration of ~800 TB from HDFS to S3 behind a Delta Lake validation gate, with CloudWatch/SNS/Lambda SLA enforcement that cut client escalations ~45%.</p>
   </header>
-
   <div class="page">
     <div class="work-two">
-      <div class="work-numbers">
-        <h3 class="proj-sub hand">on the record</h3>
-        <div class="facts"><p class="fact"><b>~800 TB</b>HDFS → S3, validated at 99.6%</p><p class="fact"><b>~45%</b>fewer client escalations</p><p class="fact"><b>18 → 6 min</b>major reporting pipeline</p><p class="fact"><b>zero</b>tolerance for production data errors</p></div>
-      </div>
-      <div class="work-story">
-        <h3 class="proj-sub hand">what I actually did</h3>
-        <ul class="deep-list"><li>The migration: ~800 TB of enterprise data moved from HDFS to AWS S3, with AWS Data Sync handling the transfer and bash scripts tracking and validating every copied batch.</li><li>Controlled, not fire-and-forget: a Delta Lake–style validation framework with Python and pytest-style dataset checks diffed source and destination for row mismatches, null anomalies and type drift — 99.6% validation accuracy before go-live, which is what kept it from becoming a client escalation.</li><li>SLAs: CloudWatch metrics, SNS alerting and reactive Lambda triggers orchestrated in Airflow; root-cause traces cut time-to-detection of pipeline failures, reducing client escalations by ~45%.</li><li>Performance: layered CTE rewrites, partitioning and execution optimization took a major reporting pipeline from ~18 minutes to 6; containerized operators and modular DAGs moved legacy Airflow pipelines to managed (MWAA-style) environments.</li></ul>
-      </div>
+      <div class="work-numbers"><h3 class="proj-sub hand">on the record</h3><div class="facts"><p class="fact"><b>~800 TB</b>HDFS → S3, validated at 99.6%</p><p class="fact"><b>~45%</b>fewer client escalations</p><p class="fact"><b>18 → 6 min</b>major reporting pipeline</p><p class="fact"><b>zero</b>tolerance for production data errors</p></div></div>
+      <div class="work-story"><h3 class="proj-sub hand">what I did</h3><ul class="deep-list"><li>The migration: ~800 TB of enterprise data moved from HDFS to AWS S3, with AWS Data Sync handling the transfer and bash scripts tracking and validating every copied batch.</li><li>Controlled, not fire-and-forget: a Delta Lake–style validation framework with Python and pytest-style dataset checks diffed source and destination for row mismatches, null anomalies and type drift — 99.6% validation accuracy before go-live, which is what kept it from becoming a client escalation.</li><li>SLAs: CloudWatch metrics, SNS alerting and reactive Lambda triggers orchestrated in Airflow; root-cause traces cut time-to-detection of pipeline failures, reducing client escalations by ~45%.</li><li>Performance: layered CTE rewrites, partitioning and execution optimization took a major reporting pipeline from ~18 minutes to 6; containerized operators and modular DAGs moved legacy Airflow pipelines to managed (MWAA-style) environments.</li></ul></div>
     </div>
-
-    <div class="proj-rows">
-      <div>
-        <h3 class="proj-sub hand">the stack</h3>
-        <ul class="tags"><li>Python</li><li>Spark / Databricks</li><li>Snowflake</li><li>AWS S3</li><li>Lambda</li><li>CloudWatch</li><li>Airflow</li><li>pytest</li></ul>
-      </div>
-      <div>
-        <h3 class="proj-sub hand">the builds from here</h3>
-        <div class="btn-row work-projs"><a class="btn" href="../project/latentview.html">Latentview</a></div>
-      </div>
-    </div>
-
-    <p class="proj-back"><a class="hand" href="../experience.html">← back to the route</a> <a class="hand" href="../projects.html">all projects</a></p>
+    <div class="proj-rows"><div><h3 class="proj-sub hand">the stack</h3><ul class="tags"><li>Python</li><li>Spark / Databricks</li><li>Snowflake</li><li>AWS S3</li><li>Lambda</li><li>CloudWatch</li><li>Airflow</li><li>pytest</li></ul></div></div>
+    <p class="work-next hand">drawn out below: every system I built here, each with its own sketch and deep dive ↓</p>
   </div>
 </section>
-
+<section class="chapter chapter--part" id="data" data-only="latentview">
+<div class="page">
+<figure class="data-sketch" data-anim>
+      <div class="data-tabs" role="tablist" aria-label="Choose a pipeline">
+        <button class="tab" type="button" role="tab" id="data-tab-transit" aria-controls="data-panel" aria-selected="true" data-pipe="transit"><b>Transit</b><span>streaming</span></button>
+        <button class="tab" type="button" role="tab" id="data-tab-zscaler" aria-controls="data-panel" aria-selected="false" tabindex="-1" data-pipe="zscaler"><b>Zscaler</b><span>2024–25</span></button>
+        <button class="tab" type="button" role="tab" id="data-tab-latentview" aria-controls="data-panel" aria-selected="false" tabindex="-1" data-pipe="latentview"><b>LatentView</b><span>2021–23</span></button>
+      </div>
+      <div class="data-board">
+        <svg class="data-svg" viewBox="0 0 1100 440" role="img" aria-labelledby="data-svg-title">
+          <title id="data-svg-title">Hand-drawn pipeline of tanks, valves and pipes. Data packets flow through each stage; at the validation gate a red-pencil hook pulls a failing packet into a quarantine bin.</title>
+          <g class="data-canvas"></g>
+        </svg>
+      </div>
+      <figcaption class="data-note" aria-live="polite"><b>Hover, tap or tab</b> to a station to see what it does.</figcaption>
+    </figure>
+<div class="data-panel" id="data-panel" role="region">
+<article class="data-pb" data-pipe="latentview" id="p-latentview">
+        <div class="pb-head">
+          <p class="project-where hand">LatentView Analytics · Data Engineer · 2021–2023</p>
+          <h3 class="project-title">An 800 TB HDFS → S3 migration behind a test gate</h3>
+          <p class="project-sum">AWS DataSync moved the data while bash scripts tracked every copied batch. A Python/pytest framework diffed source and destination for row mismatches, null anomalies and type drift before go-live. Legacy Airflow moved to MWAA-style modular DAGs, and CloudWatch → SNS → Lambda enforced client SLAs.</p>
+        </div>
+        <ul class="facts"><li><b>~800 TB</b> migrated</li><li><b>99.6%</b> validation accuracy</li><li><b>~45%</b> fewer client escalations</li><li><b>18 → 6 min</b> one reporting model</li></ul>
+        <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
+          <h4>Risks at this scale</h4>
+          <p>Corruption in transit, schema drift, partial ingestion, silent batch-job errors and SLA breaches on client reporting.</p>
+          <h4>Validation framework</h4>
+          <ul>
+            <li>Delta Lake patterns to track changes; Python validation logic with pytest-style dataset tests.</li>
+            <li>Programmatic source-vs-destination comparison: row mismatches, null anomalies, type inconsistencies, all flagged before release.</li>
+          </ul>
+          <h4>Monitoring and SLAs</h4>
+          <p>CloudWatch metrics, SNS alerting and Lambda triggers on top of Airflow detect SLA breaches and job failures and log root-cause traces; client escalations fell about 45%.</p>
+          <h4>Orchestration</h4>
+          <p>Legacy Airflow upgraded to managed MWAA-style patterns: containerized operators, modular DAGs, isolated per-workflow tests, better retries, fewer failed deploys.</p>
+          <h4>Performance</h4>
+          <p>Layered CTEs restructured, partitioning re-planned for pruning instead of wide scans, resources and query plans tuned: one major reporting model went from about 18 to 6 minutes. Stack: Python, Spark/Databricks, Snowflake, S3, Lambda, CloudWatch, Airflow.</p>
+        </div></details>
+      </article>
+</div>
+</div>
+</section>
+<section class="chapter proj proj-tail"><div class="page"><p class="proj-back"><a class="hand" href="../experience.html">← all experience</a></p></div></section>
 </main>
 
 <script src="../assets/site.js" defer></script>

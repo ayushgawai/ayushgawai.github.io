@@ -1345,6 +1345,8 @@ try {
 
   const check = () => { const v = board.clientWidth < 920; if (v !== vert || !S) { vert = v; render(); } };
   new ResizeObserver(check).observe(board);
+  const only = fig.closest('#data').dataset.only;
+  if (only && PIPES[only]) { mode = only; }
   check();
   if (!NB.reduced) NB.loop(fig, (dt, t) => S && frame(t));
 })();
@@ -1497,6 +1499,9 @@ try {
       if (d) { e.preventDefault(); setTab((i + d + tabs.length) % tabs.length, true); }
     });
   });
+
+  const only = ["lsm", "qe", "roof"].indexOf(sec.dataset.only);
+  if (only >= 0) setTab(only);
 
   /* ---------- timeline helpers ---------- */
   const ease = (p) => (p < 0.5 ? 2 * p * p : 1 - (-2 * p + 2) ** 2 / 2);

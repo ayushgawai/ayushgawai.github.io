@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Agent fleet — project · Ayush Gawai</title>
-<meta name="description" content="Agent fleet — A CLI and dashboard that gives each coding-agent task its own Git branch and worktree, shards tests across workers, and gates every diff">
+<title>Agent fleet — Ayush Gawai</title>
+<meta name="description" content="Agent fleet: A CLI and dashboard that gives each coding-agent task its own Git branch and worktree, shards tests across workers, and gates every diff throu">
 <meta name="author" content="Ayush Gawai">
 <meta name="theme-color" content="#F6F5F0">
 <link rel="canonical" href="https://ayushgawai.github.io/project/agent-fleet.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Agent fleet — project · Ayush Gawai">
-<meta property="og:description" content="Agent fleet — A CLI and dashboard that gives each coding-agent task its own Git branch and worktree, shards tests across workers, and gates every diff">
+<meta property="og:title" content="Agent fleet — Ayush Gawai">
+<meta property="og:description" content="Agent fleet: A CLI and dashboard that gives each coding-agent task its own Git branch and worktree, shards tests across workers, and gates every diff throu">
 <meta property="og:url" content="https://ayushgawai.github.io/project/agent-fleet.html">
 <meta property="og:image" content="https://ayushgawai.github.io/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -56,71 +56,41 @@
 <header class="topbar">
   <a class="topbar-wordmark hand" href="../index.html">Ayush Gawai<span>· field notebook</span></a>
   <nav class="topnav" data-page="projects" aria-label="Notebook">
-    <a class="topnav-tab" href="../index.html" style="--tab:#EFE6C8"><b>Home</b></a>
-    <a class="topnav-tab" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
-    <a class="topnav-tab" href="../projects.html" style="--tab:#F3D9CF"><b>Projects</b></a>
-    <span class="topnav-rule" aria-hidden="true"></span>
-    <a class="topnav-tab" href="../ai.html" style="--tab:#D8ECDF"><b>AI · LLM</b></a>
-    <a class="topnav-tab" href="../data.html" style="--tab:#F2E3C4"><b>Data</b></a>
-    <a class="topnav-tab" href="../software.html" style="--tab:#DDE6F6"><b>Software</b></a>
-    <a class="topnav-tab" href="../robotics.html" style="--tab:#F0D6D6"><b>Robotics</b></a>
-    <a class="topnav-tab" href="../autonomy.html" style="--tab:#DDE9E6"><b>Zoox</b></a>
-    <a class="topnav-tab" href="../research.html" style="--tab:#E3DDF0"><b>Research</b></a>
-    <a class="topnav-tab" href="../hackathons.html" style="--tab:#F4EDB8"><b>Hackathons</b></a>
-    <a class="topnav-tab" href="../media.html" style="--tab:#F6E2C9"><b>Media</b></a>
-    <a class="topnav-tab" href="../recognition.html" style="--tab:#E9DDEA"><b>Recognition</b></a>
-    <a class="topnav-tab topnav-tab--cta" href="../contact.html" style="--tab:#D9E9F0"><b>Contact</b></a>
+    <a class="topnav-tab topnav-home" data-key="home" href="../index.html" style="--tab:#EFE6C8"><b>Ayush Gawai</b></a>
+    <a class="topnav-tab" data-key="experience" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
+    <a class="topnav-tab" data-key="projects" href="../projects.html" style="--tab:#F3D9CF"><b>Hackathons &amp; Projects</b></a>
+    <a class="topnav-tab" data-key="research" href="../research.html" style="--tab:#E3DDF0"><b>Research &amp; Publications</b></a>
+    <a class="topnav-tab" data-key="media" href="../media.html" style="--tab:#F6E2C9"><b>Media &amp; Recognition</b></a>
+    <a class="topnav-tab" data-key="contact" href="../contact.html" style="--tab:#D9E9F0"><b>Résumé &amp; Contact</b></a>
   </nav>
   <div class="topbar-actions">
-    <a class="btn" href="../assets/resume/Ayush_Gawai_Resume.pdf" target="_blank" rel="noopener">Résumé</a>
     <span class="topbar-social"><a href="https://github.com/ayushgawai" target="_blank" rel="noopener">GitHub</a><i aria-hidden="true">·</i><a href="https://www.linkedin.com/in/ayushgawai" target="_blank" rel="noopener">LinkedIn</a></span>
   </div>
 </header>
 
 
 <main id="main">
-<!-- Project detail page. One source of truth: everything about this project
-     lives on this page — film, architecture, depth, results, links. -->
-<section class="chapter proj" id="proj" data-tab="projects" aria-labelledby="proj-title">
+<section class="chapter proj" id="proj" aria-labelledby="proj-title">
   <header class="chapter-head page">
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
     <p class="chapter-kicker hand">Parallel coding agents · Python + FastAPI</p>
-    <h2 id="proj-title" class="chapter-title">Agent fleet</h2>
+    <h1 id="proj-title" class="chapter-title">Agent fleet</h1>
     <p class="chapter-lede">A CLI and dashboard that gives each coding-agent task its own Git branch and worktree, shards tests across workers, and gates every diff through a review gate before a human approves.</p>
   </header>
-
-  <div class="page">
-    
-
-    <div class="proj-two">
-      <div class="proj-facts">
-        <h3 class="proj-sub hand">the numbers</h3>
-        <p class="fact"><b>worktrees</b>each task runs isolated in Docker or a subprocess sandbox</p><p class="fact"><b>LPT</b>historical-duration test-shard scheduling</p><p class="fact"><b>JUnit</b>results merged across workers</p><p class="fact"><b>diff gate</b>deleted tests, weak assertions, secrets, network calls, large changes</p>
-      </div>
-      <div class="proj-deep">
-        <h3 class="proj-sub hand">how it works</h3>
-        <ul class='deep-list'><li>Isolation: each task gets its own branch and worktree, running in a Docker or subprocess sandbox.</li><li>Verification: test suites are sharded across workers using historical-duration LPT scheduling, and JUnit results are merged.</li><li>Review gate: a diff-review gate checks for deleted tests, weak assertions, secrets, network calls and large changes, with optional LLM review — then a human approves, retries or discards.</li></ul>
-      </div>
-    </div>
-
-    <div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid"><div class="dec"><h4>The gate is the product</h4><p>Agents can propose anything; only gated, reviewed diffs move.</p></div></div></div>
-
-    <div class="proj-rows">
-      <div class="proj-stack">
-        <h3 class="proj-sub hand">the stack</h3>
-        <ul class="tags"><li>Python</li><li>FastAPI</li><li>htmx</li><li>Docker</li><li>Git worktrees</li><li>JUnit</li></ul>
-      </div>
-      <div class="proj-links">
-        <h3 class="proj-sub hand">the links</h3>
-        <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/agent-fleet" target="_blank" rel="noopener">Code on GitHub</a></div>
-      </div>
-    </div>
-
-    <p class="proj-rel hand">same territory: <a class="rel-link" href="blast.html">blast</a><a class="rel-link" href="apm-explorer.html">apm-explorer</a></p>
-
-    <p class="proj-back"><a class="hand" href="../projects.html">← back to the library</a> <a class="hand" href="../media.html">or watch all the films</a></p>
-  </div>
+  <div class="page"><div class="proj-two"><div class="proj-facts"><h3 class="proj-sub hand">the numbers</h3><p class="fact"><b>worktrees</b>each task runs isolated in Docker or a subprocess sandbox</p><p class="fact"><b>LPT</b>historical-duration test-shard scheduling</p><p class="fact"><b>JUnit</b>results merged across workers</p><p class="fact"><b>diff gate</b>deleted tests, weak assertions, secrets, network calls, large changes</p></div><div class="proj-deep"><h3 class="proj-sub hand">how it works</h3><ul class="deep-list"><li>Isolation: each task gets its own branch and worktree, running in a Docker or subprocess sandbox.</li><li>Verification: test suites are sharded across workers using historical-duration LPT scheduling, and JUnit results are merged.</li><li>Review gate: a diff-review gate checks for deleted tests, weak assertions, secrets, network calls and large changes, with optional LLM review — then a human approves, retries or discards.</li></ul></div></div></div>
 </section>
 
+<section class="chapter proj proj-tail" aria-label="More about Agent fleet">
+  <div class="page">
+    <div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid"><div class="dec"><h4>The gate is the product</h4><p>Agents can propose anything; only gated, reviewed diffs move.</p></div></div></div>
+    <div class="proj-rows">
+      <div class="proj-stack"><h3 class="proj-sub hand">the stack</h3><ul class="tags"><li>Python</li><li>FastAPI</li><li>htmx</li><li>Docker</li><li>Git worktrees</li><li>JUnit</li></ul></div>
+      <div class="proj-links"><h3 class="proj-sub hand">the links</h3><div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/agent-fleet" target="_blank" rel="noopener">Code on GitHub</a></div></div>
+    </div>
+    <p class="proj-rel hand">same territory: <a class="rel-link" href="../project/blast.html">Blast Radius</a><a class="rel-link" href="../project/apm-explorer.html">APM trace explorer</a></p>
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
+  </div>
+</section>
 </main>
 
 <script src="../assets/site.js" defer></script>

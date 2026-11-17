@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CapFlow — CDC replication — project · Ayush Gawai</title>
-<meta name="description" content="CapFlow — CDC replication — A CDC pipeline that mirrors inserts, updates and deletes from a change log into warehouse tables, reconciles row by row, a">
+<title>CapFlow — CDC replication — Ayush Gawai</title>
+<meta name="description" content="CapFlow — CDC replication: A CDC pipeline that mirrors inserts, updates and deletes from a change log into warehouse tables, reconciles row by row, and can">
 <meta name="author" content="Ayush Gawai">
 <meta name="theme-color" content="#F6F5F0">
 <link rel="canonical" href="https://ayushgawai.github.io/project/capflow.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="CapFlow — CDC replication — project · Ayush Gawai">
-<meta property="og:description" content="CapFlow — CDC replication — A CDC pipeline that mirrors inserts, updates and deletes from a change log into warehouse tables, reconciles row by row, a">
+<meta property="og:title" content="CapFlow — CDC replication — Ayush Gawai">
+<meta property="og:description" content="CapFlow — CDC replication: A CDC pipeline that mirrors inserts, updates and deletes from a change log into warehouse tables, reconciles row by row, and can">
 <meta property="og:url" content="https://ayushgawai.github.io/project/capflow.html">
 <meta property="og:image" content="https://ayushgawai.github.io/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -56,71 +56,77 @@
 <header class="topbar">
   <a class="topbar-wordmark hand" href="../index.html">Ayush Gawai<span>· field notebook</span></a>
   <nav class="topnav" data-page="projects" aria-label="Notebook">
-    <a class="topnav-tab" href="../index.html" style="--tab:#EFE6C8"><b>Home</b></a>
-    <a class="topnav-tab" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
-    <a class="topnav-tab" href="../projects.html" style="--tab:#F3D9CF"><b>Projects</b></a>
-    <span class="topnav-rule" aria-hidden="true"></span>
-    <a class="topnav-tab" href="../ai.html" style="--tab:#D8ECDF"><b>AI · LLM</b></a>
-    <a class="topnav-tab" href="../data.html" style="--tab:#F2E3C4"><b>Data</b></a>
-    <a class="topnav-tab" href="../software.html" style="--tab:#DDE6F6"><b>Software</b></a>
-    <a class="topnav-tab" href="../robotics.html" style="--tab:#F0D6D6"><b>Robotics</b></a>
-    <a class="topnav-tab" href="../autonomy.html" style="--tab:#DDE9E6"><b>Zoox</b></a>
-    <a class="topnav-tab" href="../research.html" style="--tab:#E3DDF0"><b>Research</b></a>
-    <a class="topnav-tab" href="../hackathons.html" style="--tab:#F4EDB8"><b>Hackathons</b></a>
-    <a class="topnav-tab" href="../media.html" style="--tab:#F6E2C9"><b>Media</b></a>
-    <a class="topnav-tab" href="../recognition.html" style="--tab:#E9DDEA"><b>Recognition</b></a>
-    <a class="topnav-tab topnav-tab--cta" href="../contact.html" style="--tab:#D9E9F0"><b>Contact</b></a>
+    <a class="topnav-tab topnav-home" data-key="home" href="../index.html" style="--tab:#EFE6C8"><b>Ayush Gawai</b></a>
+    <a class="topnav-tab" data-key="experience" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
+    <a class="topnav-tab" data-key="projects" href="../projects.html" style="--tab:#F3D9CF"><b>Hackathons &amp; Projects</b></a>
+    <a class="topnav-tab" data-key="research" href="../research.html" style="--tab:#E3DDF0"><b>Research &amp; Publications</b></a>
+    <a class="topnav-tab" data-key="media" href="../media.html" style="--tab:#F6E2C9"><b>Media &amp; Recognition</b></a>
+    <a class="topnav-tab" data-key="contact" href="../contact.html" style="--tab:#D9E9F0"><b>Résumé &amp; Contact</b></a>
   </nav>
   <div class="topbar-actions">
-    <a class="btn" href="../assets/resume/Ayush_Gawai_Resume.pdf" target="_blank" rel="noopener">Résumé</a>
     <span class="topbar-social"><a href="https://github.com/ayushgawai" target="_blank" rel="noopener">GitHub</a><i aria-hidden="true">·</i><a href="https://www.linkedin.com/in/ayushgawai" target="_blank" rel="noopener">LinkedIn</a></span>
   </div>
 </header>
 
 
 <main id="main">
-<!-- Project detail page. One source of truth: everything about this project
-     lives on this page — film, architecture, depth, results, links. -->
-<section class="chapter proj" id="proj" data-tab="projects" aria-labelledby="proj-title">
+<section class="chapter proj" id="proj" aria-labelledby="proj-title">
   <header class="chapter-head page">
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
     <p class="chapter-kicker hand">SQL Server-style change data capture · Python</p>
-    <h2 id="proj-title" class="chapter-title">CapFlow — CDC replication</h2>
+    <h1 id="proj-title" class="chapter-title">CapFlow — CDC replication</h1>
     <p class="chapter-lede">A CDC pipeline that mirrors inserts, updates and deletes from a change log into warehouse tables, reconciles row by row, and can backfill or replay from a saved LSN.</p>
   </header>
-
-  <div class="page">
-    
-
-    <div class="proj-two">
-      <div class="proj-facts">
-        <h3 class="proj-sub hand">the numbers</h3>
-        <p class="fact"><b>LSN cursors</b>commit-ordered, per-table progress</p><p class="fact"><b>row-level</b>source/target reconciliation</p><p class="fact"><b>lag</b>reported per table, continuously</p><p class="fact"><b>replay</b>backfill from any saved LSN</p>
-      </div>
-      <div class="proj-deep">
-        <h3 class="proj-sub hand">how it works</h3>
-        <ul class='deep-list'><li>Capture: reads inserts, updates and deletes from the change log and advances commit-LSN cursors.</li><li>Apply: mirrors changes into warehouse tables with per-table lag reporting.</li><li>Verify: reconciles source and target row by row; supports backfill and replay from a saved LSN.</li></ul>
-      </div>
-    </div>
-
-    <div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid"><div class="dec"><h4>Reconcile, don&#x27;t trust</h4><p>Every mirror is verified against the source row by row.</p></div></div></div>
-
-    <div class="proj-rows">
-      <div class="proj-stack">
-        <h3 class="proj-sub hand">the stack</h3>
-        <ul class="tags"><li>Python</li><li>SQL Server CDC</li><li>LSN cursors</li></ul>
-      </div>
-      <div class="proj-links">
-        <h3 class="proj-sub hand">the links</h3>
+  <div class="page"></div>
+</section>
+<section class="chapter chapter--part" id="data" >
+<div class="page part-page">
+<article data-part class="data-card" id="p-capflow">
+        <svg class="mini" viewBox="0 0 360 230" role="img" aria-label="A change log of inserts, updates and deletes; an LSN cursor advances row by row, each change is mirrored to the target table and checked off by reconciliation." data-anim>
+          <g class="boil">
+            <path class="ink" d="M52 40 h112 v170 h-112 z M236 40 h112 v170 h-112 z" pathLength="1"/>
+            <path class="ink-thin" d="M52 76 h112 M52 110 h112 M52 144 h112 M52 178 h112 M236 76 h112 M236 110 h112 M236 144 h112 M236 178 h112"/>
+          </g>
+          <text class="svg-print mini-s" x="108" y="30" text-anchor="middle">change log</text>
+          <text class="svg-print mini-s" x="292" y="30" text-anchor="middle">target</text>
+          <text class="svg-hand mini-l" x="68" y="99">INSERT</text><text class="svg-hand mini-l" x="68" y="133">UPDATE</text>
+          <text class="svg-hand mini-l red" x="68" y="167">DELETE</text><text class="svg-hand mini-l" x="68" y="201">INSERT</text>
+          <g class="cf-cur">
+            <text class="svg-hand mini-l red" x="4" y="84">LSN</text>
+            <path class="ink-red" d="M8 95 h34 M35 88 l7 7 -7 7"/>
+            <path class="ink-blue" d="M170 93 H228" marker-end="url(#arrowhead)"/>
+          </g>
+          <g class="cf-ok">
+            <path d="M310 92 l7 7 13 -15"/><path d="M310 126 l7 7 13 -15"/>
+            <path d="M310 160 l7 7 13 -15"/><path d="M310 194 l7 7 13 -15"/>
+          </g>
+        </svg>
+        <p class="project-where hand">CDC · replication</p>
+        <h4><a href="https://github.com/ayushgawai/capflow" target="_blank" rel="noopener">capflow</a></h4>
+        <p>SQL Server-style change data capture: replays inserts, updates and deletes from a change log, advances commit-LSN cursors, and reconciles source vs target row by row.</p>
+        <ul class="facts"><li><b>row-level</b> reconciliation</li><li><b>replay</b> from any saved LSN</li></ul>
         <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/capflow" target="_blank" rel="noopener">Code on GitHub</a></div>
-      </div>
+        <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
+          <ul>
+            <li>Python pipeline; commit-LSN cursors make each apply step resumable and idempotent.</li>
+            <li>Lag reporting between the source log and the mirrored warehouse tables.</li>
+            <li>Backfill and replay from any saved LSN after a failure or schema fix.</li>
+          </ul>
+        </div></details>
+      </article>
+</div>
+</section>
+<section class="chapter proj proj-tail" aria-label="More about CapFlow — CDC replication">
+  <div class="page">
+    <div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid"><div class="dec"><h4>Reconcile, don&#x27;t trust</h4><p>Every mirror is verified against the source row by row.</p></div></div></div>
+    <div class="proj-rows">
+      <div class="proj-stack"><h3 class="proj-sub hand">the stack</h3><ul class="tags"><li>Python</li><li>SQL Server CDC</li><li>LSN cursors</li></ul></div>
+      <div class="proj-links"><h3 class="proj-sub hand">the links</h3><div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/capflow" target="_blank" rel="noopener">Code on GitHub</a></div></div>
     </div>
-
-    <p class="proj-rel hand">same territory: <a class="rel-link" href="lsmstore.html">lsmstore</a><a class="rel-link" href="transit.html">transit</a></p>
-
-    <p class="proj-back"><a class="hand" href="../projects.html">← back to the library</a> <a class="hand" href="../media.html">or watch all the films</a></p>
+    <p class="proj-rel hand">same territory: <a class="rel-link" href="../project/lsmstore.html">LSMStore — LSM-tree key-value store</a><a class="rel-link" href="../project/transit.html">Transit Analytics</a></p>
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
   </div>
 </section>
-
 </main>
 
 <script src="../assets/site.js" defer></script>

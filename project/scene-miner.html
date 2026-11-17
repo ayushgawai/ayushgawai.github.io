@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scene Miner — Ayush Gawai</title>
+<meta name="description" content="Scene Miner: Rare-event retrieval for AV data: rule filters, embedding search, Rocchio feedback and a hybrid re-ranker compared at a fixed 300-result revie">
+<meta name="author" content="Ayush Gawai">
+<meta name="theme-color" content="#F6F5F0">
+<link rel="canonical" href="https://ayushgawai.github.io/project/scene-miner.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Scene Miner — Ayush Gawai">
+<meta property="og:description" content="Scene Miner: Rare-event retrieval for AV data: rule filters, embedding search, Rocchio feedback and a hybrid re-ranker compared at a fixed 300-result revie">
+<meta property="og:url" content="https://ayushgawai.github.io/project/scene-miner.html">
+<meta property="og:image" content="https://ayushgawai.github.io/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../assets/favicon.svg" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400..800;1,400&family=Shantell+Sans:wght,BNCE,INFM@300..800,-100..100,0..100&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Ayush Gawai","url":"https://ayushgawai.github.io/","jobTitle":"Data, AI and robotics systems engineer","alumniOf":"San José State University","sameAs":["https://github.com/ayushgawai","https://www.linkedin.com/in/ayushgawai"]}
+</script>
+
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- shared SVG defs: hand-drawn filters + hatch pattern. Use class="boil" (animated) or "rough" (static) on line art. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="boil" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="1" result="n">
+        <animate attributeName="seed" values="1;7;13" dur="0.42s" calcMode="discrete" repeatCount="indefinite"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="4" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(40)">
+      <line x1="0" y1="0" x2="6" y2="0" stroke="#1F2329" stroke-width="1" stroke-opacity=".45"/>
+    </pattern>
+    <pattern id="hatch-blue" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+      <line x1="0" y1="0" x2="6" y2="0" stroke="#2346B0" stroke-width="1" stroke-opacity=".5"/>
+    </pattern>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1.5 L8 5 L1.5 8.8" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round"/>
+    </marker>
+  </defs>
+</svg>
+
+
+<header class="topbar">
+  <a class="topbar-wordmark hand" href="../index.html">Ayush Gawai<span>· field notebook</span></a>
+  <nav class="topnav" data-page="projects" aria-label="Notebook">
+    <a class="topnav-tab topnav-home" data-key="home" href="../index.html" style="--tab:#EFE6C8"><b>Ayush Gawai</b></a>
+    <a class="topnav-tab" data-key="experience" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
+    <a class="topnav-tab" data-key="projects" href="../projects.html" style="--tab:#F3D9CF"><b>Hackathons &amp; Projects</b></a>
+    <a class="topnav-tab" data-key="research" href="../research.html" style="--tab:#E3DDF0"><b>Research &amp; Publications</b></a>
+    <a class="topnav-tab" data-key="media" href="../media.html" style="--tab:#F6E2C9"><b>Media &amp; Recognition</b></a>
+    <a class="topnav-tab" data-key="contact" href="../contact.html" style="--tab:#D9E9F0"><b>Résumé &amp; Contact</b></a>
+  </nav>
+  <div class="topbar-actions">
+    <span class="topbar-social"><a href="https://github.com/ayushgawai" target="_blank" rel="noopener">GitHub</a><i aria-hidden="true">·</i><a href="https://www.linkedin.com/in/ayushgawai" target="_blank" rel="noopener">LinkedIn</a></span>
+  </div>
+</header>
+
+
+<main id="main">
+<section class="chapter proj" id="proj" aria-labelledby="proj-title">
+  <header class="chapter-head page">
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
+    <p class="chapter-kicker hand">Side project · synthetic AV scenario corpus</p>
+    <h1 id="proj-title" class="chapter-title">Scene Miner</h1>
+    <p class="chapter-lede">Rare-event retrieval for AV data: rule filters, embedding search, Rocchio feedback and a hybrid re-ranker compared at a fixed 300-result review budget over an IVF index.</p>
+  </header>
+  <div class="page"></div>
+</section>
+<section class="chapter chapter--part" id="av" >
+<div class="page part-page">
+<article data-part class="project flip page av-proj" id="p-scene-miner">
+    <div class="project-media" data-anim>
+      <svg class="av-bars" viewBox="0 -10 420 262" role="img" aria-labelledby="av-sm-t">
+        <title id="av-sm-t">Bar chart of mean precision at a 300-result review budget: rules 0.35, embeddings 0.55, relevance feedback 0.68, hybrid 0.96, circled in red.</title>
+        <path class="ink" d="M18 200.5C120 199.5 280 201 404 199.5"/>
+        <g class="av-bar" style="--i:0"><path class="ink av-hatbar" d="M40 200V130h62v70"/><text class="svg-print av-bv" x="71" y="120" text-anchor="middle">.35</text></g>
+        <g class="av-bar" style="--i:1"><path class="ink av-hatbar" d="M132 200V90h62v110"/><text class="svg-print av-bv" x="163" y="80" text-anchor="middle">.55</text></g>
+        <g class="av-bar" style="--i:2"><path class="ink av-hatbar" d="M224 200V64h62v136"/><text class="svg-print av-bv" x="255" y="54" text-anchor="middle">.68</text></g>
+        <g class="av-bar" style="--i:3"><path class="ink av-hatbar" d="M316 200V12h62v188"/><text class="svg-print av-bv red" x="347" y="108" text-anchor="middle">.96</text></g>
+        <path class="av-ring av-ring-s" pathLength="1" d="M336 -4C372-12 406 14 400 54C396 84 362 94 334 82C306 68 304 28 324 8"/>
+        <text class="svg-hand av-bl" x="71" y="226" text-anchor="middle">rules</text><text class="svg-hand av-bl" x="163" y="226" text-anchor="middle">embed</text><text class="svg-hand av-bl" x="255" y="226" text-anchor="middle">feedback</text><text class="svg-hand av-bl red" x="347" y="226" text-anchor="middle">hybrid</text>
+        <text class="svg-hand av-bl pencil" x="18" y="250">mean precision, top 300 reviewed</text>
+      </svg>
+    </div>
+    <div class="project-body">
+      <p class="project-where hand">Side project · synthetic AV scenario corpus</p>
+      <h3 class="project-title">Scene Miner: rules vs vectors for rare events</h3>
+      <p class="project-sum">Rule filters on driving metadata, embedding nearest neighbours from seed scenes, Rocchio relevance feedback and a hybrid rule + embedding re-ranker, compared at a fixed 300-result review budget over an IVF approximate-nearest-neighbour index (k-means cells, tunable nprobe).</p>
+      <ul class="facts">
+        <li><b>0.96</b>hybrid mean precision (rules 0.35)</li>
+        <li><b>0.959</b>recall@100 at nprobe 16</li>
+        <li><b>~19×</b>exact-search throughput</li>
+      </ul>
+      <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/scene-miner" target="_blank" rel="noopener">Code on GitHub</a></div>
+      <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
+        <ul>
+          <li>Corpus: about 200,000 synthetic scene windows with 10,701 labeled rare events.</li>
+          <li>Mean precision of what a reviewer sees in the top 300: rules 0.35, embedding queries 0.55, Rocchio feedback 0.68, hybrid re-ranker 0.96.</li>
+          <li>IVF index: k-means coarse cells, search only the nprobe nearest cells. nprobe 16 kept recall@100 at 0.959 at about 19× exact-search throughput.</li>
+          <li>The offline version of the Zoox question: how much of what gets mined is worth a reviewer's time.</li>
+        </ul>
+      </div></details>
+    </div>
+  </article>
+</div>
+</section>
+<section class="chapter proj proj-tail" aria-label="More about Scene Miner">
+  <div class="page">
+    
+    <div class="proj-rows">
+      <div class="proj-stack"><h3 class="proj-sub hand">the stack</h3><ul class="tags"><li>Python</li><li>NumPy</li><li>IVF ANN index</li><li>k-means</li><li>Rocchio feedback</li></ul></div>
+      <div class="proj-links"><h3 class="proj-sub hand">the links</h3><div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/scene-miner" target="_blank" rel="noopener">Code on GitHub</a></div></div>
+    </div>
+    <p class="proj-rel hand">same territory: <a class="rel-link" href="../project/trajectory.html">AV trajectory prediction</a></p>
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
+  </div>
+</section>
+</main>
+
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TransitRisk — delay forecasting — project · Ayush Gawai</title>
-<meta name="description" content="TransitRisk — delay forecasting — Predicts whether a station-route pair will see elevated delay in the next hour: seven classifiers, probability calib">
+<title>TransitRisk — delay forecasting — Ayush Gawai</title>
+<meta name="description" content="TransitRisk — delay forecasting: Predicts whether a station-route pair will see elevated delay in the next hour: seven classifiers, probability calibration">
 <meta name="author" content="Ayush Gawai">
 <meta name="theme-color" content="#F6F5F0">
 <link rel="canonical" href="https://ayushgawai.github.io/project/transitrisk.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="TransitRisk — delay forecasting — project · Ayush Gawai">
-<meta property="og:description" content="TransitRisk — delay forecasting — Predicts whether a station-route pair will see elevated delay in the next hour: seven classifiers, probability calib">
+<meta property="og:title" content="TransitRisk — delay forecasting — Ayush Gawai">
+<meta property="og:description" content="TransitRisk — delay forecasting: Predicts whether a station-route pair will see elevated delay in the next hour: seven classifiers, probability calibration">
 <meta property="og:url" content="https://ayushgawai.github.io/project/transitrisk.html">
 <meta property="og:image" content="https://ayushgawai.github.io/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -56,71 +56,72 @@
 <header class="topbar">
   <a class="topbar-wordmark hand" href="../index.html">Ayush Gawai<span>· field notebook</span></a>
   <nav class="topnav" data-page="projects" aria-label="Notebook">
-    <a class="topnav-tab" href="../index.html" style="--tab:#EFE6C8"><b>Home</b></a>
-    <a class="topnav-tab" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
-    <a class="topnav-tab" href="../projects.html" style="--tab:#F3D9CF"><b>Projects</b></a>
-    <span class="topnav-rule" aria-hidden="true"></span>
-    <a class="topnav-tab" href="../ai.html" style="--tab:#D8ECDF"><b>AI · LLM</b></a>
-    <a class="topnav-tab" href="../data.html" style="--tab:#F2E3C4"><b>Data</b></a>
-    <a class="topnav-tab" href="../software.html" style="--tab:#DDE6F6"><b>Software</b></a>
-    <a class="topnav-tab" href="../robotics.html" style="--tab:#F0D6D6"><b>Robotics</b></a>
-    <a class="topnav-tab" href="../autonomy.html" style="--tab:#DDE9E6"><b>Zoox</b></a>
-    <a class="topnav-tab" href="../research.html" style="--tab:#E3DDF0"><b>Research</b></a>
-    <a class="topnav-tab" href="../hackathons.html" style="--tab:#F4EDB8"><b>Hackathons</b></a>
-    <a class="topnav-tab" href="../media.html" style="--tab:#F6E2C9"><b>Media</b></a>
-    <a class="topnav-tab" href="../recognition.html" style="--tab:#E9DDEA"><b>Recognition</b></a>
-    <a class="topnav-tab topnav-tab--cta" href="../contact.html" style="--tab:#D9E9F0"><b>Contact</b></a>
+    <a class="topnav-tab topnav-home" data-key="home" href="../index.html" style="--tab:#EFE6C8"><b>Ayush Gawai</b></a>
+    <a class="topnav-tab" data-key="experience" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
+    <a class="topnav-tab" data-key="projects" href="../projects.html" style="--tab:#F3D9CF"><b>Hackathons &amp; Projects</b></a>
+    <a class="topnav-tab" data-key="research" href="../research.html" style="--tab:#E3DDF0"><b>Research &amp; Publications</b></a>
+    <a class="topnav-tab" data-key="media" href="../media.html" style="--tab:#F6E2C9"><b>Media &amp; Recognition</b></a>
+    <a class="topnav-tab" data-key="contact" href="../contact.html" style="--tab:#D9E9F0"><b>Résumé &amp; Contact</b></a>
   </nav>
   <div class="topbar-actions">
-    <a class="btn" href="../assets/resume/Ayush_Gawai_Resume.pdf" target="_blank" rel="noopener">Résumé</a>
     <span class="topbar-social"><a href="https://github.com/ayushgawai" target="_blank" rel="noopener">GitHub</a><i aria-hidden="true">·</i><a href="https://www.linkedin.com/in/ayushgawai" target="_blank" rel="noopener">LinkedIn</a></span>
   </div>
 </header>
 
 
 <main id="main">
-<!-- Project detail page. One source of truth: everything about this project
-     lives on this page — film, architecture, depth, results, links. -->
-<section class="chapter proj" id="proj" data-tab="projects" aria-labelledby="proj-title">
+<section class="chapter proj" id="proj" aria-labelledby="proj-title">
   <header class="chapter-head page">
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
     <p class="chapter-kicker hand">DATA 245 · cost-sensitive forecasting</p>
-    <h2 id="proj-title" class="chapter-title">TransitRisk — delay forecasting</h2>
+    <h1 id="proj-title" class="chapter-title">TransitRisk — delay forecasting</h1>
     <p class="chapter-lede">Predicts whether a station-route pair will see elevated delay in the next hour: seven classifiers, probability calibration, conformal prediction and a cost-optimal alert threshold when a miss costs 5× a false alarm.</p>
   </header>
-
-  <div class="page">
-    
-
-    <div class="proj-two">
-      <div class="proj-facts">
-        <h3 class="proj-sub hand">the numbers</h3>
-        <p class="fact"><b>1.2M</b>generated transit events, leakage-audited</p><p class="fact"><b>38</b>engineered features</p><p class="fact"><b>0.163</b>cost-optimal alert threshold</p><p class="fact"><b>SHAP</b>per-route explanations + what-if analysis</p>
-      </div>
-      <div class="proj-deep">
-        <h3 class="proj-sub hand">how it works</h3>
-        <ul class='deep-list'><li>Models: naive Bayes, logistic regression, kNN, decision tree, random forest, SVM and XGBoost, with probability calibration and conformal prediction.</li><li>Decision theory: the alert threshold is chosen for cost, not accuracy — a missed delay costs five times a false alarm.</li><li>Surface: a Streamlit dashboard with per-route gauges, what-if controls, SHAP explanations and live-feed replay. 15 tests cover features, leakage, conformal coverage and targets.</li></ul>
-      </div>
-    </div>
-
-    <div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid"><div class="dec"><h4>Calibrate, then threshold on cost</h4><p>Accuracy is the floor; the operating point is a business decision.</p></div></div></div>
-
-    <div class="proj-rows">
-      <div class="proj-stack">
-        <h3 class="proj-sub hand">the stack</h3>
-        <ul class="tags"><li>scikit-learn</li><li>XGBoost</li><li>conformal</li><li>SHAP</li><li>Streamlit</li></ul>
-      </div>
-      <div class="proj-links">
-        <h3 class="proj-sub hand">the links</h3>
+  <div class="page"></div>
+</section>
+<section class="chapter chapter--part" id="data" >
+<div class="page part-page">
+<article data-part class="data-card" id="p-transitrisk">
+        <svg class="mini" viewBox="0 0 360 230" role="img" aria-label="Expected cost against alert threshold: a ball rolls down the cost curve and settles at the minimum, threshold 0.163, where a miss costs five times a false alarm." data-anim>
+          <g class="boil">
+            <path class="ink" d="M44 20 V180 H340" pathLength="1"/>
+            <path class="ink-blue mini-curve" d="M50 46 C 76 150, 96 168, 122 166 S 230 128, 334 64" pathLength="1"/>
+          </g>
+          <path class="ink-thin" d="M122 174 V188" stroke-dasharray="3 3"/>
+          <circle class="tr-ball" r="8"/>
+          <circle class="ink-red tr-circ" cx="122" cy="166" r="19"/>
+          <text class="svg-print mini-num" x="122" y="210" text-anchor="middle">0.163</text>
+          <text class="svg-hand mini-l" x="176" y="208">cost-optimal threshold</text>
+          <text class="svg-hand mini-l red" x="214" y="40" text-anchor="middle">miss = 5× false alarm</text>
+          <text class="svg-print mini-s" x="54" y="16">expected cost</text>
+        </svg>
+        <p class="project-where hand">DATA 245 · ML</p>
+        <h4><a href="https://github.com/ayushgawai/transitrisk" target="_blank" rel="noopener">TransitRisk</a></h4>
+        <p>Next-hour delay risk per station-route pair from 38 leakage-audited features. Seven calibrated classifiers with conformal intervals; the alert threshold minimizes expected cost, not error.</p>
+        <ul class="facts"><li><b>0.163</b> alert threshold</li><li><b>38</b> features</li></ul>
         <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/transitrisk" target="_blank" rel="noopener">Code on GitHub</a></div>
-      </div>
+        <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
+          <ul>
+            <li>~1.2M generated transit events; cleaning and a leakage audit before feature engineering.</li>
+            <li>Naive Bayes, logistic regression, kNN, decision tree, random forest, SVM and XGBoost, all probability-calibrated.</li>
+            <li>Threshold chosen where a missed delay costs 5× a false alarm: 0.163. Conformal prediction, SHAP, weather and stress tests, ablations, what-if analysis.</li>
+            <li>Streamlit dashboard with per-route gauges and a live-feed replay; 15 tests covering features, leakage, conformal coverage and targets.</li>
+          </ul>
+        </div></details>
+      </article>
+</div>
+</section>
+<section class="chapter proj proj-tail" aria-label="More about TransitRisk — delay forecasting">
+  <div class="page">
+    <div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid"><div class="dec"><h4>Calibrate, then threshold on cost</h4><p>Accuracy is the floor; the operating point is a business decision.</p></div></div></div>
+    <div class="proj-rows">
+      <div class="proj-stack"><h3 class="proj-sub hand">the stack</h3><ul class="tags"><li>scikit-learn</li><li>XGBoost</li><li>conformal</li><li>SHAP</li><li>Streamlit</li></ul></div>
+      <div class="proj-links"><h3 class="proj-sub hand">the links</h3><div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/transitrisk" target="_blank" rel="noopener">Code on GitHub</a></div></div>
     </div>
-
-    <p class="proj-rel hand">same territory: <a class="rel-link" href="transit.html">transit</a><a class="rel-link" href="wikirisk.html">wikirisk</a></p>
-
-    <p class="proj-back"><a class="hand" href="../projects.html">← back to the library</a> <a class="hand" href="../media.html">or watch all the films</a></p>
+    <p class="proj-rel hand">same territory: <a class="rel-link" href="../project/transit.html">Transit Analytics</a><a class="rel-link" href="../project/wikirisk.html">WikiRisk</a></p>
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
   </div>
 </section>
-
 </main>
 
 <script src="../assets/site.js" defer></script>

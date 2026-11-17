@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Transit Analytics — project · Ayush Gawai</title>
-<meta name="description" content="Transit Analytics — A complete transit data platform: GTFS schedules and live departures meet in one Snowflake warehouse, and a forecasting layer sits">
+<title>Transit Analytics — Ayush Gawai</title>
+<meta name="description" content="Transit Analytics: A complete transit data platform: GTFS schedules and live departures meet in one Snowflake warehouse, and a forecasting layer sits on to">
 <meta name="author" content="Ayush Gawai">
 <meta name="theme-color" content="#F6F5F0">
 <link rel="canonical" href="https://ayushgawai.github.io/project/transit.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Transit Analytics — project · Ayush Gawai">
-<meta property="og:description" content="Transit Analytics — A complete transit data platform: GTFS schedules and live departures meet in one Snowflake warehouse, and a forecasting layer sits">
+<meta property="og:title" content="Transit Analytics — Ayush Gawai">
+<meta property="og:description" content="Transit Analytics: A complete transit data platform: GTFS schedules and live departures meet in one Snowflake warehouse, and a forecasting layer sits on to">
 <meta property="og:url" content="https://ayushgawai.github.io/project/transit.html">
 <meta property="og:image" content="https://ayushgawai.github.io/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -56,71 +56,94 @@
 <header class="topbar">
   <a class="topbar-wordmark hand" href="../index.html">Ayush Gawai<span>· field notebook</span></a>
   <nav class="topnav" data-page="projects" aria-label="Notebook">
-    <a class="topnav-tab" href="../index.html" style="--tab:#EFE6C8"><b>Home</b></a>
-    <a class="topnav-tab" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
-    <a class="topnav-tab" href="../projects.html" style="--tab:#F3D9CF"><b>Projects</b></a>
-    <span class="topnav-rule" aria-hidden="true"></span>
-    <a class="topnav-tab" href="../ai.html" style="--tab:#D8ECDF"><b>AI · LLM</b></a>
-    <a class="topnav-tab" href="../data.html" style="--tab:#F2E3C4"><b>Data</b></a>
-    <a class="topnav-tab" href="../software.html" style="--tab:#DDE6F6"><b>Software</b></a>
-    <a class="topnav-tab" href="../robotics.html" style="--tab:#F0D6D6"><b>Robotics</b></a>
-    <a class="topnav-tab" href="../autonomy.html" style="--tab:#DDE9E6"><b>Zoox</b></a>
-    <a class="topnav-tab" href="../research.html" style="--tab:#E3DDF0"><b>Research</b></a>
-    <a class="topnav-tab" href="../hackathons.html" style="--tab:#F4EDB8"><b>Hackathons</b></a>
-    <a class="topnav-tab" href="../media.html" style="--tab:#F6E2C9"><b>Media</b></a>
-    <a class="topnav-tab" href="../recognition.html" style="--tab:#E9DDEA"><b>Recognition</b></a>
-    <a class="topnav-tab topnav-tab--cta" href="../contact.html" style="--tab:#D9E9F0"><b>Contact</b></a>
+    <a class="topnav-tab topnav-home" data-key="home" href="../index.html" style="--tab:#EFE6C8"><b>Ayush Gawai</b></a>
+    <a class="topnav-tab" data-key="experience" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
+    <a class="topnav-tab" data-key="projects" href="../projects.html" style="--tab:#F3D9CF"><b>Hackathons &amp; Projects</b></a>
+    <a class="topnav-tab" data-key="research" href="../research.html" style="--tab:#E3DDF0"><b>Research &amp; Publications</b></a>
+    <a class="topnav-tab" data-key="media" href="../media.html" style="--tab:#F6E2C9"><b>Media &amp; Recognition</b></a>
+    <a class="topnav-tab" data-key="contact" href="../contact.html" style="--tab:#D9E9F0"><b>Résumé &amp; Contact</b></a>
   </nav>
   <div class="topbar-actions">
-    <a class="btn" href="../assets/resume/Ayush_Gawai_Resume.pdf" target="_blank" rel="noopener">Résumé</a>
     <span class="topbar-social"><a href="https://github.com/ayushgawai" target="_blank" rel="noopener">GitHub</a><i aria-hidden="true">·</i><a href="https://www.linkedin.com/in/ayushgawai" target="_blank" rel="noopener">LinkedIn</a></span>
   </div>
 </header>
 
 
 <main id="main">
-<!-- Project detail page. One source of truth: everything about this project
-     lives on this page — film, architecture, depth, results, links. -->
-<section class="chapter proj" id="proj" data-tab="projects" aria-labelledby="proj-title">
+<section class="chapter proj" id="proj" aria-labelledby="proj-title">
   <header class="chapter-head page">
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
     <p class="chapter-kicker hand">SJSU MSDA capstone · BART + VTA</p>
-    <h2 id="proj-title" class="chapter-title">Transit Analytics</h2>
+    <h1 id="proj-title" class="chapter-title">Transit Analytics</h1>
     <p class="chapter-lede">A complete transit data platform: GTFS schedules and live departures meet in one Snowflake warehouse, and a forecasting layer sits on top — served through FastAPI and a React/TypeScript operator dashboard with text-to-SQL chat.</p>
   </header>
-
+  <div class="page"><figure class="proj-film"><video controls preload="metadata" playsinline poster="../assets/video/narrated/transit-poster.webp" width="1920" height="1080"><source src="../assets/video/narrated/transit.mp4" type="video/mp4"></video></figure></div>
+</section>
+<section class="chapter chapter--part" id="data" data-only="transit">
+<div class="page">
+<figure class="data-sketch" data-anim>
+      <div class="data-tabs" role="tablist" aria-label="Choose a pipeline">
+        <button class="tab" type="button" role="tab" id="data-tab-transit" aria-controls="data-panel" aria-selected="true" data-pipe="transit"><b>Transit</b><span>streaming</span></button>
+        <button class="tab" type="button" role="tab" id="data-tab-zscaler" aria-controls="data-panel" aria-selected="false" tabindex="-1" data-pipe="zscaler"><b>Zscaler</b><span>2024–25</span></button>
+        <button class="tab" type="button" role="tab" id="data-tab-latentview" aria-controls="data-panel" aria-selected="false" tabindex="-1" data-pipe="latentview"><b>LatentView</b><span>2021–23</span></button>
+      </div>
+      <div class="data-board">
+        <svg class="data-svg" viewBox="0 0 1100 440" role="img" aria-labelledby="data-svg-title">
+          <title id="data-svg-title">Hand-drawn pipeline of tanks, valves and pipes. Data packets flow through each stage; at the validation gate a red-pencil hook pulls a failing packet into a quarantine bin.</title>
+          <g class="data-canvas"></g>
+        </svg>
+      </div>
+      <figcaption class="data-note" aria-live="polite"><b>Hover, tap or tab</b> to a station to see what it does.</figcaption>
+    </figure>
+<div class="data-panel" id="data-panel" role="region">
+<article class="data-pb" data-pipe="transit" id="p-transit">
+        <div class="pb-head">
+          <p class="project-where hand">Transit analytics platform · SJSU MSDA capstone</p>
+          <h3 class="project-title">BART + VTA real-time feeds to an operator dashboard</h3>
+          <p class="project-sum">GTFS static and GTFS-realtime feeds enter through a Kafka producer/consumer; three Airflow DAGs on AWS MWAA load Snowflake landing and analytics schemas, and dbt builds route-level performance aggregates. FastAPI serves a React/TypeScript dashboard, with heavy ETL and model training kept off the read path.</p>
+          <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/transit-system" target="_blank" rel="noopener">Code on GitHub</a></div>
+        </div>
+        <ul class="facts"><li><b>2</b> transit operators, 1 schema</li><li><b>3</b> Airflow DAGs on MWAA</li><li><b>AWS + Azure</b> two deployments</li></ul>
+        <figure class="pb-film">
+          <video controls preload="none" playsinline poster="../assets/video/transit-poster.webp" width="1920" height="1080" aria-label="90-second explainer: the Transit pipeline drawn step by step">
+            <source src="../assets/video/transit.mp4" type="video/mp4">
+          </video>
+          <figcaption class="hand">90-second explainer: feeds → Kafka → Airflow → Snowflake/dbt → FastAPI, drawn step by step</figcaption>
+        </figure>
+        <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
+          <p>Team capstone. I ran the pipeline on AWS S3 and MWAA, and built the Azure Databricks extension.</p>
+          <h4>Data flow</h4>
+          <ul>
+            <li>Sources: BART and VTA GTFS schedules plus GTFS-realtime vehicle feeds.</li>
+            <li>Kafka producer and consumer carry near-real-time vehicle events.</li>
+            <li>Airflow DAGs: GTFS incremental ingestion, streaming ingestion, ML forecasting.</li>
+            <li>Snowflake landing and analytics schemas; dbt transformations, forecast models and route-level performance aggregates.</li>
+            <li>FastAPI REST layer feeding React/TypeScript dashboards with maps, metrics and natural-language query assistance. Docker Compose; credentials in AWS Secrets Manager.</li>
+          </ul>
+          <h4>Hard parts</h4>
+          <ul>
+            <li>Static stop IDs don’t line up with live events, so events are aligned to the static schedule before loading.</li>
+            <li>Late and malformed location samples: dedup and replay instead of trusting arrival order.</li>
+            <li>Fast API responses without putting ETL or training on the dashboard path.</li>
+          </ul>
+          <h4>Azure extension</h4>
+          <p>On-time performance and service-reliability KPIs modeled in Azure Databricks (PySpark, Delta Lake), orchestrated by Azure Data Factory, with SQL data quality checks and Power BI reporting.</p>
+        </div></details>
+      </article>
+</div>
+</div>
+</section>
+<section class="chapter proj proj-tail" aria-label="More about Transit Analytics">
   <div class="page">
-    <figure class="proj-film"><video controls preload="metadata" playsinline poster="../assets/video/narrated/transit-poster.webp" width="1920" height="1080"><source src="../assets/video/narrated/transit.mp4" type="video/mp4"></video></figure>
-
-    <div class="proj-two">
-      <div class="proj-facts">
-        <h3 class="proj-sub hand">the numbers</h3>
-        <p class="fact"><b>3</b>Airflow DAGs: batch, streaming, ML</p><p class="fact"><b>2</b>transit operators, BART and VTA</p><p class="fact"><b>7-day</b>demand forecast horizon</p><p class="fact"><b>2 deployments</b>AWS S3 + MWAA, and Azure Databricks/Delta</p>
-      </div>
-      <div class="proj-deep">
-        <h3 class="proj-sub hand">how it works</h3>
-        <ul class='deep-list'><li>Batch: gtfs_incremental lands BART and VTA GTFS every 6 h into a Snowflake LANDING schema.</li><li>Streaming: a Kafka producer polls the live departures API every 5 minutes; a consumer group writes events into the same LANDING zone, so static and live data share one place.</li><li>Modeling: dbt stages raw rows and joins trips, stops and routes per agency into analytics marts with route-level performance KPIs; an ml_forecast_dag trains on 90 days and forecasts 7 days ahead.</li><li>Serving: FastAPI serves KPIs, forecasts and a text-to-SQL chat; heavy ETL and training stay off the request path, and Snowflake and LLM keys live in AWS Secrets Manager.</li><li>Azure extension: on-time performance and service-reliability KPIs modeled in Azure Databricks with PySpark and Delta, ADF orchestration, SQL and Power BI with data-quality checks.</li></ul>
-      </div>
-    </div>
-
     <div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid"><div class="dec"><h4>Stream and batch, one landing zone</h4><p>Both paths land raw; dbt owns the cleanup.</p></div><div class="dec"><h4>Secrets out of the code</h4><p>Warehouse and LLM credentials in AWS Secrets Manager.</p></div></div></div>
-
     <div class="proj-rows">
-      <div class="proj-stack">
-        <h3 class="proj-sub hand">the stack</h3>
-        <ul class="tags"><li>Airflow</li><li>Kafka</li><li>dbt</li><li>Snowflake</li><li>FastAPI</li><li>React + TS</li><li>Docker</li><li>Databricks</li><li>Azure Databricks</li></ul>
-      </div>
-      <div class="proj-links">
-        <h3 class="proj-sub hand">the links</h3>
-        <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/transit-system" target="_blank" rel="noopener">Code on GitHub</a></div>
-      </div>
+      <div class="proj-stack"><h3 class="proj-sub hand">the stack</h3><ul class="tags"><li>Airflow</li><li>Kafka</li><li>dbt</li><li>Snowflake</li><li>FastAPI</li><li>React + TS</li><li>Docker</li><li>Databricks</li><li>Azure Databricks</li></ul></div>
+      <div class="proj-links"><h3 class="proj-sub hand">the links</h3><div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/transit-system" target="_blank" rel="noopener">Code on GitHub</a></div></div>
     </div>
-
-    <p class="proj-rel hand">same territory: <a class="rel-link" href="transitrisk.html">transitrisk</a><a class="rel-link" href="wikirisk.html">wikirisk</a></p>
-
-    <p class="proj-back"><a class="hand" href="../projects.html">← back to the library</a> <a class="hand" href="../media.html">or watch all the films</a></p>
+    <p class="proj-rel hand">same territory: <a class="rel-link" href="../project/transitrisk.html">TransitRisk — delay forecasting</a><a class="rel-link" href="../project/wikirisk.html">WikiRisk</a></p>
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
   </div>
 </section>
-
 </main>
 
 <script src="../assets/site.js" defer></script>

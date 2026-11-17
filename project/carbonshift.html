@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CarbonShift — project · Ayush Gawai</title>
-<meta name="description" content="CarbonShift — GPU training that follows the grid: a 60-second control loop polls CAISO price and carbon, maps them to four Eco-Pulse states, and drive">
+<title>CarbonShift — Ayush Gawai</title>
+<meta name="description" content="CarbonShift: GPU training that follows the grid: a 60-second control loop polls CAISO price and carbon, maps them to four Eco-Pulse states, and drives the ">
 <meta name="author" content="Ayush Gawai">
 <meta name="theme-color" content="#F6F5F0">
 <link rel="canonical" href="https://ayushgawai.github.io/project/carbonshift.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="CarbonShift — project · Ayush Gawai">
-<meta property="og:description" content="CarbonShift — GPU training that follows the grid: a 60-second control loop polls CAISO price and carbon, maps them to four Eco-Pulse states, and drive">
+<meta property="og:title" content="CarbonShift — Ayush Gawai">
+<meta property="og:description" content="CarbonShift: GPU training that follows the grid: a 60-second control loop polls CAISO price and carbon, maps them to four Eco-Pulse states, and drives the ">
 <meta property="og:url" content="https://ayushgawai.github.io/project/carbonshift.html">
 <meta property="og:image" content="https://ayushgawai.github.io/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -56,71 +56,77 @@
 <header class="topbar">
   <a class="topbar-wordmark hand" href="../index.html">Ayush Gawai<span>· field notebook</span></a>
   <nav class="topnav" data-page="projects" aria-label="Notebook">
-    <a class="topnav-tab" href="../index.html" style="--tab:#EFE6C8"><b>Home</b></a>
-    <a class="topnav-tab" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
-    <a class="topnav-tab" href="../projects.html" style="--tab:#F3D9CF"><b>Projects</b></a>
-    <span class="topnav-rule" aria-hidden="true"></span>
-    <a class="topnav-tab" href="../ai.html" style="--tab:#D8ECDF"><b>AI · LLM</b></a>
-    <a class="topnav-tab" href="../data.html" style="--tab:#F2E3C4"><b>Data</b></a>
-    <a class="topnav-tab" href="../software.html" style="--tab:#DDE6F6"><b>Software</b></a>
-    <a class="topnav-tab" href="../robotics.html" style="--tab:#F0D6D6"><b>Robotics</b></a>
-    <a class="topnav-tab" href="../autonomy.html" style="--tab:#DDE9E6"><b>Zoox</b></a>
-    <a class="topnav-tab" href="../research.html" style="--tab:#E3DDF0"><b>Research</b></a>
-    <a class="topnav-tab" href="../hackathons.html" style="--tab:#F4EDB8"><b>Hackathons</b></a>
-    <a class="topnav-tab" href="../media.html" style="--tab:#F6E2C9"><b>Media</b></a>
-    <a class="topnav-tab" href="../recognition.html" style="--tab:#E9DDEA"><b>Recognition</b></a>
-    <a class="topnav-tab topnav-tab--cta" href="../contact.html" style="--tab:#D9E9F0"><b>Contact</b></a>
+    <a class="topnav-tab topnav-home" data-key="home" href="../index.html" style="--tab:#EFE6C8"><b>Ayush Gawai</b></a>
+    <a class="topnav-tab" data-key="experience" href="../experience.html" style="--tab:#DCE8F2"><b>Experience</b></a>
+    <a class="topnav-tab" data-key="projects" href="../projects.html" style="--tab:#F3D9CF"><b>Hackathons &amp; Projects</b></a>
+    <a class="topnav-tab" data-key="research" href="../research.html" style="--tab:#E3DDF0"><b>Research &amp; Publications</b></a>
+    <a class="topnav-tab" data-key="media" href="../media.html" style="--tab:#F6E2C9"><b>Media &amp; Recognition</b></a>
+    <a class="topnav-tab" data-key="contact" href="../contact.html" style="--tab:#D9E9F0"><b>Résumé &amp; Contact</b></a>
   </nav>
   <div class="topbar-actions">
-    <a class="btn" href="../assets/resume/Ayush_Gawai_Resume.pdf" target="_blank" rel="noopener">Résumé</a>
     <span class="topbar-social"><a href="https://github.com/ayushgawai" target="_blank" rel="noopener">GitHub</a><i aria-hidden="true">·</i><a href="https://www.linkedin.com/in/ayushgawai" target="_blank" rel="noopener">LinkedIn</a></span>
   </div>
 </header>
 
 
 <main id="main">
-<!-- Project detail page. One source of truth: everything about this project
-     lives on this page — film, architecture, depth, results, links. -->
-<section class="chapter proj" id="proj" data-tab="projects" aria-labelledby="proj-title">
+<section class="chapter proj" id="proj" aria-labelledby="proj-title">
   <header class="chapter-head page">
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
     <p class="chapter-kicker hand">Devpost / TreeHacks · carbon-aware training</p>
-    <h2 id="proj-title" class="chapter-title">CarbonShift</h2>
+    <h1 id="proj-title" class="chapter-title">CarbonShift</h1>
     <p class="chapter-lede">GPU training that follows the grid: a 60-second control loop polls CAISO price and carbon, maps them to four Eco-Pulse states, and drives the A100&#x27;s power cap through NVML — from full 250 W down to a checkpointed pause.</p>
   </header>
-
+  <div class="page"><figure class="proj-film"><video controls preload="metadata" playsinline poster="../assets/video/narrated/carbonshift-poster.webp" width="1920" height="1080"><source src="../assets/video/narrated/carbonshift.mp4" type="video/mp4"></video></figure></div>
+</section>
+<section class="chapter chapter--part" id="systems" >
+<div class="page part-page">
+<article data-part class="project sys-carbon" id="p-carbonshift">
+      <div class="project-media">
+        <button class="video" data-yt="OkEENwR6-Gk" data-title="CarbonShift demo" aria-label="Play the CarbonShift demo video">
+          <img src="../assets/img/demos/carbonshift-demo.webp" alt="" loading="lazy" width="1280" height="720">
+          <span class="video-label">Demo video</span>
+        </button>
+      </div>
+      <div class="project-body">
+        <p class="project-where hand">CarbonShift · Devpost</p>
+        <h3 class="project-title">GPU training that follows the grid</h3>
+        <p class="project-sum">A control loop polls WattTime + CAISO carbon intensity and price every ~60 s and drives a GREEN / AMBER / RED state machine that sets A100 power limits or pauses training at a checkpoint. FastAPI exposes control and status; a WebSocket streams cost and carbon every ~2 s.</p>
+        <ul class="facts">
+          <li><b>~43%</b>less carbon, simulated</li>
+          <li><b>~37%</b>lower cost, simulated</li>
+          <li><b>60 s</b>grid poll</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn" href="https://github.com/ayushgawai/carbonshift" target="_blank" rel="noopener">Code on GitHub</a>
+          <a class="btn blue" href="https://devpost.com/software/carbonshift" target="_blank" rel="noopener">Devpost</a>
+        </div>
+        <details class="deep"><summary>Technical deep dive</summary><div class="deep-body">
+          <h4>Control loop</h4>
+          <ul>
+            <li>Grid monitor on WattTime and CAISO data with a mock fallback, polled about every 60 s.</li>
+            <li>Eco-Pulse arbitration engine with GREEN, AMBER, RED and NORMAL states driving a GPU power controller (A100 power limits).</li>
+            <li>Pause and resume around a checkpoint manager, so a pause never loses training progress.</li>
+            <li>FastAPI control and status endpoints, a background metrics loop, WebSocket updates about every 2 s, cumulative cost and carbon reporting.</li>
+          </ul>
+          <h4>What the numbers are</h4>
+          <p>The ~43% carbon and ~37% cost reductions are scenario results in simulation, not measured datacenter savings.</p>
+        </div></details>
+      </div>
+    </article>
+</div>
+</section>
+<section class="chapter proj proj-tail" aria-label="More about CarbonShift">
   <div class="page">
-    <figure class="proj-film"><video controls preload="metadata" playsinline poster="../assets/video/narrated/carbonshift-poster.webp" width="1920" height="1080"><source src="../assets/video/narrated/carbonshift.mp4" type="video/mp4"></video></figure>
-
-    <div class="proj-two">
-      <div class="proj-facts">
-        <h3 class="proj-sub hand">the numbers</h3>
-        <p class="fact"><b>43%</b>lower carbon intensity in a realistic profile</p><p class="fact"><b>37%</b>lower energy cost, same throughput</p><p class="fact"><b>4 states</b>GREEN / NORMAL / AMBER / RED → 250→100 W</p><p class="fact"><b>2 s</b>WebSocket state updates to the dashboard</p>
-      </div>
-      <div class="proj-deep">
-        <h3 class="proj-sub hand">how it works</h3>
-        <ul class='deep-list'><li>Sensing: an async 60-second monitor polls CAISO OASIS (WattTime fallback) for $/MWh and gCO₂/kWh.</li><li>Decision: the Eco-Pulse engine maps thresholds over price and carbon to four states; GREEN raises the cap to 250 W, AMBER throttles to 150 W, RED saves a checkpoint, drops to 100 W and pauses.</li><li>Control: the GPU controller issues NVML power caps to the A100; the PyTorch training engine pause/resumes with a checkpoint manager, so a pause never loses progress.</li><li>Surface: FastAPI REST plus a WebSocket loop pushing state and running savings every 2 s to a React dashboard; a two-loop, two-clock design keeps the control loop (60 s) separate from the UI loop (2 s).</li></ul>
-      </div>
-    </div>
-
     <div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid"><div class="dec"><h4>Throttle before pausing</h4><p>Power caps keep training moving; only RED stops it.</p></div><div class="dec"><h4>Checkpoint on every pause</h4><p>A red pause is free to resume — no progress lost.</p></div></div></div>
-
     <div class="proj-rows">
-      <div class="proj-stack">
-        <h3 class="proj-sub hand">the stack</h3>
-        <ul class="tags"><li>FastAPI</li><li>PyTorch</li><li>pynvml</li><li>WebSocket</li><li>React</li><li>CAISO OASIS</li><li>LangGraph</li></ul>
-      </div>
-      <div class="proj-links">
-        <h3 class="proj-sub hand">the links</h3>
-        <div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/carbonshift" target="_blank" rel="noopener">Code on GitHub</a></div>
-      </div>
+      <div class="proj-stack"><h3 class="proj-sub hand">the stack</h3><ul class="tags"><li>FastAPI</li><li>PyTorch</li><li>pynvml</li><li>WebSocket</li><li>React</li><li>CAISO OASIS</li><li>LangGraph</li></ul></div>
+      <div class="proj-links"><h3 class="proj-sub hand">the links</h3><div class="btn-row"><a class="btn" href="https://github.com/ayushgawai/carbonshift" target="_blank" rel="noopener">Code on GitHub</a></div></div>
     </div>
-
-    <p class="proj-rel hand">same territory: <a class="rel-link" href="leo.html">leo</a><a class="rel-link" href="mmm.html">mmm</a></p>
-
-    <p class="proj-back"><a class="hand" href="../projects.html">← back to the library</a> <a class="hand" href="../media.html">or watch all the films</a></p>
+    <p class="proj-rel hand">same territory: <a class="rel-link" href="../project/leo.html">LEO satellite coverage-risk agent</a><a class="rel-link" href="../project/mmm.html">MarketMIX — MMM + MTA budget optimizer</a></p>
+    <p class="proj-back"><a class="hand" href="../projects.html">← all hackathons and projects</a></p>
   </div>
 </section>
-
 </main>
 
 <script src="../assets/site.js" defer></script>

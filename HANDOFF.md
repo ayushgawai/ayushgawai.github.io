@@ -1,4 +1,17 @@
-# Portfolio — handoff / status (for the next agent)
+# Portfolio — handoff / status
+
+## Current information architecture (Nov 16, 2026 — supersedes the sections below where they differ)
+Top nav has 5 tabs: Experience · Hackathons & Projects · Research & Publications · Media & Recognition · Résumé & Contact.
+- `index.html`: cover, first-person about + highlights, timeline, six featured, six photos, contact.
+- `experience.html` (generated gallery from `src/data/experiences.json`) → `work/<slug>.html`: EVERYTHING about that employer
+  (header from JSON + sketch blocks pulled out of section fragments; see `WORK_PARTS` in `build.py`).
+- `projects.html` (hackathons + library from `src/data/projects.json`) → `project/<slug>.html`
+  (JSON header + its sketch block, see `PROJECT_BLOCK`).
+- `research.html`, `media.html` (films, scrapbook, recognition), `contact.html` (résumé + contact).
+- A block lives on exactly one page. `build.py::part()` lifts a block out of `src/sections/*.html`; `fix_links()` repoints every
+  cross-link to wherever the target id now lives; old URLs (`ai.html`, `autonomy.html`, `project/zoox.html`…) are redirects (`REDIRECTS`).
+- The build fails on any broken internal link. Copy is first person ("I"). QA: `node .qa/page.mjs <path> <name> [width]`.
+
 
 **Last updated:** after commit `e582fbe` (all pushed to `origin` + `githubio`).
 The site is a hand-drawn "field notebook" (graph paper, ballpoint ink, tape).

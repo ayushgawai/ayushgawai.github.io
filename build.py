@@ -1,114 +1,144 @@
 #!/usr/bin/env python3
 """Multi-page build for the field-notebook site.
-Each page = shared head + top binder nav + section fragments + shared CSS/JS.
-Output: one HTML file per page at the repo root (GitHub Pages static site).
-Each JS file is syntax-checked (node --check) and wrapped in try/catch, so one
-section's bug can't stop the scripts after it.
 
-Pages are declared in PAGES below. A fragment that is missing becomes an inline
-<!-- missing --> comment instead of a build failure, so the site keeps growing
-safely. Run `python3 build.py [page ...]` (default: all)."""
-import pathlib, re, subprocess, sys
+Information architecture (one home per thing):
+  index.html        cover, about, highlights, timeline, six featured, six photos
+  experience.html   gallery of employers  -> work/<slug>.html   (EVERYTHING about that employer)
+  projects.html     hackathons + library  -> project/<slug>.html (EVERYTHING about that project)
+  research.html     studies + publications
+  media.html        films, scrapbook, recognition
+  contact.html      resume + contact
+
+Section fragments in src/sections/ hold the animated sketches. Pages are composed
+from whole fragments or from single blocks pulled out of them (see part()), so a
+block is written once and placed on exactly one page. Old URLs become redirects.
+Cross-links are rewritten to wherever a block ended up (see fix_links()).
+
+Run: python3 build.py"""
+import pathlib, re, subprocess, sys, json, html as htmlmod
 R = pathlib.Path(__file__).parent
 src = R / "src"
 ROOT = "https://ayushgawai.github.io"
 
-def inc(m):
-    p = src / m.group(1).strip()
-    return inc_all(p.read_text()) if p.exists() else f"<!-- missing {m.group(1).strip()} -->"
-def inc_all(t): return re.sub(r"<!--\s*@include\s+(.+?)\s*-->", inc, t)
+def _esc(s): return htmlmod.escape(str(s), quote=True)
+def frag(name): return (src / "sections" / f"{name}.html").read_text()
 
-def partial(name: str, **kw) -> str:
-    p = src / "_partials" / f"{name}.html"
-    t = p.read_text() if p.exists() else f"<!-- missing partial {name} -->"
-    for k, v in kw.items():
-        t = t.replace("{%s}" % k, v)
+def partial(name, **kw):
+    t = (src / "_partials" / f"{name}.html").read_text()
+    for k, v in kw.items(): t = t.replace("{%s}" % k, v)
     return t
 
-# page: (file, [fragments], title, description, nav-active-key)
-PAGES = [
-    ("index.html",       ["hero", "home-strip", "home-featured", "contact"],
+# ---------- pulling one block out of a fragment ----------
+def find(html, sel):
+    """Return (start, end) of the first element matching '#id' or '.class', tag-balanced."""
+    if sel[0] == "#": pat = r'<(\w+)\b[^>]*\bid="%s"[^>]*>' % re.escape(sel[1:])
+    else: pat = r'<(\w+)\b[^>]*\bclass="[^"]*(?<![\w-])%s(?![\w-])[^"]*"[^>]*>' % re.escape(sel[1:])
+    m = re.search(pat, html)
+    if not m: raise SystemExit(f"build: selector {sel} not found")
+    tag, depth, pos = m.group(1), 1, m.end()
+    for t in re.finditer(r"<(/?)%s\b[^>]*>" % tag, html[pos:]):
+        depth += -1 if t.group(1) else 1
+        if depth == 0: return m.start(), pos + t.end()
+    raise SystemExit(f"build: unbalanced <{tag}> for {sel}")
+
+def take(html, sel):
+    a, b = find(html, sel); return html[a:b]
+def drop(html, *sels):
+    for s in sels:
+        a, b = find(html, s); html = html[:a] + html[b:]
+    return html
+
+def part(section, sels, attrs=""):
+    """A slim copy of a section holding only the chosen blocks. Keeps the section id so its scoped CSS/JS still apply."""
+    h = frag(section)
+    inner = "\n".join(re.sub(r"^(<\w+)", r'\1 data-part', take(h, s).replace(" hidden>", ">"), count=1) for s in sels)
+    return f'<section class="chapter chapter--part" id="{section}" {attrs}>\n<div class="page part-page">\n{inner}\n</div>\n</section>'
+
+def data_pipe(pipe):
+    h = frag("data")
+    fig = take(h, ".data-sketch"); art = take(h, f"#p-{pipe}").replace(" hidden>", ">")
+    return (f'<section class="chapter chapter--part" id="data" data-only="{pipe}">\n<div class="page">\n{fig}\n'
+            f'<div class="data-panel" id="data-panel" role="region">\n{art}\n</div>\n</div>\n</section>')
+
+def systems_pane(pane):
+    return part("systems", ["#p-under-app"], f'data-only="{pane}"')
+
+# ---------- where every block lives ----------
+WORK_PARTS = {
+    "zoox": lambda: [drop(frag("av"), "#p-scene-miner", "#p-trajectory"), part("ai", ["#p-predicates"]),
+                     part("automation", ["#p-fleet-reporting"]), part("agents", ["#p-slackbot"]), part("security", ["#p-sec-fence"])],
+    "zscaler": lambda: [data_pipe("zscaler"), part("ai", ["#p-formulas"])],
+    "latentview": lambda: [data_pipe("latentview")],
+    "coditas": lambda: [part("automation", ["#p-cicd"])],
+    "sneakstore": lambda: [part("automation", ["#p-sneakstore"])],
+}
+PROJECT_BLOCK = {
+    "sentinel": lambda: part("ai", ["#p-sentinel"]),
+    "leo": lambda: part("ai", ["#p-leo"]),
+    "blast": lambda: part("agents", ["#p-blast"]),
+    "so101": lambda: part("robots", ["#p-so101"]),
+    "obstacle": lambda: part("robots", ["#p-obstacle"]),
+    "warehouse": lambda: part("robots", ["#p-warehouse"]),
+    "transit": lambda: data_pipe("transit"),
+    "transitrisk": lambda: part("data", ["#p-transitrisk"]),
+    "wikirisk": lambda: part("data", ["#p-wikirisk"]),
+    "capflow": lambda: part("data", ["#p-capflow"]),
+    "lsmstore": lambda: systems_pane("lsm"),
+    "query-engine": lambda: systems_pane("qe"),
+    "siliconbench": lambda: systems_pane("roof"),
+    "carbonshift": lambda: part("systems", ["#p-carbonshift"]),
+    "scene-miner": lambda: part("av", ["#p-scene-miner"]),
+    "trajectory": lambda: part("av", ["#p-trajectory"]),
+}
+# old URL -> its one new home
+REDIRECTS = {
+    "ai.html": "projects.html", "data.html": "projects.html", "software.html": "projects.html", "robotics.html": "projects.html",
+    "hackathons.html": "projects.html", "autonomy.html": "work/zoox.html", "recognition.html": "media.html",
+    "work/research.html": "research.html",
+    "project/predicates.html": "work/zoox.html", "project/fleet-reporting.html": "work/zoox.html",
+    "project/slackbot.html": "work/zoox.html", "project/zoox.html": "work/zoox.html",
+    "project/formulas.html": "work/zscaler.html", "project/latentview.html": "work/latentview.html",
+    "project/cicd.html": "work/coditas.html", "project/eyetracking.html": "research.html", "project/wheelchair.html": "research.html",
+}
+MOVED = {"predicates", "fleet-reporting", "slackbot", "zoox", "formulas", "latentview", "cicd", "eyetracking", "wheelchair"}
+
+PAGES = [  # file, [parts], title, description, nav key
+    ("index.html", ["hero", "home-about", "path", "home-featured", "home-photos", "contact"],
      "Ayush Gawai — field notebook",
-     "Ayush builds data, AI and robotics systems that people can trust: AV data infrastructure at Zoox, robot-learning and human-centered research at SJSU, and data platforms at Zscaler and LatentView.",
-     "home"),
-    ("experience.html",  ["path", "recognition", "contact"],
-     "Experience — Ayush Gawai",
-     "The full route: Zoox, Zscaler, LatentView, Coditas and SJSU research — open a stop for the technical depth.",
-     "experience"),
-    ("projects.html",    ["projlib", "contact"],
-     "Projects — Ayush Gawai",
-     "The complete library: every project, each with its own page of video, architecture and results.",
-     "projects"),
-    ("ai.html",          ["ai", "agents", "automation", "security"],
-     "AI & LLM work — Ayush Gawai",
-     "Applied AI: grounded LLM systems, agentic pipelines, and guardrails that keep models honest.",
-     "ai"),
-    ("data.html",        ["data"],
-     "Data platforms — Ayush Gawai",
-     "Streaming and batch data platforms: Kafka, Airflow, dbt, Snowflake, and the models on top.",
-     "data"),
-    ("software.html",    ["systems", "software"],
-     "Software engineering — Ayush Gawai",
-     "Systems software and performance: columnar engines, storage, matching and dedup in C++ and Java.",
-     "software"),
-    ("robotics.html",    ["robots"],
-     "Robotics — Ayush Gawai",
-     "Embodied AI: SO-101 imitation learning, obstacle-alert research and edge perception.",
-     "robotics"),
-    ("autonomy.html",    ["av"],
-     "Autonomy & Zoox — Ayush Gawai",
-     "Perception data infrastructure at Zoox: teaching a fleet of data miners to grade their own work.",
-     "autonomy"),
-    ("research.html",    ["research"],
-     "Research — Ayush Gawai",
-     "Published human-centered research: visual attention, assistive mobility and robot learning at SJSU.",
-     "research"),
-    ("hackathons.html",  ["hackathons"],
-     "Hackathons — Ayush Gawai",
-     "What wins and ships in 48 hours: Sentinel AI, Blast Radius, CarbonShift and the rest.",
-     "hackathons"),
-    ("media.html",       ["films", "demos", "gallery"],
-     "Media — Ayush Gawai",
-     "Demo films, live demos and the scrapbook — everything visual about the work.",
-     "media"),
-    ("recognition.html", ["recognition", "resume", "contact"],
-     "Recognition — Ayush Gawai",
-     "Awards, scholarships, features and the publications behind them.",
-     "recognition"),
-    ("contact.html",     ["contact"],
-     "Contact — Ayush Gawai",
-     "Ways to reach out: email, GitHub and LinkedIn.",
-     "contact"),
+     "I build data, AI and robotics systems people can trust: AV data infrastructure at Zoox, robot-learning and human-centered research at SJSU, data platforms at Zscaler and LatentView.", "home"),
+    ("experience.html", ["@xp"],
+     "Experience — Ayush Gawai", "Where I have worked: Zoox, Zscaler, LatentView, Coditas and my own store. Each has one page with the whole story.", "experience"),
+    ("projects.html", ["hackathons", "projlib", "@more"],
+     "Hackathons and projects — Ayush Gawai", "Every hackathon build and project, each with one page: demo, moving sketch, numbers, code.", "projects"),
+    ("research.html", ["research"],
+     "Research and publications — Ayush Gawai", "Published human-centered AI research at SJSU: visual attention and assistive mobility.", "research"),
+    ("media.html", ["films", "gallery", "recognition"],
+     "Media and recognition — Ayush Gawai", "Project films, photos, awards and press.", "media"),
+    ("contact.html", ["resume", "contact"],
+     "Résumé and contact — Ayush Gawai", "My résumé and how to reach me.", "contact"),
 ]
 
-def build_page(file, frs, title, desc, page_key):
-    includes = "\n".join(f"<!-- @include sections/{f}.html -->" for f in frs)
-    html = f"""<!doctype html>
+def shell(body, title, desc, url, key):
+    return f"""<!doctype html>
 <html lang="en">
 <head>
-{partial('head', title=title, desc=desc, url=f"{ROOT}/{'' if file=='index.html' else file}", assetbase='')}
+{partial('head', title=title, desc=desc, url=url, assetbase='')}
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 
 {partial('defs')}
 
-{partial('topnav', page=page_key)}
+{partial('topnav', page=key)}
 
 <main id="main">
-{includes}
+{body}
 </main>
 
 <script src="assets/site.js" defer></script>
 </body>
 </html>
 """
-    (R / file).write_text(inc_all(html))
-
-# ---- project detail pages: rendered from the single source of truth ----
-import json, html as htmlmod
-
-def _esc(s): return htmlmod.escape(str(s), quote=True)
 
 def _film_block(m, ab):
     if not m: return ""
@@ -132,173 +162,219 @@ def _film_block(m, ab):
                 f'</div></figure>')
     return ""
 
+OUT = {}   # path -> html (root-relative links; prefixed for subfolders when written)
+
+def projects_data(): return json.loads((src / "data" / "projects.json").read_text())
+def works_data(): return json.loads((src / "data" / "experiences.json").read_text())
+
 def build_projects():
-    data = json.loads((src / "data" / "projects.json").read_text())
-    import pathlib
-    (R / "project").mkdir(exist_ok=True)
-    for it in data["items"]:
-        slug, ab = it["slug"], "../"
-        title = it["title"]
-        desc = f'{title} — {it["summary"]}'[:150]
+    items = [it for it in projects_data()["items"] if it["slug"] not in MOVED]
+    slugs = {it["slug"] for it in items}
+    for it in items:
+        slug, title = it["slug"], it["title"]
+        block = PROJECT_BLOCK[slug]() if slug in PROJECT_BLOCK else ""
         facts = "".join(f'<p class="fact"><b>{_esc(f["k"])}</b>{_esc(f.get("v",""))}</p>' for f in it.get("facts", []))
-        deep = "".join(f'<li>{_esc(p)}</li>' for p in it.get("deep", []))
-        deep = f"<ul class='deep-list'>{deep}</ul>" if deep else ""
+        deep = "".join(f"<li>{_esc(p)}</li>" for p in it.get("deep", []))
+        two = "" if block or not (facts or deep) else (
+            f'<div class="proj-two"><div class="proj-facts"><h3 class="proj-sub hand">the numbers</h3>{facts}</div>'
+            f'<div class="proj-deep"><h3 class="proj-sub hand">how it works</h3><ul class="deep-list">{deep}</ul></div></div>')
         dec = it.get("decisions", [])
-        decisions = ""
-        if dec:
-            cards = "".join(f'<div class="dec"><h4>{_esc(d["h"])}</h4><p>{_esc(d["b"])}</p></div>' for d in dec)
-            decisions = f'<div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid">{cards}</div></div>'
+        decisions = ('<div class="proj-decs"><h3 class="proj-sub hand">the design calls</h3><div class="decs-grid">'
+                     + "".join(f'<div class="dec"><h4>{_esc(d["h"])}</h4><p>{_esc(d["b"])}</p></div>' for d in dec) + "</div></div>") if dec else ""
         stack = "".join(f"<li>{_esc(s)}</li>" for s in it.get("stack", []))
-        repo = (f'<a class="btn" href="{it["repo"]}" target="_blank" rel="noopener">Code on GitHub</a>'
-                if it.get("repo") else '<p class="hand pencil">no public repo</p>')
-        papers = it.get("papers", [])
-        pstr = ""
-        for p in papers:
-            u = p["url"]
-            pstr += (f'<a class="btn" href="{_esc(u)}" target="_blank" rel="noopener">{_esc(p["label"])}</a> ')
-            if "placeholder" in u:
-                pstr += '<span class="hand pencil red">link pending — see TODO.md</span> '
-        rel = it.get("related", [])
-        if rel:
-            links = "".join(f'<a class="rel-link" href="{r}.html">{_esc(r)}</a>' for r in rel)
-            related = f'<p class="proj-rel hand">same territory: {links}</p>'
-        else:
-            related = ""
-        body = partial("project-detail", page="projects",
-                       title=_esc(title), where=_esc(it.get("where","")), summary=_esc(it.get("summary","")),
-                       film=_film_block(it.get("film"), ab), facts=facts, deep=deep,
-                       decisions=decisions, stack=stack, repo=repo, papers=pstr, related=related)
-        html = f"""<!doctype html>
-<html lang="en">
-<head>
-{partial('head', title=f'{title} — project · Ayush Gawai', desc=desc, url=f"{ROOT}/project/{slug}.html", assetbase='../')}
-</head>
-<body>
-<a class="skip-link" href="#main">Skip to content</a>
-
-{partial('defs')}
-
-{partial('topnav', page="projects")}
-
-<main id="main">
-{body}
-</main>
-
-<script src="{ab}assets/site.js" defer></script>
-</body>
-</html>
-"""
-        # relative page links need a ../ prefix on project/ pages
-        for lnk in ["index.html","experience.html","projects.html","ai.html","data.html","software.html",
-                    "robotics.html","autonomy.html","research.html","hackathons.html","media.html",
-                    "recognition.html","contact.html"]:
-            html = html.replace(f'href="{lnk}"', f'href="../{lnk}"')
-        html = html.replace('href="assets/', 'href="../assets/')   # topnav resume pdf etc
-        (R / "project" / f"{slug}.html").write_text(inc_all(html))
-    print(f"built project/ detail pages ({len(data['items'])})")
+        repo = (f'<a class="btn" href="{it["repo"]}" target="_blank" rel="noopener">Code on GitHub</a>' if it.get("repo")
+                else '<p class="hand pencil">no public repo</p>')
+        papers = "".join(f'<a class="btn" href="{_esc(p["url"])}" target="_blank" rel="noopener">{_esc(p["label"])}</a> '
+                         for p in it.get("papers", []) if "placeholder" not in p["url"])
+        rel = [r for r in it.get("related", []) if r in slugs]
+        related = ('<p class="proj-rel hand">same territory: ' + "".join(
+            f'<a class="rel-link" href="project/{r}.html">{_esc(next(x["title"] for x in items if x["slug"]==r))}</a>' for r in rel) + "</p>") if rel else ""
+        film = it.get("film")
+        film_html = "" if (block and 'class="video"' in block and isinstance(film, dict)) else _film_block(film, "")
+        body = f"""<section class="chapter proj" id="proj" aria-labelledby="proj-title">
+  <header class="chapter-head page">
+    <p class="proj-back"><a class="hand" href="projects.html">← all hackathons and projects</a></p>
+    <p class="chapter-kicker hand">{_esc(it.get("where",""))}</p>
+    <h1 id="proj-title" class="chapter-title">{_esc(title)}</h1>
+    <p class="chapter-lede">{_esc(it.get("summary",""))}</p>
+  </header>
+  <div class="page">{film_html}{two}</div>
+</section>
+{block}
+<section class="chapter proj proj-tail" aria-label="More about {_esc(title)}">
+  <div class="page">
+    {decisions}
+    <div class="proj-rows">
+      <div class="proj-stack"><h3 class="proj-sub hand">the stack</h3><ul class="tags">{stack}</ul></div>
+      <div class="proj-links"><h3 class="proj-sub hand">the links</h3><div class="btn-row">{repo}{papers}</div></div>
+    </div>
+    {related}
+    <p class="proj-back"><a class="hand" href="projects.html">← all hackathons and projects</a></p>
+  </div>
+</section>"""
+        OUT[f"project/{slug}.html"] = shell(body, f"{title} — Ayush Gawai", _esc(f'{title}: {it["summary"]}'[:155]), f"{ROOT}/project/{slug}.html", "projects")
+    return items
 
 def build_works():
-    data = json.loads((src / "data" / "experiences.json").read_text())
-    (R / "work").mkdir(exist_ok=True)
-    for it in data["items"]:
-        slug, ab, title = it["slug"], "../", it["org"]
-        desc = f'{it["org"]} — {it["role"]} · {it["dates"]}'
+    items = works_data()["items"]
+    for it in items:
+        slug = it["slug"]
+        if slug not in WORK_PARTS: continue
         numbers = "".join(f'<p class="fact"><b>{_esc(n["k"])}</b>{_esc(n.get("v",""))}</p>' for n in it.get("numbers", []))
-        numbers = f'<div class="facts">{numbers}</div>'
-        story = "".join(f'<li>{_esc(p)}</li>' for p in it.get("deep", []))
-        story = f'<ul class="deep-list">{story}</ul>'
+        story = "".join(f"<li>{_esc(p)}</li>" for p in it.get("deep", []))
         stack = "".join(f"<li>{_esc(x)}</li>" for x in it.get("stack", []))
-        projs = "".join(f'<a class="btn" href="project/{r}.html">{_esc(r.replace("-"," ").replace("zoox","Zoox").title()) if r not in ("zoox",) else "Zoox (overview)"}</a>' for r in it.get("projects", []))
-        body = partial("work-detail", page="experience",
-                       org=_esc(title), role=_esc(it.get("role","")), dates=_esc(it.get("dates","")),
-                       one=_esc(it.get("one","")), numbers=numbers, story=story, stack=stack, projects=projs)
-        html = f"""<!doctype html>
-<html lang="en">
-<head>
-{partial('head', title=f'{title} — experience · Ayush Gawai', desc=desc, url=f"{ROOT}/work/{slug}.html", assetbase='../')}
-</head>
-<body>
-<a class="skip-link" href="#main">Skip to content</a>
+        body = f"""<section class="chapter work" id="work" aria-labelledby="work-title">
+  <header class="chapter-head page">
+    <p class="proj-back"><a class="hand" href="experience.html">← all experience</a></p>
+    <p class="chapter-kicker hand">{_esc(it["dates"])} · {_esc(it["role"])}</p>
+    <h1 id="work-title" class="chapter-title">{_esc(it["org"])}</h1>
+    <p class="chapter-lede">{_esc(it["one"])}</p>
+  </header>
+  <div class="page">
+    <div class="work-two">
+      <div class="work-numbers"><h3 class="proj-sub hand">on the record</h3><div class="facts">{numbers}</div></div>
+      <div class="work-story"><h3 class="proj-sub hand">what I did</h3><ul class="deep-list">{story}</ul></div>
+    </div>
+    <div class="proj-rows"><div><h3 class="proj-sub hand">the stack</h3><ul class="tags">{stack}</ul></div></div>
+    <p class="work-next hand">drawn out below: every system I built here, each with its own sketch and deep dive ↓</p>
+  </div>
+</section>
+{chr(10).join(WORK_PARTS[slug]())}
+<section class="chapter proj proj-tail"><div class="page"><p class="proj-back"><a class="hand" href="experience.html">← all experience</a></p></div></section>"""
+        OUT[f"work/{slug}.html"] = shell(body, f'{it["org"]} — experience · Ayush Gawai', _esc(f'{it["org"]}: {it["role"]}, {it["dates"]}'), f"{ROOT}/work/{slug}.html", "experience")
+    return items
 
-{partial('defs')}
+def xp_gallery(items):
+    cards = []
+    for it in items:
+        href = f'work/{it["slug"]}.html' if it["slug"] in WORK_PARTS else "research.html"
+        nums = "".join(f'<li><b>{_esc(n["k"])}</b> {_esc(n.get("v",""))}</li>' for n in it.get("numbers", [])[:3])
+        cards.append(f"""      <a class="xpg-card" href="{href}">
+        <p class="xpg-date hand">{_esc(it["dates"])}</p>
+        <h2 class="xpg-org">{_esc(it["org"])}</h2>
+        <p class="xpg-role">{_esc(it["role"])}</p>
+        <p class="xpg-one">{_esc(it["one"])}</p>
+        <ul class="xpg-nums">{nums}</ul>
+        <span class="xpg-go hand">open the full page →</span>
+      </a>""")
+    return f"""<section class="chapter" id="xp" aria-labelledby="xp-title">
+  <header class="chapter-head page">
+    <p class="chapter-kicker hand">2021 → now</p>
+    <h1 id="xp-title" class="chapter-title">Experience</h1>
+    <p class="chapter-lede">Each card opens one page that holds everything I did there: the systems, the sketches, the numbers.</p>
+  </header>
+  <div class="page"><div class="xpg-grid">
+{chr(10).join(cards)}
+  </div></div>
+</section>"""
 
-{partial('topnav', page="experience")}
-
-<main id="main">
-{body}
-</main>
-
-<script src="{ab}assets/site.js" defer></script>
-</body>
-</html>
-"""
-        for lnk in ["index.html","experience.html","projects.html","ai.html","data.html","software.html",
-                    "robotics.html","autonomy.html","research.html","hackathons.html","media.html",
-                    "recognition.html","contact.html"]:
-            html = html.replace(f'href="{lnk}"', f'href="../{lnk}"')
-        html = html.replace('href="project/', 'href="../project/')
-        html = html.replace('href="assets/', 'href="../assets/')
-        (R / "work" / f"{slug}.html").write_text(inc_all(html))
-    print(f"built work/ experience pages ({len(data['items'])})")
-
-def build_projlib():
-    """Regenerate src/sections/projlib.html from the single source of truth so the
-    library list never diverges from the project detail pages."""
-    data = json.loads((src / "data" / "projects.json").read_text())
-    area_label = {"ai":"AI · LLM","data":"data","software":"software engineering",
-                  "robotics":"robotics","autonomy":"autonomy & Zoox","research":"research","marketing":"marketing ML"}
-    order = ["ai","data","software","robotics","autonomy","research","marketing"]
-    by = {a: [it for it in data["items"] if it.get("area")==a] for a in order}
+def projlib(items):
+    label = {"ai": "AI and agents", "data": "data platforms", "software": "software and systems", "robotics": "robotics",
+             "autonomy": "autonomy", "marketing": "marketing ML", "research": "research"}
     blocks = []
-    for a in order:
-        items = by.get(a, [])
-        if not items:
-            continue
-        cards = []
-        for it in items:
-            sl = it["slug"]
-            where = it.get("where","")
-            where = where.split(" · ")[-1].strip() if " · " in where else where
-            cards.append(
-                '      <a class="lib-card" href="project/%s.html">\n'
-                '        <p class="lib-where hand">%s</p>\n'
-                '        <h3 class="lib-t">%s</h3>\n'
-                '        <p class="lib-sum">%s <span class="lib-open hand">open the full work →</span></p>\n'
-                '      </a>' % (sl, _esc(area_label.get(a,a)), _esc(it["title"]), _esc(it.get("summary","")))
-            )
-        blocks.append('    <h3 class="lib-group hand">%s</h3>\n    <div class="lib-grid">\n%s\n    </div>' % (_esc(area_label.get(a,a)), "\n".join(cards)))
-    out = ('<!-- GENERATED from src/data/projects.json by build.py: edit the data, not this file. -->\n'
-           '<section class="chapter" id="projlib" data-tab="Projects" aria-labelledby="projlib-title">\n'
-           '  <header class="chapter-head page">\n'
-           '    <p class="chapter-kicker hand">the full library</p>\n'
-           '    <h2 id="projlib-title" class="chapter-title">Every build, in one list</h2>\n'
-           '    <p class="chapter-lede">%d projects, each with its own page: the film, the architecture, the numbers and the links. A card may appear under more than one area — its full story lives in one place, on its project page.</p>\n'
-           '  </header>\n  <div class="page">\n%s\n  </div>\n</section>\n' % (len(data["items"]), "\n".join(blocks)))
-    (src / "sections" / "projlib.html").write_text(out)
-    print("generated src/sections/projlib.html (%d projects)" % len(data["items"]))
+    for a in ["ai", "data", "software", "robotics", "autonomy", "marketing", "research"]:
+        its = [it for it in items if it.get("area") == a]
+        if not its: continue
+        cards = "\n".join(f"""      <a class="lib-card" href="project/{it["slug"]}.html">
+        <h3 class="lib-t">{_esc(it["title"])}</h3>
+        <p class="lib-sum">{_esc(it.get("summary",""))} <span class="lib-open hand">open →</span></p>
+      </a>""" for it in its)
+        blocks.append(f'    <h3 class="lib-group hand">{label[a]}</h3>\n    <div class="lib-grid">\n{cards}\n    </div>')
+    return f"""<section class="chapter" id="projlib" aria-labelledby="projlib-title">
+  <header class="chapter-head page">
+    <p class="chapter-kicker hand">the full library</p>
+    <h2 id="projlib-title" class="chapter-title">Every project, one page each</h2>
+    <p class="chapter-lede">{len(items)} builds. Open a card for its demo, moving sketch, numbers and code.</p>
+  </header>
+  <div class="page">
+{chr(10).join(blocks)}
+  </div>
+</section>"""
 
+def more_builds():
+    return (part("agents", [".ag-more"]) + "\n" + part("security", [".sec-cards"]) + "\n" + part("systems", [".sys-log-wrap", ".sys-cloud"]).replace(take(frag("systems"), "#p-carbonshift"), ""))
+
+def build_pages(projects, works):
+    special = {"@xp": lambda: xp_gallery(works), "@more": more_builds, "projlib": lambda: projlib(projects),
+               "research": lambda: frag("research")}
+    for file, parts, title, desc, key in PAGES:
+        body = "\n".join(special[p]() if p in special else frag(p) for p in parts)
+        OUT[file] = shell(body, title, desc, f"{ROOT}/{'' if file == 'index.html' else file}", key)
+    for old, new in REDIRECTS.items():
+        OUT[old] = (f'<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Moved</title>'
+                    f'<link rel="canonical" href="{ROOT}/{new}"><meta http-equiv="refresh" content="0; url={new}">'
+                    f'<meta name="robots" content="noindex"></head><body><p>This page moved to <a href="{new}">{new}</a>.</p></body></html>')
+
+# ---------- links ----------
+ATTR = re.compile(r'\b(href|src|poster)="([^"]*)"')
+def is_rel(u): return u and not re.match(r"^(https?:|mailto:|tel:|data:|#|/|\.\./|javascript:)", u)
+
+def fix_links():
+    """Point every in-site link at the page where its target id actually lives now."""
+    home = {}
+    for path, h in OUT.items():
+        if path in REDIRECTS: continue
+        for i in re.findall(r'\bid="([^"]+)"', h): home.setdefault(i, path)
+    for path, h in OUT.items():
+        if path in REDIRECTS: continue
+        ids = set(re.findall(r'\bid="([^"]+)"', h))
+        def sub(m):
+            attr, u = m.group(1), m.group(2)
+            if attr != "href": return m.group(0)
+            if u.startswith("#"):
+                i = u[1:]
+                if i and i not in ids and i in home: return f'href="{home[i]}#{i}"'
+                if i and i not in ids: return f'href="{SECTION_HOME.get(i, "index.html")}"'
+                return m.group(0)
+            if not is_rel(u): return m.group(0)
+            page, _, i = u.partition("#")
+            if i and i in home: return f'href="{home[i]}#{i}"' if home[i] != path else f'href="#{i}"'
+            if page in REDIRECTS: return f'href="{REDIRECTS[page]}"'
+            return f'href="{page}"' if i else m.group(0)
+        OUT[path] = ATTR.sub(sub, h)
+
+SECTION_HOME = {"av": "work/zoox.html", "ai": "projects.html", "agents": "projects.html", "automation": "projects.html", "security": "projects.html",
+                "data": "projects.html", "systems": "projects.html", "robots": "projects.html", "demos": "media.html", "films": "media.html",
+                "gallery": "media.html", "resume": "contact.html", "path": "index.html", "top": "index.html", "recognition": "media.html"}
+
+def write_all():
+    for path, h in OUT.items():
+        depth = path.count("/")
+        if depth:
+            h = ATTR.sub(lambda m: f'{m.group(1)}="{"../" * depth}{m.group(2)}"' if is_rel(m.group(2)) else m.group(0), h)
+            h = re.sub(r'srcset="([^"]+)"', lambda m: 'srcset="' + ", ".join(("../" * depth + x.strip()) if is_rel(x.strip()) else x.strip() for x in m.group(1).split(",")) + '"', h)
+            if path in REDIRECTS: h = re.sub(r'url=([^"]+)"', lambda m: f'url={"../" * depth}{m.group(1)}"', h)
+        p = R / path; p.parent.mkdir(exist_ok=True); p.write_text(h)
+    # remove stale generated pages
+    for d in ("project", "work"):
+        for f in (R / d).glob("*.html"):
+            if f"{d}/{f.name}" not in OUT: f.unlink()
+
+def check_links():
+    bad = []
+    for path, h in OUT.items():
+        base = (R / path).parent
+        for attr, u in ATTR.findall((R / path).read_text()):
+            if not (is_rel(u) or u.startswith("../")): continue
+            page, _, i = u.partition("#")
+            t = (base / page).resolve()
+            if not t.exists(): bad.append(f"{path}: {u} (missing file)")
+            elif i and t.suffix == ".html" and f'id="{i}"' not in t.read_text(): bad.append(f"{path}: {u} (missing id)")
+    return bad
 
 def main():
-    only = sys.argv[1:] or [p[0] for p in PAGES]
-    for file, frs, title, desc, key in PAGES:
-        if file not in only:
-            continue
-        build_page(file, frs, title, desc, key)
-        print(f"built {file}")
-    if "project/" not in " ".join(only):
-        build_projects()
-    if "projlib" not in " ".join(only):
-        build_projlib()
-    if "work/" not in " ".join(only):
-        build_works()
-
     js = sorted((src / "js").glob("*.js"))
     bad = [p.name for p in js if subprocess.run(["node", "--check", str(p)], capture_output=True).returncode]
-    if bad: sys.exit(f"syntax error in: {', '.join(bad)} (run: node --check src/js/<file>)")
+    if bad: sys.exit(f"syntax error in: {', '.join(bad)}")
+    projects, works = build_projects(), build_works()
+    build_pages(projects, works)
+    fix_links(); write_all()
     (R / "assets/site.css").write_text("\n".join(f"/* {p.name} */\n{p.read_text()}" for p in sorted((src / "css").glob("*.css"))))
     (R / "assets/site.js").write_text("\n".join(
         f"/* {p.name} */\ntry {{\n{p.read_text()}\n}} catch (e) {{ console.error('[{p.name}]', e); }}" for p in js))
-    print("built assets/site.css + assets/site.js")
+    broken = check_links()
+    print(f"built {len(OUT)} pages ({len(projects)} projects)")
+    if broken: print("BROKEN LINKS:\n  " + "\n  ".join(sorted(set(broken))[:60])); sys.exit(1)
 
 if __name__ == "__main__":
     main()
