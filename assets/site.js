@@ -153,7 +153,7 @@ try {
 
     // choose tools by priority to fit capacity, keep the domain order
     const capTotal = stars.reduce((a, s) => a + s.cap, 0);
-    const n = Math.min(tools.length, capTotal, mobile ? 20 : 48);
+    const n = Math.min(tools.length, capTotal, mobile ? 14 : 48);
     const keep = new Set(tools.slice().sort((a, b) => a.p - b.p || a.i - b.i).slice(0, n).map((t) => t.i));
     const chosen = tools.filter((t) => keep.has(t.i));
     tools.forEach((t) => (t.rope = null));
@@ -554,6 +554,22 @@ try {
 })();
 
 } catch (e) { console.error('[10-hero.js]', e); }
+/* 13-skills.js */
+try {
+/* skills: on phones each group shows its first few skills, the rest behind "+N more" */
+(() => {
+  const SHOW = 6;
+  document.querySelectorAll('#skills .sk-note').forEach((note) => {
+    const chips = note.querySelector('.sk-chips'), n = chips ? chips.children.length - SHOW : 0;
+    if (n <= 0) return;
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'sk-more hand'; b.textContent = `+${n} more`; b.setAttribute('aria-expanded', 'false');
+    b.addEventListener('click', () => { const open = note.classList.toggle('sk-all'); b.textContent = open ? 'show fewer' : `+${n} more`; b.setAttribute('aria-expanded', open); });
+    chips.after(b);
+  });
+})();
+
+} catch (e) { console.error('[13-skills.js]', e); }
 /* 20-av.js */
 try {
 /* Autonomy chapter: robotaxi street loop, red-pencil catches, event cards into the validation pipeline. */

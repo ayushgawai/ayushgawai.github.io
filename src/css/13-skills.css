@@ -36,9 +36,12 @@
 #skills .sk-proof a { font-weight: 700; }
 @keyframes sk-in { from { opacity: 0; transform: translateY(-4px); } }
 
+#skills .sk-more { display: none; margin-top: 10px; background: none; border: 0; padding: 6px 0; color: var(--blue); font-size: var(--t-md); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 820px) {
   #skills .sk-board { grid-template-columns: 1fr; gap: calc(var(--u) * 1.5); }
   #skills .sk-note { padding: var(--u) 16px 16px; }
+  #skills .sk-note:not(.sk-all) .sk-chips > :nth-child(n+7) { display: none; }
+  #skills .sk-more { display: inline-block; }
 }
 @media (prefers-reduced-motion: reduce) {
   #skills .sk-note, #skills .sk-note:nth-child(even), #skills .sk-note:nth-child(3n) { transform: none; }

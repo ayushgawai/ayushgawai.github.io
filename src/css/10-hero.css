@@ -67,7 +67,7 @@
   #top .hero-facts i { display: none; }
 }
 @media (max-width: 760px) {
-  #top.hero { min-height: 0; justify-content: flex-start; padding-top: max(420px, 58svh); padding-bottom: calc(var(--u) * 2.5); }
+  #top.hero { min-height: 0; justify-content: flex-start; padding-top: max(290px, 38svh); padding-bottom: calc(var(--u) * 2); }
   #top .hero-name { margin-bottom: calc(var(--u) / 2); }
   #top .hero-lede { font-size: var(--t-md); }
   #top .hero-hint { justify-content: flex-end; font-size: var(--t-sm); }

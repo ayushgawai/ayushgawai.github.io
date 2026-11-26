@@ -56,9 +56,12 @@
 /* the old right-rail tabs are superseded by the top nav — hide them */
 .tabs { display: none; }
 
+/* long labels on wide screens, short ones on phones */
+.topnav-tab .ts { display: none; }
 @media (max-width: 760px) {
-  .topnav { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
-  .topnav::-webkit-scrollbar { display: none; }
-  .topnav-tab { padding: 10px 10px 12px; flex: 0 0 auto; }
+  .topnav { flex-wrap: nowrap; gap: 3px; padding: 0 10px; }
+  .topnav-tab { flex: 1 1 0; min-width: 0; justify-content: center; padding: 11px 4px 12px; font-size: 12.5px; }
+  .topnav-tab .tl { display: none; }
+  .topnav-tab .ts { display: inline; }
   body { padding-top: 0; }
 }

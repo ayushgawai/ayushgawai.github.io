@@ -90,7 +90,7 @@
 
     // choose tools by priority to fit capacity, keep the domain order
     const capTotal = stars.reduce((a, s) => a + s.cap, 0);
-    const n = Math.min(tools.length, capTotal, mobile ? 20 : 48);
+    const n = Math.min(tools.length, capTotal, mobile ? 14 : 48);
     const keep = new Set(tools.slice().sort((a, b) => a.p - b.p || a.i - b.i).slice(0, n).map((t) => t.i));
     const chosen = tools.filter((t) => keep.has(t.i));
     tools.forEach((t) => (t.rope = null));

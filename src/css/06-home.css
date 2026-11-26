@@ -19,7 +19,8 @@
 .xp-dot { display: none; }
 
 /* ---- featured gallery: 6 cards + "show more" ---- */
-.feat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(var(--u) * 2) calc(var(--u) * 1.5); }
+.feat-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(var(--u) * 2) calc(var(--u) * 1.5); }
+.feat-img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border: 1.5px solid var(--ink); border-radius: 3px; margin-bottom: 6px; background: var(--paper); }
 .feat-card { position: relative; display: flex; flex-direction: column; gap: 8px; min-height: 210px;
   background: var(--paper-card); border: 1.5px solid var(--ink); border-radius: 4px;
   padding: 18px 18px 16px; box-shadow: var(--shadow-card); text-decoration: none; color: var(--ink);
@@ -46,7 +47,6 @@
 @media (max-width: 1000px) {
   .xp-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .xp-card:last-child { grid-column: 1 / -1; }
-  .feat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 600px) {
   .xp-strip { grid-template-columns: 1fr; }
