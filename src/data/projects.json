@@ -102,7 +102,8 @@
     "obstacle",
     "sensor-hub"
    ],
-   "owned": "Team project. I owned the relay, the harness and step machine, label reading and parcel finding, calibration, the safety guards and the real-robot trials. My teammate built the replay dashboard and its arm kinematics, the table-grid homography and the scenario 4 WALLX work. The code is in a private repository for now."
+   "owned": "Team project. I owned the relay, the harness and step machine, label reading and parcel finding, calibration, the safety guards and the real-robot trials. My teammate built the replay dashboard and its arm kinematics, the table-grid homography and the scenario 4 WALLX work.",
+   "repo": "https://github.com/ayushgawai/LabelLoop"
   },
   {
    "slug": "sentinel",

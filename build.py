@@ -184,7 +184,9 @@ def build_projects():
         slug, title = it["slug"], it["title"]
         block = PROJECT_BLOCK[slug]() if slug in PROJECT_BLOCK else ""
         own_deep = "<!-- @deep -->" in block   # the block carries its own deep dive; the tail then skips decisions + stack
-        if own_deep: block = block.replace("<!-- @film -->", card_media(it)).replace("<!-- @deep -->", deep_dive(it))
+        if own_deep:
+            gh = f'<a class="btn" href="{it["repo"]}" target="_blank" rel="noopener">Code on GitHub</a>' if it.get("repo") else ""
+            block = block.replace("<!-- @film -->", card_media(it)).replace("<!-- @deep -->", deep_dive(it)).replace("<!-- @repo -->", gh)
         facts = "".join(f'<p class="fact"><b>{_esc(f["k"])}</b>{_esc(f.get("v",""))}</p>' for f in it.get("facts", []))
         deep = "".join(f"<li>{_esc(p)}</li>" for p in it.get("deep", []))
         two = "" if (block and not it.get("showtext")) or not (facts or deep) else (
