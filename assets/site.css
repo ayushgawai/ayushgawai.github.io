@@ -1284,6 +1284,12 @@ h1.chapter-title { font-size: var(--t-2xl); }
 #labelloop .ll-shots figcaption { margin-top: 8px; font-size: var(--t-sm); line-height: 1.35; color: var(--ink-2); }
 #labelloop .ll-shots figcaption b { display: block; font-family: var(--f-hand); color: var(--blue); font-size: var(--t-md); }
 
+#labelloop .ll-event { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: calc(var(--u) * 1.5); }
+#labelloop .ll-event figure { margin: 0; background: var(--paper-card); padding: 10px 10px 8px; border: 1px solid rgba(31,35,41,.18); box-shadow: var(--shadow-card); }
+#labelloop .ll-event figure:first-child { transform: rotate(-.5deg); } #labelloop .ll-event figure:last-child { transform: rotate(.6deg); }
+#labelloop .ll-event img { display: block; width: 100%; height: auto; }
+#labelloop .ll-event figcaption { margin-top: 6px; color: var(--ink-2); font-size: var(--t-md); }
+@media (max-width: 700px) { #labelloop .ll-event { grid-template-columns: 1fr; } }
 #labelloop .deep { margin-top: calc(var(--u) * 2.5); }
 #labelloop .deep-body h4 { color: var(--blue); }
 #labelloop .ll-calls { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px 24px; margin: 0; }

@@ -6,3 +6,6 @@
 node_modules/
 .qa/
 videos/
+
+# full-size camera originals (web copies live in assets/img/gallery)
+assets/img/labelloop/*.JPG
