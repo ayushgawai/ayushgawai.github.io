@@ -5,7 +5,7 @@
 
 /* the film / video, taped like the reels */
 .proj-film { margin: 0 0 calc(var(--u) * 2); position: relative; }
-.proj-film video { display: block; width: 100%; aspect-ratio: 16/9; background: var(--paper-card);
+.proj-film video { display: block; width: 100%; height: auto; aspect-ratio: 16/9; background: var(--paper-card);
   border: 1.5px solid var(--ink); border-radius: 4px; box-shadow: var(--shadow-card); }
 .proj-film::before { content: ""; position: absolute; top: -12px; left: 40%; width: 110px; height: 26px;
   background: var(--tape); mix-blend-mode: multiply; transform: rotate(-1.5deg);

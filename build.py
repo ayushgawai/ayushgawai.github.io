@@ -78,6 +78,7 @@ PROJECT_BLOCK = {
     "blast": lambda: part("agents", ["#p-blast"]),
     "obstacle": lambda: part("robots", ["#p-obstacle"]),
     "warehouse": lambda: part("robots", ["#p-warehouse"]),
+    "labelloop": lambda: part("labelloop", ["#p-labelloop"]),
     "transit": lambda: data_pipe("transit"),
     "transitrisk": lambda: part("data", ["#p-transitrisk"]),
     "wikirisk": lambda: part("data", ["#p-wikirisk"]),
@@ -175,7 +176,7 @@ def build_projects():
         block = PROJECT_BLOCK[slug]() if slug in PROJECT_BLOCK else ""
         facts = "".join(f'<p class="fact"><b>{_esc(f["k"])}</b>{_esc(f.get("v",""))}</p>' for f in it.get("facts", []))
         deep = "".join(f"<li>{_esc(p)}</li>" for p in it.get("deep", []))
-        two = "" if block or not (facts or deep) else (
+        two = "" if (block and not it.get("showtext")) or not (facts or deep) else (
             f'<div class="proj-two"><div class="proj-facts"><h3 class="proj-sub hand">the numbers</h3>{facts}</div>'
             f'<div class="proj-deep"><h3 class="proj-sub hand">how it works</h3><ul class="deep-list">{deep}</ul></div></div>')
         dec = it.get("decisions", [])
@@ -273,7 +274,7 @@ def xp_gallery(items):
   </div></div>
 </section>"""
 
-SHOWCASE = ["sentinel", "leo", "carbonshift", "blast", "transit", "multiplayer-agents", "query-engine", "iot-garden"]   # owner's order; the rest follow, films first
+SHOWCASE = ["labelloop", "sentinel", "leo", "carbonshift", "blast", "transit", "multiplayer-agents", "query-engine", "iot-garden"]   # owner's order; the rest follow, films first
 THUMB = {"sentinel": "assets/img/demos/sentinel.webp", "blast": "assets/img/demos/blast-radius.webp", "carbonshift": "assets/img/demos/carbonshift-demo.webp"}
 
 def card_media(it):
