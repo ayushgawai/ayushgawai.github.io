@@ -1,143 +1,70 @@
-<section class="chapter" id="labelloop" aria-labelledby="labelloop-title">
-  <header class="chapter-head page">
-    <p class="chapter-kicker hand">X Square Robot Embodied Agent Hackathon · 2026</p>
-    <h2 id="labelloop-title" class="chapter-title">Wrapping a robot foundation model in a loop that can read, decide and verify</h2>
-    <p class="chapter-lede">LabelLoop is the harness around the robot's own AI. It <span class="marker">sees, decides and checks</span> every move, so the model only has to place.</p>
-  </header>
-
+<section class="chapter" id="labelloop" aria-label="How LabelLoop works">
   <div class="page">
-    <article class="project ll-wide" id="p-labelloop">
-      <figure class="sketch ll-fig" data-anim>
-        <div class="ll-scroll">
-          <svg class="ll-svg draw" viewBox="0 0 1060 400" role="img" aria-labelledby="ll-t">
-            <title id="ll-t">Architecture of LabelLoop. A dual-arm robot sends three camera streams and joint states into the LabelLoop relay every control cycle. Inside the relay, a see box reads the label with a QR and barcode decoder, pincode OCR or a phone held in the claw, finds the parcel and maps it onto a three by three table grid. A decide box runs a step machine, routes the parcel by ZIP prefix rule and verifies on camera. It then sends either an exact scripted motion from the harness or one short sentence to the WALLX model back to the robot. A guards bar spans the relay: arm locks, grip latch, bin watchdog, bins hidden from the model. Every cycle is logged and replayed in a dashboard.</title>
-            <defs>
-              <marker id="ll-ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1F2329" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
-              <marker id="ll-ahb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#2346B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
-            </defs>
+    <article class="ll" id="p-labelloop">
 
-            <g class="boil">
-              <!-- the robot -->
-              <path class="ink ll-fill" pathLength="1" d="M62 112 L134 111 L140 250 L56 251 Z"/>
-              <circle class="ink ll-fill" pathLength="1" cx="98" cy="82" r="17"/>
-              <circle class="ll-lens" cx="98" cy="82" r="6"/>
-              <path class="ink" pathLength="1" d="M62 128 L28 184 L44 238 M134 128 L170 182 L154 238"/>
-              <circle class="ll-lens" cx="44" cy="244" r="7"/><circle class="ll-lens" cx="154" cy="244" r="7"/>
-              <path class="ink-thin" d="M70 150 L126 150 M70 170 L126 170 M70 190 L126 190"/>
-              <text class="svg-hand ll-t" x="98" y="48" text-anchor="middle">head camera</text>
-              <text class="svg-print ll-s" x="98" y="284" text-anchor="middle">X Square dual-arm robot</text>
-              <text class="svg-hand ll-t" x="98" y="304" text-anchor="middle">+ two wrist cameras</text>
-
-              <!-- the relay -->
-              <rect class="ll-relay" x="250" y="26" width="592" height="338" rx="20"/>
-              <text class="svg-hand ll-t" x="272" y="58">LabelLoop relay · every control cycle</text>
-
-              <!-- SEE -->
-              <path class="ink ll-fill" pathLength="1" d="M272 96 L436 94 L438 224 L270 226 Z"/>
-              <text class="svg-hand ll-h" x="288" y="124">SEE</text>
-              <text class="svg-print ll-s" x="288" y="150">read the label</text>
-              <text class="svg-print ll-x" x="288" y="168">QR · OCR · phone scan</text>
-              <text class="svg-print ll-s" x="288" y="192">find the parcel</text>
-              <text class="svg-print ll-x" x="288" y="210">3 × 3 table grid</text>
-
-              <!-- DECIDE -->
-              <path class="ink ll-fill" pathLength="1" d="M478 95 L644 96 L643 225 L476 224 Z"/>
-              <text class="svg-hand ll-h" x="494" y="124">DECIDE</text>
-              <text class="svg-print ll-s" x="494" y="150">step machine</text>
-              <text class="svg-print ll-x" x="494" y="168">ZIP3 → bin, by rule</text>
-              <text class="svg-print ll-s" x="494" y="192">check on camera</text>
-              <text class="svg-print ll-x" x="494" y="210">grasp · drop · in the bin</text>
-
-              <!-- ACT: harness vs WALLX -->
-              <path class="ink-blue ll-fill" pathLength="1" d="M690 70 L826 69 L827 138 L689 139 Z"/>
-              <text class="svg-hand ll-h2" x="706" y="96">harness</text>
-              <text class="svg-print ll-x" x="706" y="118">exact motions</text>
-              <path class="ink-red ll-fill" pathLength="1" d="M690 172 L826 171 L827 240 L689 241 Z"/>
-              <text class="svg-hand ll-h2 ll-redt" x="706" y="198">WALLX</text>
-              <text class="svg-print ll-x" x="706" y="220">one sentence</text>
-
-              <!-- guards -->
-              <path class="ink ll-fill ll-guard" pathLength="1" d="M272 292 L824 291 L825 340 L271 341 Z"/>
-              <text class="svg-hand ll-h" x="288" y="322">GUARDS</text>
-              <text class="svg-print ll-x" x="398" y="322">arm locks · grip latch · bin watchdog · bins hidden</text>
-
-              <!-- arrows -->
-              <path class="ink" pathLength="1" marker-end="url(#ll-ah)" d="M176 160 L266 160"/>
-              <text class="svg-hand ll-t" x="221" y="126" text-anchor="middle">3 cams</text>
-              <text class="svg-hand ll-t" x="221" y="144" text-anchor="middle">+ joints</text>
-              <path class="ink" pathLength="1" marker-end="url(#ll-ah)" d="M442 160 L474 160"/>
-              <path class="ink" pathLength="1" marker-end="url(#ll-ah)" d="M648 140 Q668 112 686 106"/>
-              <path class="ink" pathLength="1" marker-end="url(#ll-ah)" d="M648 180 Q668 208 686 212"/>
-              <path id="ll-loop" class="ink-blue ll-return" pathLength="1" marker-end="url(#ll-ahb)" d="M830 105 L860 105 L860 266 L100 266 L100 256"/>
-              <path class="ink-blue ll-return" pathLength="1" d="M830 208 L860 208"/>
-              <text class="svg-hand ll-t" x="470" y="256">action: a motion or a sentence</text>
-
-              <!-- log + replay dashboard -->
-              <path class="ink" pathLength="1" marker-end="url(#ll-ah)" d="M846 332 L884 332"/>
-              <g class="ll-logs">
-                <rect x="892" y="296" width="130" height="62" rx="3"/><rect x="898" y="290" width="130" height="62" rx="3"/><rect class="ll-top" x="904" y="284" width="130" height="62" rx="3"/>
-              </g>
-              <text class="svg-print ll-x" x="969" y="312" text-anchor="middle">frames + state</text>
-              <text class="svg-print ll-x" x="969" y="330" text-anchor="middle">+ the sentence</text>
-              <path class="ink" pathLength="1" marker-end="url(#ll-ah)" d="M968 276 L968 214"/>
-              <rect class="ink ll-fill" x="890" y="84" width="140" height="124" rx="6"/>
-              <path class="ink-thin" d="M890 106 L1030 106"/>
-              <circle class="ll-lens" cx="902" cy="95" r="3"/><circle class="ll-lens" cx="914" cy="95" r="3"/>
-              <path class="ink-blue ll-mini" d="M930 188 L958 148 L996 164 L1010 128"/>
-              <circle class="ll-lens" cx="930" cy="188" r="4"/><circle class="ll-lens" cx="958" cy="148" r="4"/><circle class="ll-lens" cx="996" cy="164" r="4"/>
-              <text class="svg-print ll-x" x="962" y="126" text-anchor="middle">harness moving</text>
-              <text class="svg-hand ll-t" x="960" y="48" text-anchor="middle">replay dashboard</text>
-              <text class="svg-hand ll-t" x="960" y="68" text-anchor="middle">arms from the logs</text>
-            </g>
-
-            <!-- a packet that rides the loop: cameras → see → decide → act → back to the robot -->
-            <g class="ll-pkt" opacity="0" aria-hidden="true">
-              <rect x="-9" y="-6" width="18" height="12" rx="2"/>
-              <animateMotion dur="9s" repeatCount="indefinite" calcMode="linear" path="M176 160 L266 160 L474 160 L650 160 L690 206 L860 206 L860 266 L100 266 L100 256"/>
-              <animate attributeName="opacity" dur="9s" repeatCount="indefinite" values="0;1;1;1;0" keyTimes="0;.04;.5;.94;1"/>
-            </g>
-          </svg>
-        </div>
-        <figcaption><span class="ll-big">1 loop</span> see, decide, act, verify, every control cycle; the model is one box inside it</figcaption>
-      </figure>
-
-      <div class="ll-cards" data-anim>
-        <div class="card ll-route tilt-l">
-          <span class="tape" aria-hidden="true"></span>
-          <p class="ll-card-h hand">the sort rule · a lookup, never a guess</p>
-          <ul class="ll-lanes">
-            <li><span class="ll-dot ll-blue" aria-hidden="true"></span><span class="ll-zip">950 · 951 · 940 · 941</span><span class="ll-to">blue lane, left arm</span></li>
-            <li><span class="ll-dot ll-red" aria-hidden="true"></span><span class="ll-zip">900 · 901 · 902</span><span class="ll-to">red lane, right arm</span></li>
-            <li><span class="ll-dot ll-black" aria-hidden="true"></span><span class="ll-zip">anything else</span><span class="ll-to">black reject bin</span></li>
+      <!-- film + the four numbers that matter -->
+      <div class="ll-hero">
+        <div class="ll-film"><!-- @film --></div>
+        <div class="ll-side">
+          <ul class="ll-nums">
+            <li><b>0 of 17</b><span>simulated runs where the model alone lifted and placed the box</span></li>
+            <li><b>4 × 3/3</b><span>event scenarios passed on the real dual-arm robot</span></li>
+            <li><b>163</b><span>real-robot trials, 16,441 control cycles, every one logged</span></li>
+            <li><b>3 cycles</b><span>to re-target after a person moves the parcel</span></li>
           </ul>
-          <p class="ll-note hand pencil">no readable label? flip it, rescan, then reject. the model never picks a bin.</p>
-        </div>
-
-        <div class="card ll-score tilt-r">
-          <span class="tape" aria-hidden="true"></span>
-          <p class="ll-card-h hand">real robot · the event scenarios</p>
-          <ol class="ll-runs">
-            <li><span class="ll-rn">1</span>pick and place<span class="ll-ticks" aria-label="3 of 3"><i>✓</i><i>✓</i><i>✓</i></span></li>
-            <li><span class="ll-rn">2</span>straighten, pick, place<span class="ll-ticks" aria-label="3 of 3"><i>✓</i><i>✓</i><i>✓</i></span></li>
-            <li><span class="ll-rn">3</span>turn over, hand across<span class="ll-ticks" aria-label="3 of 3"><i>✓</i><i>✓</i><i>✓</i></span></li>
-            <li><span class="ll-rn">4</span>pick, hand across, zone 1<span class="ll-ticks" aria-label="3 of 3"><i>✓</i><i>✓</i><i>✓</i></span></li>
-          </ol>
-          <p class="ll-note hand red">WALLX alone setting a held box inside zone 1: 1 in, 1 on the edge, 1 out. so that move stays scripted, and the replay says so.</p>
-        </div>
-
-        <div class="card ll-debug tilt-l">
-          <span class="tape" aria-hidden="true"></span>
-          <p class="ll-card-h hand red">debug log · the model kept grabbing bins</p>
-          <ol class="ll-steps">
-            <li><span class="hand red">symptom</span> whatever the placing sentence, WALLX went for a bin, not the parcel: a blue bin tipped, a black one was lifted into the red</li>
-            <li><span class="hand red">fix</span> paint the bins out of the head image until the drop, bring back only the target bin for the place step, and latch a hold if a bin region changes</li>
-            <li><span class="hand red">then</span> a sentence that squeezes the short ends lifted a wide box clean off the table</li>
-          </ol>
-          <p class="ll-ok hand"><span aria-hidden="true">✓</span> first real pick of a wide parcel</p>
+          <div class="btn-row">
+            <a class="btn blue" href="#ll-deep" data-open="ll-deep">Technical deep dive</a>
+            <a class="btn" href="https://youtu.be/d8Mocv8j5S0" target="_blank" rel="noopener">Watch on YouTube</a>
+          </div>
         </div>
       </div>
 
-      <p class="ll-meta meta">Team project with Pratham. I owned the relay, the harness and step machine, label reading and parcel finding, calibration, the safety guards and the real-robot trials. Pratham built the replay dashboard and its arm kinematics, the table-grid homography and the scenario 4 WALLX work. The code is in a private repository for now.</p>
+      <!-- the loop -->
+      <h3 class="ll-sub hand">the loop, every control cycle</h3>
+      <div class="ll-loopwrap" data-anim>
+        <ol class="ll-loop">
+          <li class="ll-st">
+            <svg viewBox="0 0 72 56" aria-hidden="true"><rect class="ink" x="20" y="8" width="32" height="24" rx="6"/><circle class="ll-fillb" cx="36" cy="20" r="6"/><path class="ink" d="M24 32 L12 48 M48 32 L60 48"/><circle class="ll-fillb" cx="12" cy="49" r="4"/><circle class="ll-fillb" cx="60" cy="49" r="4"/></svg>
+            <h4>Sense</h4>
+            <p>head + two wrist cameras, both arms' joints</p>
+          </li>
+          <li class="ll-st">
+            <svg viewBox="0 0 72 56" aria-hidden="true"><path class="ink" d="M10 8 L62 7 L63 49 L9 50 Z"/><path class="ll-qr" d="M16 14h10v10H16zM16 32h10v10H16zM32 14h10v10H32zM34 34h4v4h-4zM40 30h4v4h-4zM30 40h4v4h-4z"/><path class="ink-blue" d="M48 18 L56 18 M48 26 L56 26 M48 34 L56 34"/></svg>
+            <h4>Read</h4>
+            <p>QR · pincode OCR · a phone in the claw</p>
+          </li>
+          <li class="ll-st">
+            <svg viewBox="0 0 72 56" aria-hidden="true"><path class="ink" d="M36 6 L36 22 M36 22 L14 38 M36 22 L36 38 M36 22 L58 38"/><rect class="ll-bin ll-b" x="5" y="40" width="18" height="11" rx="2"/><rect class="ll-bin ll-r" x="27" y="40" width="18" height="11" rx="2"/><rect class="ll-bin ll-k" x="49" y="40" width="18" height="11" rx="2"/></svg>
+            <h4>Route</h4>
+            <p>ZIP prefix → bin, a lookup, never a guess</p>
+          </li>
+          <li class="ll-st ll-act">
+            <svg viewBox="0 0 72 56" aria-hidden="true"><path class="ink" d="M8 30 L22 18 L30 26 M22 18 L22 10"/><path class="ink" d="M26 26 L32 32 M26 26 L22 34"/><path class="ink-blue" d="M40 10 L66 10 L66 30 L52 30 L46 37 L46 30 L40 30 Z"/><path class="ink-blue" d="M45 18 L61 18 M45 24 L56 24"/></svg>
+            <h4>Act</h4>
+            <p><span class="ll-who">harness</span> exact moves: pick, flip, hand-over</p>
+            <p><span class="ll-who ll-who--m">WALLX</span> one sentence: place it</p>
+          </li>
+          <li class="ll-st">
+            <svg viewBox="0 0 72 56" aria-hidden="true"><path class="ink" d="M8 28 Q36 2 64 28 Q36 54 8 28 Z"/><circle class="ink" cx="36" cy="28" r="9"/><path class="ll-chk" d="M46 40 L53 47 L67 31"/></svg>
+            <h4>Verify</h4>
+            <p>grasp, drop, in the bin: checked on camera</p>
+          </li>
+        </ol>
+        <svg class="ll-back" viewBox="0 0 1000 40" preserveAspectRatio="none" aria-hidden="true"><path d="M960 4 C960 30 940 34 900 34 L100 34 C60 34 40 30 40 6" marker-end="url(#ll-ah)"/><defs><marker id="ll-ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#2346B0" stroke-width="1.8"/></marker></defs></svg>
+        <p class="ll-again hand">↺ next control cycle</p>
+        <p class="ll-guards"><b class="hand">guards</b> idle arm locked · grip latched while carrying · bins hidden from the model · one-button stop</p>
+      </div>
+
+      <!-- real robot, head camera -->
+      <h3 class="ll-sub hand">on the real robot</h3>
+      <div class="ll-shots">
+        <figure><img src="assets/img/labelloop/read-route.webp" alt="Head-camera view: the right arm carries a cap with a label toward zone 2." loading="lazy" width="800" height="450"><figcaption><b>Read → route</b> OCR reads 90291, so the cap goes to zone 2</figcaption></figure>
+        <figure><img src="assets/img/labelloop/flip.webp" alt="Head-camera view: a mailer bag flipped label-up next to zone 1." loading="lazy" width="800" height="450"><figcaption><b>Flip, then read</b> label face down? the harness turns it over</figcaption></figure>
+        <figure><img src="assets/img/labelloop/handover.webp" alt="Head-camera view: one arm passes a box to the other in mid-air above zone 1." loading="lazy" width="800" height="450"><figcaption><b>Arm to arm</b> hand-over in mid-air, then WALLX places it</figcaption></figure>
+        <figure><img src="assets/img/labelloop/relocate.webp" alt="Head-camera view with a 3 by 3 grid overlay; the moved cap is boxed in the front-middle cell as the arm reaches it." loading="lazy" width="800" height="450"><figcaption><b>Moved mid-task</b> re-found on the 3 × 3 grid, re-targeted</figcaption></figure>
+      </div>
+
+      <!-- @deep -->
     </article>
   </div>
 </section>

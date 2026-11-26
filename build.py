@@ -168,12 +168,23 @@ OUT = {}   # path -> html (root-relative links; prefixed for subfolders when wri
 def projects_data(): return json.loads((src / "data" / "projects.json").read_text())
 def works_data(): return json.loads((src / "data" / "experiences.json").read_text())
 
+def deep_dive(it):
+    li = lambda xs: "".join(f"<li>{_esc(x)}</li>" for x in xs)
+    calls = "".join(f'<li><b>{_esc(d["h"])}.</b> {_esc(d["b"])}</li>' for d in it.get("decisions", []))
+    return (f'<details class="deep" id="ll-deep"><summary>Technical deep dive</summary><div class="deep-body">'
+            + (f'<p>{_esc(it["owned"])}</p>' if it.get("owned") else "")
+            + f'<h4>How it works</h4><ul>{li(it.get("deep", []))}</ul>'
+            + (f'<h4>Design calls</h4><ul class="ll-calls">{calls}</ul>' if calls else "")
+            + f'<h4>Stack</h4><ul class="tags">{li(it.get("stack", []))}</ul></div></details>')
+
 def build_projects():
     items = [it for it in projects_data()["items"] if it["slug"] not in MOVED]
     slugs = {it["slug"] for it in items}
     for it in items:
         slug, title = it["slug"], it["title"]
         block = PROJECT_BLOCK[slug]() if slug in PROJECT_BLOCK else ""
+        own_deep = "<!-- @deep -->" in block   # the block carries its own deep dive; the tail then skips decisions + stack
+        if own_deep: block = block.replace("<!-- @film -->", card_media(it)).replace("<!-- @deep -->", deep_dive(it))
         facts = "".join(f'<p class="fact"><b>{_esc(f["k"])}</b>{_esc(f.get("v",""))}</p>' for f in it.get("facts", []))
         deep = "".join(f"<li>{_esc(p)}</li>" for p in it.get("deep", []))
         two = "" if (block and not it.get("showtext")) or not (facts or deep) else (
@@ -205,11 +216,11 @@ def build_projects():
 {block}
 <section class="chapter proj proj-tail" aria-label="More about {_esc(title)}">
   <div class="page">
-    {decisions}
-    <div class="proj-rows">
+    {"" if own_deep else decisions}
+    {"" if own_deep else f'''<div class="proj-rows">
       <div class="proj-stack"><h3 class="proj-sub hand">the stack</h3><ul class="tags">{stack}</ul></div>
       <div class="proj-links"><h3 class="proj-sub hand">the links</h3><div class="btn-row">{repo}{papers}</div></div>
-    </div>
+    </div>'''}
     {related}
     <p class="proj-back"><a class="hand" href="projects.html">← all hackathons and projects</a></p>
   </div>
@@ -275,7 +286,7 @@ def xp_gallery(items):
 </section>"""
 
 SHOWCASE = ["labelloop", "sentinel", "leo", "carbonshift", "blast", "transit", "multiplayer-agents", "query-engine", "iot-garden"]   # owner's order; the rest follow, films first
-THUMB = {"sentinel": "assets/img/demos/sentinel.webp", "blast": "assets/img/demos/blast-radius.webp", "carbonshift": "assets/img/demos/carbonshift-demo.webp"}
+THUMB = {"labelloop": "assets/img/labelloop/yt-thumb.webp", "sentinel": "assets/img/demos/sentinel.webp", "blast": "assets/img/demos/blast-radius.webp", "carbonshift": "assets/img/demos/carbonshift-demo.webp"}
 
 def card_media(it):
     f, t = it.get("film"), _esc(it["title"])

@@ -16,9 +16,12 @@
    "title": "LabelLoop",
    "area": "robotics",
    "where": "X Square Robot Embodied Agent Hackathon · Scan and Sort Parcels · dual-arm robot · 2026",
-   "summary": "A perception and control harness wrapped around a robot foundation model. It reads a shipping label three ways, routes the parcel by rule, finds it on a calibrated table grid, checks every grasp on camera and gives the model one precise sentence at a time. Two days on a real dual-arm robot, 163 logged trials.",
-   "showtext": true,
-   "film": "labelloop",
+   "summary": "A perception and control harness around a robot foundation model: it reads the shipping label, routes the parcel by rule, checks every grasp on camera and gives the model one sentence at a time.",
+   "film": {
+    "type": "yt",
+    "id": "d8Mocv8j5S0",
+    "label": "LabelLoop demo"
+   },
    "facts": [
     {
      "k": "163",
@@ -98,7 +101,8 @@
     "warehouse",
     "obstacle",
     "sensor-hub"
-   ]
+   ],
+   "owned": "Team project. I owned the relay, the harness and step machine, label reading and parcel finding, calibration, the safety guards and the real-robot trials. My teammate built the replay dashboard and its arm kinematics, the table-grid homography and the scenario 4 WALLX work. The code is in a private repository for now."
   },
   {
    "slug": "sentinel",

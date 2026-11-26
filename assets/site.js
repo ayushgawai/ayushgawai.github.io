@@ -851,6 +851,16 @@ try {
 })();
 
 } catch (e) { console.error('[30-robots.js]', e); }
+/* 31-labelloop.js */
+try {
+// "Technical deep dive" buttons open the <details> they point at.
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('[data-open]');
+  const d = a && document.getElementById(a.dataset.open);
+  if (d) { d.open = true; }
+});
+
+} catch (e) { console.error('[31-labelloop.js]', e); }
 /* 35-research.js */
 try {
 /* research chapter: eye-tracking scanpath over two sketched images (three task modes) + wheelchair alert loop */
