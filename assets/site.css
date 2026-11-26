@@ -1249,14 +1249,12 @@ h1.chapter-title { font-size: var(--t-2xl); }
 /* the loop: five stages, a cycle highlight walks across them */
 #labelloop .ll-loop { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 30px; counter-reset: st; }
 #labelloop .ll-st { position: relative; background: var(--paper-card); border: 2px solid var(--ink); border-radius: 10px 14px 9px 12px;
-  padding: 14px 14px 12px; box-shadow: var(--shadow-card); animation: ll-on 10s infinite; counter-increment: st; }
-#labelloop .ll-st:nth-child(2) { animation-delay: 2s; } #labelloop .ll-st:nth-child(3) { animation-delay: 4s; }
-#labelloop .ll-st:nth-child(4) { animation-delay: 6s; } #labelloop .ll-st:nth-child(5) { animation-delay: 8s; }
+  padding: 14px 14px 12px; box-shadow: var(--shadow-card); counter-increment: st; transition: background .35s, transform .35s; }
 #labelloop .ll-st::before { content: counter(st); position: absolute; top: -12px; left: 12px; width: 24px; height: 24px; border-radius: 50%;
   display: grid; place-items: center; background: var(--paper); border: 1.5px solid var(--ink); font: 700 13px/1 var(--f-hand); }
 #labelloop .ll-st:not(:last-child)::after { content: ""; position: absolute; top: 50%; right: -27px; width: 22px; height: 12px; transform: translateY(-50%);
   background: no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 12'%3E%3Cpath d='M1 6 Q8 4 19 6 M14 1.5 L20 6 L14 10.5' fill='none' stroke='%231F2329' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
-@keyframes ll-on { 0%, 18% { background: #FFF6C8; transform: translateY(-3px); } 22%, 100% { background: var(--paper-card); transform: none; } }
+#labelloop .ll-st.on { background: #FFF6C8; transform: translateY(-3px); }
 #labelloop .ll-st svg { width: 72px; height: 56px; display: block; margin-bottom: 6px; overflow: visible; }
 #labelloop .ll-st svg .ink, #labelloop .ll-st svg .ink-blue { fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 #labelloop .ll-fillb { fill: var(--blue); }
@@ -1291,6 +1289,50 @@ h1.chapter-title { font-size: var(--t-2xl); }
 #labelloop .ll-calls { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px 24px; margin: 0; }
 #labelloop .ll-calls li::before { content: "✓"; color: var(--green); }
 
+/* what it is + how it works */
+#labelloop .ll-abstract { margin: calc(var(--u) * 2) 0 0; max-width: 78ch; }
+#labelloop .ll-abstract p { margin: 0; font-size: 1.15rem; line-height: 1.6; color: var(--ink); }
+#labelloop .ll-abstract b { color: var(--red); }
+#labelloop .ll-howlist { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px 32px; }
+#labelloop .ll-howlist li { font-size: var(--t-md); line-height: 1.5; color: var(--ink-2); padding-left: 14px; border-left: 3px solid var(--marker); }
+#labelloop .ll-howlist b { color: var(--ink); }
+#labelloop .ll-stack { margin-top: calc(var(--u) * 1.2); }
+
+/* the robot sketch */
+#labelloop .ll-robot { margin: calc(var(--u) * 1.5) 0 0; }
+#labelloop .ll-rsvg { display: block; width: 100%; height: auto; max-height: 560px; overflow: visible; }
+#labelloop .ll-status { display: none; min-height: 3em; margin: 4px 0 0; text-align: center; color: var(--blue); font-size: var(--t-md); }
+#labelloop .ll-robot figcaption { text-align: center; color: var(--ink-3); margin-top: 6px; }
+#labelloop .ll-mat { fill: rgba(46, 125, 91, .10); stroke: var(--ink); stroke-width: 2.2; stroke-linejoin: round; }
+#labelloop .ll-rsvg .ink, #labelloop .ll-rsvg .ink-thin { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+#labelloop .ll-rsvg .ll-body { fill: var(--paper-card); }
+#labelloop .ll-tape { fill: none; stroke: #C9B57A; stroke-width: 5; stroke-linejoin: round; opacity: .9; }
+#labelloop .ll-zn { font-size: 30px; fill: #A8915A; font-weight: 700; }
+#labelloop .ll-lens { fill: var(--blue); }
+#labelloop .ll-lbl { font-size: 18px; fill: var(--ink-3); }
+#labelloop .ll-cone { fill: rgba(35, 70, 176, .14); stroke: rgba(35, 70, 176, .5); stroke-width: 1.5; stroke-dasharray: 5 5; opacity: 0; transition: opacity .2s; }
+#labelloop .ll-box { fill: #E9D3AC; } #labelloop .ll-boxtop { fill: #D9BE8E; }
+#labelloop .ll-label { fill: #fff; stroke: var(--ink); stroke-width: 1; } #labelloop .ll-qrk { fill: var(--ink); }
+#labelloop .ll-tube-o { fill: none; stroke: var(--ink); stroke-width: 17; stroke-linecap: round; stroke-linejoin: round; }
+#labelloop .ll-tube-i { fill: none; stroke: #F1F1EC; stroke-width: 12; stroke-linecap: round; stroke-linejoin: round; }
+#labelloop .ll-j { fill: var(--paper-card); stroke: var(--ink); stroke-width: 2; }
+#labelloop .ll-claw { fill: none; stroke: var(--ink); stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; }
+#labelloop .ll-card { fill: var(--paper-card); stroke: var(--ink); stroke-width: 1.6; filter: drop-shadow(0 3px 5px rgba(31,35,41,.12)); }
+#labelloop .ll-card-r { stroke: var(--red); }
+#labelloop .ll-n { opacity: 0; transition: opacity .3s; }
+#labelloop .ll-n.on, #labelloop .ll-robot:not(.js) .ll-n { opacity: 1; }
+#labelloop .ll-n1 { font-size: 19px; fill: var(--ink-3); }
+#labelloop .ll-n2 { font-size: 21px; font-weight: 700; fill: var(--ink); transition: opacity .3s; }
+#labelloop .ll-n3 { font-size: 19px; fill: var(--blue); transition: opacity .3s; }
+#labelloop .ll-blue { font-size: 21px; fill: var(--blue); }
+#labelloop .ll-red { font-size: 19px; fill: var(--red); }
+#labelloop .ll-green { font-size: 21px; fill: var(--green); font-weight: 700; }
+@media (max-width: 700px) {
+  #labelloop .ll-read, #labelloop .ll-wall, #labelloop .ll-harn, #labelloop .ll-lbl, #labelloop .ll-gok, #labelloop .ll-zok { display: none; }
+  #labelloop .ll-robot.js .ll-status { display: block; }
+  #labelloop .ll-howlist { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 1000px) {
   #labelloop .ll-hero { grid-template-columns: 1fr; }
   #labelloop .ll-loop { grid-template-columns: 1fr; gap: 26px; max-width: 520px; }
@@ -1302,7 +1344,7 @@ h1.chapter-title { font-size: var(--t-2xl); }
   #labelloop .ll-shots { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 520px) { #labelloop .ll-nums b { font-size: 1.35rem; } #labelloop .ll-shots { gap: 12px; } }
-@media (prefers-reduced-motion: reduce) { #labelloop .ll-st, #labelloop .ll-back path { animation: none; } }
+@media (prefers-reduced-motion: reduce) { #labelloop .ll-back path { animation: none; } }
 
 /* home: LabelLoop lead card spans the featured grid */
 .feat-card--lead { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: calc(var(--u) * 1.5); align-items: center; min-height: 0; }

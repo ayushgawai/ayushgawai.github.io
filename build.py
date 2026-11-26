@@ -175,7 +175,7 @@ def deep_dive(it):
             + (f'<p>{_esc(it["owned"])}</p>' if it.get("owned") else "")
             + f'<h4>How it works</h4><ul>{li(it.get("deep", []))}</ul>'
             + (f'<h4>Design calls</h4><ul class="ll-calls">{calls}</ul>' if calls else "")
-            + f'<h4>Stack</h4><ul class="tags">{li(it.get("stack", []))}</ul></div></details>')
+            + '</div></details>')
 
 def build_projects():
     items = [it for it in projects_data()["items"] if it["slug"] not in MOVED]

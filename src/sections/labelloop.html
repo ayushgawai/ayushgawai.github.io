@@ -19,6 +19,64 @@
         </div>
       </div>
 
+
+      <!-- what it is -->
+      <div class="ll-abstract">
+        <p>X Square's WALLX model turns one sentence into arm motion. It cannot read a shipping label, pick the right bin or tell whether it really grabbed the box: alone in our simulation twin it went <b>0 for 17</b>. LabelLoop wraps the model in a loop. Perception reads the label and finds the parcel, a step machine routes it by rule and decides who moves, and every grasp and drop is checked on camera before the next step.</p>
+      </div>
+
+      <!-- the robot doing the job, drawn -->
+      <figure class="sketch ll-robot" data-anim>
+        <svg class="ll-rsvg" viewBox="0 0 1000 480" role="img" aria-labelledby="ll-rt">
+          <title id="ll-rt">Animated sketch of the dual-arm robot at its table. A parcel is set down in the middle; the head camera scans its label and the readout shows the ZIP and the zone it routes to. The harness moves one arm down to grasp the parcel, a check confirms the grasp, WALLX is given one sentence to place it, and the arm sets it inside the taped zone, where the camera confirms it. The next parcel goes to the other zone with the other arm.</title>
+          <defs><marker id="ll-rah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#2346B0" stroke-width="1.8" stroke-linecap="round"/></marker></defs>
+          <!-- table + taped zones -->
+          <path class="ll-mat" d="M128 330 L872 330 L936 404 L64 404 Z"/>
+          <path class="ink" d="M64 404 L936 404 L936 420 L64 420 Z M92 420 L96 476 M904 420 L900 476 M128 330 L872 330"/>
+          <path class="ll-tape" d="M196 342 L330 342 L322 392 L172 392 Z"/>
+          <path class="ll-tape" d="M670 342 L804 342 L828 392 L678 392 Z"/>
+          <text class="svg-hand ll-zn" x="250" y="378">1</text><text class="svg-hand ll-zn" x="744" y="378">2</text>
+          <!-- robot body -->
+          <g class="boil">
+            <path class="ink ll-body" d="M444 142 L556 142 L548 330 L452 330 Z"/>
+            <path class="ink-thin" d="M462 190 L538 190 M462 214 L538 214 M462 238 L538 238"/>
+            <path class="ink" d="M492 118 L492 142 M508 118 L508 142"/>
+            <rect class="ink ll-body" x="466" y="70" width="68" height="50" rx="12"/>
+          </g>
+          <circle class="ll-lens" cx="500" cy="95" r="9"/>
+          <text class="svg-hand ll-lbl" x="456" y="84" text-anchor="end">head camera</text>
+          <!-- scan cone -->
+          <path class="ll-cone" d="M500 104 L462 340 L538 340 Z"/>
+          <!-- parcel -->
+          <g class="ll-parcel"><g transform="scale(1.4)">
+            <path class="ink ll-box" d="M-24 -38 L24 -38 L24 0 L-24 0 Z"/>
+            <path class="ink ll-boxtop" d="M-24 -38 L-16 -46 L32 -46 L24 -38 Z M24 -38 L32 -46 L32 -8 L24 0"/>
+            <rect class="ll-label" x="-15" y="-31" width="30" height="20" rx="1.5"/>
+            <path class="ll-qrk" d="M-12 -28h7v7h-7zM-12 -19h4v4h-4zM-2 -28h4v4h-4zM4 -24h4v4h-4zM0 -18h7v3h-7z"/>
+          </g></g>
+          <!-- arms (drawn by script) -->
+          <g class="ll-arm" data-side="-1"><path class="ll-tube-o"/><path class="ll-tube-i"/><circle class="ll-j" r="8"/><circle class="ll-j" r="6"/><path class="ll-claw"/></g>
+          <g class="ll-arm" data-side="1"><path class="ll-tube-o"/><path class="ll-tube-i"/><circle class="ll-j" r="8"/><circle class="ll-j" r="6"/><path class="ll-claw"/></g>
+          <!-- annotations -->
+          <g class="ll-read ll-n">
+            <path class="ll-card" d="M34 30 L330 28 L332 126 L32 128 Z"/>
+            <text class="svg-hand ll-n1" x="52" y="62">reading the label…</text>
+            <text class="svg-print ll-n2" x="52" y="94"> </text>
+            <text class="svg-hand ll-n3" x="52" y="116"> </text>
+          </g>
+          <g class="ll-harn ll-n"><text class="svg-hand ll-blue" x="52" y="170">harness: exact pick</text></g>
+          <g class="ll-wall ll-n">
+            <path class="ll-card ll-card-r" d="M640 30 L968 28 L970 104 L700 106 L680 126 L682 106 L638 106 Z"/>
+            <text class="svg-hand ll-red" x="658" y="60">WALLX gets one sentence:</text>
+            <text class="svg-print ll-n2 ll-say" x="658" y="90">“put the box into zone 1”</text>
+          </g>
+          <g class="ll-gok ll-n"><text class="svg-hand ll-green ll-gokt" x="500" y="458" text-anchor="middle">✓ grasp seen on camera</text></g>
+          <g class="ll-zok ll-n"><text class="svg-hand ll-green ll-zokt" x="250" y="458" text-anchor="middle">✓ in zone 1, checked</text></g>
+        </svg>
+        <p class="ll-status hand" aria-hidden="true"></p>
+        <figcaption class="hand">one parcel through the loop: read, route, pick, place, verify; the next one goes to the other arm</figcaption>
+      </figure>
+
       <!-- the loop -->
       <h3 class="ll-sub hand">the loop, every control cycle</h3>
       <div class="ll-loopwrap" data-anim>
@@ -53,6 +111,20 @@
         <svg class="ll-back" viewBox="0 0 1000 40" preserveAspectRatio="none" aria-hidden="true"><path d="M960 4 C960 30 940 34 900 34 L100 34 C60 34 40 30 40 6" marker-end="url(#ll-ah)"/><defs><marker id="ll-ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#2346B0" stroke-width="1.8"/></marker></defs></svg>
         <p class="ll-again hand">↺ next control cycle</p>
         <p class="ll-guards"><b class="hand">guards</b> idle arm locked · grip latched while carrying · bins hidden from the model · one-button stop</p>
+      </div>
+
+
+      <!-- how it works, the technical short version -->
+      <div class="ll-how">
+        <h3 class="ll-sub hand">how it works</h3>
+        <ul class="ll-howlist">
+          <li><b>Perception.</b> zxing QR and barcode decoding with an upscale retry, Tesseract OCR for small printed pincodes, and a phone held in the robot's own claw as a handheld scanner.</li>
+          <li><b>Localization.</b> Parcels segmented off the mat (never a bin or tray), a homography from head-camera pixels to a 3 × 3 table grid in metres, and a pixel-to-arm-pose fit from four recorded grasps.</li>
+          <li><b>Control.</b> A typed step machine: the harness runs exact motions (pick, flip, hand-over), WALLX gets one training-style sentence per call, and its history resets on every re-target.</li>
+          <li><b>Verification.</b> A grasp counts only when the claw closes and the parcel leaves its spot on camera; a drop counts only at the target with the claw open.</li>
+          <li><b>Relay and evidence.</b> One WebSocket + msgpack relay drives both the Isaac Sim / X2Real twin and the real robot. Every control cycle is logged with all three camera frames, and 240+ tests include a full offline run against a stub model.</li>
+        </ul>
+        <ul class="tags ll-stack" aria-label="Tech stack"><li>Python</li><li>OpenCV</li><li>zxing-cpp</li><li>Tesseract OCR</li><li>NumPy</li><li>WebSockets + msgpack</li><li>Isaac Sim / X2Real</li><li>WALLX VLA</li><li>Inverse kinematics</li><li>pytest</li></ul>
       </div>
 
       <!-- real robot, head camera -->

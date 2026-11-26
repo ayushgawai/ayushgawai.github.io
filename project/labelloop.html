@@ -100,6 +100,64 @@
         </div>
       </div>
 
+
+      <!-- what it is -->
+      <div class="ll-abstract">
+        <p>X Square's WALLX model turns one sentence into arm motion. It cannot read a shipping label, pick the right bin or tell whether it really grabbed the box: alone in our simulation twin it went <b>0 for 17</b>. LabelLoop wraps the model in a loop. Perception reads the label and finds the parcel, a step machine routes it by rule and decides who moves, and every grasp and drop is checked on camera before the next step.</p>
+      </div>
+
+      <!-- the robot doing the job, drawn -->
+      <figure class="sketch ll-robot" data-anim>
+        <svg class="ll-rsvg" viewBox="0 0 1000 480" role="img" aria-labelledby="ll-rt">
+          <title id="ll-rt">Animated sketch of the dual-arm robot at its table. A parcel is set down in the middle; the head camera scans its label and the readout shows the ZIP and the zone it routes to. The harness moves one arm down to grasp the parcel, a check confirms the grasp, WALLX is given one sentence to place it, and the arm sets it inside the taped zone, where the camera confirms it. The next parcel goes to the other zone with the other arm.</title>
+          <defs><marker id="ll-rah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#2346B0" stroke-width="1.8" stroke-linecap="round"/></marker></defs>
+          <!-- table + taped zones -->
+          <path class="ll-mat" d="M128 330 L872 330 L936 404 L64 404 Z"/>
+          <path class="ink" d="M64 404 L936 404 L936 420 L64 420 Z M92 420 L96 476 M904 420 L900 476 M128 330 L872 330"/>
+          <path class="ll-tape" d="M196 342 L330 342 L322 392 L172 392 Z"/>
+          <path class="ll-tape" d="M670 342 L804 342 L828 392 L678 392 Z"/>
+          <text class="svg-hand ll-zn" x="250" y="378">1</text><text class="svg-hand ll-zn" x="744" y="378">2</text>
+          <!-- robot body -->
+          <g class="boil">
+            <path class="ink ll-body" d="M444 142 L556 142 L548 330 L452 330 Z"/>
+            <path class="ink-thin" d="M462 190 L538 190 M462 214 L538 214 M462 238 L538 238"/>
+            <path class="ink" d="M492 118 L492 142 M508 118 L508 142"/>
+            <rect class="ink ll-body" x="466" y="70" width="68" height="50" rx="12"/>
+          </g>
+          <circle class="ll-lens" cx="500" cy="95" r="9"/>
+          <text class="svg-hand ll-lbl" x="456" y="84" text-anchor="end">head camera</text>
+          <!-- scan cone -->
+          <path class="ll-cone" d="M500 104 L462 340 L538 340 Z"/>
+          <!-- parcel -->
+          <g class="ll-parcel"><g transform="scale(1.4)">
+            <path class="ink ll-box" d="M-24 -38 L24 -38 L24 0 L-24 0 Z"/>
+            <path class="ink ll-boxtop" d="M-24 -38 L-16 -46 L32 -46 L24 -38 Z M24 -38 L32 -46 L32 -8 L24 0"/>
+            <rect class="ll-label" x="-15" y="-31" width="30" height="20" rx="1.5"/>
+            <path class="ll-qrk" d="M-12 -28h7v7h-7zM-12 -19h4v4h-4zM-2 -28h4v4h-4zM4 -24h4v4h-4zM0 -18h7v3h-7z"/>
+          </g></g>
+          <!-- arms (drawn by script) -->
+          <g class="ll-arm" data-side="-1"><path class="ll-tube-o"/><path class="ll-tube-i"/><circle class="ll-j" r="8"/><circle class="ll-j" r="6"/><path class="ll-claw"/></g>
+          <g class="ll-arm" data-side="1"><path class="ll-tube-o"/><path class="ll-tube-i"/><circle class="ll-j" r="8"/><circle class="ll-j" r="6"/><path class="ll-claw"/></g>
+          <!-- annotations -->
+          <g class="ll-read ll-n">
+            <path class="ll-card" d="M34 30 L330 28 L332 126 L32 128 Z"/>
+            <text class="svg-hand ll-n1" x="52" y="62">reading the label…</text>
+            <text class="svg-print ll-n2" x="52" y="94"> </text>
+            <text class="svg-hand ll-n3" x="52" y="116"> </text>
+          </g>
+          <g class="ll-harn ll-n"><text class="svg-hand ll-blue" x="52" y="170">harness: exact pick</text></g>
+          <g class="ll-wall ll-n">
+            <path class="ll-card ll-card-r" d="M640 30 L968 28 L970 104 L700 106 L680 126 L682 106 L638 106 Z"/>
+            <text class="svg-hand ll-red" x="658" y="60">WALLX gets one sentence:</text>
+            <text class="svg-print ll-n2 ll-say" x="658" y="90">“put the box into zone 1”</text>
+          </g>
+          <g class="ll-gok ll-n"><text class="svg-hand ll-green ll-gokt" x="500" y="458" text-anchor="middle">✓ grasp seen on camera</text></g>
+          <g class="ll-zok ll-n"><text class="svg-hand ll-green ll-zokt" x="250" y="458" text-anchor="middle">✓ in zone 1, checked</text></g>
+        </svg>
+        <p class="ll-status hand" aria-hidden="true"></p>
+        <figcaption class="hand">one parcel through the loop: read, route, pick, place, verify; the next one goes to the other arm</figcaption>
+      </figure>
+
       <!-- the loop -->
       <h3 class="ll-sub hand">the loop, every control cycle</h3>
       <div class="ll-loopwrap" data-anim>
@@ -136,6 +194,20 @@
         <p class="ll-guards"><b class="hand">guards</b> idle arm locked · grip latched while carrying · bins hidden from the model · one-button stop</p>
       </div>
 
+
+      <!-- how it works, the technical short version -->
+      <div class="ll-how">
+        <h3 class="ll-sub hand">how it works</h3>
+        <ul class="ll-howlist">
+          <li><b>Perception.</b> zxing QR and barcode decoding with an upscale retry, Tesseract OCR for small printed pincodes, and a phone held in the robot's own claw as a handheld scanner.</li>
+          <li><b>Localization.</b> Parcels segmented off the mat (never a bin or tray), a homography from head-camera pixels to a 3 × 3 table grid in metres, and a pixel-to-arm-pose fit from four recorded grasps.</li>
+          <li><b>Control.</b> A typed step machine: the harness runs exact motions (pick, flip, hand-over), WALLX gets one training-style sentence per call, and its history resets on every re-target.</li>
+          <li><b>Verification.</b> A grasp counts only when the claw closes and the parcel leaves its spot on camera; a drop counts only at the target with the claw open.</li>
+          <li><b>Relay and evidence.</b> One WebSocket + msgpack relay drives both the Isaac Sim / X2Real twin and the real robot. Every control cycle is logged with all three camera frames, and 240+ tests include a full offline run against a stub model.</li>
+        </ul>
+        <ul class="tags ll-stack" aria-label="Tech stack"><li>Python</li><li>OpenCV</li><li>zxing-cpp</li><li>Tesseract OCR</li><li>NumPy</li><li>WebSockets + msgpack</li><li>Isaac Sim / X2Real</li><li>WALLX VLA</li><li>Inverse kinematics</li><li>pytest</li></ul>
+      </div>
+
       <!-- real robot, head camera -->
       <h3 class="ll-sub hand">on the real robot</h3>
       <div class="ll-shots">
@@ -145,7 +217,7 @@
         <figure><img src="../assets/img/labelloop/relocate.webp" alt="Head-camera view with a 3 by 3 grid overlay; the moved cap is boxed in the front-middle cell as the arm reaches it." loading="lazy" width="800" height="450"><figcaption><b>Moved mid-task</b> re-found on the 3 × 3 grid, re-targeted</figcaption></figure>
       </div>
 
-      <details class="deep" id="ll-deep"><summary>Technical deep dive</summary><div class="deep-body"><p>Team project. I owned the relay, the harness and step machine, label reading and parcel finding, calibration, the safety guards and the real-robot trials. My teammate built the replay dashboard and its arm kinematics, the table-grid homography and the scenario 4 WALLX work. The code is in a private repository for now.</p><h4>How it works</h4><ul><li>The gap: X Square&#x27;s WALLX vision-language-action model turns one sentence into arm motion, but it cannot read a shipping label, pick a bin or confirm it really grasped the box. We built a simulation twin of the robot first and swept prompt strategies against the model alone: 17 simulated episodes, none lifted and placed the box. Better wording was never going to close that gap, so the loop was built around the model.</li><li>The relay: LabelLoop sits between the robot and the model. Every control cycle it takes three camera streams (head and two wrists) and both arms&#x27; joint states, runs perception, a step machine and a set of guards, and answers with an exact scripted motion, one short sentence for WALLX, or a hold. The same relay drives the Isaac Sim and X2Real twin and the real robot, so each behaviour was rehearsed before it touched hardware.</li><li>Perception: a zxing QR and barcode decoder with an upscale retry, a Tesseract pincode reader for small dense labels, and a phone held in the robot&#x27;s own claw as a handheld scanner that streams frames to the relay. A parcel finder segments objects off the mat (never a bin or tray, with touching parcels split), a label finder locates the label, and a table-grid homography turns head-camera pixels into a 3 by 3 grid in metres. A pixel-to-arm-pose map is fitted from four recorded grasps.</li><li>Who moves: a step machine runs typed steps (replay a recorded motion, move, auto-pick, present the label, read, say a sentence, release, grip, hold the claw, wait for the parcel). The harness owns the exact motions: the pick, the flip, the in-air handover. WALLX owns open-ended placing, one sentence per call. The dashboard marks which of the two moved at every step, so the film never claims more of the model than it did.</li><li>Routing and verification: the ZIP prefix picks the bin by lookup (950, 951, 940, 941 to the blue lane and the left arm; 900, 901, 902 to the red lane and the right arm; anything else, or no readable label, to the black reject bin). A pick counts only when the claw closes on something and the parcel leaves its spot on camera. A drop counts only at the target with the claw open, and the parcel is confirmed in the bin on camera before the run is called done.</li><li>Live re-targeting: when a person moves the parcel, the harness sees it land in a new grid cell, cancels the old instruction, resets the model&#x27;s history and re-targets within three control cycles. In the stress test, three moves produced three re-targets.</li><li>The debugging story: early real-robot runs kept ending the same way. Whatever the placing sentence, WALLX reached for a bin instead of the parcel. The fix was to hide what it must not touch: bins are painted out of the head image until the drop, only the target bin comes back for the place step, and a watchdog holds all motion if a bin region changes. A wording that tells the arms to squeeze the short ends then lifted a wide box clean off the table for the first real pick.</li><li>Guards and evidence: the idle arm is locked, the grip is latched while carrying, harness step names are never forwarded to the model, and one button stops and homes both arms. Every control cycle is logged with all three camera frames, the harness state and the exact sentence the model received. A replay dashboard animates the arms from the logs with inverse kinematics, and 269 tests keep the loop honest, including a full offline run against a stub model.</li><li>Where it stopped: asking WALLX to set a held box down inside a taped zone worked in some runs and not others (one series: 1 inside, 1 on the edge, 1 out), and asking it to pick with no destination never committed to a lift. Those moves stay scripted in the demo, and the replay says so.</li></ul><h4>Design calls</h4><ul class="ll-calls"><li><b>Hard rules, not prompts.</b> Routing is a lookup on the ZIP prefix, never a model guess. No readable label, no bin: the parcel is flipped and rescanned, then rejected.</li><li><b>One sentence at a time.</b> The model gets a single short, training-style sentence per call, or a hold. History is reset on every re-target so stale intent never leaks into the next move.</li><li><b>Hide what it must not touch.</b> Bins are masked out of the head image until the drop. The model cannot grab what it cannot see, and a watchdog stops the run if a bin moves anyway.</li><li><b>One relay for sim and real.</b> The same harness drives the Isaac Sim twin and the real robot, so every behaviour was rehearsed in simulation first.</li><li><b>Log everything, replay anything.</b> Every cycle keeps all three camera frames, the harness state and the model&#x27;s exact input. A failure is a replay, not a guess.</li><li><b>Say what the model did.</b> Harness motions and WALLX motions are labelled apart at every step, in the film and the dashboard.</li></ul><h4>Stack</h4><ul class="tags"><li>Python</li><li>OpenCV</li><li>zxing-cpp</li><li>Tesseract OCR</li><li>NumPy</li><li>WebSockets + msgpack</li><li>Isaac Sim / X2Real</li><li>WALLX (VLA)</li><li>Inverse kinematics</li><li>pytest</li></ul></div></details>
+      <details class="deep" id="ll-deep"><summary>Technical deep dive</summary><div class="deep-body"><p>Team project. I owned the relay, the harness and step machine, label reading and parcel finding, calibration, the safety guards and the real-robot trials. My teammate built the replay dashboard and its arm kinematics, the table-grid homography and the scenario 4 WALLX work. The code is in a private repository for now.</p><h4>How it works</h4><ul><li>The gap: X Square&#x27;s WALLX vision-language-action model turns one sentence into arm motion, but it cannot read a shipping label, pick a bin or confirm it really grasped the box. We built a simulation twin of the robot first and swept prompt strategies against the model alone: 17 simulated episodes, none lifted and placed the box. Better wording was never going to close that gap, so the loop was built around the model.</li><li>The relay: LabelLoop sits between the robot and the model. Every control cycle it takes three camera streams (head and two wrists) and both arms&#x27; joint states, runs perception, a step machine and a set of guards, and answers with an exact scripted motion, one short sentence for WALLX, or a hold. The same relay drives the Isaac Sim and X2Real twin and the real robot, so each behaviour was rehearsed before it touched hardware.</li><li>Perception: a zxing QR and barcode decoder with an upscale retry, a Tesseract pincode reader for small dense labels, and a phone held in the robot&#x27;s own claw as a handheld scanner that streams frames to the relay. A parcel finder segments objects off the mat (never a bin or tray, with touching parcels split), a label finder locates the label, and a table-grid homography turns head-camera pixels into a 3 by 3 grid in metres. A pixel-to-arm-pose map is fitted from four recorded grasps.</li><li>Who moves: a step machine runs typed steps (replay a recorded motion, move, auto-pick, present the label, read, say a sentence, release, grip, hold the claw, wait for the parcel). The harness owns the exact motions: the pick, the flip, the in-air handover. WALLX owns open-ended placing, one sentence per call. The dashboard marks which of the two moved at every step, so the film never claims more of the model than it did.</li><li>Routing and verification: the ZIP prefix picks the bin by lookup (950, 951, 940, 941 to the blue lane and the left arm; 900, 901, 902 to the red lane and the right arm; anything else, or no readable label, to the black reject bin). A pick counts only when the claw closes on something and the parcel leaves its spot on camera. A drop counts only at the target with the claw open, and the parcel is confirmed in the bin on camera before the run is called done.</li><li>Live re-targeting: when a person moves the parcel, the harness sees it land in a new grid cell, cancels the old instruction, resets the model&#x27;s history and re-targets within three control cycles. In the stress test, three moves produced three re-targets.</li><li>The debugging story: early real-robot runs kept ending the same way. Whatever the placing sentence, WALLX reached for a bin instead of the parcel. The fix was to hide what it must not touch: bins are painted out of the head image until the drop, only the target bin comes back for the place step, and a watchdog holds all motion if a bin region changes. A wording that tells the arms to squeeze the short ends then lifted a wide box clean off the table for the first real pick.</li><li>Guards and evidence: the idle arm is locked, the grip is latched while carrying, harness step names are never forwarded to the model, and one button stops and homes both arms. Every control cycle is logged with all three camera frames, the harness state and the exact sentence the model received. A replay dashboard animates the arms from the logs with inverse kinematics, and 269 tests keep the loop honest, including a full offline run against a stub model.</li><li>Where it stopped: asking WALLX to set a held box down inside a taped zone worked in some runs and not others (one series: 1 inside, 1 on the edge, 1 out), and asking it to pick with no destination never committed to a lift. Those moves stay scripted in the demo, and the replay says so.</li></ul><h4>Design calls</h4><ul class="ll-calls"><li><b>Hard rules, not prompts.</b> Routing is a lookup on the ZIP prefix, never a model guess. No readable label, no bin: the parcel is flipped and rescanned, then rejected.</li><li><b>One sentence at a time.</b> The model gets a single short, training-style sentence per call, or a hold. History is reset on every re-target so stale intent never leaks into the next move.</li><li><b>Hide what it must not touch.</b> Bins are masked out of the head image until the drop. The model cannot grab what it cannot see, and a watchdog stops the run if a bin moves anyway.</li><li><b>One relay for sim and real.</b> The same harness drives the Isaac Sim twin and the real robot, so every behaviour was rehearsed in simulation first.</li><li><b>Log everything, replay anything.</b> Every cycle keeps all three camera frames, the harness state and the model&#x27;s exact input. A failure is a replay, not a guess.</li><li><b>Say what the model did.</b> Harness motions and WALLX motions are labelled apart at every step, in the film and the dashboard.</li></ul></div></details>
     </article>
 </div>
 </section>
