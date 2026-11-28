@@ -8,5 +8,5 @@ node_modules/
 videos/
 
 # full-size camera originals (web copies live in assets/img/gallery)
-assets/img/labelloop/*.JPG
-assets/img/IMG_*
+# full-size originals; the site serves the compressed .webp copies in gallery/ etc.
+assets/img/originals/
